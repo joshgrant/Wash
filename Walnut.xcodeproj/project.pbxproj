@@ -15,6 +15,8 @@
 		033FE6A3266CE2AB00BCF5AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033FE6A1266CE2AB00BCF5AA /* LaunchScreen.storyboard */; };
 		033FE6AE266CE2AB00BCF5AA /* WalnutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE6AD266CE2AB00BCF5AA /* WalnutTests.swift */; };
 		033FE6B9266CE2AB00BCF5AA /* WalnutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE6B8266CE2AB00BCF5AA /* WalnutUITests.swift */; };
+		033FE6C7266CE31200BCF5AA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE6C6266CE31200BCF5AA /* main.swift */; };
+		033FE6C9266CE38800BCF5AA /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE6C8266CE38800BCF5AA /* Application.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		033FE6B4266CE2AB00BCF5AA /* WalnutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalnutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		033FE6B8266CE2AB00BCF5AA /* WalnutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalnutUITests.swift; sourceTree = "<group>"; };
 		033FE6BA266CE2AB00BCF5AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		033FE6C6266CE31200BCF5AA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		033FE6C8266CE38800BCF5AA /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +104,14 @@
 			isa = PBXGroup;
 			children = (
 				033FE696266CE2AA00BCF5AA /* AppDelegate.swift */,
+				033FE6C6266CE31200BCF5AA /* main.swift */,
 				033FE698266CE2AA00BCF5AA /* SceneDelegate.swift */,
 				033FE69A266CE2AA00BCF5AA /* ViewController.swift */,
 				033FE69C266CE2AA00BCF5AA /* Main.storyboard */,
 				033FE69F266CE2AB00BCF5AA /* Assets.xcassets */,
 				033FE6A1266CE2AB00BCF5AA /* LaunchScreen.storyboard */,
 				033FE6A4266CE2AB00BCF5AA /* Info.plist */,
+				033FE6C8266CE38800BCF5AA /* Application.swift */,
 			);
 			path = Walnut;
 			sourceTree = "<group>";
@@ -258,8 +264,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
 				033FE69B266CE2AA00BCF5AA /* ViewController.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
+				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
