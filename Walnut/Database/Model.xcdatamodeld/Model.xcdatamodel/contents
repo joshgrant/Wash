@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20E241" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Block" representedClassName="Block" isAbstract="YES" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="url" optional="YES" attributeType="URI"/>
         <relationship name="backgroundColor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Color" inverseName="backgroundColorOf" inverseEntity="Color"/>
@@ -22,13 +22,6 @@
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="conditions" inverseEntity="Event"/>
         <relationship name="leftHand" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="valueOfCondition" inverseEntity="Source"/>
         <relationship name="rightHand" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="targetOfCondition" inverseEntity="Source"/>
-    </entity>
-    <entity name="Contact" representedClassName="Contact" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <attribute name="email" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="phone" optional="YES" attributeType="String"/>
-        <relationship name="flows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="actor" inverseEntity="Flow"/>
-        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="noteOfContact" inverseEntity="Note"/>
     </entity>
     <entity name="Conversion" representedClassName="Conversion" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="isReversible" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -64,7 +57,7 @@
         <relationship name="systems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="System" inverseName="events" inverseEntity="System"/>
     </entity>
     <entity name="Flow" representedClassName="Flow" isAbstract="YES" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <relationship name="actor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="flows" inverseEntity="Contact"/>
+        <relationship name="actor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="flows" inverseEntity="Person"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="flows" inverseEntity="Event"/>
         <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="historyOfFlow" inverseEntity="History"/>
         <relationship name="inflowForStock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="inflows" inverseEntity="Stock"/>
@@ -100,7 +93,7 @@
         <attribute name="secondLine" optional="YES" attributeType="String"/>
         <relationship name="blocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Block" inverseName="note" inverseEntity="Block"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entity" inverseName="linkedNotes" inverseEntity="Entity"/>
-        <relationship name="noteOfContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="notes" inverseEntity="Contact"/>
+        <relationship name="noteOfContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="notes" inverseEntity="Person"/>
         <relationship name="noteOfEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="notes" inverseEntity="Event"/>
         <relationship name="noteOfFlow" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Flow" inverseName="notes" inverseEntity="Flow"/>
         <relationship name="noteOfStock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="notes" inverseEntity="Stock"/>
@@ -109,6 +102,13 @@
         <relationship name="relatedNotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="relatedNotes" inverseEntity="Note"/>
         <relationship name="subnotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="parent" inverseEntity="Note"/>
         <relationship name="thumbnail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="thumbnailOf" inverseEntity="Image"/>
+    </entity>
+    <entity name="Person" representedClassName="Person" parentEntity="Entity" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <relationship name="flows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="actor" inverseEntity="Flow"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="noteOfContact" inverseEntity="Note"/>
     </entity>
     <entity name="ProcessFlow" representedClassName="ProcessFlow" parentEntity="Flow" syncable="YES" codeGenerationType="class">
         <attribute name="completionOrderTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -225,7 +225,7 @@
         <element name="Block" positionX="-63" positionY="-18" width="128" height="118"/>
         <element name="Color" positionX="-54" positionY="-9" width="128" height="148"/>
         <element name="Condition" positionX="-36" positionY="9" width="128" height="118"/>
-        <element name="Contact" positionX="-18" positionY="27" width="128" height="118"/>
+        <element name="Person" positionX="-18" positionY="27" width="128" height="104"/>
         <element name="Conversion" positionX="0" positionY="45" width="128" height="103"/>
         <element name="Dimension" positionX="18" positionY="63" width="128" height="88"/>
         <element name="DynamicSource" positionX="18" positionY="153" width="128" height="73"/>
