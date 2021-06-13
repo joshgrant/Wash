@@ -88,6 +88,7 @@
 		038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6562676777600931595 /* FlowsHeaderViewModel.swift */; };
 		038CF6592676778F00931595 /* ForecastHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6582676778F00931595 /* ForecastHeaderViewModel.swift */; };
 		038CF65B2676779800931595 /* PriorityHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF65A2676779800931595 /* PriorityHeaderViewModel.swift */; };
+		038CF65F26767D7900931595 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 038CF65D26767D7900931595 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,6 +196,7 @@
 		038CF6562676777600931595 /* FlowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowsHeaderViewModel.swift; sourceTree = "<group>"; };
 		038CF6582676778F00931595 /* ForecastHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastHeaderViewModel.swift; sourceTree = "<group>"; };
 		038CF65A2676779800931595 /* PriorityHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityHeaderViewModel.swift; sourceTree = "<group>"; };
+		038CF65E26767D7900931595 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +256,7 @@
 				033FE6A1266CE2AB00BCF5AA /* LaunchScreen.storyboard */,
 				033FE6A4266CE2AB00BCF5AA /* Info.plist */,
 				033FE6C8266CE38800BCF5AA /* Application.swift */,
+				038CF65C26767D6D00931595 /* Database */,
 				038CF6482676744B00931595 /* Shared */,
 				038CF5AC26754D2000931595 /* V VM C CM */,
 			);
@@ -555,6 +558,14 @@
 			path = Priority;
 			sourceTree = "<group>";
 		};
+		038CF65C26767D6D00931595 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				038CF65D26767D7900931595 /* Model.xcdatamodeld */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -720,6 +731,7 @@
 				038CF5F426763DD000931595 /* EventResponder.swift in Sources */,
 				038CF5F526763DD000931595 /* ViewModel.swift in Sources */,
 				038CF623267652D500931595 /* LibraryControllerModel.swift in Sources */,
+				038CF65F26767D7900931595 /* Model.xcdatamodeld in Sources */,
 				038CF5F626763DD000931595 /* TableViewDataSource.swift in Sources */,
 				038CF5F726763DD000931595 /* TableViewDataSourceModel.swift in Sources */,
 				038CF5F826763DD000931595 /* TableViewDelegateModel.swift in Sources */,
@@ -1097,6 +1109,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		038CF65D26767D7900931595 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				038CF65E26767D7900931595 /* Model.xcdatamodel */,
+			);
+			currentVersion = 038CF65E26767D7900931595 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 033FE68B266CE2AA00BCF5AA /* Project object */;
 }

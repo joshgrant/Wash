@@ -15,15 +15,22 @@ class RootController: TabBarController
 func makeTabBarViewControllers() -> [UIViewController]
 {
     let dashboardController = DashboardController()
+    let dashboardNavigation = NavigationController(rootViewController: dashboardController)
+    
     let libraryController = LibraryController.makeController()
+    let libraryNavigation = NavigationController(rootViewController: libraryController)
+    
     let inboxController = InboxController.makeController()
+    let inboxNavigation = NavigationController(rootViewController: inboxController)
+    
     let settingsController = SettingsController.makeController()
+    let settingsNavigation = NavigationController(rootViewController: settingsController)
     
     return [
-        dashboardController,
-        libraryController,
-        inboxController,
-        settingsController
+        dashboardNavigation,
+        libraryNavigation,
+        inboxNavigation,
+        settingsNavigation
     ]
 }
 

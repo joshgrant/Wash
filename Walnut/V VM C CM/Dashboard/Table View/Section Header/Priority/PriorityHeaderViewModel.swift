@@ -13,6 +13,6 @@ class PriorityHeaderViewModel: TableHeaderViewModel
     {
         self.init(
             title: "Priority".localized,
-            icon: .system)
+            icon: .priority)
     }
 }

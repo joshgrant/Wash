@@ -11,6 +11,27 @@ class DashboardTableViewDataSourceModel: TableViewDataSourceModel
 {
     convenience init()
     {
-        self.init(cellModels: [[PinnedCellModel()]])
+        let cellModels = Self.makeCellModels()
+        self.init(cellModels: cellModels)
+    }
+    
+    // MARK: - Factory
+    
+    static func makeCellModels() -> [[TableViewCellModel]]
+    {
+        [
+            [
+                PinnedCellModel()
+            ],
+            [
+                PinnedCellModel() // Flows
+            ],
+            [
+                PinnedCellModel() // Events
+            ],
+            [
+                PinnedCellModel() // Priority Systems
+            ]
+        ]
     }
 }

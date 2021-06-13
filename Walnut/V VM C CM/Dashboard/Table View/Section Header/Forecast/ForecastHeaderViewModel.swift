@@ -13,6 +13,6 @@ class ForecastHeaderViewModel: TableHeaderViewModel
     {
         self.init(
             title: "Forecast".localized,
-            icon: .event)
+            icon: .forecast)
     }
 }

@@ -31,6 +31,7 @@ class DashboardController: ViewController<
             viewModel: viewModel)
         
         tabBarItem = makeTabBarItem()
+        title = model.tabBarItemTitle
         view.backgroundColor = model.backgroundColor
         view.embed(tableView)
     }

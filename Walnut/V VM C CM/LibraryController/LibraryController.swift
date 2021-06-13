@@ -21,6 +21,7 @@ class LibraryController: ViewController<
             viewModel: viewModel)
         
         tabBarItem = makeTabBarItem()
+        title = model.tabBarItemTitle
         view.backgroundColor = model.backgroundColor
     }
 }
