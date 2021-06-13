@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
     
     var window: UIWindow?
     
-    var context: Context { AppDelegate.shared.context }
+    var context: Context { AppDelegate.shared.database.context }
 
     // MARK: - Functions
     

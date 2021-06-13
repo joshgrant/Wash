@@ -31,6 +31,7 @@ class LibraryController: ViewController<
         tabBarItem = makeTabBarItem()
         title = model.tabBarItemTitle
         view.backgroundColor = model.backgroundColor
+        view.embed(tableView)
     }
     
     convenience init(context: Context)

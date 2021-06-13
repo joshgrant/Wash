@@ -24,7 +24,21 @@ class LibraryTableViewDelegateModel: TableViewDelegateModel
     
     static func makeDidSelect() -> TableViewSelectionClosure
     {
-        { selection in }
+        { selection in
+            
+            let entityType = EntityType.libraryVisible[selection.indexPath.row]
+            
+            // Now we need to get the list view controller for the entityType
+            
+            print("Selected: \(entityType)")
+            
+            selection.tableView.deselectRow(
+                at: selection.indexPath,
+                animated: true)
+            
+            return
+            
+        }
         //    return { selection in
         //
         //        let entityType = EntityType.libraryVisible[selection.indexPath.row]

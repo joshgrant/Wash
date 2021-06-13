@@ -11,7 +11,31 @@ open class Database
 {
     // MARK: - Variables
     
-    weak var delegate: DatabaseDelegate?
+    var modelName: String
+    var container: Container
+    
+    var context: Context { container.context }
+    
+    // MARK: - Initialization
+    
+    init(modelName: String = "Model")
+    {
+        self.modelName = modelName
+        
+        do
+        {
+            container = try Container(modelName: modelName)
+            try container.loadPersistentStores()
+        }
+        catch
+        {
+            fatalError("Failed to create the container: \(error)")
+        }
+        
+        populate(context: context)
+    }
+    
+    // MARK: - Functions
     
     func getItemsForList<T: NSManagedObject>(context: Context, type: T.Type) -> [T]
     {
@@ -28,5 +52,13 @@ open class Database
     {
         let items = getItemsForList(context: context, type: type)
         return items[indexPath.row]
+    }
+}
+
+extension Database
+{
+    func populate(context: Context)
+    {
+        context.quickSave()
     }
 }

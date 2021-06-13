@@ -28,6 +28,6 @@ class LibraryTableViewModel: TableViewModel
     
     static func makeCellModelTypes() -> [TableViewCellModel.Type]
     {
-        []
+        [LibraryCellModel.self]
     }
 }

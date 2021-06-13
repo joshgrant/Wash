@@ -7,32 +7,35 @@
 
 import UIKit
 
+typealias LaunchOptions = [UIApplication.LaunchOptionsKey: Any]
+
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
     // MARK: - Variables
     
     static var shared: AppDelegate { UIApplication.shared.delegate as! AppDelegate }
-    private var container = { try! Container(modelName: "Model") }()
     
-    var context: Context { container.context }
+    var database = Database()
     
     // MARK: - Functions
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
-    {
-        return true
-    }
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: LaunchOptions?) -> Bool { true }
 
     // MARK: - UISceneSession Lifecycle
 
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions) -> UISceneConfiguration
     {
-        return UISceneConfiguration(
+        UISceneConfiguration(
             name: "Default Configuration",
             sessionRole: connectingSceneSession.role)
     }
 
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>)
-    {
-    }
+    func application(
+        _ application: UIApplication,
+        didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
 }

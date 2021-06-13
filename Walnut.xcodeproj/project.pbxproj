@@ -23,7 +23,6 @@
 		038CF5E626763DD000931595 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5B426763D5F00931595 /* Observer.swift */; };
 		038CF5E726763DD000931595 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5B526763D5F00931595 /* ViewController.swift */; };
 		038CF5E826763DD000931595 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5B726763D5F00931595 /* Model.swift */; };
-		038CF5E926763DD000931595 /* DatabaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5B826763D5F00931595 /* DatabaseDelegate.swift */; };
 		038CF5EA26763DD000931595 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5B926763D5F00931595 /* Container.swift */; };
 		038CF5EB26763DD000931595 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5BA26763D5F00931595 /* DatabaseError.swift */; };
 		038CF5EC26763DD000931595 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5BB26763D5F00931595 /* Context.swift */; };
@@ -130,6 +129,7 @@
 		038CF6EE267687A500931595 /* LibraryTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6ED267687A500931595 /* LibraryTableViewModel.swift */; };
 		038CF6F0267687AF00931595 /* LibraryTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6EF267687AF00931595 /* LibraryTableViewDelegateModel.swift */; };
 		038CF6F2267687B800931595 /* LibraryTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6F1267687B800931595 /* LibraryTableViewDataSourceModel.swift */; };
+		038CF6F9267690CD00931595 /* SystemListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6F8267690CD00931595 /* SystemListController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,7 +172,6 @@
 		038CF5B426763D5F00931595 /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		038CF5B526763D5F00931595 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		038CF5B726763D5F00931595 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		038CF5B826763D5F00931595 /* DatabaseDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseDelegate.swift; sourceTree = "<group>"; };
 		038CF5B926763D5F00931595 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		038CF5BA26763D5F00931595 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		038CF5BB26763D5F00931595 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
@@ -279,6 +278,7 @@
 		038CF6ED267687A500931595 /* LibraryTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewModel.swift; sourceTree = "<group>"; };
 		038CF6EF267687AF00931595 /* LibraryTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewDelegateModel.swift; sourceTree = "<group>"; };
 		038CF6F1267687B800931595 /* LibraryTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewDataSourceModel.swift; sourceTree = "<group>"; };
+		038CF6F8267690CD00931595 /* SystemListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,11 +366,9 @@
 		038CF5AC26754D2000931595 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				038CF6F426768F4C00931595 /* Entities */,
 				038CF5AA26751C9C00931595 /* RootController.swift */,
-				038CF61A267650FD00931595 /* Dashboard */,
-				038CF61F267652BA00931595 /* LibraryController */,
-				038CF620267652C000931595 /* InboxController */,
-				038CF621267652C500931595 /* SettingsController */,
+				038CF6F326768F4600931595 /* Tabs */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -413,7 +411,6 @@
 				038CF5BB26763D5F00931595 /* Context.swift */,
 				038CF5BD26763D5F00931595 /* Coordinator.swift */,
 				038CF5BC26763D5F00931595 /* Database.swift */,
-				038CF5B826763D5F00931595 /* DatabaseDelegate.swift */,
 				038CF5BA26763D5F00931595 /* DatabaseError.swift */,
 				038CF5B726763D5F00931595 /* Model.swift */,
 			);
@@ -517,7 +514,7 @@
 			path = Dashboard;
 			sourceTree = "<group>";
 		};
-		038CF61F267652BA00931595 /* LibraryController */ = {
+		038CF61F267652BA00931595 /* Library */ = {
 			isa = PBXGroup;
 			children = (
 				038CF6EB2676877600931595 /* Table View */,
@@ -526,10 +523,10 @@
 				038CF627267652EC00931595 /* LibraryView.swift */,
 				038CF624267652E000931595 /* LibraryViewModel.swift */,
 			);
-			path = LibraryController;
+			path = Library;
 			sourceTree = "<group>";
 		};
-		038CF620267652C000931595 /* InboxController */ = {
+		038CF620267652C000931595 /* Inbox */ = {
 			isa = PBXGroup;
 			children = (
 				038CF60F26763E1200931595 /* InboxController.swift */,
@@ -537,10 +534,10 @@
 				038CF62B267652FF00931595 /* InboxView.swift */,
 				038CF62D2676530700931595 /* InboxViewModel.swift */,
 			);
-			path = InboxController;
+			path = Inbox;
 			sourceTree = "<group>";
 		};
-		038CF621267652C500931595 /* SettingsController */ = {
+		038CF621267652C500931595 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				038CF61126764DA500931595 /* SettingsController.swift */,
@@ -548,7 +545,7 @@
 				038CF6312676531B00931595 /* SettingsView.swift */,
 				038CF6332676532400931595 /* SettingsViewModel.swift */,
 			);
-			path = SettingsController;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		038CF6352676569A00931595 /* V VM C CM */ = {
@@ -737,6 +734,49 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		038CF6F326768F4600931595 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				038CF61A267650FD00931595 /* Dashboard */,
+				038CF620267652C000931595 /* Inbox */,
+				038CF61F267652BA00931595 /* Library */,
+				038CF621267652C500931595 /* Settings */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		038CF6F426768F4C00931595 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6F526768F5500931595 /* System */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		038CF6F526768F5500931595 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6F726768F5B00931595 /* Detail */,
+				038CF6F626768F5800931595 /* List */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		038CF6F626768F5800931595 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6F8267690CD00931595 /* SystemListController.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		038CF6F726768F5B00931595 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -895,7 +935,6 @@
 				038CF61E267651E800931595 /* DashboardView.swift in Sources */,
 				038CF6592676778F00931595 /* ForecastHeaderViewModel.swift in Sources */,
 				038CF64A2676745B00931595 /* PinnedCell.swift in Sources */,
-				038CF5E926763DD000931595 /* DatabaseDelegate.swift in Sources */,
 				038CF5EA26763DD000931595 /* Container.swift in Sources */,
 				038CF5EB26763DD000931595 /* DatabaseError.swift in Sources */,
 				038CF6982676829F00931595 /* Source+Extensions.swift in Sources */,
@@ -950,6 +989,7 @@
 				038CF60126763DD000931595 /* UIImage+Extensions.swift in Sources */,
 				038CF625267652E000931595 /* LibraryViewModel.swift in Sources */,
 				038CF6C1267682C700931595 /* SourceType.swift in Sources */,
+				038CF6F9267690CD00931595 /* SystemListController.swift in Sources */,
 				038CF6F2267687B800931595 /* LibraryTableViewDataSourceModel.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				038CF6192676506A00931595 /* DashboardControllerModel.swift in Sources */,

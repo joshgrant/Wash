@@ -32,10 +32,6 @@ public extension Container
         }
         
         self.init(name: modelName, managedObjectModel: model)
-        
-        try loadPersistentStores()
-        context.populate()
-        context.quickSave()
     }
     
     static func getModelURL(modelName: String) -> URL?
