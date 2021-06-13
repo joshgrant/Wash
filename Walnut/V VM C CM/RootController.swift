@@ -14,7 +14,7 @@ class RootController: TabBarController
 
 func makeTabBarViewControllers() -> [UIViewController]
 {
-    let dashboardController = DashboardController.makeController()
+    let dashboardController = DashboardController()
     let libraryController = LibraryController.makeController()
     let inboxController = InboxController.makeController()
     let settingsController = SettingsController.makeController()

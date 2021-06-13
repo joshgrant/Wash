@@ -13,16 +13,36 @@ class DashboardController: ViewController<
                             DashboardViewModel,
                             DashboardView>
 {
+    // MARK: - Variables
+    
+    var tableView: TableView<DashboardTableViewModel>
+    
+    // MARK: - Initialization
+    
     required init(
         controllerModel: DashboardControllerModel,
         viewModel: DashboardViewModel)
     {
+        tableView = TableView(
+            model: controllerModel.tableViewModel)
+        
         super.init(
             controllerModel: controllerModel,
             viewModel: viewModel)
         
         tabBarItem = makeTabBarItem()
         view.backgroundColor = model.backgroundColor
+        view.embed(tableView)
+    }
+    
+    convenience init()
+    {
+        let controllerModel = DashboardControllerModel()
+        let viewModel = DashboardViewModel()
+        
+        self.init(
+            controllerModel: controllerModel,
+            viewModel: viewModel)
     }
 }
 
@@ -34,28 +54,5 @@ extension DashboardController: ViewControllerTabBarDelegate
             title: model.tabBarItemTitle,
             image: model.tabBarImage,
             tag: model.tabBarTag)
-    }
-}
-
-extension DashboardController
-{
-    static func makeDashboardControllerModel() -> DashboardControllerModel
-    {
-        DashboardControllerModel()
-    }
-    
-    static func makeDashboardViewModel() -> DashboardViewModel
-    {
-        DashboardViewModel()
-    }
-    
-    static func makeController() -> DashboardController
-    {
-        let controllerModel = makeDashboardControllerModel()
-        let viewModel = makeDashboardViewModel()
-        
-        return DashboardController(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
     }
 }

@@ -9,5 +9,7 @@ import Foundation
 
 public protocol ConfigurableTableViewCellProtocol
 {
-    func configure(with viewModel: TableViewCellModel)
+    associatedtype TVCM
+    
+    func configure(with viewModel: TVCM)
 }

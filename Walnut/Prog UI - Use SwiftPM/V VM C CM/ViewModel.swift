@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol ViewModel
+public class ViewModel
 {
     
 }

@@ -77,6 +77,17 @@
 		038CF6302676531100931595 /* SettingsControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF62F2676531100931595 /* SettingsControllerModel.swift */; };
 		038CF6322676531B00931595 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6312676531B00931595 /* SettingsView.swift */; };
 		038CF6342676532400931595 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6332676532400931595 /* SettingsViewModel.swift */; };
+		038CF6392676609D00931595 /* UISearchBarDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6382676609D00931595 /* UISearchBarDelegate+Extensions.swift */; };
+		038CF63B2676642200931595 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF63A2676642200931595 /* TableHeaderView.swift */; };
+		038CF63D267664C200931595 /* TableHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF63C267664C200931595 /* TableHeaderViewModel.swift */; };
+		038CF6402676679700931595 /* DashboardTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF63F2676679700931595 /* DashboardTableViewModel.swift */; };
+		038CF6442676726900931595 /* DashboardTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6432676726900931595 /* DashboardTableViewDelegateModel.swift */; };
+		038CF6462676727500931595 /* DashboardTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6452676727500931595 /* DashboardTableViewDataSourceModel.swift */; };
+		038CF64A2676745B00931595 /* PinnedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6492676745B00931595 /* PinnedCell.swift */; };
+		038CF651267675D500931595 /* PinnedHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF650267675D500931595 /* PinnedHeaderViewModel.swift */; };
+		038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6562676777600931595 /* FlowsHeaderViewModel.swift */; };
+		038CF6592676778F00931595 /* ForecastHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6582676778F00931595 /* ForecastHeaderViewModel.swift */; };
+		038CF65B2676779800931595 /* PriorityHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF65A2676779800931595 /* PriorityHeaderViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +184,17 @@
 		038CF62F2676531100931595 /* SettingsControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControllerModel.swift; sourceTree = "<group>"; };
 		038CF6312676531B00931595 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		038CF6332676532400931595 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		038CF6382676609D00931595 /* UISearchBarDelegate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBarDelegate+Extensions.swift"; sourceTree = "<group>"; };
+		038CF63A2676642200931595 /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
+		038CF63C267664C200931595 /* TableHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderViewModel.swift; sourceTree = "<group>"; };
+		038CF63F2676679700931595 /* DashboardTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTableViewModel.swift; sourceTree = "<group>"; };
+		038CF6432676726900931595 /* DashboardTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTableViewDelegateModel.swift; sourceTree = "<group>"; };
+		038CF6452676727500931595 /* DashboardTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTableViewDataSourceModel.swift; sourceTree = "<group>"; };
+		038CF6492676745B00931595 /* PinnedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedCell.swift; sourceTree = "<group>"; };
+		038CF650267675D500931595 /* PinnedHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedHeaderViewModel.swift; sourceTree = "<group>"; };
+		038CF6562676777600931595 /* FlowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowsHeaderViewModel.swift; sourceTree = "<group>"; };
+		038CF6582676778F00931595 /* ForecastHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastHeaderViewModel.swift; sourceTree = "<group>"; };
+		038CF65A2676779800931595 /* PriorityHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityHeaderViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +254,7 @@
 				033FE6A1266CE2AB00BCF5AA /* LaunchScreen.storyboard */,
 				033FE6A4266CE2AB00BCF5AA /* Info.plist */,
 				033FE6C8266CE38800BCF5AA /* Application.swift */,
+				038CF6482676744B00931595 /* Shared */,
 				038CF5AC26754D2000931595 /* V VM C CM */,
 			);
 			path = Walnut;
@@ -320,6 +343,7 @@
 				038CF5CC26763D5F00931595 /* Cell */,
 				038CF5D026763D5F00931595 /* TableView.swift */,
 				038CF5D126763D5F00931595 /* TableViewModel.swift */,
+				038CF63E267664CF00931595 /* Header View */,
 			);
 			path = "Table View";
 			sourceTree = "<group>";
@@ -368,6 +392,7 @@
 				038CF5D526763D5F00931595 /* UIColor+Extensions.swift */,
 				038CF5D626763D5F00931595 /* UIImage+Extensions.swift */,
 				038CF5D726763D5F00931595 /* UIBarButtonItem+Extensions.swift */,
+				038CF6382676609D00931595 /* UISearchBarDelegate+Extensions.swift */,
 			);
 			path = UIKIt;
 			sourceTree = "<group>";
@@ -402,6 +427,7 @@
 				038CF6182676506A00931595 /* DashboardControllerModel.swift */,
 				038CF61B267651D600931595 /* DashboardViewModel.swift */,
 				038CF61D267651E800931595 /* DashboardView.swift */,
+				038CF647267673DC00931595 /* Table View */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -448,6 +474,85 @@
 				038CF5C426763D5F00931595 /* ViewModel.swift */,
 			);
 			path = "V VM C CM";
+			sourceTree = "<group>";
+		};
+		038CF63E267664CF00931595 /* Header View */ = {
+			isa = PBXGroup;
+			children = (
+				038CF63A2676642200931595 /* TableHeaderView.swift */,
+				038CF63C267664C200931595 /* TableHeaderViewModel.swift */,
+			);
+			path = "Header View";
+			sourceTree = "<group>";
+		};
+		038CF647267673DC00931595 /* Table View */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6522676773800931595 /* Section Header */,
+				038CF63F2676679700931595 /* DashboardTableViewModel.swift */,
+				038CF6432676726900931595 /* DashboardTableViewDelegateModel.swift */,
+				038CF6452676727500931595 /* DashboardTableViewDataSourceModel.swift */,
+			);
+			path = "Table View";
+			sourceTree = "<group>";
+		};
+		038CF6482676744B00931595 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				038CF64B2676756500931595 /* Table View Cell */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		038CF64B2676756500931595 /* Table View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6492676745B00931595 /* PinnedCell.swift */,
+			);
+			path = "Table View Cell";
+			sourceTree = "<group>";
+		};
+		038CF64F267675C400931595 /* Pinned */ = {
+			isa = PBXGroup;
+			children = (
+				038CF650267675D500931595 /* PinnedHeaderViewModel.swift */,
+			);
+			path = Pinned;
+			sourceTree = "<group>";
+		};
+		038CF6522676773800931595 /* Section Header */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6532676774400931595 /* Flows */,
+				038CF6542676774E00931595 /* Forecast */,
+				038CF64F267675C400931595 /* Pinned */,
+				038CF6552676775700931595 /* Priority */,
+			);
+			path = "Section Header";
+			sourceTree = "<group>";
+		};
+		038CF6532676774400931595 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6562676777600931595 /* FlowsHeaderViewModel.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		038CF6542676774E00931595 /* Forecast */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6582676778F00931595 /* ForecastHeaderViewModel.swift */,
+			);
+			path = Forecast;
+			sourceTree = "<group>";
+		};
+		038CF6552676775700931595 /* Priority */ = {
+			isa = PBXGroup;
+			children = (
+				038CF65A2676779800931595 /* PriorityHeaderViewModel.swift */,
+			);
+			path = Priority;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -588,11 +693,15 @@
 				038CF5E426763DD000931595 /* CollectionView.swift in Sources */,
 				038CF5E526763DD000931595 /* CollectionViewCell.swift in Sources */,
 				038CF61226764DA500931595 /* SettingsController.swift in Sources */,
+				038CF651267675D500931595 /* PinnedHeaderViewModel.swift in Sources */,
 				038CF5E626763DD000931595 /* Observer.swift in Sources */,
 				038CF5E726763DD000931595 /* ViewController.swift in Sources */,
+				038CF65B2676779800931595 /* PriorityHeaderViewModel.swift in Sources */,
 				038CF5E826763DD000931595 /* Model.swift in Sources */,
 				038CF6322676531B00931595 /* SettingsView.swift in Sources */,
 				038CF61E267651E800931595 /* DashboardView.swift in Sources */,
+				038CF6592676778F00931595 /* ForecastHeaderViewModel.swift in Sources */,
+				038CF64A2676745B00931595 /* PinnedCell.swift in Sources */,
 				038CF5E926763DD000931595 /* DatabaseDelegate.swift in Sources */,
 				038CF5EA26763DD000931595 /* Container.swift in Sources */,
 				038CF5EB26763DD000931595 /* DatabaseError.swift in Sources */,
@@ -623,6 +732,8 @@
 				038CF628267652EC00931595 /* LibraryView.swift in Sources */,
 				038CF6342676532400931595 /* SettingsViewModel.swift in Sources */,
 				038CF5FD26763DD000931595 /* TableView.swift in Sources */,
+				038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */,
+				038CF6402676679700931595 /* DashboardTableViewModel.swift in Sources */,
 				038CF5FE26763DD000931595 /* TableViewModel.swift in Sources */,
 				038CF5FF26763DD000931595 /* UIView+Extensions.swift in Sources */,
 				038CF60026763DD000931595 /* UIColor+Extensions.swift in Sources */,
@@ -630,6 +741,7 @@
 				038CF625267652E000931595 /* LibraryViewModel.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				038CF6192676506A00931595 /* DashboardControllerModel.swift in Sources */,
+				038CF63B2676642200931595 /* TableHeaderView.swift in Sources */,
 				038CF60226763DD000931595 /* UIBarButtonItem+Extensions.swift in Sources */,
 				038CF60326763DD000931595 /* Array+Extensions.swift in Sources */,
 				038CF60426763DD000931595 /* Int+Extensions.swift in Sources */,
@@ -639,15 +751,19 @@
 				038CF60726763DD000931595 /* SearchBarDelegate.swift in Sources */,
 				038CF60826763DD000931595 /* SpacerView.swift in Sources */,
 				038CF60926763DD000931595 /* TabBarControllerDelegate.swift in Sources */,
+				038CF6462676727500931595 /* DashboardTableViewDataSourceModel.swift in Sources */,
 				038CF60A26763DD000931595 /* ActionClosure.swift in Sources */,
+				038CF6392676609D00931595 /* UISearchBarDelegate+Extensions.swift in Sources */,
 				038CF60B26763DD000931595 /* NavigationController.swift in Sources */,
 				038CF60C26763DD000931595 /* TabBarController.swift in Sources */,
 				038CF5AB26751C9C00931595 /* RootController.swift in Sources */,
 				038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */,
+				038CF6442676726900931595 /* DashboardTableViewDelegateModel.swift in Sources */,
 				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
+				038CF63D267664C200931595 /* TableHeaderViewModel.swift in Sources */,
 				038CF62E2676530700931595 /* InboxViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

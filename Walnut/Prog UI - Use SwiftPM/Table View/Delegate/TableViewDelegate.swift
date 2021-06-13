@@ -61,6 +61,7 @@ public extension TableViewDelegate
         else
         {
             print("Selected row, but no new state")
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
 }

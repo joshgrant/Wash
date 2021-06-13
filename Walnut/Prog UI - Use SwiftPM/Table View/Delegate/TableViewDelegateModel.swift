@@ -15,10 +15,25 @@ public struct TableViewSelection
     var indexPath: IndexPath
 }
 
-public struct TableViewDelegateModel
+public class TableViewDelegateModel
 {
+    // MARK: - Variables
+    
     var headerViews: [UIView?]?
     var sectionHeaderHeights: [CGFloat]?
     var estimatedSectionHeaderHeights: [CGFloat]?
     var didSelect: TableViewSelectionClosure?
+    
+    // MARK: - Initialization
+    
+    init(headerViews: [UIView?]?,
+         sectionHeaderHeights: [CGFloat]?,
+         estimatedSectionHeaderHeights: [CGFloat]?,
+         didSelect: TableViewSelectionClosure?)
+    {
+        self.headerViews = headerViews
+        self.sectionHeaderHeights = sectionHeaderHeights
+        self.estimatedSectionHeaderHeights = estimatedSectionHeaderHeights ?? sectionHeaderHeights
+        self.didSelect = didSelect
+    }
 }

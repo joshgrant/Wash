@@ -7,11 +7,18 @@
 
 import Foundation
 
-public struct TableViewDataSourceModel
+public class TableViewDataSourceModel
 {
     // MARK: - Variables
     
     var cellModels: [[TableViewCellModel]]
+    
+    // MARK: - Initialization
+    
+    init(cellModels: [[TableViewCellModel]])
+    {
+        self.cellModels = cellModels
+    }
     
     // MARK: - Functions
     
