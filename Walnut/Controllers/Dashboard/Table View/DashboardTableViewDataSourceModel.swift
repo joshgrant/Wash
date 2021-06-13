@@ -9,6 +9,8 @@ import Foundation
 
 class DashboardTableViewDataSourceModel: TableViewDataSourceModel
 {
+    // MARK: - Initialization
+    
     convenience init()
     {
         let cellModels = Self.makeCellModels()

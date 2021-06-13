@@ -10,8 +10,14 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate
 {
+    // MARK: - Variables
+    
     var window: UIWindow?
+    
+    var context: Context { AppDelegate.shared.context }
 
+    // MARK: - Functions
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions)
     {
         guard let scene = scene as? UIWindowScene else
@@ -22,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         
         window = UIWindow(windowScene: scene)
         
-        let viewControllers = makeTabBarViewControllers()
+        let viewControllers = makeTabBarViewControllers(context: context)
         let root = makeTabBarController(viewControllers: viewControllers)
         
         window?.rootViewController = root

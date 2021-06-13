@@ -13,20 +13,6 @@ open class Database
     
     weak var delegate: DatabaseDelegate?
     
-    private func populate(context: Context)
-    {
-        delegate?.populate(context: context)
-        context.quickSave()
-    }
-    
-    public func createContext() -> Context
-    {
-        let container = try! Container(modelName: "Model")
-        try! container.loadPersistentStores()
-        populate(context: container.context)
-        return container.context
-    }
-    
     func getItemsForList<T: NSManagedObject>(context: Context, type: T.Type) -> [T]
     {
         let fetchRequest: NSFetchRequest<T> = NSFetchRequest(entityName: NSStringFromClass(type))

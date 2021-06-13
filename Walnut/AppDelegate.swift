@@ -9,17 +9,21 @@ import UIKit
 
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
-    static var shared: AppDelegate
-    {
-        UIApplication.shared.delegate as! AppDelegate
-    }
+    // MARK: - Variables
+    
+    static var shared: AppDelegate { UIApplication.shared.delegate as! AppDelegate }
+    private var container = { try! Container(modelName: "Model") }()
+    
+    var context: Context { container.context }
+    
+    // MARK: - Functions
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
         return true
     }
 
-    // MARK: UISceneSession Lifecycle
+    // MARK: - UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration
     {

@@ -12,12 +12,12 @@ class RootController: TabBarController
 {
 }
 
-func makeTabBarViewControllers() -> [UIViewController]
+func makeTabBarViewControllers(context: Context) -> [UIViewController]
 {
     let dashboardController = DashboardController()
     let dashboardNavigation = NavigationController(rootViewController: dashboardController)
     
-    let libraryController = LibraryController.makeController()
+    let libraryController = LibraryController(context: context)
     let libraryNavigation = NavigationController(rootViewController: libraryController)
     
     let inboxController = InboxController.makeController()

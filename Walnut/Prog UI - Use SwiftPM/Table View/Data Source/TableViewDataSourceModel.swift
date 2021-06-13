@@ -15,7 +15,7 @@ public class TableViewDataSourceModel
     
     // MARK: - Initialization
     
-    init(cellModels: [[TableViewCellModel]])
+    required init(cellModels: [[TableViewCellModel]])
     {
         self.cellModels = cellModels
     }

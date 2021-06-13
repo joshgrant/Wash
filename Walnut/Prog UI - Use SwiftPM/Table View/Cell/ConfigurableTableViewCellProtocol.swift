@@ -11,5 +11,5 @@ public protocol ConfigurableTableViewCellProtocol
 {
     associatedtype TVCM
     
-    func configure(with viewModel: TVCM)
+    func configure(with model: TVCM)
 }

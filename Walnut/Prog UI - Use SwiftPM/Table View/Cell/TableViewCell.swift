@@ -24,7 +24,7 @@ open class TableViewCell<TVCM: TableViewCellModel>: UITableViewCell, Configurabl
 
     /// This can't be in an extension because the compiler won't
     /// allow it to be overridden
-    open func configure(with viewModel: TVCM)
+    open func configure(with model: TVCM)
     {
         assertionFailure("Failed to properly configure the table view cell.")
     }

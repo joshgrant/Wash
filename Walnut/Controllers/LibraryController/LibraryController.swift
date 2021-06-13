@@ -12,10 +12,18 @@ class LibraryController: ViewController<
                             LibraryViewModel,
                             LibraryView>
 {
+    // MARK: - Variables
+    
+    var tableView: TableView<LibraryTableViewModel>
+    
+    // MARK: - Initialization
+    
     required init(
         controllerModel: LibraryControllerModel,
         viewModel: LibraryViewModel)
     {
+        tableView = TableView(model: controllerModel.tableViewModel)
+        
         super.init(
             controllerModel: controllerModel,
             viewModel: viewModel)
@@ -23,6 +31,16 @@ class LibraryController: ViewController<
         tabBarItem = makeTabBarItem()
         title = model.tabBarItemTitle
         view.backgroundColor = model.backgroundColor
+    }
+    
+    convenience init(context: Context)
+    {
+        let controllerModel = LibraryControllerModel(context: context)
+        let viewModel = LibraryViewModel()
+        
+        self.init(
+            controllerModel: controllerModel,
+            viewModel: viewModel)
     }
 }
 
@@ -34,28 +52,5 @@ extension LibraryController: ViewControllerTabBarDelegate
             title: model.tabBarItemTitle,
             image: model.tabBarImage,
             tag: model.tabBarTag)
-    }
-}
-
-extension LibraryController
-{
-    static func makeControllerModel() -> LibraryControllerModel
-    {
-        LibraryControllerModel()
-    }
-    
-    static func makeViewModel() -> LibraryViewModel
-    {
-        LibraryViewModel()
-    }
-    
-    static func makeController() -> LibraryController
-    {
-        let controllerModel = makeControllerModel()
-        let viewModel = makeViewModel()
-        
-        return LibraryController(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
     }
 }
