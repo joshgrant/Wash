@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgrammaticUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate
 {
@@ -21,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         
         window = UIWindow(windowScene: scene)
         
-        let root = UIViewController()
-        root.view.backgroundColor = .orange
+        let viewControllers = makeTabBarViewControllers()
+        let root = makeTabBarController(viewControllers: viewControllers)
         
         window?.rootViewController = root
         window?.makeKeyAndVisible()

@@ -9,7 +9,8 @@ import UIKit
 
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
-    static var shared: AppDelegate {
+    static var shared: AppDelegate
+    {
         UIApplication.shared.delegate as! AppDelegate
     }
     
