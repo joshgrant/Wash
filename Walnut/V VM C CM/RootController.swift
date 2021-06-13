@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ProgrammaticUI
+//import ProgrammaticUI
 
 class RootController: TabBarController
 {
@@ -14,7 +14,17 @@ class RootController: TabBarController
 
 func makeTabBarViewControllers() -> [UIViewController]
 {
-    return []
+    let dashboardController = DashboardController.makeController()
+    let libraryController = LibraryController.makeController()
+    let inboxController = InboxController.makeController()
+    let settingsController = SettingsController.makeController()
+    
+    return [
+        dashboardController,
+        libraryController,
+        inboxController,
+        settingsController
+    ]
 }
 
 func makeTabBarControllerDelegate() -> TabBarControllerDelegate
