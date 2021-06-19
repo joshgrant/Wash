@@ -22,7 +22,5 @@ class DashboardView: View<DashboardViewModel>
         super.init(model: model)
         
         embed(tableView)
-        
-        print("1: \(tableView)")
     }
 }

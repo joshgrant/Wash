@@ -21,7 +21,7 @@ public extension TableViewDelegate
 {
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
     {
-        model.estimatedSectionHeaderHeights?[section] ?? 0
+        model.estimatedSectionHeaderHeights?[section] ?? 1
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
@@ -35,7 +35,7 @@ public extension TableViewDelegate
         {
             return nil
         }
-        
+
         if headerViews.count > section
         {
             return headerViews[section]
@@ -44,6 +44,21 @@ public extension TableViewDelegate
         {
             return nil
         }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat
+    {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
+    {
+        0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
+    {
+        nil
     }
 }
 

@@ -22,7 +22,5 @@ class LibraryView: View<LibraryViewModel>
         super.init(model: model)
         
         embed(tableView)
-        
-        print("2: \(tableView)")
     }
 }
