@@ -9,6 +9,10 @@ import Foundation
 
 class SystemListControllerModel: ControllerModel
 {
+}
+
+class SystemListViewModel: ViewModel
+{
     // MARK: - Variables
     
     var tableViewModel: SystemListTableViewModel
@@ -27,14 +31,20 @@ class SystemListControllerModel: ControllerModel
     }
 }
 
-class SystemListViewModel: ViewModel
-{
-    
-}
-
 class SystemListView: View<SystemListViewModel>
 {
+    // MARK: - Variables
     
+    var tableView: TableView<SystemListTableViewModel>
+    
+    // MARK: - Initialization
+    
+    required init(model: SystemListViewModel)
+    {
+        tableView = TableView(model: model.tableViewModel)
+        super.init(model: model)
+        embed(tableView)
+    }
 }
 
 class SystemListTableViewDelegateModel: TableViewDelegateModel
@@ -57,6 +67,7 @@ class SystemListTableViewDelegateModel: TableViewDelegateModel
     static func makeDidSelect() -> TableViewSelectionClosure
     {
         { selection in
+            print("Did select system list at: \(selection.indexPath)")
             // TODO: Take the user to the system detail page
         }
     }
@@ -88,10 +99,10 @@ class SystemListTableViewModel: TableViewModel
     convenience init(context: Context)
     {
         let delegateModel = SystemListTableViewDelegateModel()
-        let dataSourceModel = SystemListTableViewDataSourceModel()
+        let dataSourceModel = SystemListTableViewDataSourceModel(context: context)
         let cellModelTypes = Self.makeCellModelTypes()
         
-        super.init(
+        self.init(
             style: .grouped,
             delegate: .init(model: delegateModel),
             dataSource: .init(model: dataSourceModel),
@@ -113,16 +124,4 @@ class SystemListController: ViewController<
                                 SystemListViewModel,
                                 SystemListView>
 {
-    // MARK: - Variables
-    
-    var tableView: TableView<SystemListTableViewModel>
-    
-    // MARK: - Initialization
-    
-    required init(
-        controllerModel: SystemListControllerModel,
-        viewModel: SystemListViewModel)
-    {
-        tableView = TableView(model: controllerModel.tableViewModel)
-    }
 }

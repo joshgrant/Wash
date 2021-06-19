@@ -7,4 +7,5 @@
 
 import Foundation
 
-extension System: Named { }
+extension System: Named {}
+extension System: Pinnable {}

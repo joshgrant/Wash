@@ -12,22 +12,7 @@ class DashboardControllerModel: ControllerModel
 {
     // MARK: - Variables
     
-    var tableViewModel: DashboardTableViewModel
     var backgroundColor: UIColor { #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1) }
-    
-    // MARK: - Initialization
-    
-    required init(tableViewModel: DashboardTableViewModel)
-    {
-        self.tableViewModel = tableViewModel
-        super.init()
-    }
-    
-    convenience override init()
-    {
-        let model = DashboardTableViewModel()
-        self.init(tableViewModel: model)
-    }
 }
 
 // MARK: - Tab Bar
@@ -37,59 +22,6 @@ extension DashboardControllerModel: ControllerModelTabBarDelegate
     var tabBarItemTitle: String { "Dashboard".localized }
     var tabBarImage: UIImage? { Icon.dashboard.getImage() }
     var tabBarTag: Int { 0 }
-}
-
-func getForecastedEvents(context: Context) -> [Event]
-{
-    let fetchRequest = makeDateSourcesFetchRequest()
-    do {
-        let sources = try context.fetch(fetchRequest)
-        let events = Event.eventsFromSources(sources)
-        return events
-    } catch {
-        assertionFailure(error.localizedDescription)
-        return []
-    }
-}
-
-func makeForecastModels(context: Context) -> [TableViewCellModel]
-{
-//    let events = getForecastedEvents(context: context)
-//    return EventListCellModel.eventCellModelsFrom(events: events)
-    return []
-}
-
-func makePinnedModels(context: Context) -> [TableViewCellModel]
-{
-//    let pins = getPinnedObjects(context: context)
-//    let cells = PinnedCellModel.pinnedCellModels(from: pins)
-//    return cells
-    return []
-}
-
-func getPinnedObjects(context: Context) -> [Entity]
-{
-    let request = Entity.makePinnedObjectsFetchRequest()
-    do {
-        let results = try context.fetch(request)
-        return results
-    } catch {
-        assertionFailure(error.localizedDescription)
-        return []
-    }
-}
-
-func makeDashboardSuggestedFlowsPredicate() -> NSPredicate
-{
-    NSPredicate(format: "@suggestedIn.count > %@", 0)
-}
-
-func makeDashboardSuggestedFlowsFetchRequest() -> NSFetchRequest<Flow>
-{
-    let fetchRequest: NSFetchRequest<Flow> = Flow.fetchRequest()
-    fetchRequest.predicate = makeDashboardSuggestedFlowsPredicate()
-    fetchRequest.shouldRefreshRefetchedObjects = true
-    return fetchRequest
 }
 
 func makeDashboardRootViewDidSelectAction(context: Context) -> TableViewSelectionClosure

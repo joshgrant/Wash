@@ -13,33 +13,24 @@ class DashboardController: ViewController<
                             DashboardViewModel,
                             DashboardView>
 {
-    // MARK: - Variables
-    
-    var tableView: TableView<DashboardTableViewModel>
-    
     // MARK: - Initialization
     
     required init(
         controllerModel: DashboardControllerModel,
         viewModel: DashboardViewModel)
     {
-        tableView = TableView(
-            model: controllerModel.tableViewModel)
-        
         super.init(
             controllerModel: controllerModel,
             viewModel: viewModel)
         
         tabBarItem = makeTabBarItem()
         title = model.tabBarItemTitle
-        view.backgroundColor = model.backgroundColor
-        view.embed(tableView)
     }
     
-    convenience init()
+    convenience init(context: Context)
     {
         let controllerModel = DashboardControllerModel()
-        let viewModel = DashboardViewModel()
+        let viewModel = DashboardViewModel(context: context)
         
         self.init(
             controllerModel: controllerModel,

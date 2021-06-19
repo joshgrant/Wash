@@ -9,5 +9,18 @@ import Foundation
 
 class DashboardView: View<DashboardViewModel>
 {
+    // MARK: - Variables
     
+    var tableView: TableView<DashboardTableViewModel>
+    
+    // MARK: - Initialization
+    
+    required init(model: DashboardViewModel)
+    {
+        tableView = TableView(model: model.tableViewModel)
+        
+        super.init(model: model)
+        
+        embed(tableView)
+    }
 }

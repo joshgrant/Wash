@@ -11,10 +11,10 @@ class DashboardTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     
-    convenience init()
+    convenience init(context: Context)
     {
         let delegateModel = DashboardTableViewDelegateModel()
-        let dataSourceModel = DashboardTableViewDataSourceModel()
+        let dataSourceModel = DashboardTableViewDataSourceModel(context: context)
         let cellModelTypes = Self.makeCellModelTypes()
         
         self.init(
@@ -29,7 +29,9 @@ class DashboardTableViewModel: TableViewModel
     static func makeCellModelTypes() -> [TableViewCellModel.Type]
     {
         [
-            PinnedCellModel.self
+            PinnedCellModel.self,
+            TextCellModel.self,
+            DetailCellModel.self
             // TODO:
             // Flow Cell
             // Event Cell

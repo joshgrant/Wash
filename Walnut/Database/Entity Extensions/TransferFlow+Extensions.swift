@@ -6,5 +6,3 @@
 //
 
 import Foundation
-
-extension TransferFlow: Named {}

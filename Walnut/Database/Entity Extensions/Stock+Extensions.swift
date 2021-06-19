@@ -8,6 +8,7 @@
 import Foundation
 
 extension Stock: Named {}
+extension Stock: Pinnable {}
 
 extension Stock
 {

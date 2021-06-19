@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681AE267D655B00F493DA /* DashboardFlowCell.swift */; };
+		031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B0267D656500F493DA /* DashboardForecastCell.swift */; };
+		031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B2267D656F00F493DA /* DashboardPriorityCell.swift */; };
+		031681B5267D66E100F493DA /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B4267D66E100F493DA /* TextCell.swift */; };
+		031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B6267DA56700F493DA /* Flow+Extensions.swift */; };
+		031681B9267DA6F100F493DA /* Pinnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B8267DA6F100F493DA /* Pinnable.swift */; };
 		033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE696266CE2AA00BCF5AA /* AppDelegate.swift */; };
 		033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE698266CE2AA00BCF5AA /* SceneDelegate.swift */; };
 		033FE6A0266CE2AB00BCF5AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033FE69F266CE2AB00BCF5AA /* Assets.xcassets */; };
@@ -94,7 +100,7 @@
 		038CF6932676829F00931595 /* DynamicSource+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6752676829E00931595 /* DynamicSource+Extensions.swift */; };
 		038CF6942676829F00931595 /* State+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6762676829E00931595 /* State+Extensions.swift */; };
 		038CF6952676829F00931595 /* Dimension+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6772676829E00931595 /* Dimension+Extensions.swift */; };
-		038CF6962676829F00931595 /* Contact+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6782676829E00931595 /* Contact+Extensions.swift */; };
+		038CF6962676829F00931595 /* Person+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6782676829E00931595 /* Person+Extensions.swift */; };
 		038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6792676829E00931595 /* TextBlock+Searchable.swift */; };
 		038CF6982676829F00931595 /* Source+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF67A2676829E00931595 /* Source+Extensions.swift */; };
 		038CF6992676829F00931595 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF67B2676829E00931595 /* History+Extensions.swift */; };
@@ -150,6 +156,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		031681AE267D655B00F493DA /* DashboardFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlowCell.swift; sourceTree = "<group>"; };
+		031681B0267D656500F493DA /* DashboardForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardForecastCell.swift; sourceTree = "<group>"; };
+		031681B2267D656F00F493DA /* DashboardPriorityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPriorityCell.swift; sourceTree = "<group>"; };
+		031681B4267D66E100F493DA /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
+		031681B6267DA56700F493DA /* Flow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+Extensions.swift"; sourceTree = "<group>"; };
+		031681B8267DA6F100F493DA /* Pinnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinnable.swift; sourceTree = "<group>"; };
 		033FE693266CE2AA00BCF5AA /* Walnut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Walnut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		033FE696266CE2AA00BCF5AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		033FE698266CE2AA00BCF5AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -243,7 +255,7 @@
 		038CF6752676829E00931595 /* DynamicSource+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DynamicSource+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6762676829E00931595 /* State+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "State+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6772676829E00931595 /* Dimension+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dimension+Extensions.swift"; sourceTree = "<group>"; };
-		038CF6782676829E00931595 /* Contact+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+Extensions.swift"; sourceTree = "<group>"; };
+		038CF6782676829E00931595 /* Person+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6792676829E00931595 /* TextBlock+Searchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TextBlock+Searchable.swift"; sourceTree = "<group>"; };
 		038CF67A2676829E00931595 /* Source+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Source+Extensions.swift"; sourceTree = "<group>"; };
 		038CF67B2676829E00931595 /* History+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
@@ -306,6 +318,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		031681AD267D654200F493DA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				038CF6492676745B00931595 /* PinnedCell.swift */,
+				031681AE267D655B00F493DA /* DashboardFlowCell.swift */,
+				031681B0267D656500F493DA /* DashboardForecastCell.swift */,
+				031681B2267D656F00F493DA /* DashboardPriorityCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		033FE68A266CE2AA00BCF5AA = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +594,7 @@
 		038CF647267673DC00931595 /* Table View */ = {
 			isa = PBXGroup;
 			children = (
+				031681AD267D654200F493DA /* Cell */,
 				038CF6522676773800931595 /* Section Header */,
 				038CF63F2676679700931595 /* DashboardTableViewModel.swift */,
 				038CF6432676726900931595 /* DashboardTableViewDelegateModel.swift */,
@@ -590,8 +614,8 @@
 		038CF64B2676756500931595 /* Table View Cell */ = {
 			isa = PBXGroup;
 			children = (
-				038CF6492676745B00931595 /* PinnedCell.swift */,
 				038CF6E92676865600931595 /* DetailCell.swift */,
+				031681B4267D66E100F493DA /* TextCell.swift */,
 			);
 			path = "Table View Cell";
 			sourceTree = "<group>";
@@ -653,6 +677,7 @@
 			isa = PBXGroup;
 			children = (
 				038CF6672676829E00931595 /* Named.swift */,
+				031681B8267DA6F100F493DA /* Pinnable.swift */,
 			);
 			path = "Entity Protocols";
 			sourceTree = "<group>";
@@ -661,7 +686,7 @@
 			isa = PBXGroup;
 			children = (
 				038CF6DE2676840300931595 /* Condition+Extensions.swift */,
-				038CF6782676829E00931595 /* Contact+Extensions.swift */,
+				038CF6782676829E00931595 /* Person+Extensions.swift */,
 				038CF6772676829E00931595 /* Dimension+Extensions.swift */,
 				038CF6752676829E00931595 /* DynamicSource+Extensions.swift */,
 				038CF67D2676829E00931595 /* Entity+Extensions.swift */,
@@ -680,6 +705,7 @@
 				038CF6DB267683FB00931595 /* TransferFlow+Extensions.swift */,
 				038CF6722676829E00931595 /* Unit+Extensions.swift */,
 				038CF67E2676829E00931595 /* ValueSource+Extensions.swift */,
+				031681B6267DA56700F493DA /* Flow+Extensions.swift */,
 			);
 			path = "Entity Extensions";
 			sourceTree = "<group>";
@@ -940,10 +966,12 @@
 				038CF6982676829F00931595 /* Source+Extensions.swift in Sources */,
 				038CF5EC26763DD000931595 /* Context.swift in Sources */,
 				038CF6D9267683EE00931595 /* Symbol+Extensions.swift in Sources */,
+				031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */,
 				038CF6C3267682C700931595 /* TextStyle.swift in Sources */,
 				038CF61526764E2600931595 /* ViewControllerTabBarDelegate.swift in Sources */,
 				038CF5ED26763DD000931595 /* Database.swift in Sources */,
 				038CF6C7267682C700931595 /* Priority.swift in Sources */,
+				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
 				038CF62A267652F700931595 /* InboxControllerModel.swift in Sources */,
 				038CF6E3267684E200931595 /* LibraryCell.swift in Sources */,
 				038CF62C267652FF00931595 /* InboxView.swift in Sources */,
@@ -958,6 +986,7 @@
 				038CF5F026763DD000931595 /* ControllerModel.swift in Sources */,
 				038CF5F126763DD000931595 /* Icon.swift in Sources */,
 				038CF6952676829F00931595 /* Dimension+Extensions.swift in Sources */,
+				031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */,
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
 				038CF5F226763DD000931595 /* ObserverForSceneUpdatesEventResponder.swift in Sources */,
@@ -978,9 +1007,11 @@
 				038CF5FB26763DD000931595 /* TableViewCell.swift in Sources */,
 				038CF5FC26763DD000931595 /* TableViewCellModel.swift in Sources */,
 				038CF628267652EC00931595 /* LibraryView.swift in Sources */,
+				031681B9267DA6F100F493DA /* Pinnable.swift in Sources */,
 				038CF6342676532400931595 /* SettingsViewModel.swift in Sources */,
 				038CF5FD26763DD000931595 /* TableView.swift in Sources */,
 				038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */,
+				031681B5267D66E100F493DA /* TextCell.swift in Sources */,
 				038CF6402676679700931595 /* DashboardTableViewModel.swift in Sources */,
 				038CF6D2267682C700931595 /* EntityType.swift in Sources */,
 				038CF5FE26763DD000931595 /* TableViewModel.swift in Sources */,
@@ -997,7 +1028,7 @@
 				038CF63B2676642200931595 /* TableHeaderView.swift in Sources */,
 				038CF60226763DD000931595 /* UIBarButtonItem+Extensions.swift in Sources */,
 				038CF6DD267683FB00931595 /* TransferFlow+Extensions.swift in Sources */,
-				038CF6962676829F00931595 /* Contact+Extensions.swift in Sources */,
+				038CF6962676829F00931595 /* Person+Extensions.swift in Sources */,
 				038CF60326763DD000931595 /* Array+Extensions.swift in Sources */,
 				038CF60426763DD000931595 /* Int+Extensions.swift in Sources */,
 				038CF60526763DD000931595 /* NSSet+Extensions.swift in Sources */,
@@ -1008,6 +1039,7 @@
 				038CF60726763DD000931595 /* SearchBarDelegate.swift in Sources */,
 				038CF60826763DD000931595 /* SpacerView.swift in Sources */,
 				038CF60926763DD000931595 /* TabBarControllerDelegate.swift in Sources */,
+				031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */,
 				038CF6462676727500931595 /* DashboardTableViewDataSourceModel.swift in Sources */,
 				038CF60A26763DD000931595 /* ActionClosure.swift in Sources */,
 				038CF6392676609D00931595 /* UISearchBarDelegate+Extensions.swift in Sources */,
