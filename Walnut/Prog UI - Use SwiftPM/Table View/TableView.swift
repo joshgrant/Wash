@@ -21,12 +21,10 @@ open class TableView<TVM: TableViewModel>: UITableView
         
         super.init(frame: .zero, style: model.style)
         
-        model.cellModelTypes.forEach {
+        model.cellModelTypes.forEach
+        {
             register($0.cellClass, forCellReuseIdentifier: $0.cellReuseIdentifier)
         }
-        
-        print(model.delegate)
-        print(model.dataSource)
         
         delegate = model.delegate
         dataSource = model.dataSource

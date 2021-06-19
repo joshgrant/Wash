@@ -21,7 +21,8 @@ class LibraryTableViewDataSourceModel: TableViewDataSourceModel
     
     static func makeCellModels(context: Context) -> [[TableViewCellModel]]
     {
-        let cellModels = EntityType.libraryVisible.map {
+        let cellModels = EntityType.libraryVisible.map
+        {
             LibraryCellModel(entityType: $0, context: context)
         }
         

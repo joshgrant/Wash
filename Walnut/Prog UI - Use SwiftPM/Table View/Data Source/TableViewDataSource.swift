@@ -32,7 +32,7 @@ extension TableViewDataSource: UITableViewDataSource
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return model.numberOfRows()[section]
+        return model.numberOfRows(section: section)
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell

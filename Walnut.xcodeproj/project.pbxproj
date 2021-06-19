@@ -530,8 +530,8 @@
 			children = (
 				038CF5AD26754D5A00931595 /* DashboardController.swift */,
 				038CF6182676506A00931595 /* DashboardControllerModel.swift */,
-				038CF61B267651D600931595 /* DashboardViewModel.swift */,
 				038CF61D267651E800931595 /* DashboardView.swift */,
+				038CF61B267651D600931595 /* DashboardViewModel.swift */,
 				038CF647267673DC00931595 /* Table View */,
 			);
 			path = Dashboard;
@@ -540,11 +540,11 @@
 		038CF61F267652BA00931595 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				038CF6EB2676877600931595 /* Table View */,
 				038CF60D26763E0A00931595 /* LibraryController.swift */,
 				038CF622267652D500931595 /* LibraryControllerModel.swift */,
 				038CF627267652EC00931595 /* LibraryView.swift */,
 				038CF624267652E000931595 /* LibraryViewModel.swift */,
+				038CF6EB2676877600931595 /* Table View */,
 			);
 			path = Library;
 			sourceTree = "<group>";

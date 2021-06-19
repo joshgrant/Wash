@@ -9,5 +9,21 @@ import Foundation
 
 class LibraryViewModel: ViewModel
 {
+    // MARK: - Variables
     
+    var tableViewModel: LibraryTableViewModel
+    
+    // MARK: - Initialization
+    
+    required init(tableViewModel: LibraryTableViewModel)
+    {
+        self.tableViewModel = tableViewModel
+        super.init()
+    }
+    
+    convenience init(context: Context)
+    {
+        let model = LibraryTableViewModel(context: context)
+        self.init(tableViewModel: model)
+    }
 }

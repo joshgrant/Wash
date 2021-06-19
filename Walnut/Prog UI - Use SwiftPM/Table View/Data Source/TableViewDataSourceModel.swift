@@ -22,10 +22,8 @@ public class TableViewDataSourceModel
     
     // MARK: - Functions
     
-    func numberOfRows() -> [Int]
+    func numberOfRows(section: Int) -> Int
     {
-        cellModels.map {
-            $0.count
-        }
+        cellModels[section].count
     }
 }

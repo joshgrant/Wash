@@ -12,32 +12,24 @@ class LibraryController: ViewController<
                             LibraryViewModel,
                             LibraryView>
 {
-    // MARK: - Variables
-    
-    var tableView: TableView<LibraryTableViewModel>
-    
     // MARK: - Initialization
     
     required init(
         controllerModel: LibraryControllerModel,
         viewModel: LibraryViewModel)
     {
-        tableView = TableView(model: controllerModel.tableViewModel)
-        
         super.init(
             controllerModel: controllerModel,
             viewModel: viewModel)
         
         tabBarItem = makeTabBarItem()
         title = model.tabBarItemTitle
-        view.backgroundColor = model.backgroundColor
-        view.embed(tableView)
     }
     
     convenience init(context: Context)
     {
-        let controllerModel = LibraryControllerModel(context: context)
-        let viewModel = LibraryViewModel()
+        let controllerModel = LibraryControllerModel()
+        let viewModel = LibraryViewModel(context: context)
         
         self.init(
             controllerModel: controllerModel,
