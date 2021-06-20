@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ProgrammaticUI
 
 class LibraryView: View<LibraryViewModel>
 {

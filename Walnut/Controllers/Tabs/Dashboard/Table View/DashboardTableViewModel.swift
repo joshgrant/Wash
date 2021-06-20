@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgrammaticUI
 
 class DashboardTableViewModel: TableViewModel
 {

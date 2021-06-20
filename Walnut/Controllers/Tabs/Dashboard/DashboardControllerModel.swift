@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import ProgrammaticUI
 
 class DashboardControllerModel: ControllerModel
 {

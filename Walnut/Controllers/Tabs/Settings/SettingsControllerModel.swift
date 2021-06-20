@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import ProgrammaticUI
 
-class SettingsControllerModel: ControllerModel
+public class SettingsControllerModel: ControllerModel
 {
     var backgroundColor: UIColor
     {
@@ -17,17 +18,17 @@ class SettingsControllerModel: ControllerModel
 
 extension SettingsControllerModel: ControllerModelTabBarDelegate
 {
-    var tabBarItemTitle: String
+    public var tabBarItemTitle: String
     {
         return "Settings".localized
     }
     
-    var tabBarImage: UIImage?
+    public var tabBarImage: UIImage?
     {
         return Icon.settings.getImage()
     }
     
-    var tabBarTag: Int
+    public var tabBarTag: Int
     {
         return 3
     }
