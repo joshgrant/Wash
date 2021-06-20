@@ -30,6 +30,10 @@
 		030B2192267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */; };
 		030B2194267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */; };
 		030B2196267FE0560038C095 /* SystemDetailTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */; };
+		030B219B267FE3730038C095 /* EntityListTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */; };
+		030B219F267FE4D50038C095 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B219E267FE4D50038C095 /* Listable.swift */; };
+		030B21A1267FEA230038C095 /* EntityListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A0267FEA230038C095 /* EntityListController.swift */; };
+		030B21A3267FEC610038C095 /* EntityListTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */; };
 		031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681AE267D655B00F493DA /* DashboardFlowCell.swift */; };
 		031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B0267D656500F493DA /* DashboardForecastCell.swift */; };
 		031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B2267D656F00F493DA /* DashboardPriorityCell.swift */; };
@@ -155,6 +159,10 @@
 		030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewDelegateModel.swift; sourceTree = "<group>"; };
 		030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewDataSourceModel.swift; sourceTree = "<group>"; };
 		030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewModel.swift; sourceTree = "<group>"; };
+		030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewDataSourceModel.swift; sourceTree = "<group>"; };
+		030B219E267FE4D50038C095 /* Listable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
+		030B21A0267FEA230038C095 /* EntityListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListController.swift; sourceTree = "<group>"; };
+		030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewModel.swift; sourceTree = "<group>"; };
 		031681AE267D655B00F493DA /* DashboardFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlowCell.swift; sourceTree = "<group>"; };
 		031681B0267D656500F493DA /* DashboardForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardForecastCell.swift; sourceTree = "<group>"; };
 		031681B2267D656F00F493DA /* DashboardPriorityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPriorityCell.swift; sourceTree = "<group>"; };
@@ -332,6 +340,32 @@
 				030B2189267FDFB70038C095 /* SystemDetailControllerModel.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		030B2197267FE2BB0038C095 /* Stock */ = {
+			isa = PBXGroup;
+			children = (
+				030B2199267FE2C70038C095 /* List */,
+				030B2198267FE2C30038C095 /* Detail */,
+			);
+			path = Stock;
+			sourceTree = "<group>";
+		};
+		030B2198267FE2C30038C095 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		030B2199267FE2C70038C095 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */,
+				030B21A0267FEA230038C095 /* EntityListController.swift */,
+				030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 		031681AD267D654200F493DA /* Cell */ = {
@@ -513,6 +547,7 @@
 			children = (
 				038CF6672676829E00931595 /* Named.swift */,
 				031681B8267DA6F100F493DA /* Pinnable.swift */,
+				030B219E267FE4D50038C095 /* Listable.swift */,
 			);
 			path = "Entity Protocols";
 			sourceTree = "<group>";
@@ -609,6 +644,7 @@
 		038CF6F426768F4C00931595 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				030B2197267FE2BB0038C095 /* Stock */,
 				038CF6F526768F5500931595 /* System */,
 			);
 			path = Entities;
@@ -830,6 +866,7 @@
 				038CF623267652D500931595 /* LibraryControllerModel.swift in Sources */,
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
 				038CF69D2676829F00931595 /* ImageBlock+Searchable.swift in Sources */,
+				030B21A1267FEA230038C095 /* EntityListController.swift in Sources */,
 				038CF6EA2676865600931595 /* DetailCell.swift in Sources */,
 				038CF61C267651D600931595 /* DashboardViewModel.swift in Sources */,
 				038CF628267652EC00931595 /* LibraryView.swift in Sources */,
@@ -837,11 +874,13 @@
 				038CF6342676532400931595 /* SettingsViewModel.swift in Sources */,
 				030B2166267EDA2E0038C095 /* SystemListTableViewModel.swift in Sources */,
 				030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */,
+				030B219B267FE3730038C095 /* EntityListTableViewDataSourceModel.swift in Sources */,
 				038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */,
 				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
 				030B2181267F7EF70038C095 /* SubSystemsHeaderViewModel.swift in Sources */,
 				031681B5267D66E100F493DA /* TextCell.swift in Sources */,
 				038CF6402676679700931595 /* DashboardTableViewModel.swift in Sources */,
+				030B21A3267FEC610038C095 /* EntityListTableViewModel.swift in Sources */,
 				030B218E267FDFFD0038C095 /* SystemDetailView.swift in Sources */,
 				030B218A267FDFB70038C095 /* SystemDetailControllerModel.swift in Sources */,
 				030B2168267EDA440038C095 /* SystemListTableViewDataSourceModel.swift in Sources */,
@@ -877,6 +916,7 @@
 				030B216E267EDA760038C095 /* SystemListViewModel.swift in Sources */,
 				038CF6862676829F00931595 /* Named.swift in Sources */,
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
+				030B219F267FE4D50038C095 /* Listable.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
 				030B216C267EDA670038C095 /* SystemListView.swift in Sources */,
 				038CF6D0267682C700931595 /* Searchable.swift in Sources */,

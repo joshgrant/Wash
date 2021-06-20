@@ -12,7 +12,7 @@ class DashboardView: View<DashboardViewModel>
 {
     // MARK: - Variables
     
-    var tableView: TableView<DashboardTableViewModel>
+    var tableView: TableView<DashboardTableViewDelegateModel, DashboardTableViewDataSourceModel, DashboardTableViewModel>
     
     // MARK: - Initialization
     

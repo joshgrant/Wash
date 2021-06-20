@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import ProgrammaticUI
 
-class LibraryTableViewModel: TableViewModel
+class LibraryTableViewModel: TableViewModel<LibraryTableViewDelegateModel, LibraryTableViewDataSourceModel>
 {
     // MARK: - Initialization
     
@@ -21,8 +21,8 @@ class LibraryTableViewModel: TableViewModel
         
         self.init(
             style: .grouped,
-            delegate: .init(model: delegateModel),
-            dataSource: .init(model: dataSourceModel),
+            delegateModel: delegateModel,
+            dataSourceModel: dataSourceModel,
             cellModelTypes: cellModelTypes)
     }
     

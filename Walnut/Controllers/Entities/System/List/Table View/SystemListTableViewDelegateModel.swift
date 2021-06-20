@@ -32,7 +32,7 @@ class SystemListTableViewDelegateModel: TableViewDelegateModel
             // TODO: Take the user to the system detail page
             let systems = System.allSystems(context: context)
             let system = systems[selection.indexPath.row]
-            let detailController = SystemDetailController(system: system)
+            let detailController = SystemDetailController(system: system, navigationController: navigationController)
             navigationController.pushViewController(detailController, animated: true)
         }
     }

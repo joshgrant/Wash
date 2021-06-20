@@ -39,10 +39,8 @@ class SystemListControllerModel: ControllerModel
     {
         ActionClosure { selector in
             let system = System(context: context)
-            system.title = "Hello"
-            let detailController = SystemDetailController(system: system)
-            // TODO: Open the system detail page
-            // Refresh the table view list
+            let detailController = SystemDetailController(system: system, navigationController: navigationController)
+            // TODO: Refresh the table view list
             navigationController.pushViewController(detailController, animated: true)
             context.quickSave()
         }

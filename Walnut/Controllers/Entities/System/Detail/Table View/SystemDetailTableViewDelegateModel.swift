@@ -12,9 +12,9 @@ class SystemDetailTableViewDelegateModel: TableViewDelegateModel
 {
     // MARK: - Initialization
     
-    convenience init(system: System)
+    convenience init(system: System, navigationController: NavigationController)
     {
-        let headerViews = Self.makeHeaderViews()
+        let headerViews = Self.makeHeaderViews(system: system, navigationController: navigationController)
         
         // TODO: Add a selection action closure
         
@@ -27,11 +27,11 @@ class SystemDetailTableViewDelegateModel: TableViewDelegateModel
     
     // MARK: - Factory
     
-    static func makeHeaderViewModels() -> [TableHeaderViewModel]
+    static func makeHeaderViewModels(system: System, navigationController: NavigationController) -> [TableHeaderViewModel]
     {
         [
             InfoHeaderViewModel(),
-            StocksHeaderViewModel(),
+            StocksHeaderViewModel(system: system, navigationController: navigationController),
             SystemDetailFlowsHeaderViewModel(),
             EventsHeaderViewModel(),
             SubSystemsHeaderViewModel(),
@@ -39,9 +39,9 @@ class SystemDetailTableViewDelegateModel: TableViewDelegateModel
         ]
     }
     
-    static func makeHeaderViews(models: [TableHeaderViewModel]? = nil) -> [TableHeaderView]
+    static func makeHeaderViews(system: System, navigationController: NavigationController) -> [TableHeaderView]
     {
-        let models = models ?? makeHeaderViewModels()
+        let models = makeHeaderViewModels(system: system, navigationController: navigationController)
         return models.map { TableHeaderView(model: $0) }
     }
 }

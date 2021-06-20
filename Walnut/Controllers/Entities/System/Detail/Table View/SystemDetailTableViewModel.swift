@@ -8,20 +8,20 @@
 import Foundation
 import ProgrammaticUI
 
-class SystemDetailTableViewModel: TableViewModel
+class SystemDetailTableViewModel: TableViewModel<SystemDetailTableViewDelegateModel, SystemDetailTableViewDataSourceModel>
 {
     // MARK: - Initialization
     
-    convenience init(system: System)
+    convenience init(system: System, navigationController: NavigationController)
     {
-        let delegateModel = SystemDetailTableViewDelegateModel(system: system)
+        let delegateModel = SystemDetailTableViewDelegateModel(system: system, navigationController: navigationController)
         let dataSourceModel = SystemDetailTableViewDataSourceModel(system: system)
         let cellModelTypes = Self.makeCellModelTypes()
         
         self.init(
             style: .grouped,
-            delegate: .init(model: delegateModel),
-            dataSource: .init(model: dataSourceModel),
+            delegateModel: delegateModel,
+            dataSourceModel: dataSourceModel,
             cellModelTypes: cellModelTypes)
     }
     

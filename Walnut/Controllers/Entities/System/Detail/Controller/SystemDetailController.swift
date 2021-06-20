@@ -27,10 +27,10 @@ class SystemDetailController: ViewController<
         title = model.title
     }
     
-    convenience init(system: System)
+    convenience init(system: System, navigationController: NavigationController)
     {
         let controllerModel = SystemDetailControllerModel(system: system)
-        let viewModel = SystemDetailViewModel(system: system)
+        let viewModel = SystemDetailViewModel(system: system, navigationController: navigationController)
         
         self.init(
             controllerModel: controllerModel,

@@ -7,9 +7,15 @@
 
 import Foundation
 import CoreData
+import ProgrammaticUI
 
 extension Event: Named {}
 extension Event: Pinnable {}
+
+extension Event: Listable
+{
+    typealias T = Event
+}
 
 public extension Event
 {

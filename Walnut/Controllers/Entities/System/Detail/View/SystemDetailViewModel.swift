@@ -21,9 +21,9 @@ class SystemDetailViewModel: ViewModel
         self.tableViewModel = tableViewModel
     }
     
-    convenience init(system: System)
+    convenience init(system: System, navigationController: NavigationController)
     {
-        let tableViewModel = SystemDetailTableViewModel(system: system)
+        let tableViewModel = SystemDetailTableViewModel(system: system, navigationController: navigationController)
         self.init(tableViewModel: tableViewModel)
     }
 }

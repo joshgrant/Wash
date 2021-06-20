@@ -8,7 +8,7 @@
 import UIKit
 import ProgrammaticUI
 
-class DashboardTableViewModel: TableViewModel
+class DashboardTableViewModel: TableViewModel<DashboardTableViewDelegateModel, DashboardTableViewDataSourceModel>
 {
     // MARK: - Initialization
     
@@ -20,8 +20,8 @@ class DashboardTableViewModel: TableViewModel
         
         self.init(
             style: .grouped,
-            delegate: .init(model: delegateModel),
-            dataSource: .init(model: dataSourceModel),
+            delegateModel: delegateModel,
+            dataSourceModel: dataSourceModel,
             cellModelTypes: cellModelTypes)
     }
     

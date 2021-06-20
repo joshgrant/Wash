@@ -8,18 +8,18 @@
 import Foundation
 import ProgrammaticUI
 
-class SystemListView: View<SystemListViewModel>
-{
-    // MARK: - Variables
-    
-    var tableView: TableView<SystemListTableViewModel>
-    
-    // MARK: - Initialization
-    
-    required init(model: SystemListViewModel)
-    {
-        tableView = TableView(model: model.tableViewModel)
-        super.init(model: model)
-        embed(tableView)
-    }
-}
+//class SystemListView: View<SystemListViewModel>
+//{
+//    // MARK: - Variables
+//    
+//    var tableView: TableView<SystemListTableViewModel>
+//    
+//    // MARK: - Initialization
+//    
+//    required init(model: SystemListViewModel)
+//    {
+//        tableView = TableView(model: model.tableViewModel)
+//        super.init(model: model)
+//        embed(tableView)
+//    }
+//}

@@ -115,16 +115,9 @@ enum EntityType
         }
     }
     
-    func listController(context: Context, navigationController: NavigationController) -> UIViewController?
+    func listController<E: Entity & Listable & Pinnable & Named>(context: Context, navigationController: NavigationController) -> EntityListController<E>?
     {
-        switch self
-        {
-        case .system:
-            return SystemListController(context: context, navigationController: navigationController)
-        default:
-            print("Entity.listController doesn't handle this case")
-            return nil
-        }
+        return EntityListController<E>(context: context, navigationController: navigationController)
     }
     
     static func type(from entity: Entity) -> EntityType?
