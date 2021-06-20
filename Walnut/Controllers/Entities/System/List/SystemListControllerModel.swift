@@ -40,7 +40,6 @@ class SystemListControllerModel: ControllerModel
         ActionClosure { selector in
             let system = System(context: context)
             system.title = "Hello"
-            print("Added: \(system)")
             let detailController = SystemDetailController(system: system)
             // TODO: Open the system detail page
             // Refresh the table view list

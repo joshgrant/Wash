@@ -21,6 +21,15 @@
 		030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */; };
 		030B217F267F7EE80038C095 /* NotesHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217E267F7EE80038C095 /* NotesHeaderViewModel.swift */; };
 		030B2181267F7EF70038C095 /* SubSystemsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2180267F7EF70038C095 /* SubSystemsHeaderViewModel.swift */; };
+		030B2183267FB15B0038C095 /* TextEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2182267FB15B0038C095 /* TextEditCell.swift */; };
+		030B2186267FB2B50038C095 /* IdealInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2185267FB2B50038C095 /* IdealInfoCell.swift */; };
+		030B2188267FB6C80038C095 /* SuggestedFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2187267FB6C80038C095 /* SuggestedFlowCell.swift */; };
+		030B218A267FDFB70038C095 /* SystemDetailControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2189267FDFB70038C095 /* SystemDetailControllerModel.swift */; };
+		030B218C267FDFDD0038C095 /* SystemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B218B267FDFDD0038C095 /* SystemDetailViewModel.swift */; };
+		030B218E267FDFFD0038C095 /* SystemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B218D267FDFFD0038C095 /* SystemDetailView.swift */; };
+		030B2192267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */; };
+		030B2194267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */; };
+		030B2196267FE0560038C095 /* SystemDetailTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */; };
 		031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681AE267D655B00F493DA /* DashboardFlowCell.swift */; };
 		031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B0267D656500F493DA /* DashboardForecastCell.swift */; };
 		031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B2267D656F00F493DA /* DashboardPriorityCell.swift */; };
@@ -137,6 +146,15 @@
 		030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailFlowsHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B217E267F7EE80038C095 /* NotesHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B2180267F7EF70038C095 /* SubSystemsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubSystemsHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B2182267FB15B0038C095 /* TextEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditCell.swift; sourceTree = "<group>"; };
+		030B2185267FB2B50038C095 /* IdealInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealInfoCell.swift; sourceTree = "<group>"; };
+		030B2187267FB6C80038C095 /* SuggestedFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedFlowCell.swift; sourceTree = "<group>"; };
+		030B2189267FDFB70038C095 /* SystemDetailControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailControllerModel.swift; sourceTree = "<group>"; };
+		030B218B267FDFDD0038C095 /* SystemDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailViewModel.swift; sourceTree = "<group>"; };
+		030B218D267FDFFD0038C095 /* SystemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailView.swift; sourceTree = "<group>"; };
+		030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewDelegateModel.swift; sourceTree = "<group>"; };
+		030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewDataSourceModel.swift; sourceTree = "<group>"; };
+		030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewModel.swift; sourceTree = "<group>"; };
 		031681AE267D655B00F493DA /* DashboardFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlowCell.swift; sourceTree = "<group>"; };
 		031681B0267D656500F493DA /* DashboardForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardForecastCell.swift; sourceTree = "<group>"; };
 		031681B2267D656F00F493DA /* DashboardPriorityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPriorityCell.swift; sourceTree = "<group>"; };
@@ -267,7 +285,11 @@
 		030B2174267F7D550038C095 /* Table View */ = {
 			isa = PBXGroup;
 			children = (
+				030B2184267FB2A60038C095 /* Cells */,
 				030B2175267F7D5E0038C095 /* Section Header */,
+				030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */,
+				030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */,
+				030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */,
 			);
 			path = "Table View";
 			sourceTree = "<group>";
@@ -283,6 +305,33 @@
 				030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */,
 			);
 			path = "Section Header";
+			sourceTree = "<group>";
+		};
+		030B2184267FB2A60038C095 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				030B2185267FB2B50038C095 /* IdealInfoCell.swift */,
+				030B2187267FB6C80038C095 /* SuggestedFlowCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		030B218F267FE0080038C095 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				030B218B267FDFDD0038C095 /* SystemDetailViewModel.swift */,
+				030B218D267FDFFD0038C095 /* SystemDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		030B2190267FE00D0038C095 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				030B2172267F7C130038C095 /* SystemDetailController.swift */,
+				030B2189267FDFB70038C095 /* SystemDetailControllerModel.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		031681AD267D654200F493DA /* Cell */ = {
@@ -433,6 +482,7 @@
 			children = (
 				038CF6E92676865600931595 /* DetailCell.swift */,
 				031681B4267D66E100F493DA /* TextCell.swift */,
+				030B2182267FB15B0038C095 /* TextEditCell.swift */,
 			);
 			path = "Table View Cell";
 			sourceTree = "<group>";
@@ -471,14 +521,15 @@
 			isa = PBXGroup;
 			children = (
 				038CF6DE2676840300931595 /* Condition+Extensions.swift */,
-				038CF6782676829E00931595 /* Person+Extensions.swift */,
 				038CF6772676829E00931595 /* Dimension+Extensions.swift */,
 				038CF6752676829E00931595 /* DynamicSource+Extensions.swift */,
 				038CF67D2676829E00931595 /* Entity+Extensions.swift */,
 				038CF6DA267683FB00931595 /* Event+Extensions.swift */,
+				031681B6267DA56700F493DA /* Flow+Extensions.swift */,
 				038CF67B2676829E00931595 /* History+Extensions.swift */,
 				038CF67F2676829E00931595 /* ImageBlock+Searchable.swift */,
 				038CF6742676829E00931595 /* Net+Extensions.swift */,
+				038CF6782676829E00931595 /* Person+Extensions.swift */,
 				038CF6732676829E00931595 /* ProcessFlow+Extensions.swift */,
 				038CF67C2676829E00931595 /* RangeSource+Extensions.swift */,
 				038CF67A2676829E00931595 /* Source+Extensions.swift */,
@@ -490,7 +541,6 @@
 				038CF6DB267683FB00931595 /* TransferFlow+Extensions.swift */,
 				038CF6722676829E00931595 /* Unit+Extensions.swift */,
 				038CF67E2676829E00931595 /* ValueSource+Extensions.swift */,
-				031681B6267DA56700F493DA /* Flow+Extensions.swift */,
 			);
 			path = "Entity Extensions";
 			sourceTree = "<group>";
@@ -589,7 +639,8 @@
 			isa = PBXGroup;
 			children = (
 				030B2174267F7D550038C095 /* Table View */,
-				030B2172267F7C130038C095 /* SystemDetailController.swift */,
+				030B2190267FE00D0038C095 /* Controller */,
+				030B218F267FE0080038C095 /* View */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -737,7 +788,9 @@
 				038CF6DF2676840300931595 /* Condition+Extensions.swift in Sources */,
 				038CF61226764DA500931595 /* SettingsController.swift in Sources */,
 				030B2170267EDA850038C095 /* SystemListControllerModel.swift in Sources */,
+				030B2192267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift in Sources */,
 				038CF6F0267687AF00931595 /* LibraryTableViewDelegateModel.swift in Sources */,
+				030B2188267FB6C80038C095 /* SuggestedFlowCell.swift in Sources */,
 				038CF651267675D500931595 /* PinnedHeaderViewModel.swift in Sources */,
 				038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */,
 				038CF6DC267683FB00931595 /* Event+Extensions.swift in Sources */,
@@ -752,12 +805,15 @@
 				038CF6982676829F00931595 /* Source+Extensions.swift in Sources */,
 				030B217F267F7EE80038C095 /* NotesHeaderViewModel.swift in Sources */,
 				038CF6D9267683EE00931595 /* Symbol+Extensions.swift in Sources */,
+				030B2196267FE0560038C095 /* SystemDetailTableViewModel.swift in Sources */,
+				030B2186267FB2B50038C095 /* IdealInfoCell.swift in Sources */,
 				031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */,
 				038CF6C3267682C700931595 /* TextStyle.swift in Sources */,
 				038CF6C7267682C700931595 /* Priority.swift in Sources */,
 				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
 				038CF62A267652F700931595 /* InboxControllerModel.swift in Sources */,
 				038CF6E3267684E200931595 /* LibraryCell.swift in Sources */,
+				030B218C267FDFDD0038C095 /* SystemDetailViewModel.swift in Sources */,
 				038CF62C267652FF00931595 /* InboxView.swift in Sources */,
 				038CF60E26763E0A00931595 /* LibraryController.swift in Sources */,
 				038CF69B2676829F00931595 /* Entity+Extensions.swift in Sources */,
@@ -769,6 +825,7 @@
 				031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */,
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
 				030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */,
+				030B2183267FB15B0038C095 /* TextEditCell.swift in Sources */,
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
 				038CF623267652D500931595 /* LibraryControllerModel.swift in Sources */,
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
@@ -785,6 +842,8 @@
 				030B2181267F7EF70038C095 /* SubSystemsHeaderViewModel.swift in Sources */,
 				031681B5267D66E100F493DA /* TextCell.swift in Sources */,
 				038CF6402676679700931595 /* DashboardTableViewModel.swift in Sources */,
+				030B218E267FDFFD0038C095 /* SystemDetailView.swift in Sources */,
+				030B218A267FDFB70038C095 /* SystemDetailControllerModel.swift in Sources */,
 				030B2168267EDA440038C095 /* SystemListTableViewDataSourceModel.swift in Sources */,
 				038CF6D2267682C700931595 /* EntityType.swift in Sources */,
 				038CF625267652E000931595 /* LibraryViewModel.swift in Sources */,
@@ -802,6 +861,7 @@
 				038CF6BE267682C700931595 /* DateStock.swift in Sources */,
 				038CF6302676531100931595 /* SettingsControllerModel.swift in Sources */,
 				031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */,
+				030B2194267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift in Sources */,
 				038CF6462676727500931595 /* DashboardTableViewDataSourceModel.swift in Sources */,
 				038CF6992676829F00931595 /* History+Extensions.swift in Sources */,
 				038CF6922676829F00931595 /* Net+Extensions.swift in Sources */,

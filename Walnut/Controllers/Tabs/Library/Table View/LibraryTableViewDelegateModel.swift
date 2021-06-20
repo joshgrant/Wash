@@ -32,22 +32,14 @@ class LibraryTableViewDelegateModel: TableViewDelegateModel
             
             let entityType = EntityType.libraryVisible[selection.indexPath.row]
             
-            // Now we need to get the list view controller for the entityType
+            let listController = entityType.listController(
+                context: context,
+                navigationController: navigationController)
             
-            let listController = SystemListController(context: context, navigationController: navigationController)
-            
-            // The question is: how can we get the navigation controller
-            // when initializing the delegate model?
-            // It can't happen immediately - can we pass a reference instead?
-            //
-            
-            navigationController.pushViewController(listController, animated: true)
-            
-            print("Selected: \(entityType)")
-            
-            selection.tableView.deselectRow(
-                at: selection.indexPath,
-                animated: true)
+            if let listController = listController
+            {
+                navigationController.pushViewController(listController, animated: true)
+            }
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreData
 import ProgrammaticUI
 
@@ -111,6 +112,18 @@ enum EntityType
         } catch {
             assertionFailure(error.localizedDescription)
             return 0
+        }
+    }
+    
+    func listController(context: Context, navigationController: NavigationController) -> UIViewController?
+    {
+        switch self
+        {
+        case .system:
+            return SystemListController(context: context, navigationController: navigationController)
+        default:
+            print("Entity.listController doesn't handle this case")
+            return nil
         }
     }
     

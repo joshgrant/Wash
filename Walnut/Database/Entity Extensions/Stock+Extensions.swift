@@ -39,10 +39,8 @@ extension Stock
 
 extension Stock
 {
-    var currentValue: Any?
-    {
-        return amount?.computedValue
-    }
+    var currentValue: Any? { amount?.computedValue }
+    var idealValue: Any? { ideal?.computedValue }
 }
 
 extension Stock
