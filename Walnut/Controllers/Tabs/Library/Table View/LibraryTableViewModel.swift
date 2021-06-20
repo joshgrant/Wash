@@ -6,15 +6,16 @@
 //
 
 import Foundation
+import UIKit
 import ProgrammaticUI
 
 class LibraryTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     
-    convenience init(context: Context)
+    convenience init(context: Context, navigationController: UINavigationController)
     {
-        let delegateModel = LibraryTableViewDelegateModel()
+        let delegateModel = LibraryTableViewDelegateModel(context: context, navigationController: navigationController)
         let dataSourceModel = LibraryTableViewDataSourceModel(context: context)
         let cellModelTypes = Self.makeCellModelTypes()
         

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import ProgrammaticUI
 
 class LibraryViewModel: ViewModel
@@ -22,9 +23,9 @@ class LibraryViewModel: ViewModel
         super.init()
     }
     
-    convenience init(context: Context)
+    convenience init(context: Context, navigationController: UINavigationController)
     {
-        let model = LibraryTableViewModel(context: context)
+        let model = LibraryTableViewModel(context: context, navigationController: navigationController)
         self.init(tableViewModel: model)
     }
 }

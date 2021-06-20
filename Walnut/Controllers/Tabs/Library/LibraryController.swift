@@ -27,10 +27,10 @@ class LibraryController: ViewController<
         title = model.tabBarItemTitle
     }
     
-    convenience init(context: Context)
+    convenience init(context: Context, navigationController: UINavigationController)
     {
         let controllerModel = LibraryControllerModel()
-        let viewModel = LibraryViewModel(context: context)
+        let viewModel = LibraryViewModel(context: context, navigationController: navigationController)
         
         self.init(
             controllerModel: controllerModel,
@@ -46,5 +46,13 @@ extension LibraryController: ViewControllerTabBarDelegate
             title: model.tabBarItemTitle,
             image: model.tabBarImage,
             tag: model.tabBarTag)
+    }
+}
+
+extension LibraryController: TableViewSelectionDelegate
+{
+    var presentingController: UIViewController
+    {
+        self
     }
 }

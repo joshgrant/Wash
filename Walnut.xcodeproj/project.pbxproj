@@ -298,8 +298,8 @@
 		038CF5AC26754D2000931595 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				038CF6F426768F4C00931595 /* Entities */,
 				038CF5AA26751C9C00931595 /* RootController.swift */,
+				038CF6F426768F4C00931595 /* Entities */,
 				038CF6F326768F4600931595 /* Tabs */,
 			);
 			path = Controllers;

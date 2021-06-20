@@ -6,13 +6,23 @@
 //
 
 import Foundation
+import UIKit
 import ProgrammaticUI
+
+// TODO: Move into the SWIFTPM
+
+public protocol TableViewSelectionDelegate: AnyObject
+{
+    var presentingController: UIViewController { get }
+}
 
 class LibraryTableViewDelegateModel: TableViewDelegateModel
 {
-    convenience init()
+    // MARK: - Initialization
+    
+    convenience init(context: Context, navigationController: UINavigationController)
     {
-        let didSelect = Self.makeDidSelect()
+        let didSelect = Self.makeDidSelect(context: context, navigationController: navigationController)
         
         self.init(
             headerViews: nil,
@@ -23,7 +33,7 @@ class LibraryTableViewDelegateModel: TableViewDelegateModel
     
     // MARK: - Factory
     
-    static func makeDidSelect() -> TableViewSelectionClosure
+    static func makeDidSelect(context: Context, navigationController: UINavigationController) -> TableViewSelectionClosure
     {
         { selection in
             
@@ -31,33 +41,20 @@ class LibraryTableViewDelegateModel: TableViewDelegateModel
             
             // Now we need to get the list view controller for the entityType
             
+            let listController = SystemListController(context: context)
+            
+            // The question is: how can we get the navigation controller
+            // when initializing the delegate model?
+            // It can't happen immediately - can we pass a reference instead?
+            //
+            
+            navigationController.pushViewController(listController, animated: true)
+            
             print("Selected: \(entityType)")
             
             selection.tableView.deselectRow(
                 at: selection.indexPath,
                 animated: true)
-            
-            return
-            
         }
-        //    return { selection in
-        //
-        //        let entityType = EntityType.libraryVisible[selection.indexPath.row]
-        //
-        //        let page = Page(kind: entityType, modifier: .list)
-        //
-        //        let detailViewController = makeListController(
-        //            page: page,
-        //            context: context)
-        //
-        //        self.navigationController?
-        //            .pushViewController(detailViewController, animated: true)
-        //
-        //        selection.tableView.deselectRow(at: selection.indexPath, animated: true)
-        //
-        //        // TODO: Use a state change to the app state, rather than the above statements
-        //        return
-        //
-        //    }
     }
 }

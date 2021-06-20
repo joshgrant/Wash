@@ -17,8 +17,9 @@ func makeTabBarViewControllers(context: Context) -> [UIViewController]
     let dashboardController = DashboardController(context: context)
     let dashboardNavigation = NavigationController(rootViewController: dashboardController)
     
-    let libraryController = LibraryController(context: context)
-    let libraryNavigation = NavigationController(rootViewController: libraryController)
+    let libraryNavigation = NavigationController()
+    let libraryController = LibraryController(context: context, navigationController: libraryNavigation)
+    libraryNavigation.setViewControllers([libraryController], animated: false)
     
     let inboxController = InboxController.makeController()
     let inboxNavigation = NavigationController(rootViewController: inboxController)

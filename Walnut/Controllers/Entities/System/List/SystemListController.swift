@@ -7,6 +7,7 @@
 
 import Foundation
 import ProgrammaticUI
+import CoreData
 
 class SystemListControllerModel: ControllerModel
 {
@@ -88,8 +89,38 @@ class SystemListTableViewDataSourceModel: TableViewDataSourceModel
     
     static func makeCellModels(context: Context) -> [[TableViewCellModel]]
     {
-        // TODO: Return a list of all of the system cells
-        []
+        [
+            makeSystemsListCellModels(context: context)
+        ]
+    }
+    
+    static func makeSystemsFetchRequest() -> NSFetchRequest<System>
+    {
+        let fetchRequest: NSFetchRequest<System> = System.fetchRequest()
+        return fetchRequest
+    }
+    
+    static func getSystems(context: Context) -> [System]
+    {
+        let request = makeSystemsFetchRequest()
+        do
+        {
+            return try context.fetch(request)
+        }
+        catch
+        {
+            assertionFailure(error.localizedDescription)
+            return []
+        }
+    }
+    
+    static func makeSystemsListCellModels(context: Context) -> [TableViewCellModel]
+    {
+        let systems = getSystems(context: context)
+        return systems.map
+        {
+            TextCellModel(title: $0.title, disclosureIndicator: true)
+        }
     }
 }
 
@@ -115,7 +146,7 @@ class SystemListTableViewModel: TableViewModel
     static func makeCellModelTypes() -> [TableViewCellModel.Type]
     {
         [
-            // TODO: System List Cell
+            TextCellModel.self
         ]
     }
 }
@@ -125,4 +156,12 @@ class SystemListController: ViewController<
                                 SystemListViewModel,
                                 SystemListView>
 {
+    // MARK: - Initialization
+    
+    convenience init(context: Context)
+    {
+        let controllerModel = SystemListControllerModel()
+        let viewModel = SystemListViewModel(context: context)
+        self.init(controllerModel: controllerModel, viewModel: viewModel)
+    }
 }
