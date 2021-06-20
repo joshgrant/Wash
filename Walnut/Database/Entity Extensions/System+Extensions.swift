@@ -6,6 +6,30 @@
 //
 
 import Foundation
+import CoreData
+import ProgrammaticUI
 
 extension System: Named {}
 extension System: Pinnable {}
+
+extension System
+{
+    static func makeFetchRequest() -> NSFetchRequest<System>
+    {
+        System.fetchRequest()
+    }
+    
+    static func allSystems(context: Context) -> [System]
+    {
+        let request = Self.makeFetchRequest()
+        do
+        {
+            return try context.fetch(request)
+        }
+        catch
+        {
+            assertionFailure(error.localizedDescription)
+            return []
+        }
+    }
+}

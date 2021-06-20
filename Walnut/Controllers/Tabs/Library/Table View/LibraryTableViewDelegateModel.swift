@@ -9,18 +9,11 @@ import Foundation
 import UIKit
 import ProgrammaticUI
 
-// TODO: Move into the SWIFTPM
-
-public protocol TableViewSelectionDelegate: AnyObject
-{
-    var presentingController: UIViewController { get }
-}
-
 class LibraryTableViewDelegateModel: TableViewDelegateModel
 {
     // MARK: - Initialization
     
-    convenience init(context: Context, navigationController: UINavigationController)
+    convenience init(context: Context, navigationController: NavigationController)
     {
         let didSelect = Self.makeDidSelect(context: context, navigationController: navigationController)
         
@@ -33,7 +26,7 @@ class LibraryTableViewDelegateModel: TableViewDelegateModel
     
     // MARK: - Factory
     
-    static func makeDidSelect(context: Context, navigationController: UINavigationController) -> TableViewSelectionClosure
+    static func makeDidSelect(context: Context, navigationController: NavigationController) -> TableViewSelectionClosure
     {
         { selection in
             
@@ -41,7 +34,7 @@ class LibraryTableViewDelegateModel: TableViewDelegateModel
             
             // Now we need to get the list view controller for the entityType
             
-            let listController = SystemListController(context: context)
+            let listController = SystemListController(context: context, navigationController: navigationController)
             
             // The question is: how can we get the navigation controller
             // when initializing the delegate model?

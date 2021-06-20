@@ -1,22 +1,21 @@
 //
-//  LibraryTableViewModel.swift
+//  SystemListTableViewModel.swift
 //  Walnut
 //
-//  Created by Joshua Grant on 6/13/21.
+//  Created by Joshua Grant on 6/19/21.
 //
 
 import Foundation
-import UIKit
 import ProgrammaticUI
 
-class LibraryTableViewModel: TableViewModel
+class SystemListTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     
     convenience init(context: Context, navigationController: NavigationController)
     {
-        let delegateModel = LibraryTableViewDelegateModel(context: context, navigationController: navigationController)
-        let dataSourceModel = LibraryTableViewDataSourceModel(context: context)
+        let delegateModel = SystemListTableViewDelegateModel(context: context, navigationController: navigationController)
+        let dataSourceModel = SystemListTableViewDataSourceModel(context: context)
         let cellModelTypes = Self.makeCellModelTypes()
         
         self.init(
@@ -30,6 +29,8 @@ class LibraryTableViewModel: TableViewModel
     
     static func makeCellModelTypes() -> [TableViewCellModel.Type]
     {
-        [LibraryCellModel.self]
+        [
+            TextCellModel.self
+        ]
     }
 }

@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		030B2164267EC9BE0038C095 /* ProgrammaticUI in Frameworks */ = {isa = PBXBuildFile; productRef = 030B2163267EC9BE0038C095 /* ProgrammaticUI */; };
+		030B2166267EDA2E0038C095 /* SystemListTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2165267EDA2E0038C095 /* SystemListTableViewModel.swift */; };
+		030B2168267EDA440038C095 /* SystemListTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2167267EDA440038C095 /* SystemListTableViewDataSourceModel.swift */; };
+		030B216A267EDA570038C095 /* SystemListTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2169267EDA570038C095 /* SystemListTableViewDelegateModel.swift */; };
+		030B216C267EDA670038C095 /* SystemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B216B267EDA670038C095 /* SystemListView.swift */; };
+		030B216E267EDA760038C095 /* SystemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B216D267EDA760038C095 /* SystemListViewModel.swift */; };
+		030B2170267EDA850038C095 /* SystemListControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B216F267EDA850038C095 /* SystemListControllerModel.swift */; };
+		030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2172267F7C130038C095 /* SystemDetailController.swift */; };
+		030B2177267F7D790038C095 /* InfoHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2176267F7D790038C095 /* InfoHeaderViewModel.swift */; };
+		030B2179267F7EBD0038C095 /* EventsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2178267F7EBD0038C095 /* EventsHeaderViewModel.swift */; };
+		030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */; };
+		030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */; };
+		030B217F267F7EE80038C095 /* NotesHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217E267F7EE80038C095 /* NotesHeaderViewModel.swift */; };
+		030B2181267F7EF70038C095 /* SubSystemsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2180267F7EF70038C095 /* SubSystemsHeaderViewModel.swift */; };
 		031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681AE267D655B00F493DA /* DashboardFlowCell.swift */; };
 		031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B0267D656500F493DA /* DashboardForecastCell.swift */; };
 		031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B2267D656F00F493DA /* DashboardPriorityCell.swift */; };
@@ -111,6 +124,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		030B2165267EDA2E0038C095 /* SystemListTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListTableViewModel.swift; sourceTree = "<group>"; };
+		030B2167267EDA440038C095 /* SystemListTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListTableViewDataSourceModel.swift; sourceTree = "<group>"; };
+		030B2169267EDA570038C095 /* SystemListTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListTableViewDelegateModel.swift; sourceTree = "<group>"; };
+		030B216B267EDA670038C095 /* SystemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListView.swift; sourceTree = "<group>"; };
+		030B216D267EDA760038C095 /* SystemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListViewModel.swift; sourceTree = "<group>"; };
+		030B216F267EDA850038C095 /* SystemListControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListControllerModel.swift; sourceTree = "<group>"; };
+		030B2172267F7C130038C095 /* SystemDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailController.swift; sourceTree = "<group>"; };
+		030B2176267F7D790038C095 /* InfoHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B2178267F7EBD0038C095 /* EventsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailFlowsHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B217E267F7EE80038C095 /* NotesHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B2180267F7EF70038C095 /* SubSystemsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubSystemsHeaderViewModel.swift; sourceTree = "<group>"; };
 		031681AE267D655B00F493DA /* DashboardFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlowCell.swift; sourceTree = "<group>"; };
 		031681B0267D656500F493DA /* DashboardForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardForecastCell.swift; sourceTree = "<group>"; };
 		031681B2267D656F00F493DA /* DashboardPriorityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPriorityCell.swift; sourceTree = "<group>"; };
@@ -228,6 +254,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		030B2171267EDA8D0038C095 /* Table View */ = {
+			isa = PBXGroup;
+			children = (
+				030B2167267EDA440038C095 /* SystemListTableViewDataSourceModel.swift */,
+				030B2169267EDA570038C095 /* SystemListTableViewDelegateModel.swift */,
+				030B2165267EDA2E0038C095 /* SystemListTableViewModel.swift */,
+			);
+			path = "Table View";
+			sourceTree = "<group>";
+		};
+		030B2174267F7D550038C095 /* Table View */ = {
+			isa = PBXGroup;
+			children = (
+				030B2175267F7D5E0038C095 /* Section Header */,
+			);
+			path = "Table View";
+			sourceTree = "<group>";
+		};
+		030B2175267F7D5E0038C095 /* Section Header */ = {
+			isa = PBXGroup;
+			children = (
+				030B2178267F7EBD0038C095 /* EventsHeaderViewModel.swift */,
+				030B2176267F7D790038C095 /* InfoHeaderViewModel.swift */,
+				030B217E267F7EE80038C095 /* NotesHeaderViewModel.swift */,
+				030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */,
+				030B2180267F7EF70038C095 /* SubSystemsHeaderViewModel.swift */,
+				030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */,
+			);
+			path = "Section Header";
+			sourceTree = "<group>";
+		};
 		031681AD267D654200F493DA /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,47 +437,15 @@
 			path = "Table View Cell";
 			sourceTree = "<group>";
 		};
-		038CF64F267675C400931595 /* Pinned */ = {
-			isa = PBXGroup;
-			children = (
-				038CF650267675D500931595 /* PinnedHeaderViewModel.swift */,
-			);
-			path = Pinned;
-			sourceTree = "<group>";
-		};
 		038CF6522676773800931595 /* Section Header */ = {
 			isa = PBXGroup;
 			children = (
-				038CF6532676774400931595 /* Flows */,
-				038CF6542676774E00931595 /* Forecast */,
-				038CF64F267675C400931595 /* Pinned */,
-				038CF6552676775700931595 /* Priority */,
-			);
-			path = "Section Header";
-			sourceTree = "<group>";
-		};
-		038CF6532676774400931595 /* Flows */ = {
-			isa = PBXGroup;
-			children = (
 				038CF6562676777600931595 /* FlowsHeaderViewModel.swift */,
-			);
-			path = Flows;
-			sourceTree = "<group>";
-		};
-		038CF6542676774E00931595 /* Forecast */ = {
-			isa = PBXGroup;
-			children = (
 				038CF6582676778F00931595 /* ForecastHeaderViewModel.swift */,
-			);
-			path = Forecast;
-			sourceTree = "<group>";
-		};
-		038CF6552676775700931595 /* Priority */ = {
-			isa = PBXGroup;
-			children = (
+				038CF650267675D500931595 /* PinnedHeaderViewModel.swift */,
 				038CF65A2676779800931595 /* PriorityHeaderViewModel.swift */,
 			);
-			path = Priority;
+			path = "Section Header";
 			sourceTree = "<group>";
 		};
 		038CF65C26767D6D00931595 /* Database */ = {
@@ -552,6 +577,10 @@
 			isa = PBXGroup;
 			children = (
 				038CF6F8267690CD00931595 /* SystemListController.swift */,
+				030B216F267EDA850038C095 /* SystemListControllerModel.swift */,
+				030B216B267EDA670038C095 /* SystemListView.swift */,
+				030B216D267EDA760038C095 /* SystemListViewModel.swift */,
+				030B2171267EDA8D0038C095 /* Table View */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -559,6 +588,8 @@
 		038CF6F726768F5B00931595 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				030B2174267F7D550038C095 /* Table View */,
+				030B2172267F7C130038C095 /* SystemDetailController.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -705,6 +736,7 @@
 				038CF6C2267682C700931595 /* Order.swift in Sources */,
 				038CF6DF2676840300931595 /* Condition+Extensions.swift in Sources */,
 				038CF61226764DA500931595 /* SettingsController.swift in Sources */,
+				030B2170267EDA850038C095 /* SystemListControllerModel.swift in Sources */,
 				038CF6F0267687AF00931595 /* LibraryTableViewDelegateModel.swift in Sources */,
 				038CF651267675D500931595 /* PinnedHeaderViewModel.swift in Sources */,
 				038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */,
@@ -718,6 +750,7 @@
 				038CF6592676778F00931595 /* ForecastHeaderViewModel.swift in Sources */,
 				038CF64A2676745B00931595 /* PinnedCell.swift in Sources */,
 				038CF6982676829F00931595 /* Source+Extensions.swift in Sources */,
+				030B217F267F7EE80038C095 /* NotesHeaderViewModel.swift in Sources */,
 				038CF6D9267683EE00931595 /* Symbol+Extensions.swift in Sources */,
 				031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */,
 				038CF6C3267682C700931595 /* TextStyle.swift in Sources */,
@@ -735,6 +768,7 @@
 				038CF6952676829F00931595 /* Dimension+Extensions.swift in Sources */,
 				031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */,
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
+				030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */,
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
 				038CF623267652D500931595 /* LibraryControllerModel.swift in Sources */,
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
@@ -744,9 +778,14 @@
 				038CF628267652EC00931595 /* LibraryView.swift in Sources */,
 				031681B9267DA6F100F493DA /* Pinnable.swift in Sources */,
 				038CF6342676532400931595 /* SettingsViewModel.swift in Sources */,
+				030B2166267EDA2E0038C095 /* SystemListTableViewModel.swift in Sources */,
+				030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */,
 				038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */,
+				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
+				030B2181267F7EF70038C095 /* SubSystemsHeaderViewModel.swift in Sources */,
 				031681B5267D66E100F493DA /* TextCell.swift in Sources */,
 				038CF6402676679700931595 /* DashboardTableViewModel.swift in Sources */,
+				030B2168267EDA440038C095 /* SystemListTableViewDataSourceModel.swift in Sources */,
 				038CF6D2267682C700931595 /* EntityType.swift in Sources */,
 				038CF625267652E000931595 /* LibraryViewModel.swift in Sources */,
 				038CF6C1267682C700931595 /* SourceType.swift in Sources */,
@@ -755,8 +794,10 @@
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				038CF6192676506A00931595 /* DashboardControllerModel.swift in Sources */,
 				038CF6C8267682C700931595 /* CompletionType.swift in Sources */,
+				030B2177267F7D790038C095 /* InfoHeaderViewModel.swift in Sources */,
 				038CF6DD267683FB00931595 /* TransferFlow+Extensions.swift in Sources */,
 				038CF6962676829F00931595 /* Person+Extensions.swift in Sources */,
+				030B2179267F7EBD0038C095 /* EventsHeaderViewModel.swift in Sources */,
 				038CF6CA267682C700931595 /* AmountType.swift in Sources */,
 				038CF6BE267682C700931595 /* DateStock.swift in Sources */,
 				038CF6302676531100931595 /* SettingsControllerModel.swift in Sources */,
@@ -769,12 +810,15 @@
 				038CF6442676726900931595 /* DashboardTableViewDelegateModel.swift in Sources */,
 				038CF6902676829F00931595 /* Unit+Extensions.swift in Sources */,
 				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
+				030B216A267EDA570038C095 /* SystemListTableViewDelegateModel.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
 				038CF6EE267687A500931595 /* LibraryTableViewModel.swift in Sources */,
 				038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */,
+				030B216E267EDA760038C095 /* SystemListViewModel.swift in Sources */,
 				038CF6862676829F00931595 /* Named.swift in Sources */,
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
+				030B216C267EDA670038C095 /* SystemListView.swift in Sources */,
 				038CF6D0267682C700931595 /* Searchable.swift in Sources */,
 				038CF62E2676530700931595 /* InboxViewModel.swift in Sources */,
 			);

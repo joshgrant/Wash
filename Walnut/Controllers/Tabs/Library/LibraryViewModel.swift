@@ -23,7 +23,7 @@ class LibraryViewModel: ViewModel
         super.init()
     }
     
-    convenience init(context: Context, navigationController: UINavigationController)
+    convenience init(context: Context, navigationController: NavigationController)
     {
         let model = LibraryTableViewModel(context: context, navigationController: navigationController)
         self.init(tableViewModel: model)
