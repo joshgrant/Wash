@@ -152,7 +152,7 @@ class UnitDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: UnitDetailControllerModel,
         viewModel: UnitDetailViewModel)
     {

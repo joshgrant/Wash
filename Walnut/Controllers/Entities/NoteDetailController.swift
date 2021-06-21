@@ -152,7 +152,7 @@ class NoteDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: NoteDetailControllerModel,
         viewModel: NoteDetailViewModel)
     {

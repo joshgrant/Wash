@@ -6,16 +6,17 @@
 //
 
 import Foundation
+import UIKit
 import ProgrammaticUI
 
 class SystemDetailTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     
-    convenience init(system: System, navigationController: NavigationController)
+    convenience init(system: System, navigationController: NavigationController, delegate: UITextFieldDelegate)
     {
         let delegateModel = SystemDetailTableViewDelegateModel(system: system, navigationController: navigationController)
-        let dataSourceModel = SystemDetailTableViewDataSourceModel(system: system)
+        let dataSourceModel = SystemDetailTableViewDataSourceModel(system: system, delegate: delegate)
         let cellModelTypes = Self.makeCellModelTypes()
         
         self.init(

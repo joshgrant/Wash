@@ -152,7 +152,7 @@ class ProcessFlowDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: ProcessFlowDetailControllerModel,
         viewModel: ProcessFlowDetailViewModel)
     {

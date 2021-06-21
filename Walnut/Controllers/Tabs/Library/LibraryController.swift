@@ -15,7 +15,7 @@ class LibraryController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: LibraryControllerModel,
         viewModel: LibraryViewModel)
     {

@@ -152,7 +152,7 @@ class ConversionDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: ConversionDetailControllerModel,
         viewModel: ConversionDetailViewModel)
     {

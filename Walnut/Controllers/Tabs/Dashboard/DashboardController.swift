@@ -15,7 +15,7 @@ class DashboardController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: DashboardControllerModel,
         viewModel: DashboardViewModel)
     {

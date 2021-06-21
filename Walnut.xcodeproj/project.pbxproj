@@ -45,6 +45,7 @@
 		030B21C8268114480038C095 /* NoteDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21C7268114480038C095 /* NoteDetailController.swift */; };
 		030B21CB26811E630038C095 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21CA26811E630038C095 /* String+Extensions.swift */; };
 		030B21CE268121AA0038C095 /* SearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */; };
+		030B21D126815D930038C095 /* Notifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D026815D930038C095 /* Notifiable.swift */; };
 		031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681AE267D655B00F493DA /* DashboardFlowCell.swift */; };
 		031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B0267D656500F493DA /* DashboardForecastCell.swift */; };
 		031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B2267D656F00F493DA /* DashboardPriorityCell.swift */; };
@@ -184,6 +185,7 @@
 		030B21C7268114480038C095 /* NoteDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailController.swift; sourceTree = "<group>"; };
 		030B21CA26811E630038C095 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerDelegate.swift; sourceTree = "<group>"; };
+		030B21D026815D930038C095 /* Notifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifiable.swift; sourceTree = "<group>"; };
 		031681AE267D655B00F493DA /* DashboardFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlowCell.swift; sourceTree = "<group>"; };
 		031681B0267D656500F493DA /* DashboardForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardForecastCell.swift; sourceTree = "<group>"; };
 		031681B2267D656F00F493DA /* DashboardPriorityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPriorityCell.swift; sourceTree = "<group>"; };
@@ -355,11 +357,11 @@
 		030B2199267FE2C70038C095 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */,
 				030B21A0267FEA230038C095 /* EntityListController.swift */,
-				030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */,
 				030B21AC26810EF00038C095 /* EntityListControllerModel.swift */,
+				030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */,
 				030B21AE26810F080038C095 /* EntityListTableViewDelegateModel.swift */,
+				030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */,
 				030B21B026810F2A0038C095 /* EntityListView.swift */,
 				030B21B226810F3C0038C095 /* EntityListViewModel.swift */,
 			);
@@ -380,6 +382,14 @@
 				030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		030B21CF26815D800038C095 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				030B21D026815D930038C095 /* Notifiable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		031681AD267D654200F493DA /* Cell */ = {
@@ -427,6 +437,7 @@
 				038CF65C26767D6D00931595 /* Database */,
 				030B21C926811E540038C095 /* Extensions */,
 				033FE6A1266CE2AB00BCF5AA /* LaunchScreen.storyboard */,
+				030B21CF26815D800038C095 /* Protocols */,
 				038CF6482676744B00931595 /* Shared */,
 			);
 			path = Walnut;
@@ -890,6 +901,7 @@
 				038CF61C267651D600931595 /* DashboardViewModel.swift in Sources */,
 				038CF628267652EC00931595 /* LibraryView.swift in Sources */,
 				030B21AD26810EF00038C095 /* EntityListControllerModel.swift in Sources */,
+				030B21D126815D930038C095 /* Notifiable.swift in Sources */,
 				030B21A72680E8230038C095 /* Note+Extensions.swift in Sources */,
 				031681B9267DA6F100F493DA /* Pinnable.swift in Sources */,
 				038CF6342676532400931595 /* SettingsViewModel.swift in Sources */,

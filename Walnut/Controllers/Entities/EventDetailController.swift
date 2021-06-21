@@ -176,7 +176,7 @@ class EventDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: EventDetailControllerModel,
         viewModel: EventDetailViewModel)
     {

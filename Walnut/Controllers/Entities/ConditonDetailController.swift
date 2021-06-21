@@ -160,7 +160,7 @@ class ConditionDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: ConditionDetailControllerModel,
         viewModel: ConditionDetailViewModel)
     {

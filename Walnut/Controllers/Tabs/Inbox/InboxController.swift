@@ -13,7 +13,9 @@ class InboxController: ViewController<
                         InboxViewModel,
                         InboxView>
 {
-    required init(
+    // MARK: - Initialization
+    
+    override init(
         controllerModel: InboxControllerModel,
         viewModel: InboxViewModel)
     {

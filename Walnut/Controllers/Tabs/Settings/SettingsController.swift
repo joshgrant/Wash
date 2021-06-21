@@ -13,7 +13,7 @@ class SettingsController: ViewController<
                             SettingsViewModel,
                             SettingsView>
 {
-    required init(
+    override init(
         controllerModel: SettingsControllerModel,
         viewModel: SettingsViewModel)
     {

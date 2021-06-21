@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import ProgrammaticUI
 
 class SystemDetailViewModel: ViewModel
@@ -21,9 +22,12 @@ class SystemDetailViewModel: ViewModel
         self.tableViewModel = tableViewModel
     }
     
-    convenience init(system: System, navigationController: NavigationController)
+    convenience init(system: System, navigationController: NavigationController, delegate: UITextFieldDelegate)
     {
-        let tableViewModel = SystemDetailTableViewModel(system: system, navigationController: navigationController)
+        let tableViewModel = SystemDetailTableViewModel(
+            system: system,
+            navigationController: navigationController,
+            delegate: delegate)
         self.init(tableViewModel: tableViewModel)
     }
 }

@@ -9,17 +9,63 @@ import Foundation
 import UIKit
 import ProgrammaticUI
 
+class SystemDetailControllerTextFieldDelegate: NSObject, UITextFieldDelegate
+{
+    // MARK: - Variables
+    
+    weak var model: SystemDetailControllerModel?
+    weak var controller: SystemDetailController?
+    
+    // MARK: - Initialization
+    
+    init(model: SystemDetailControllerModel)
+    {
+        self.model = model
+    }
+    
+    // MARK: - Functions
+    
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        model?.system.title = textField.text ?? ""
+        model?.system.managedObjectContext?.quickSave()
+        
+        controller?.title = textField.text ?? ""
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        
+        NotificationCenter.default.post(name: .titleUpdate, object: nil)
+        
+        return true
+    }
+}
+
+extension Notification.Name
+{
+    static let titleUpdate = Notification.Name("Notification.Title.Update")
+}
+
 class SystemDetailController: ViewController<
                                 SystemDetailControllerModel,
                                 SystemDetailViewModel,
                                 SystemDetailView>
 {
+    // MARK: - Variables
+    
+    var textFieldDelegate: SystemDetailControllerTextFieldDelegate
+    
     // MARK: - Initialization
     
     required init(
         controllerModel: SystemDetailControllerModel,
-        viewModel: SystemDetailViewModel)
+        viewModel: SystemDetailViewModel,
+        delegate: SystemDetailControllerTextFieldDelegate)
     {
+        self.textFieldDelegate = delegate
+        
         super.init(
             controllerModel: controllerModel,
             viewModel: viewModel)
@@ -30,11 +76,19 @@ class SystemDetailController: ViewController<
     convenience init(system: System, navigationController: NavigationController)
     {
         let controllerModel = SystemDetailControllerModel(system: system)
-        let viewModel = SystemDetailViewModel(system: system, navigationController: navigationController)
+        let textFieldDelegate = SystemDetailControllerTextFieldDelegate(model: controllerModel)
+        let viewModel = SystemDetailViewModel(
+            system: system,
+            navigationController: navigationController,
+            delegate: textFieldDelegate)
         
         self.init(
             controllerModel: controllerModel,
-            viewModel: viewModel)
+            viewModel: viewModel,
+            delegate: textFieldDelegate)
+        
+        // To update the title
+        textFieldDelegate.controller = self
         
         // Menu Bar
         

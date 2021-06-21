@@ -10,12 +10,27 @@ import ProgrammaticUI
 
 class EntityListTableViewDataSourceModel: TableViewDataSourceModel
 {
+    // MARK: - Variables
+    
+    weak var context: Context?
+    var type: Entity.Type?
+    
     // MARK: - Initialization
     
     convenience init(context: Context, type: Entity.Type)
     {
         let cellModels = Self.makeCellModels(context: context, type: type)
+        
         self.init(cellModels: cellModels)
+        
+        self.context = context
+        self.type = type
+    }
+    
+    func reload()
+    {
+        guard let type = type, let context = context else { return }
+        self.cellModels = Self.makeCellModels(context: context, type: type)
     }
     
     // MARK: - Factory

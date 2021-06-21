@@ -6,25 +6,26 @@
 //
 
 import Foundation
+import UIKit
 import ProgrammaticUI
 
 class SystemDetailTableViewDataSourceModel: TableViewDataSourceModel
 {
     // MARK: - Initialization
     
-    convenience init(system: System)
+    convenience init(system: System, delegate: UITextFieldDelegate)
     {
-        let cellModels = Self.makeCellModels(system: system)
+        let cellModels = Self.makeCellModels(system: system, delegate: delegate)
         self.init(cellModels: cellModels)
     }
     
     // MARK: - Factory
     
-    static func makeCellModels(system: System) -> [[TableViewCellModel]]
+    static func makeCellModels(system: System, delegate: UITextFieldDelegate?) -> [[TableViewCellModel]]
     {
         [
             // Info
-            makeInfoSection(system: system),
+            makeInfoSection(system: system, delegate: delegate),
             makeStocksModels(system: system),
             makeFlowsModels(system: system),
             makeEventsModels(system: system),
@@ -33,13 +34,14 @@ class SystemDetailTableViewDataSourceModel: TableViewDataSourceModel
         ]
     }
     
-    static func makeInfoSection(system: System) -> [TableViewCellModel]
+    static func makeInfoSection(system: System, delegate: UITextFieldDelegate?) -> [TableViewCellModel]
     {
         var section: [TableViewCellModel] = []
         
         section.append(TextEditCellModel(
                         text: system.title,
-                        placeholder: "Name"))
+                        placeholder: "Name",
+                        delegate: delegate))
         
         section.append(IdealInfoCellModel(
                         percentage: system.percentIdeal,

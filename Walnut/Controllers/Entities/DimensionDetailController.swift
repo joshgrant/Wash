@@ -152,7 +152,7 @@ class DimensionDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: DimensionDetailControllerModel,
         viewModel: DimensionDetailViewModel)
     {

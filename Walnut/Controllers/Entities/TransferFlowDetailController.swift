@@ -176,7 +176,7 @@ class TransferFlowDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: TransferFlowDetailControllerModel,
         viewModel: TransferFlowDetailViewModel)
     {

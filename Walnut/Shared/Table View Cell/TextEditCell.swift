@@ -15,13 +15,15 @@ class TextEditCellModel: TableViewCellModel
     
     var text: String?
     var placeholder: String
+    weak var delegate: UITextFieldDelegate?
     
     // MARK: - Initialization
     
-    init(text: String?, placeholder: String)
+    init(text: String?, placeholder: String, delegate: UITextFieldDelegate?)
     {
         self.text = text
         self.placeholder = placeholder
+        self.delegate = delegate
     }
     
     static var cellClass: AnyClass { TextEditCell.self }
@@ -29,10 +31,6 @@ class TextEditCellModel: TableViewCellModel
 
 class TextEditCell: TableViewCell<TextEditCellModel>
 {
-    // TODO: Title began editing
-    // TODO: Title ended editing
-    // TODO: Title changed text
-    
     // MARK: - Variables
     
     var textField: UITextField
@@ -66,5 +64,6 @@ class TextEditCell: TableViewCell<TextEditCellModel>
     {
         textField.placeholder = model.placeholder
         textField.text = model.text
+        textField.delegate = model.delegate
     }
 }

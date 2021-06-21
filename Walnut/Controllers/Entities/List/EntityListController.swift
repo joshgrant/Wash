@@ -32,6 +32,8 @@ class EntityListController: ViewController<
             controllerModel: controllerModel,
             viewModel: viewModel)
         
+        handleNotifications(true)
+        
         title = controllerModel.title
         navigationItem.rightBarButtonItem = Self.makeAddBarButtonItem(model: controllerModel)
         
@@ -39,7 +41,6 @@ class EntityListController: ViewController<
         
         navigationItem.searchController = controller
         navigationItem.hidesSearchBarWhenScrolling = true
-        
     }
     
     // MARK: - Factory
@@ -61,6 +62,30 @@ class EntityListController: ViewController<
         let searchController = UISearchController(searchResultsController: searchResultsController)
         searchController.delegate = searchControllerDelegate
         return searchController
+    }
+}
+
+// MARK: - Notifications
+
+extension EntityListController: Notifiable
+{
+    func startObservingNotifications()
+    {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleTitleUpdateNotification(_:)),
+            name: .titleUpdate,
+            object: nil)
+    }
+    
+    // MARK: Handlers
+    
+    @objc func handleTitleUpdateNotification(_ notification: Notification)
+    {
+        DispatchQueue.main.async {
+            (self._view.model.tableViewModel.dataSource.model as? EntityListTableViewDataSourceModel)?.reload()
+            self._view.tableView.reloadData()
+        }
     }
 }
 

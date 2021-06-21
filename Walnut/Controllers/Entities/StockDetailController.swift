@@ -176,7 +176,7 @@ class StockDetailController: ViewController<
 {
     // MARK: - Initialization
     
-    required init(
+    override init(
         controllerModel: StockDetailControllerModel,
         viewModel: StockDetailViewModel)
     {
