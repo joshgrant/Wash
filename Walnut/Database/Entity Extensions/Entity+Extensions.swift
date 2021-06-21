@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 import ProgrammaticUI
 
 public extension Entity
@@ -94,5 +95,46 @@ extension Entity
             assertionFailure(error.localizedDescription)
             return []
         }
+    }
+}
+
+// MARK: - Detail Controller
+
+extension Entity
+{
+    func detailController(navigationController: NavigationController) -> UIViewController
+    {
+        switch self
+        {
+        case (let s as System):
+            return SystemDetailController(
+                system: s,
+                navigationController: navigationController)
+        case (let s as Stock):
+            break
+        case (let t as TransferFlow):
+            break
+        case (let p as ProcessFlow):
+            break
+        case (let e as Event):
+            break
+        case (let c as Conversion):
+            break
+        case (let c as Condition):
+            break
+        case (let d as Dimension):
+            break
+        case (let u as Unit):
+            break
+        case (let s as Symbol):
+            break
+        case (let n as Note):
+            break
+        default:
+            // TODO: Handle all cases
+            break
+        }
+        
+        return UIViewController()
     }
 }
