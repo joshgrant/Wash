@@ -107,34 +107,30 @@ extension Entity
         switch self
         {
         case (let s as System):
-            return SystemDetailController(
-                system: s,
-                navigationController: navigationController)
+            return SystemDetailController(system: s, navigationController: navigationController)
         case (let s as Stock):
-            break
+            return StockDetailController(stock: s, navigationController: navigationController)
         case (let t as TransferFlow):
-            break
+            return TransferFlowDetailController(flow: t, navigationController: navigationController)
         case (let p as ProcessFlow):
-            break
+            return ProcessFlowDetailController(processFlow: p, navigationController: navigationController)
         case (let e as Event):
-            break
+            return EventDetailController(event: e, navigationController: navigationController)
         case (let c as Conversion):
-            break
+            return ConversionDetailController(conversion: c, navigationController: navigationController)
         case (let c as Condition):
-            break
+            return ConditionDetailController(condition: c, navigationController: navigationController)
         case (let d as Dimension):
-            break
+            return DimensionDetailController(dimension: d, navigationController: navigationController)
         case (let u as Unit):
-            break
+            return UnitDetailController(unit: u, navigationController: navigationController)
         case (let s as Symbol):
-            break
+            return SymbolDetailController(symbol: s, navigationController: navigationController)
         case (let n as Note):
-            break
+            return NoteDetailController(note: n, navigationController: navigationController)
         default:
-            // TODO: Handle all cases
-            break
+            assertionFailure("Unhandled entity: \(self)")
+            return UIViewController()
         }
-        
-        return UIViewController()
     }
 }
