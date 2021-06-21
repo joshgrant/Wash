@@ -8,7 +8,7 @@
 import Foundation
 import ProgrammaticUI
 
-public protocol Named: AnyObject
+public protocol Named: Entity
 {
     var name: Symbol? { get set }
     var unwrappedName: String? { get set }

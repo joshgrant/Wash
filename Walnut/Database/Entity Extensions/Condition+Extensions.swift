@@ -8,7 +8,6 @@
 import Foundation
 
 extension Condition: Named {}
-extension Condition: Listable {}
 
 public extension Condition
 {

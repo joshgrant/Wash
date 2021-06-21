@@ -11,7 +11,6 @@ import ProgrammaticUI
 
 extension System: Named {}
 extension System: Pinnable {}
-extension System: Listable {}
 
 // MARK: - Utility
 

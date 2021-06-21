@@ -11,7 +11,6 @@ import ProgrammaticUI
 
 extension Event: Named {}
 extension Event: Pinnable {}
-extension Event: Listable {}
 
 public extension Event
 {

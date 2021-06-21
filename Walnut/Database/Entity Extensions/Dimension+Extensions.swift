@@ -8,4 +8,3 @@
 import Foundation
 
 extension Dimension: Named {}
-extension Dimension: Listable {}

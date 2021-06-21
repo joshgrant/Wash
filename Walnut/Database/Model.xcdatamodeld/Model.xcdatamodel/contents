@@ -140,7 +140,7 @@
         <relationship name="targetOfCondition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Condition" inverseName="rightHand" inverseEntity="Condition"/>
         <relationship name="valueOfCondition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Condition" inverseName="leftHand" inverseEntity="Condition"/>
     </entity>
-    <entity name="State" representedClassName="State" syncable="YES" codeGenerationType="class">
+    <entity name="State" representedClassName="State" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="max" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="min" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="name" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfState" inverseEntity="Symbol"/>

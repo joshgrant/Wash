@@ -9,4 +9,3 @@ import Foundation
 
 extension Flow: Named {}
 extension Flow: Pinnable {}
-extension Flow: Listable {}

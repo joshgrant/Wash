@@ -8,4 +8,3 @@
 import Foundation
 
 extension Note: Named {}
-extension Note: Listable {}
