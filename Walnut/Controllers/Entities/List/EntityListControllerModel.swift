@@ -13,14 +13,19 @@ class EntityListControllerModel: ControllerModel
 {
     // MARK: - Variables
     
+    private var type: Entity.Type
+    
     var addAction: ActionClosure
     var addButtonImage: UIImage? { Icon.add.getImage() }
     var addButtonStyle: UIBarButtonItem.Style { .plain }
+    var title: String { type.readableName.pluralize() }
     
     // MARK: - Initialization
     
     init(context: Context, navigationController: NavigationController, type: Entity.Type)
     {
+        self.type = type
+        
         addAction = Self.makeAddAction(
             context: context,
             navigationController: navigationController,

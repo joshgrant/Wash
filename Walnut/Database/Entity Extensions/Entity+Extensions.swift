@@ -68,6 +68,11 @@ public extension Entity
 
 extension Entity
 {
+    static var readableName: String
+    {
+        return entityName.insertSpacesBetweenCamelCaseWords()
+    }
+    
     static var entityName: String
     {
         let components = NSStringFromClass(self).components(separatedBy: ".")

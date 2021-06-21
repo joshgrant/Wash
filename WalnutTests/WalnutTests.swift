@@ -29,5 +29,16 @@ class WalnutTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
+    
+    func testInsertSpacesBetweenCamelCaseWords()
+    {
+        let input: [String] = ["TestWord", "CoolstorybeaNs", "   WWW   ", "none but this is cool"]
+        let output: [String] = ["Test Word", "Coolstorybea Ns", "W W W", "none but this is cool"]
+        
+        for (i, o) in zip(input, output)
+        {
+            let result = i.insertSpacesBetweenCamelCaseWords()
+            XCTAssertEqual(result, o)
+        }
+    }
 }
