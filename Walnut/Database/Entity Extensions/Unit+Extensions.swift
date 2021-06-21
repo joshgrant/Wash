@@ -8,3 +8,4 @@
 import Foundation
 
 extension Unit: Named {}
+extension Unit: Listable {}

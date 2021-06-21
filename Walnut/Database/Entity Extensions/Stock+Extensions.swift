@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import ProgrammaticUI
 
 extension Stock: Named {}
 extension Stock: Pinnable {}
+extension Stock: Listable {}
 
 extension Stock
 {

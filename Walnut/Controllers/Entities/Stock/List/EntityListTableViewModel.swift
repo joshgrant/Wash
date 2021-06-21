@@ -8,7 +8,7 @@
 //import Foundation
 import ProgrammaticUI
 
-class EntityListTableViewDelegateModel<E: Entity & Listable & Pinnable>: TableViewDelegateModel
+class EntityListTableViewDelegateModel<E: LibraryVisible>: TableViewDelegateModel
 {
     // MARK: - Initialization
     
@@ -40,7 +40,7 @@ class EntityListTableViewDelegateModel<E: Entity & Listable & Pinnable>: TableVi
     }
 }
 
-class EntityListTableViewDataSourceModel<E: Entity & Listable & Named>: TableViewDataSourceModel
+class EntityListTableViewDataSourceModel<E: LibraryVisible>: TableViewDataSourceModel
 {
     // MARK: - Initialization
     
@@ -69,7 +69,7 @@ class EntityListTableViewDataSourceModel<E: Entity & Listable & Named>: TableVie
 }
 
 
-class EntityListTableViewModel<E: Entity & Listable & Named & Pinnable>: TableViewModel<
+class EntityListTableViewModel<E: LibraryVisible>: TableViewModel<
                                                                             EntityListTableViewDelegateModel<E>,
                                                                             EntityListTableViewDataSourceModel<E>>
 {

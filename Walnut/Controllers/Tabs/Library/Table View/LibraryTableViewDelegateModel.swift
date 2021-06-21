@@ -30,16 +30,27 @@ class LibraryTableViewDelegateModel: TableViewDelegateModel
     {
         { selection in
             
-            let entityType = EntityType.libraryVisible[selection.indexPath.row]
+//            let entityType = EntityType.libraryVisible[selection.indexPath.row]
             
-            let listController = entityType.listController(
-                context: context,
-                navigationController: navigationController)
+//            let managedType = entityType.managedObjectType
             
-            if let listController = listController
-            {
-                navigationController.pushViewController(listController, animated: true)
-            }
+//            let entityType = EntityType.libraryVisible[selection.indexPath.row]
+//
+////            let managedType = entityType.managedObjectType
+//
+//            if entityType.managedObjectType is Listable
+//            {
+//
+//            }
+//
+//            let listController = managedType.listController(
+//                context: context,
+//                navigationController: navigationController)
+//
+//            if let listController = listController
+//            {
+//                navigationController.pushViewController(listController, animated: true)
+//            }
         }
     }
 }

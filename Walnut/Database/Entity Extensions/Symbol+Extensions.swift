@@ -9,6 +9,9 @@ import Foundation
 import CoreData
 import ProgrammaticUI
 
+//extension Symbol: Named {}
+//extension Symbol: Listable {}
+
 extension Symbol: Searchable
 {
     public static func predicate(for queryString: String) -> NSPredicate

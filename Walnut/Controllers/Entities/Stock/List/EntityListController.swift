@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 import ProgrammaticUI
 
-class EntityListViewModel<E: Entity & Listable & Named & Pinnable>: ViewModel
+typealias LibraryVisible = Entity & Listable & Named
+
+class EntityListViewModel<E: LibraryVisible>: ViewModel
 {
     // MARK: - Variables
     
@@ -31,12 +33,12 @@ class EntityListViewModel<E: Entity & Listable & Named & Pinnable>: ViewModel
     }
 }
 
-class EntityListView<E: Entity & Listable & Named & Pinnable>: View<EntityListViewModel<E>>
+class EntityListView<E: LibraryVisible>: View<EntityListViewModel<E>>
 {
     
 }
 
-class EntityListControllerModel<E: Entity>: ControllerModel
+class EntityListControllerModel<E: LibraryVisible>: ControllerModel
 {
     // MARK: - Variables
     
@@ -68,7 +70,7 @@ class EntityListControllerModel<E: Entity>: ControllerModel
     }
 }
 
-class EntityListController<E: Entity & Listable & Pinnable & Named>: ViewController<
+class EntityListController<E: LibraryVisible>: ViewController<
                                         EntityListControllerModel<E>,
                                         EntityListViewModel<E>,
                                         EntityListView<E>>

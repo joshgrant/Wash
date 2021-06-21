@@ -115,11 +115,6 @@ enum EntityType
         }
     }
     
-    func listController<E: Entity & Listable & Pinnable & Named>(context: Context, navigationController: NavigationController) -> EntityListController<E>?
-    {
-        return EntityListController<E>(context: context, navigationController: navigationController)
-    }
-    
     static func type(from entity: Entity) -> EntityType?
     {
         switch entity
