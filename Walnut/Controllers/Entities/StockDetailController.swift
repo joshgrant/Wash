@@ -23,6 +23,30 @@ class StockDetailTableViewDataSourceModel: TableViewDataSourceModel
     {
         [
             // TODO: Add cell models
+            // Info
+            [
+                // title edit
+                // type (detail, disclosure)
+                // dimension (detail)
+                // current (small subtitle, detail, disclosure)
+                // net (detail, info)
+            ],
+            // States
+            [
+                // state cell (target, title, detail)
+            ],
+            // Inflows
+            [
+                // Title, subtitle, detail, disclosure
+            ],
+            // Outflows
+            [
+                // Title, subtitle, detail, disclosure
+            ],
+            // Events
+            [
+                // Title, detail, disclosure
+            ]
         ]
     }
 }

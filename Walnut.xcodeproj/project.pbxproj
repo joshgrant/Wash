@@ -299,11 +299,11 @@
 		030B2174267F7D550038C095 /* Table View */ = {
 			isa = PBXGroup;
 			children = (
+				030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */,
+				030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */,
+				030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */,
 				030B2184267FB2A60038C095 /* Cells */,
 				030B2175267F7D5E0038C095 /* Section Header */,
-				030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */,
-				030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */,
-				030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */,
 			);
 			path = "Table View";
 			sourceTree = "<group>";
@@ -333,8 +333,8 @@
 		030B218F267FE0080038C095 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				030B218B267FDFDD0038C095 /* SystemDetailViewModel.swift */,
 				030B218D267FDFFD0038C095 /* SystemDetailView.swift */,
+				030B218B267FDFDD0038C095 /* SystemDetailViewModel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -639,18 +639,18 @@
 		038CF6F426768F4C00931595 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				030B21BF2681141F0038C095 /* ConditonDetailController.swift */,
+				030B21BD268114130038C095 /* ConversionDetailController.swift */,
+				030B21C1268114290038C095 /* DimensionDetailController.swift */,
+				030B21BB268114080038C095 /* EventDetailController.swift */,
+				030B21C7268114480038C095 /* NoteDetailController.swift */,
+				030B21B9268113FF0038C095 /* ProcessDetailController.swift */,
 				030B21B526810FCF0038C095 /* StockDetailController.swift */,
+				030B21C52681143C0038C095 /* SymbolDetailController.swift */,
 				030B21B7268113ED0038C095 /* TransferFlowDetailController.swift */,
+				030B21C3268114320038C095 /* UnitDetailController.swift */,
 				030B2199267FE2C70038C095 /* List */,
 				038CF6F526768F5500931595 /* System */,
-				030B21B9268113FF0038C095 /* ProcessDetailController.swift */,
-				030B21BB268114080038C095 /* EventDetailController.swift */,
-				030B21BD268114130038C095 /* ConversionDetailController.swift */,
-				030B21BF2681141F0038C095 /* ConditonDetailController.swift */,
-				030B21C1268114290038C095 /* DimensionDetailController.swift */,
-				030B21C3268114320038C095 /* UnitDetailController.swift */,
-				030B21C52681143C0038C095 /* SymbolDetailController.swift */,
-				030B21C7268114480038C095 /* NoteDetailController.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -666,8 +666,8 @@
 		038CF6F726768F5B00931595 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				030B2174267F7D550038C095 /* Table View */,
 				030B2190267FE00D0038C095 /* Controller */,
+				030B2174267F7D550038C095 /* Table View */,
 				030B218F267FE0080038C095 /* View */,
 			);
 			path = Detail;

@@ -34,7 +34,8 @@ class SystemDetailTableViewModel: TableViewModel
             TextEditCellModel.self,
             TextCellModel.self,
             IdealInfoCellModel.self,
-            SuggestedFlowCellModel.self
+            SuggestedFlowCellModel.self,
+            DetailCellModel.self
             // Title cell
             // Ideal cell
             // Suggested flows

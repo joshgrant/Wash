@@ -31,13 +31,10 @@ class StocksHeaderViewModel: TableHeaderViewModel
                 return
             }
             
-            let newStock = Stock(context: context)
-            system.addToStocks(newStock)
-            
-            // TODO: Present the new stock page
-            
-            // We want to open up the stock detail page (modally?)
-            // with the stock that we just added
+            let stock = Stock(context: context)
+            system.addToStocks(stock)
+            let detailController = stock.detailController(navigationController: navigationController)
+            navigationController.present(detailController, animated: true, completion: nil)
         }
     }
 }

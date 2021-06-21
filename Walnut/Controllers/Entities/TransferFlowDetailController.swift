@@ -23,6 +23,24 @@ class TransferFlowDetailTableViewDataSourceModel: TableViewDataSourceModel
     {
         [
             // TODO: Add cell models
+            
+            // Info
+            [
+                // Title edit
+                // amount (detail)
+                // from (detail)
+                // to (detail)
+                // duration (detail)
+                // require user completion (toggle)
+            ],
+            // Events
+            [
+                // detail
+            ],
+            // History
+            [
+                // detail
+            ]
         ]
     }
 }
@@ -30,6 +48,9 @@ class TransferFlowDetailTableViewDataSourceModel: TableViewDataSourceModel
 class TransferFlowDetailTableViewDelegateModel: TableViewDelegateModel
 {
     // MARK: - Initialization
+    
+    // TODO: Add a footer for the info section
+    // "Adds a to-do button in the dashboard
     
     convenience init(
         flow: TransferFlow,
@@ -51,6 +72,9 @@ class TransferFlowDetailTableViewDelegateModel: TableViewDelegateModel
     static func makeHeaderViewModels(flow: TransferFlow, navigationController: NavigationController) -> [TableHeaderViewModel]
     {
         [
+            // Info,
+            // Events
+            // History
         ]
     }
     

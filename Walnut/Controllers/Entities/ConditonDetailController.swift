@@ -23,6 +23,12 @@ class ConditionDetailTableViewDataSourceModel: TableViewDataSourceModel
     {
         [
             // TODO: Add cell models
+            [
+                // detail, disclosure
+                // detail, disclosure
+                // green, detail, info, disclosure
+                // green, detail, info, disclosure
+            ]
         ]
     }
 }
@@ -51,6 +57,7 @@ class ConditionDetailTableViewDelegateModel: TableViewDelegateModel
     static func makeHeaderViewModels(condition: Condition, navigationController: NavigationController) -> [TableHeaderViewModel]
     {
         [
+            // Condition
         ]
     }
     
@@ -145,6 +152,7 @@ class ConditionDetailControllerModel: ControllerModel
     }
 }
 
+/// This is visible in the event detal, by adding a condition
 class ConditionDetailController: ViewController<
                             ConditionDetailControllerModel,
                             ConditionDetailViewModel,

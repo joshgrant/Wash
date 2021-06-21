@@ -25,11 +25,11 @@ class SystemDetailTableViewDataSourceModel: TableViewDataSourceModel
         [
             // Info
             makeInfoSection(system: system),
-            [], // Stocks
-            [], // Flows
-            [], // Events
-            [], // Subsystems
-            [] // Notes
+            makeStocksModels(system: system),
+            makeFlowsModels(system: system),
+            makeEventsModels(system: system),
+//            [], // Subsystems
+            makeNotesModels(system: system)
         ]
     }
     
@@ -51,5 +51,41 @@ class SystemDetailTableViewDataSourceModel: TableViewDataSourceModel
         //        }
         
         return section
+    }
+    
+    static func makeStocksModels(system: System) -> [TableViewCellModel]
+    {
+        let stocks = system.unwrappedStocks
+        return stocks.map
+        {
+            DetailCellModel(title: $0.title, detail: $0.currentDescription)
+        }
+    }
+    
+    static func makeFlowsModels(system: System) -> [TableViewCellModel]
+    {
+        let flows = system.unwrappedFlows
+        return flows.map
+        {
+            DetailCellModel(title: $0.title, detail: "None")
+        }
+    }
+    
+    static func makeEventsModels(system: System) -> [TableViewCellModel]
+    {
+        let events = system.unwrappedEvents
+        return events.map
+        {
+            DetailCellModel(title: $0.title, detail: "None")
+        }
+    }
+    
+    static func makeNotesModels(system: System) -> [TableViewCellModel]
+    {
+        let notes = system.unwrappedNotes
+        return notes.map
+        {
+            DetailCellModel(title: $0.title, detail: $0.firstLine ?? "None")
+        }
     }
 }

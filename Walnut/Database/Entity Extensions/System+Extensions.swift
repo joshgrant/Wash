@@ -24,6 +24,9 @@ extension System
 //    }
     
     var unwrappedStocks: [Stock] { unwrapped(\System.stocks) }
+    var unwrappedFlows: [Flow] { unwrapped(\System.flows) }
+    var unwrappedEvents: [Event] { unwrapped(\System.events) }
+    var unwrappedNotes: [Note] { unwrapped(\System.notes) }
     
     var percentIdeal: Int
     {

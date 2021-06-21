@@ -23,6 +23,26 @@ class EventDetailTableViewDataSourceModel: TableViewDataSourceModel
     {
         [
             // TODO: Add cell models
+            
+            // Info
+            [
+                // Title edit
+                // Active (toggle)
+            ],
+            // Conditions
+            [
+                // Condition (green, detail, info, disclosure)
+                // (then a list of conditions)
+                // title (detail, disclosure)
+            ],
+            // Flows
+            [
+                // title, disclosure
+            ],
+            // History
+            [
+                // Title, disclosure
+            ]
         ]
     }
 }
@@ -51,6 +71,10 @@ class EventDetailTableViewDelegateModel: TableViewDelegateModel
     static func makeHeaderViewModels(event: Event, navigationController: NavigationController) -> [TableHeaderViewModel]
     {
         [
+            // Info
+            // Conditions
+            // Flows
+            // History
         ]
     }
     
