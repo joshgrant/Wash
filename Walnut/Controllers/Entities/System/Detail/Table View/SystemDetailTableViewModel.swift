@@ -8,7 +8,7 @@
 import Foundation
 import ProgrammaticUI
 
-class SystemDetailTableViewModel: TableViewModel<SystemDetailTableViewDelegateModel, SystemDetailTableViewDataSourceModel>
+class SystemDetailTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import ProgrammaticUI
 
-class LibraryTableViewModel: TableViewModel<LibraryTableViewDelegateModel, LibraryTableViewDataSourceModel>
+class LibraryTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     

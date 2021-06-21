@@ -8,7 +8,7 @@
 import UIKit
 import ProgrammaticUI
 
-class DashboardTableViewModel: TableViewModel<DashboardTableViewDelegateModel, DashboardTableViewDataSourceModel>
+class DashboardTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     

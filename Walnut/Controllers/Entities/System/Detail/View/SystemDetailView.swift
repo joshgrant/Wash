@@ -12,7 +12,7 @@ class SystemDetailView: View<SystemDetailViewModel>
 {
     // MARK: - Variables
     
-    var tableView: TableView<SystemDetailTableViewDelegateModel, SystemDetailTableViewDataSourceModel, SystemDetailTableViewModel>
+    var tableView: TableView<SystemDetailTableViewModel>
     
     // MARK: - Initialization
     

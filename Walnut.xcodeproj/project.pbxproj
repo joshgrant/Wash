@@ -11,7 +11,6 @@
 		030B2166267EDA2E0038C095 /* SystemListTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2165267EDA2E0038C095 /* SystemListTableViewModel.swift */; };
 		030B2168267EDA440038C095 /* SystemListTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2167267EDA440038C095 /* SystemListTableViewDataSourceModel.swift */; };
 		030B216A267EDA570038C095 /* SystemListTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2169267EDA570038C095 /* SystemListTableViewDelegateModel.swift */; };
-		030B216C267EDA670038C095 /* SystemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B216B267EDA670038C095 /* SystemListView.swift */; };
 		030B216E267EDA760038C095 /* SystemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B216D267EDA760038C095 /* SystemListViewModel.swift */; };
 		030B2170267EDA850038C095 /* SystemListControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B216F267EDA850038C095 /* SystemListControllerModel.swift */; };
 		030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2172267F7C130038C095 /* SystemDetailController.swift */; };
@@ -142,7 +141,6 @@
 		030B2165267EDA2E0038C095 /* SystemListTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListTableViewModel.swift; sourceTree = "<group>"; };
 		030B2167267EDA440038C095 /* SystemListTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListTableViewDataSourceModel.swift; sourceTree = "<group>"; };
 		030B2169267EDA570038C095 /* SystemListTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListTableViewDelegateModel.swift; sourceTree = "<group>"; };
-		030B216B267EDA670038C095 /* SystemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListView.swift; sourceTree = "<group>"; };
 		030B216D267EDA760038C095 /* SystemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListViewModel.swift; sourceTree = "<group>"; };
 		030B216F267EDA850038C095 /* SystemListControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemListControllerModel.swift; sourceTree = "<group>"; };
 		030B2172267F7C130038C095 /* SystemDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailController.swift; sourceTree = "<group>"; };
@@ -344,22 +342,6 @@
 				030B2189267FDFB70038C095 /* SystemDetailControllerModel.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		030B2197267FE2BB0038C095 /* Stock */ = {
-			isa = PBXGroup;
-			children = (
-				030B2199267FE2C70038C095 /* List */,
-				030B2198267FE2C30038C095 /* Detail */,
-			);
-			path = Stock;
-			sourceTree = "<group>";
-		};
-		030B2198267FE2C30038C095 /* Detail */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Detail;
 			sourceTree = "<group>";
 		};
 		030B2199267FE2C70038C095 /* List */ = {
@@ -650,7 +632,7 @@
 		038CF6F426768F4C00931595 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				030B2197267FE2BB0038C095 /* Stock */,
+				030B2199267FE2C70038C095 /* List */,
 				038CF6F526768F5500931595 /* System */,
 			);
 			path = Entities;
@@ -670,7 +652,6 @@
 			children = (
 				038CF6F8267690CD00931595 /* SystemListController.swift */,
 				030B216F267EDA850038C095 /* SystemListControllerModel.swift */,
-				030B216B267EDA670038C095 /* SystemListView.swift */,
 				030B216D267EDA760038C095 /* SystemListViewModel.swift */,
 				030B2171267EDA8D0038C095 /* Table View */,
 			);
@@ -926,7 +907,6 @@
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
 				030B219F267FE4D50038C095 /* Listable.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
-				030B216C267EDA670038C095 /* SystemListView.swift in Sources */,
 				038CF6D0267682C700931595 /* Searchable.swift in Sources */,
 				038CF62E2676530700931595 /* InboxViewModel.swift in Sources */,
 			);

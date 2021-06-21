@@ -10,12 +10,9 @@ import ProgrammaticUI
 
 class LibraryView: View<LibraryViewModel>
 {
-    typealias Delegate = LibraryTableViewDelegateModel
-    typealias DataSource = LibraryTableViewDataSourceModel
-    
     // MARK: - Variables
     
-    var tableView: TableView<Delegate, DataSource, LibraryTableViewModel>
+    var tableView: TableView<LibraryTableViewModel>
     
     // MARK: - Initialization
     
