@@ -39,8 +39,8 @@ class EntityListControllerModel: ControllerModel
         ActionClosure { sender in
             let entity = type.init(context: context)
             print("Creating: \(entity)")
-            // TODO: Create the detail controller
-            // TODO: Push the detail controller
+            let detailController = entity.detailController(navigationController: navigationController)
+            navigationController.pushViewController(detailController, animated: true)
             // TODO: Refresh the table view list (insertion)
             context.quickSave()
         }

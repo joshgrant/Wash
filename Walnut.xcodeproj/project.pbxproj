@@ -46,6 +46,10 @@
 		030B21CB26811E630038C095 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21CA26811E630038C095 /* String+Extensions.swift */; };
 		030B21CE268121AA0038C095 /* SearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */; };
 		030B21D126815D930038C095 /* Notifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D026815D930038C095 /* Notifiable.swift */; };
+		030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D2268167730038C095 /* StatesHeaderViewModel.swift */; };
+		030B21D5268168450038C095 /* InflowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */; };
+		030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */; };
+		030B21D92681697D0038C095 /* EntityListTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D82681697D0038C095 /* EntityListTableViewDelegate.swift */; };
 		031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681AE267D655B00F493DA /* DashboardFlowCell.swift */; };
 		031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B0267D656500F493DA /* DashboardForecastCell.swift */; };
 		031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B2267D656F00F493DA /* DashboardPriorityCell.swift */; };
@@ -186,6 +190,10 @@
 		030B21CA26811E630038C095 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerDelegate.swift; sourceTree = "<group>"; };
 		030B21D026815D930038C095 /* Notifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifiable.swift; sourceTree = "<group>"; };
+		030B21D2268167730038C095 /* StatesHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InflowsHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutflowsHeaderViewModel.swift; sourceTree = "<group>"; };
+		030B21D82681697D0038C095 /* EntityListTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewDelegate.swift; sourceTree = "<group>"; };
 		031681AE267D655B00F493DA /* DashboardFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlowCell.swift; sourceTree = "<group>"; };
 		031681B0267D656500F493DA /* DashboardForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardForecastCell.swift; sourceTree = "<group>"; };
 		031681B2267D656F00F493DA /* DashboardPriorityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPriorityCell.swift; sourceTree = "<group>"; };
@@ -309,7 +317,6 @@
 				030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */,
 				030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */,
 				030B2184267FB2A60038C095 /* Cells */,
-				030B2175267F7D5E0038C095 /* Section Header */,
 			);
 			path = "Table View";
 			sourceTree = "<group>";
@@ -323,6 +330,9 @@
 				030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */,
 				030B2180267F7EF70038C095 /* SubSystemsHeaderViewModel.swift */,
 				030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */,
+				030B21D2268167730038C095 /* StatesHeaderViewModel.swift */,
+				030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */,
+				030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */,
 			);
 			path = "Section Header";
 			sourceTree = "<group>";
@@ -364,6 +374,7 @@
 				030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */,
 				030B21B026810F2A0038C095 /* EntityListView.swift */,
 				030B21B226810F3C0038C095 /* EntityListViewModel.swift */,
+				030B21D82681697D0038C095 /* EntityListTableViewDelegate.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -533,6 +544,7 @@
 		038CF6482676744B00931595 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				030B2175267F7D5E0038C095 /* Section Header */,
 				038CF64B2676756500931595 /* Table View Cell */,
 			);
 			path = Shared;
@@ -872,6 +884,7 @@
 				030B2186267FB2B50038C095 /* IdealInfoCell.swift in Sources */,
 				031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */,
 				038CF6C3267682C700931595 /* TextStyle.swift in Sources */,
+				030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */,
 				038CF6C7267682C700931595 /* Priority.swift in Sources */,
 				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
 				038CF62A267652F700931595 /* InboxControllerModel.swift in Sources */,
@@ -882,10 +895,12 @@
 				038CF60E26763E0A00931595 /* LibraryController.swift in Sources */,
 				038CF69B2676829F00931595 /* Entity+Extensions.swift in Sources */,
 				038CF6E12676840E00931595 /* System+Extensions.swift in Sources */,
+				030B21D5268168450038C095 /* InflowsHeaderViewModel.swift in Sources */,
 				038CF69C2676829F00931595 /* ValueSource+Extensions.swift in Sources */,
 				038CF6BF267682C700931595 /* TimePeriod.swift in Sources */,
 				038CF6C6267682C700931595 /* ConditionType.swift in Sources */,
 				038CF6952676829F00931595 /* Dimension+Extensions.swift in Sources */,
+				030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */,
 				031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */,
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
 				030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */,
@@ -895,6 +910,7 @@
 				038CF623267652D500931595 /* LibraryControllerModel.swift in Sources */,
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
 				038CF69D2676829F00931595 /* ImageBlock+Searchable.swift in Sources */,
+				030B21D92681697D0038C095 /* EntityListTableViewDelegate.swift in Sources */,
 				030B21C62681143C0038C095 /* SymbolDetailController.swift in Sources */,
 				030B21A1267FEA230038C095 /* EntityListController.swift in Sources */,
 				038CF6EA2676865600931595 /* DetailCell.swift in Sources */,

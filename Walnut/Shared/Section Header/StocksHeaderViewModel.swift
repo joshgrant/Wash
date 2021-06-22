@@ -10,11 +10,13 @@ import ProgrammaticUI
 
 class StocksHeaderViewModel: TableHeaderViewModel
 {
+    // MARK: - Initialization
+    
     convenience init(system: System, navigationController: NavigationController)
     {
         self.init(
             title: "Stocks".localized,
-            icon: Icon.stock)
+            icon: .stock)
         
         disclosureTriangleActionClosure = ActionClosure { sender in
             print("DISCLOSE")

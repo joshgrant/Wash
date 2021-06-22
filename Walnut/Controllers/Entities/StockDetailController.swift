@@ -75,6 +75,12 @@ class StockDetailTableViewDelegateModel: TableViewDelegateModel
     static func makeHeaderViewModels(stock: Stock, navigationController: NavigationController) -> [TableHeaderViewModel]
     {
         [
+            InfoHeaderViewModel(),
+            StatesHeaderViewModel(),
+            InflowsHeaderViewModel(),
+            OutflowsHeaderViewModel(),
+            EventsHeaderViewModel(),
+            NotesHeaderViewModel()
         ]
     }
     
