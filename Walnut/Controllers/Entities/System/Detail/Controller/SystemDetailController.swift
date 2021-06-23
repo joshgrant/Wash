@@ -9,45 +9,6 @@ import Foundation
 import UIKit
 import ProgrammaticUI
 
-class SystemDetailControllerTextFieldDelegate: NSObject, UITextFieldDelegate
-{
-    // MARK: - Variables
-    
-    weak var model: SystemDetailControllerModel?
-    weak var controller: SystemDetailController?
-    
-    // MARK: - Initialization
-    
-    init(model: SystemDetailControllerModel)
-    {
-        self.model = model
-    }
-    
-    // MARK: - Functions
-    
-    func textFieldDidEndEditing(_ textField: UITextField)
-    {
-        model?.system.title = textField.text ?? ""
-        model?.system.managedObjectContext?.quickSave()
-        
-        controller?.title = textField.text ?? ""
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
-        textField.resignFirstResponder()
-        
-        NotificationCenter.default.post(name: .titleUpdate, object: nil)
-        
-        return true
-    }
-}
-
-extension Notification.Name
-{
-    static let titleUpdate = Notification.Name("Notification.Title.Update")
-}
-
 class SystemDetailController: ViewController<
                                 SystemDetailControllerModel,
                                 SystemDetailViewModel,
@@ -102,6 +63,27 @@ class SystemDetailController: ViewController<
         let pinItem = Self.makePinNavigationItem(system: system, action: pinAction)
         
         navigationItem.setRightBarButtonItems([duplicateItem, pinItem], animated: false)
+    }
+    
+    // MARK: - View lifecycle
+
+    override func viewDidAppear(_ animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        
+        // TODO: TERRIBLE!
+        // TODO: It should be the cell... or maybe not?
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        let cell = _view.tableView.cellForRow(at: indexPath)
+        guard let textCell = cell as? TextEditCell else { return }
+//
+        if let text = textCell.textField.text
+        {
+            if text.count > 0 { return }
+        }
+        
+        textCell.textField.becomeFirstResponder()
     }
     
     // MARK: - Factory

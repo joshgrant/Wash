@@ -132,6 +132,8 @@
 		038CF6EE267687A500931595 /* LibraryTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6ED267687A500931595 /* LibraryTableViewModel.swift */; };
 		038CF6F0267687AF00931595 /* LibraryTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6EF267687AF00931595 /* LibraryTableViewDelegateModel.swift */; };
 		038CF6F2267687B800931595 /* LibraryTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6F1267687B800931595 /* LibraryTableViewDataSourceModel.swift */; };
+		03E700732683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700722683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift */; };
+		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -282,6 +284,8 @@
 		038CF6ED267687A500931595 /* LibraryTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewModel.swift; sourceTree = "<group>"; };
 		038CF6EF267687AF00931595 /* LibraryTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewDelegateModel.swift; sourceTree = "<group>"; };
 		038CF6F1267687B800931595 /* LibraryTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewDataSourceModel.swift; sourceTree = "<group>"; };
+		03E700722683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailControllerTextFieldDelegate.swift; sourceTree = "<group>"; };
+		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +364,7 @@
 			children = (
 				030B2172267F7C130038C095 /* SystemDetailController.swift */,
 				030B2189267FDFB70038C095 /* SystemDetailControllerModel.swift */,
+				03E700722683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -383,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				030B21CA26811E630038C095 /* String+Extensions.swift */,
+				03E700742683916400B8B527 /* Notification.Name+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -905,6 +911,7 @@
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
 				030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */,
 				030B2183267FB15B0038C095 /* TextEditCell.swift in Sources */,
+				03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */,
 				030B21B126810F2A0038C095 /* EntityListView.swift in Sources */,
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
 				038CF623267652D500931595 /* LibraryControllerModel.swift in Sources */,
@@ -967,6 +974,7 @@
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
 				038CF6EE267687A500931595 /* LibraryTableViewModel.swift in Sources */,
 				030B21B626810FCF0038C095 /* StockDetailController.swift in Sources */,
+				03E700732683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift in Sources */,
 				038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */,
 				038CF6862676829F00931595 /* Named.swift in Sources */,
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,

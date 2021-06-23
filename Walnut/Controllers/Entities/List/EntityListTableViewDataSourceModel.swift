@@ -73,8 +73,8 @@ extension EntityListTableViewDataSourceModel: Notifiable
     
     @objc func contextUpdateNotification(_ notification: Notification)
     {
-        let deleted = notification.userInfo?["deleted"]
-        print(deleted)
+//        let deleted = notification.userInfo?["deleted"]
+//        print(deleted)
         
         guard let context = context else { return }
         guard let type = type else { return }
