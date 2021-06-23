@@ -76,8 +76,8 @@ class NoteDetailTableViewModel: TableViewModel
         
         self.init(
             style: .grouped,
-            delegateModel: delegateModel,
-            dataSourceModel: dataSourceModel,
+            delegate: .init(model: delegateModel),
+            dataSource: .init(model: dataSourceModel),
             cellModelTypes: cellModelTypes)
     }
     

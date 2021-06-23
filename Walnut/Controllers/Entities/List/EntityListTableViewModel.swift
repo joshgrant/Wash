@@ -15,6 +15,7 @@ class EntityListTableViewModel: TableViewModel
         let delegateModel = EntityListTableViewDelegateModel(
             context: context,
             navigationController: navigationController, type: type)
+        let delegate = EntityListTableViewDelegate(model: delegateModel, entityType: type, context: context)
         let dataSourceModel = EntityListTableViewDataSourceModel(
             context: context,
             type: type)
@@ -22,8 +23,8 @@ class EntityListTableViewModel: TableViewModel
         
         self.init(
             style: .grouped,
-            delegateModel: delegateModel,
-            dataSourceModel: dataSourceModel,
+            delegate: delegate,
+            dataSource: .init(model: dataSourceModel),
             cellModelTypes: cellModelTypes)
     }
     

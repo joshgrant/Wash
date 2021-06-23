@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 import ProgrammaticUI
 
 class EntityListTableViewDataSourceModel: TableViewDataSourceModel
@@ -16,6 +17,12 @@ class EntityListTableViewDataSourceModel: TableViewDataSourceModel
     var type: Entity.Type?
     
     // MARK: - Initialization
+    
+    required init(cellModels: [[TableViewCellModel]])
+    {
+        super.init(cellModels: cellModels)
+        handleNotifications(true)
+    }
     
     convenience init(context: Context, type: Entity.Type)
     {
@@ -48,5 +55,29 @@ class EntityListTableViewDataSourceModel: TableViewDataSourceModel
             .all(context: context)
             .compactMap { $0 as? Named }
             .map { TextCellModel(title: $0.title, disclosureIndicator: true) }
+    }
+}
+
+// MARK: - Notifications
+
+extension EntityListTableViewDataSourceModel: Notifiable
+{
+    func startObservingNotifications()
+    {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(contextUpdateNotification(_:)),
+            name: .NSManagedObjectContextObjectsDidChange,
+            object: nil)
+    }
+    
+    @objc func contextUpdateNotification(_ notification: Notification)
+    {
+        let deleted = notification.userInfo?["deleted"]
+        print(deleted)
+        
+        guard let context = context else { return }
+        guard let type = type else { return }
+        self.cellModels = Self.makeCellModels(context: context, type: type)
     }
 }
