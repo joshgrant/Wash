@@ -21,11 +21,11 @@ class EntityListViewModel: ViewModel
         self.tableViewModel = tableViewModel
     }
     
-    convenience init(context: Context, navigationController: NavigationController, type: Entity.Type)
+    convenience init(context: Context, navigationController: NavigationController, type: Entity.Type, stateMachine: EntityListStateMachine)
     {
         let tableViewModel = EntityListTableViewModel(
             context: context,
-            navigationController: navigationController, type: type)
+            navigationController: navigationController, type: type, stateMachine: stateMachine)
         self.init(tableViewModel: tableViewModel)
     }
 }

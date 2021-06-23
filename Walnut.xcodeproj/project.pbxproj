@@ -134,6 +134,7 @@
 		038CF6F2267687B800931595 /* LibraryTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6F1267687B800931595 /* LibraryTableViewDataSourceModel.swift */; };
 		03E700732683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700722683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
+		03E70079268394F300B8B527 /* EntityListStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E70078268394F300B8B527 /* EntityListStateMachine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -286,6 +287,7 @@
 		038CF6F1267687B800931595 /* LibraryTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewDataSourceModel.swift; sourceTree = "<group>"; };
 		03E700722683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailControllerTextFieldDelegate.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
+		03E70078268394F300B8B527 /* EntityListStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListStateMachine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,19 +371,16 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		030B2199267FE2C70038C095 /* List */ = {
+		030B2199267FE2C70038C095 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				030B21A0267FEA230038C095 /* EntityListController.swift */,
 				030B21AC26810EF00038C095 /* EntityListControllerModel.swift */,
-				030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */,
-				030B21AE26810F080038C095 /* EntityListTableViewDelegateModel.swift */,
-				030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */,
-				030B21B026810F2A0038C095 /* EntityListView.swift */,
-				030B21B226810F3C0038C095 /* EntityListViewModel.swift */,
-				030B21D82681697D0038C095 /* EntityListTableViewDelegate.swift */,
+				03E70077268394D100B8B527 /* Table View */,
+				03E70076268394C600B8B527 /* View */,
+				03E70078268394F300B8B527 /* EntityListStateMachine.swift */,
 			);
-			path = List;
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		030B21C926811E540038C095 /* Extensions */ = {
@@ -700,7 +699,7 @@
 				030B21C52681143C0038C095 /* SymbolDetailController.swift */,
 				030B21B7268113ED0038C095 /* TransferFlowDetailController.swift */,
 				030B21C3268114320038C095 /* UnitDetailController.swift */,
-				030B2199267FE2C70038C095 /* List */,
+				030B2199267FE2C70038C095 /* Entity */,
 				038CF6F526768F5500931595 /* System */,
 			);
 			path = Entities;
@@ -722,6 +721,26 @@
 				030B218F267FE0080038C095 /* View */,
 			);
 			path = Detail;
+			sourceTree = "<group>";
+		};
+		03E70076268394C600B8B527 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				030B21B026810F2A0038C095 /* EntityListView.swift */,
+				030B21B226810F3C0038C095 /* EntityListViewModel.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		03E70077268394D100B8B527 /* Table View */ = {
+			isa = PBXGroup;
+			children = (
+				030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */,
+				030B21AE26810F080038C095 /* EntityListTableViewDelegateModel.swift */,
+				030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */,
+				030B21D82681697D0038C095 /* EntityListTableViewDelegate.swift */,
+			);
+			path = "Table View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -970,6 +989,7 @@
 				038CF6442676726900931595 /* DashboardTableViewDelegateModel.swift in Sources */,
 				038CF6902676829F00931595 /* Unit+Extensions.swift in Sources */,
 				030B21C4268114320038C095 /* UnitDetailController.swift in Sources */,
+				03E70079268394F300B8B527 /* EntityListStateMachine.swift in Sources */,
 				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
 				038CF6EE267687A500931595 /* LibraryTableViewModel.swift in Sources */,

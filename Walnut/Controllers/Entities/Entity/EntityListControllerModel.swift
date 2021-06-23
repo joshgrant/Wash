@@ -22,26 +22,31 @@ class EntityListControllerModel: ControllerModel
     
     // MARK: - Initialization
     
-    init(context: Context, navigationController: NavigationController, type: Entity.Type)
+    init(context: Context, navigationController: NavigationController, type: Entity.Type, stateMachine: EntityListStateMachine)
     {
         self.type = type
         
         addAction = Self.makeAddAction(
             context: context,
             navigationController: navigationController,
-            type: type)
+            type: type,
+            stateMachine: stateMachine)
     }
     
     // MARK: - Factory
     
-    static func makeAddAction(context: Context, navigationController: NavigationController, type: Entity.Type) -> ActionClosure
+    static func makeAddAction(
+        context: Context,
+        navigationController: NavigationController,
+        type: Entity.Type,
+        stateMachine: EntityListStateMachine) -> ActionClosure
     {
+        // TODO: We should use a router instead
+        // of having the controller creation happening here
         ActionClosure { sender in
             let entity = type.init(context: context)
-            print("Creating: \(entity)")
-            let detailController = entity.detailController(navigationController: navigationController)
+            let detailController = entity.detailController(navigationController: navigationController, stateMachine: stateMachine)
             navigationController.pushViewController(detailController, animated: true)
-            // TODO: Refresh the table view list (insertion)
             context.quickSave()
         }
     }

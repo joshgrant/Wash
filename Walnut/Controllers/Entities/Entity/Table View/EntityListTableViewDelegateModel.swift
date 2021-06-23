@@ -12,12 +12,12 @@ class EntityListTableViewDelegateModel: TableViewDelegateModel
 {
     // MARK: - Initialization
     
-    convenience init(context: Context, navigationController: NavigationController, type: Entity.Type)
+    convenience init(context: Context, navigationController: NavigationController, type: Entity.Type, stateMachine: EntityListStateMachine)
     {
         let didSelect = Self.makeDidSelect(
             context: context,
             navigationController: navigationController,
-            type: type)
+            type: type, stateMachine: stateMachine)
         
         self.init(
             headerViews: nil,
@@ -28,13 +28,13 @@ class EntityListTableViewDelegateModel: TableViewDelegateModel
     
     // MARK: - Factory
     
-    static func makeDidSelect(context: Context, navigationController: NavigationController, type: Entity.Type) -> TableViewSelectionClosure
+    static func makeDidSelect(context: Context, navigationController: NavigationController, type: Entity.Type, stateMachine: EntityListStateMachine) -> TableViewSelectionClosure
     {
         { selection in
             let all = type.all(context: context)
             let entity = all[selection.indexPath.row]
             print("Selected: \(entity)")
-            let detailController = entity.detailController(navigationController: navigationController)
+            let detailController = entity.detailController(navigationController: navigationController, stateMachine: stateMachine)
             navigationController.pushViewController(detailController, animated: true)
         }
     }

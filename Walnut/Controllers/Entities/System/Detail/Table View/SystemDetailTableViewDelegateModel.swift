@@ -12,9 +12,9 @@ class SystemDetailTableViewDelegateModel: TableViewDelegateModel
 {
     // MARK: - Initialization
     
-    convenience init(system: System, navigationController: NavigationController)
+    convenience init(system: System, navigationController: NavigationController, stateMachine: EntityListStateMachine)
     {
-        let headerViews = Self.makeHeaderViews(system: system, navigationController: navigationController)
+        let headerViews = Self.makeHeaderViews(system: system, navigationController: navigationController, stateMachine: stateMachine)
         
         // TODO: Add a selection action closure
         
@@ -27,11 +27,11 @@ class SystemDetailTableViewDelegateModel: TableViewDelegateModel
     
     // MARK: - Factory
     
-    static func makeHeaderViewModels(system: System, navigationController: NavigationController) -> [TableHeaderViewModel]
+    static func makeHeaderViewModels(system: System, navigationController: NavigationController, stateMachine: EntityListStateMachine) -> [TableHeaderViewModel]
     {
         [
             InfoHeaderViewModel(),
-            StocksHeaderViewModel(system: system, navigationController: navigationController),
+            StocksHeaderViewModel(system: system, navigationController: navigationController, stateMachine: stateMachine),
             SystemDetailFlowsHeaderViewModel(),
             EventsHeaderViewModel(),
             SubSystemsHeaderViewModel(),
@@ -39,9 +39,9 @@ class SystemDetailTableViewDelegateModel: TableViewDelegateModel
         ]
     }
     
-    static func makeHeaderViews(system: System, navigationController: NavigationController) -> [TableHeaderView]
+    static func makeHeaderViews(system: System, navigationController: NavigationController, stateMachine: EntityListStateMachine) -> [TableHeaderView]
     {
-        let models = makeHeaderViewModels(system: system, navigationController: navigationController)
+        let models = makeHeaderViewModels(system: system, navigationController: navigationController, stateMachine: stateMachine)
         return models.map { TableHeaderView(model: $0) }
     }
 }

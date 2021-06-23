@@ -62,6 +62,8 @@ class EntityListTableViewDataSourceModel: TableViewDataSourceModel
 
 extension EntityListTableViewDataSourceModel: Notifiable
 {
+    // TODO: This seems not great... notifications introduce spaghetti code
+    // and we can probably come up with a better way.
     func startObservingNotifications()
     {
         NotificationCenter.default.addObserver(
@@ -73,11 +75,6 @@ extension EntityListTableViewDataSourceModel: Notifiable
     
     @objc func contextUpdateNotification(_ notification: Notification)
     {
-//        let deleted = notification.userInfo?["deleted"]
-//        print(deleted)
-        
-        guard let context = context else { return }
-        guard let type = type else { return }
-        self.cellModels = Self.makeCellModels(context: context, type: type)
+        reload()
     }
 }

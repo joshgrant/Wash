@@ -13,9 +13,13 @@ class SystemDetailTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     
-    convenience init(system: System, navigationController: NavigationController, delegate: UITextFieldDelegate)
+    convenience init(
+        system: System,
+        navigationController: NavigationController,
+        delegate: UITextFieldDelegate,
+        stateMachine: EntityListStateMachine)
     {
-        let delegateModel = SystemDetailTableViewDelegateModel(system: system, navigationController: navigationController)
+        let delegateModel = SystemDetailTableViewDelegateModel(system: system, navigationController: navigationController, stateMachine: stateMachine)
         let dataSourceModel = SystemDetailTableViewDataSourceModel(system: system, delegate: delegate)
         let cellModelTypes = Self.makeCellModelTypes()
         

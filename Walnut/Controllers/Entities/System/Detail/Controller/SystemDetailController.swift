@@ -17,6 +17,7 @@ class SystemDetailController: ViewController<
     // MARK: - Variables
     
     var textFieldDelegate: SystemDetailControllerTextFieldDelegate
+    weak var entityListStateMachine: EntityListStateMachine?
     
     // MARK: - Initialization
     
@@ -34,35 +35,28 @@ class SystemDetailController: ViewController<
         title = model.title
     }
     
-    convenience init(system: System, navigationController: NavigationController)
+    convenience init(system: System, navigationController: NavigationController, stateMachine: EntityListStateMachine)
     {
         let controllerModel = SystemDetailControllerModel(system: system)
         let textFieldDelegate = SystemDetailControllerTextFieldDelegate(model: controllerModel)
         let viewModel = SystemDetailViewModel(
             system: system,
             navigationController: navigationController,
-            delegate: textFieldDelegate)
+            delegate: textFieldDelegate,
+            stateMachine: stateMachine)
         
         self.init(
             controllerModel: controllerModel,
             viewModel: viewModel,
             delegate: textFieldDelegate)
         
+        entityListStateMachine = stateMachine
+        
         // To update the title
         textFieldDelegate.controller = self
         
         // Menu Bar
-        
-        let duplicateAction = Self.makeDuplicateAction()
-        let pinAction = Self.makePinAction(system: system)
-        
-        actionClosures.insert(duplicateAction)
-        actionClosures.insert(pinAction)
-        
-        let duplicateItem = Self.makeDuplicateNavigationItem(action: duplicateAction)
-        let pinItem = Self.makePinNavigationItem(system: system, action: pinAction)
-        
-        navigationItem.setRightBarButtonItems([duplicateItem, pinItem], animated: false)
+        configureNavigationItemRightBarButtonItems(system: system)
     }
     
     // MARK: - View lifecycle
@@ -84,6 +78,22 @@ class SystemDetailController: ViewController<
         }
         
         textCell.textField.becomeFirstResponder()
+    }
+    
+    // MARK: - Configuration
+    
+    private func configureNavigationItemRightBarButtonItems(system: System)
+    {
+        let duplicateAction = Self.makeDuplicateAction()
+        let pinAction = Self.makePinAction(system: system)
+        
+        actionClosures.insert(duplicateAction)
+        actionClosures.insert(pinAction)
+        
+        let duplicateItem = Self.makeDuplicateNavigationItem(action: duplicateAction)
+        let pinItem = Self.makePinNavigationItem(system: system, action: pinAction)
+        
+        navigationItem.setRightBarButtonItems([duplicateItem, pinItem], animated: false)
     }
     
     // MARK: - Factory

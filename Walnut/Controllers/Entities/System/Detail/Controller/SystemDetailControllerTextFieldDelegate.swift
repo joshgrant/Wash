@@ -36,7 +36,8 @@ class SystemDetailControllerTextFieldDelegate: NSObject, UITextFieldDelegate
     {
         textField.resignFirstResponder()
         
-        NotificationCenter.default.post(name: .titleUpdate, object: nil)
+        // TODO: This delegate should NOT know about the controller!
+        controller?.entityListStateMachine?.dirty = true
         
         return true
     }
