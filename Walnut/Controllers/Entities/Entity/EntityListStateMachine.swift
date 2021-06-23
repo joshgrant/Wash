@@ -24,6 +24,9 @@ class EntityListStateMachine: StateMachine<EntityListState>
     /// Needs to reload the data source and tableView
     var dirty: Bool = false
     
+    // The managed object context for the current frame
     weak var context: Context?
+    
+    // The type?
     var type: Entity.Type?
 }

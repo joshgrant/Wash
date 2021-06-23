@@ -135,6 +135,7 @@
 		03E700732683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700722683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03E70079268394F300B8B527 /* EntityListStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E70078268394F300B8B527 /* EntityListStateMachine.swift */; };
+		03E7007B2683A80500B8B527 /* EntityListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E7007A2683A80500B8B527 /* EntityListInteractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -288,6 +289,7 @@
 		03E700722683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailControllerTextFieldDelegate.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03E70078268394F300B8B527 /* EntityListStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListStateMachine.swift; sourceTree = "<group>"; };
+		03E7007A2683A80500B8B527 /* EntityListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListInteractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +381,7 @@
 				03E70077268394D100B8B527 /* Table View */,
 				03E70076268394C600B8B527 /* View */,
 				03E70078268394F300B8B527 /* EntityListStateMachine.swift */,
+				03E7007A2683A80500B8B527 /* EntityListInteractor.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -951,6 +954,7 @@
 				030B219B267FE3730038C095 /* EntityListTableViewDataSourceModel.swift in Sources */,
 				038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */,
 				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
+				03E7007B2683A80500B8B527 /* EntityListInteractor.swift in Sources */,
 				030B21B8268113ED0038C095 /* TransferFlowDetailController.swift in Sources */,
 				030B2181267F7EF70038C095 /* SubSystemsHeaderViewModel.swift in Sources */,
 				031681B5267D66E100F493DA /* TextCell.swift in Sources */,

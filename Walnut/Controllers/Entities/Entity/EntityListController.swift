@@ -18,6 +18,7 @@ class EntityListController: ViewController<
     // MARK: - Variables
     
     var stateMachine: EntityListStateMachine
+    var interactor = EntityListInteractor()
     
     // MARK: - Initialization
     
@@ -55,8 +56,6 @@ class EntityListController: ViewController<
             viewModel: viewModel,
             stateMachine: stateMachine)
         
-//        handleNotifications(true)
-        
         title = controllerModel.title
         navigationItem.rightBarButtonItem = Self.makeAddBarButtonItem(model: controllerModel)
         
@@ -68,54 +67,15 @@ class EntityListController: ViewController<
     
     // MARK: - View lifecycle
     
-    override func viewWillLayoutSubviews()
-    {
-        super.viewWillLayoutSubviews()
-        stateMachine.transition(to: .layingOutSubviews)
-    }
-    
-    override func viewDidLayoutSubviews()
-    {
-        super.viewDidLayoutSubviews()
-        stateMachine.transition(to: .waiting)
-    }
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        stateMachine.transition(to: .loaded)
-    }
-    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        stateMachine.transition(to: .appearing)
         
         if stateMachine.dirty
         {
-            // TODO: Cleanup
-            (self._view.model.tableViewModel.dataSource.model as? EntityListTableViewDataSourceModel)?.reload()
-            self._view.tableView.reloadData()
+            interactor.reload()
             stateMachine.dirty = false
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool)
-    {
-        super.viewDidAppear(animated)
-        stateMachine.transition(to: .waiting)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        super.viewWillDisappear(animated)
-        stateMachine.transition(to: .disappearing)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool)
-    {
-        super.viewDidDisappear(animated)
-        stateMachine.transition(to: .unloaded)
     }
     
     // MARK: - Factory
@@ -139,30 +99,6 @@ class EntityListController: ViewController<
         return searchController
     }
 }
-
-// MARK: - Notifications
-
-//extension EntityListController: Notifiable
-//{
-//    func startObservingNotifications()
-//    {
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(handleTitleUpdateNotification(_:)),
-//            name: .titleUpdate,
-//            object: nil)
-//    }
-//    
-//    // MARK: Handlers
-//    
-//    @objc func handleTitleUpdateNotification(_ notification: Notification)
-//    {
-//        DispatchQueue.main.async {
-//            (self._view.model.tableViewModel.dataSource.model as? EntityListTableViewDataSourceModel)?.reload()
-//            self._view.tableView.reloadData()
-//        }
-//    }
-//}
 
 extension EntityListController: UISearchControllerDelegate
 {
