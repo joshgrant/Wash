@@ -107,12 +107,12 @@ extension Entity
 
 extension Entity
 {
-    func detailController(navigationController: NavigationController, stateMachine: EntityListStateMachine) -> UIViewController
+    func detailController(navigationController: NavigationController) -> UIViewController
     {
         switch self
         {
         case (let s as System):
-            return SystemDetailController(system: s, navigationController: navigationController, stateMachine: stateMachine)
+            return SystemDetailController(system: s, navigationController: navigationController)
         case (let s as Stock):
             return StockDetailController(stock: s, navigationController: navigationController)
         case (let t as TransferFlow):

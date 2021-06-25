@@ -15,49 +15,26 @@ class EntityListController: ViewController<
                                 EntityListViewModel,
                                 EntityListView>
 {
-    // MARK: - Variables
-    
-    var stateMachine: EntityListStateMachine
-    var interactor = EntityListInteractor()
-    
     // MARK: - Initialization
-    
-    init(
-        controllerModel: EntityListControllerModel,
-        viewModel: EntityListViewModel,
-        stateMachine: EntityListStateMachine)
-    {
-        self.stateMachine = stateMachine
-        
-        super.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
-    }
-    
+
     convenience init(
         context: Context,
         navigationController: NavigationController,
         type: Entity.Type)
     {
-        let stateMachine = EntityListStateMachine(current: .unloaded)
         let controllerModel = EntityListControllerModel(
-            context: context,
-            navigationController: navigationController,
-            type: type,
-            stateMachine: stateMachine)
+            type: type)
         let viewModel = EntityListViewModel(
             context: context,
             navigationController: navigationController,
-            type: type,
-            stateMachine: stateMachine)
+            type: type)
         
         self.init(
             controllerModel: controllerModel,
-            viewModel: viewModel,
-            stateMachine: stateMachine)
+            viewModel: viewModel)
         
         title = controllerModel.title
-        navigationItem.rightBarButtonItem = Self.makeAddBarButtonItem(model: controllerModel)
+//        navigationItem.rightBarButtonItem = Self.makeAddBarButtonItem(model: controllerModel)
         
         let controller = Self.makeSearchController(searchControllerDelegate: self)
         
@@ -71,23 +48,23 @@ class EntityListController: ViewController<
     {
         super.viewWillAppear(animated)
         
-        if stateMachine.dirty
-        {
-            interactor.reload()
-            stateMachine.dirty = false
-        }
+//        if stateMachine.dirty
+//        {
+//            interactor.reload()
+//            stateMachine.dirty = false
+//        }
     }
     
     // MARK: - Factory
     
-    static func makeAddBarButtonItem(model: EntityListControllerModel) -> UIBarButtonItem
-    {
-        UIBarButtonItem(
-            image: model.addButtonImage,
-            style: model.addButtonStyle,
-            target: model.addAction,
-            action: #selector(model.addAction.perform(sender:)))
-    }
+//    static func makeAddBarButtonItem(model: EntityListControllerModel) -> UIBarButtonItem
+//    {
+////        UIBarButtonItem(
+////            image: model.addButtonImage,
+////            style: model.addButtonStyle,
+////            target: model.addAction,
+////            action: #selector(model.addAction.perform(sender:)))
+//    }
     
     static func makeSearchController(searchControllerDelegate: UISearchControllerDelegate) -> UISearchController
     {

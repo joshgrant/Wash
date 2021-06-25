@@ -12,7 +12,7 @@ class StocksHeaderViewModel: TableHeaderViewModel
 {
     // MARK: - Initialization
     
-    convenience init(system: System, navigationController: NavigationController, stateMachine: EntityListStateMachine)
+    convenience init(system: System, navigationController: NavigationController)
     {
         self.init(
             title: "Stocks".localized,
@@ -35,7 +35,7 @@ class StocksHeaderViewModel: TableHeaderViewModel
             
             let stock = Stock(context: context)
             system.addToStocks(stock)
-            let detailController = stock.detailController(navigationController: navigationController, stateMachine: stateMachine)
+            let detailController = stock.detailController(navigationController: navigationController)
             navigationController.present(detailController, animated: true, completion: nil)
         }
     }

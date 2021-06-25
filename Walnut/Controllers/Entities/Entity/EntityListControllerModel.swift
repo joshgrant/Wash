@@ -15,39 +15,35 @@ class EntityListControllerModel: ControllerModel
     
     private var type: Entity.Type
     
-    var addAction: ActionClosure
-    var addButtonImage: UIImage? { Icon.add.getImage() }
-    var addButtonStyle: UIBarButtonItem.Style { .plain }
-    var title: String { type.readableName.pluralize() }
     
     // MARK: - Initialization
     
-    init(context: Context, navigationController: NavigationController, type: Entity.Type, stateMachine: EntityListStateMachine)
+    init(type: Entity.Type)
     {
         self.type = type
         
-        addAction = Self.makeAddAction(
-            context: context,
-            navigationController: navigationController,
-            type: type,
-            stateMachine: stateMachine)
+//        addAction = Self.makeAddAction(
+//            context: context,
+//            navigationController: navigationController,
+//            type: type,
+//            stateMachine: stateMachine)
     }
     
     // MARK: - Factory
     
-    static func makeAddAction(
-        context: Context,
-        navigationController: NavigationController,
-        type: Entity.Type,
-        stateMachine: EntityListStateMachine) -> ActionClosure
-    {
-        // TODO: We should use a router instead
-        // of having the controller creation happening here
-        ActionClosure { sender in
-            let entity = type.init(context: context)
-            let detailController = entity.detailController(navigationController: navigationController, stateMachine: stateMachine)
-            navigationController.pushViewController(detailController, animated: true)
-            context.quickSave()
-        }
-    }
+//    static func makeAddAction(
+//        context: Context,
+//        navigationController: NavigationController,
+//        type: Entity.Type,
+//        stateMachine: EntityListStateMachine) -> ActionClosure
+//    {
+//        // TODO: We should use a router instead
+//        // of having the controller creation happening here
+//        ActionClosure { sender in
+//            let entity = type.init(context: context)
+//            let detailController = entity.detailController(navigationController: navigationController, stateMachine: stateMachine)
+//            navigationController.pushViewController(detailController, animated: true)
+//            context.quickSave()
+//        }
+//    }
 }

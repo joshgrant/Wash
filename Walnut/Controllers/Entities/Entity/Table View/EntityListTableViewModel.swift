@@ -10,15 +10,15 @@ import ProgrammaticUI
 
 class EntityListTableViewModel: TableViewModel
 {
-    convenience init(context: Context, navigationController: NavigationController, type: Entity.Type, stateMachine: EntityListStateMachine)
+    convenience init(context: Context, navigationController: NavigationController, entityType: Entity.Type)
     {
         let delegateModel = EntityListTableViewDelegateModel(
             context: context,
-            navigationController: navigationController, type: type, stateMachine: stateMachine)
-        let delegate = EntityListTableViewDelegate(model: delegateModel, entityType: type, context: context)
+            navigationController: navigationController, type: entityType)
+        let delegate = EntityListTableViewDelegate(model: delegateModel, entityType: entityType, context: context)
         let dataSourceModel = EntityListTableViewDataSourceModel(
             context: context,
-            type: type)
+            type: entityType)
         let cellModelTypes = Self.makeCellModelTypes()
         
         self.init(

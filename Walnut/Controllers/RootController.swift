@@ -10,6 +10,20 @@ import ProgrammaticUI
 
 class RootController: TabBarController
 {
+    init(
+        viewControllers: [UIViewController],
+        delegate: TabBarControllerDelegate)
+    {
+        super.init(delegate: delegate)
+        self.viewControllers = viewControllers
+        self.view.backgroundColor = .orange
+    }
+    
+    convenience init(viewControllers: [UIViewController])
+    {
+        let delegate = makeTabBarControllerDelegate()
+        self.init(viewControllers: viewControllers, delegate: delegate)
+    }
 }
 
 func makeTabBarViewControllers(context: Context) -> [UIViewController]
@@ -42,16 +56,4 @@ func makeTabBarControllerDelegate() -> TabBarControllerDelegate
     }, didSelect: { _, viewController in
         print("Selected tab: \(viewController)")
     })
-}
-
-func makeTabBarController(viewControllers: [UIViewController]) -> TabBarController
-{
-    let delegate = makeTabBarControllerDelegate()
-    let controller = RootController(delegate: delegate)
-    
-    controller.view.backgroundColor = .orange
-    
-    controller.viewControllers = viewControllers
-    
-    return controller
 }

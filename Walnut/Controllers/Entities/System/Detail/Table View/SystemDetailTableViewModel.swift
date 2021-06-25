@@ -16,10 +16,9 @@ class SystemDetailTableViewModel: TableViewModel
     convenience init(
         system: System,
         navigationController: NavigationController,
-        delegate: UITextFieldDelegate,
-        stateMachine: EntityListStateMachine)
+        delegate: UITextFieldDelegate)
     {
-        let delegateModel = SystemDetailTableViewDelegateModel(system: system, navigationController: navigationController, stateMachine: stateMachine)
+        let delegateModel = SystemDetailTableViewDelegateModel(system: system, navigationController: navigationController)
         let dataSourceModel = SystemDetailTableViewDataSourceModel(system: system, delegate: delegate)
         let cellModelTypes = Self.makeCellModelTypes()
         

@@ -17,7 +17,6 @@ class SystemDetailController: ViewController<
     // MARK: - Variables
     
     var textFieldDelegate: SystemDetailControllerTextFieldDelegate
-    weak var entityListStateMachine: EntityListStateMachine?
     
     // MARK: - Initialization
     
@@ -35,22 +34,19 @@ class SystemDetailController: ViewController<
         title = model.title
     }
     
-    convenience init(system: System, navigationController: NavigationController, stateMachine: EntityListStateMachine)
+    convenience init(system: System, navigationController: NavigationController)
     {
         let controllerModel = SystemDetailControllerModel(system: system)
         let textFieldDelegate = SystemDetailControllerTextFieldDelegate(model: controllerModel)
         let viewModel = SystemDetailViewModel(
             system: system,
             navigationController: navigationController,
-            delegate: textFieldDelegate,
-            stateMachine: stateMachine)
+            delegate: textFieldDelegate)
         
         self.init(
             controllerModel: controllerModel,
             viewModel: viewModel,
             delegate: textFieldDelegate)
-        
-        entityListStateMachine = stateMachine
         
         // To update the title
         textFieldDelegate.controller = self

@@ -22,13 +22,12 @@ class SystemDetailViewModel: ViewModel
         self.tableViewModel = tableViewModel
     }
     
-    convenience init(system: System, navigationController: NavigationController, delegate: UITextFieldDelegate, stateMachine: EntityListStateMachine)
+    convenience init(system: System, navigationController: NavigationController, delegate: UITextFieldDelegate)
     {
         let tableViewModel = SystemDetailTableViewModel(
             system: system,
             navigationController: navigationController,
-            delegate: delegate,
-            stateMachine: stateMachine)
+            delegate: delegate)
         self.init(tableViewModel: tableViewModel)
     }
 }

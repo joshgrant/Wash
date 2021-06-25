@@ -11,11 +11,26 @@ protocol Interactor: AnyObject {}
 
 class EntityListInteractor: Interactor
 {
+    // MARK: - Variables
+    
+    var router: EntityListRouter
+    
+    // MARK: - Initialization
+    
+    init(router: EntityListRouter)
+    {
+        self.router = router
+    }
+    
+    // MARK: - Functions
+    
     // Navigate back up the navigation stack
     // Let's use a router for this
     func back()
     {
-        
+        router
+            .navigationController?
+            .popViewController(animated: true)
     }
     
     func select(entity: Entity)
