@@ -7,11 +7,3 @@
 
 import Foundation
 import UIKit
-
-typealias TransitionCompletion = () -> Void
-
-protocol Router
-{
-    associatedtype Destination
-    func transition(to: Destination, from: UIViewController, completion: TransitionCompletion?)
-}

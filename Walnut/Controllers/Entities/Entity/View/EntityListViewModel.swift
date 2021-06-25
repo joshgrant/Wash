@@ -19,7 +19,6 @@ class EntityListViewModel: ViewModel
     
     var addButtonImage: UIImage? { Icon.add.getImage() }
     var addButtonStyle: UIBarButtonItem.Style { .plain }
-    var title: String { entityType.readableName.pluralize() }
     
     // MARK: - Initialization
     

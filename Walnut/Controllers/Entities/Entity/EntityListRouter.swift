@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import ProgrammaticUI
 
-class EntityListRouter: Router
+class EntityListRouter: AnyRouter
 {
     // MARK: - Defined types
     
@@ -28,7 +28,9 @@ class EntityListRouter: Router
     
     init(context: Context, navigationController: NavigationController)
     {
-        
+        self.context = context
+        self.navigationController = navigationController
+        super.init()
     }
     
     // MARK: - Functions
@@ -82,41 +84,3 @@ class EntityListRouter: Router
         
     }
 }
-
-//protocol Router: AnyObject
-//{
-//    func makeController() -> UIViewController?
-//}
-//
-//class EntityListRouter: Router
-//{
-//    // MARK: - Variables
-//
-//    weak var context: Context?
-//    weak var navigationController: NavigationController?
-//    var type: Entity.Type
-//
-//    // MARK: - Initialization
-//
-//    init(
-//        context: Context?,
-//        navigationController: NavigationController?,
-//        type: Entity.Type)
-//    {
-//        self.context = context
-//        self.navigationController = navigationController
-//        self.type = type
-//    }
-//
-//    // MARK: - Functions
-//
-//    func makeController() -> UIViewController?
-//    {
-//        guard let context = context else { return nil }
-//        guard let navigationController = navigationController else { return nil }
-//        return EntityListController(
-//            context: context,
-//            navigationController: navigationController,
-//            type: type)
-//    }
-//}

@@ -27,14 +27,14 @@ class EntityListController: ViewController<
         let viewModel = EntityListViewModel(
             context: context,
             navigationController: navigationController,
-            type: type)
+            entityType: type)
         
         self.init(
             controllerModel: controllerModel,
             viewModel: viewModel)
         
         title = controllerModel.title
-//        navigationItem.rightBarButtonItem = Self.makeAddBarButtonItem(model: controllerModel)
+        navigationItem.rightBarButtonItem = _view.barButtonItem
         
         let controller = Self.makeSearchController(searchControllerDelegate: self)
         
@@ -56,15 +56,6 @@ class EntityListController: ViewController<
     }
     
     // MARK: - Factory
-    
-//    static func makeAddBarButtonItem(model: EntityListControllerModel) -> UIBarButtonItem
-//    {
-////        UIBarButtonItem(
-////            image: model.addButtonImage,
-////            style: model.addButtonStyle,
-////            target: model.addAction,
-////            action: #selector(model.addAction.perform(sender:)))
-//    }
     
     static func makeSearchController(searchControllerDelegate: UISearchControllerDelegate) -> UISearchController
     {

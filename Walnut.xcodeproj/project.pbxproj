@@ -73,9 +73,13 @@
 		03555AC226840CBF006E9EA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03555AC026840CBF006E9EA1 /* LaunchScreen.storyboard */; };
 		03555AC8268516DC006E9EA1 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AC7268516DB006E9EA1 /* Application.swift */; };
 		03555ACA268516E0006E9EA1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AC9268516E0006E9EA1 /* main.swift */; };
-		03555ACC26851782006E9EA1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555ACB26851782006E9EA1 /* Router.swift */; };
-		03555AD62685232E006E9EA1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AD52685232E006E9EA1 /* Router.swift */; };
 		03555AD8268528F9006E9EA1 /* EntityListResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AD7268528F9006E9EA1 /* EntityListResponder.swift */; };
+		03555ADB26861B4E006E9EA1 /* ProgrammaticUI in Frameworks */ = {isa = PBXBuildFile; productRef = 03555ADA26861B4E006E9EA1 /* ProgrammaticUI */; };
+		03555ADE2686235C006E9EA1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555ADD2686235C006E9EA1 /* Event.swift */; };
+		03555AE02686236B006E9EA1 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555ADF2686236B006E9EA1 /* Stream.swift */; };
+		03555AE426862386006E9EA1 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AE326862386006E9EA1 /* Subscriber.swift */; };
+		03555AE62686388B006E9EA1 /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AE52686388B006E9EA1 /* EventData.swift */; };
+		03555AE82686390E006E9EA1 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AE72686390E006E9EA1 /* Priority.swift */; };
 		038CF5AB26751C9C00931595 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AA26751C9C00931595 /* RootController.swift */; };
 		038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AD26754D5A00931595 /* DashboardController.swift */; };
 		038CF60E26763E0A00931595 /* LibraryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60D26763E0A00931595 /* LibraryController.swift */; };
@@ -241,9 +245,12 @@
 		03555AC326840CBF006E9EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03555AC7268516DB006E9EA1 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		03555AC9268516E0006E9EA1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		03555ACB26851782006E9EA1 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
-		03555AD52685232E006E9EA1 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		03555AD7268528F9006E9EA1 /* EntityListResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListResponder.swift; sourceTree = "<group>"; };
+		03555ADD2686235C006E9EA1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		03555ADF2686236B006E9EA1 /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
+		03555AE326862386006E9EA1 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
+		03555AE52686388B006E9EA1 /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
+		03555AE72686390E006E9EA1 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		038CF5AA26751C9C00931595 /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		038CF5AD26754D5A00931595 /* DashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		038CF60D26763E0A00931595 /* LibraryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryController.swift; sourceTree = "<group>"; };
@@ -345,6 +352,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03555ADB26861B4E006E9EA1 /* ProgrammaticUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +473,7 @@
 				033FE6B7266CE2AB00BCF5AA /* WalnutUITests */,
 				03555AB426840CBE006E9EA1 /* Architecture */,
 				033FE694266CE2AA00BCF5AA /* Products */,
+				03555AD926861B4E006E9EA1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -488,7 +497,6 @@
 				033FE6C6266CE31200BCF5AA /* main.swift */,
 				033FE698266CE2AA00BCF5AA /* SceneDelegate.swift */,
 				03555AAD2684096D006E9EA1 /* WindowState.swift */,
-				03555AD426852322006E9EA1 /* Architecture */,
 				033FE69F266CE2AB00BCF5AA /* Assets.xcassets */,
 				038CF5AC26754D2000931595 /* Controllers */,
 				038CF6A3267682C700931595 /* Data Structures */,
@@ -522,6 +530,7 @@
 		03555AB426840CBE006E9EA1 /* Architecture */ = {
 			isa = PBXGroup;
 			children = (
+				03555ADC26862352006E9EA1 /* Message Passing */,
 				03555AC9268516E0006E9EA1 /* main.swift */,
 				03555AC7268516DB006E9EA1 /* Application.swift */,
 				03555AB526840CBE006E9EA1 /* AppDelegate.swift */,
@@ -530,25 +539,27 @@
 				03555ABE26840CBF006E9EA1 /* Assets.xcassets */,
 				03555AC026840CBF006E9EA1 /* LaunchScreen.storyboard */,
 				03555AC326840CBF006E9EA1 /* Info.plist */,
-				03555ACD26851786006E9EA1 /* VIPER */,
 			);
 			path = Architecture;
 			sourceTree = "<group>";
 		};
-		03555ACD26851786006E9EA1 /* VIPER */ = {
+		03555AD926861B4E006E9EA1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				03555ACB26851782006E9EA1 /* Router.swift */,
 			);
-			path = VIPER;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		03555AD426852322006E9EA1 /* Architecture */ = {
+		03555ADC26862352006E9EA1 /* Message Passing */ = {
 			isa = PBXGroup;
 			children = (
-				03555AD52685232E006E9EA1 /* Router.swift */,
+				03555ADD2686235C006E9EA1 /* Event.swift */,
+				03555ADF2686236B006E9EA1 /* Stream.swift */,
+				03555AE326862386006E9EA1 /* Subscriber.swift */,
+				03555AE52686388B006E9EA1 /* EventData.swift */,
+				03555AE72686390E006E9EA1 /* Priority.swift */,
 			);
-			path = Architecture;
+			path = "Message Passing";
 			sourceTree = "<group>";
 		};
 		038CF5AC26754D2000931595 /* Controllers */ = {
@@ -889,6 +900,9 @@
 			dependencies = (
 			);
 			name = Architecture;
+			packageProductDependencies = (
+				03555ADA26861B4E006E9EA1 /* ProgrammaticUI */,
+			);
 			productName = Architecture;
 			productReference = 03555AB326840CBE006E9EA1 /* Architecture.app */;
 			productType = "com.apple.product-type.application";
@@ -1031,7 +1045,6 @@
 				038CF6C6267682C700931595 /* ConditionType.swift in Sources */,
 				038CF6952676829F00931595 /* Dimension+Extensions.swift in Sources */,
 				030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */,
-				03555AD62685232E006E9EA1 /* Router.swift in Sources */,
 				031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */,
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
 				030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */,
@@ -1135,10 +1148,14 @@
 			files = (
 				03555AC8268516DC006E9EA1 /* Application.swift in Sources */,
 				03555ACA268516E0006E9EA1 /* main.swift in Sources */,
+				03555AE62686388B006E9EA1 /* EventData.swift in Sources */,
+				03555AE82686390E006E9EA1 /* Priority.swift in Sources */,
 				03555ABA26840CBE006E9EA1 /* ViewController.swift in Sources */,
 				03555AB626840CBE006E9EA1 /* AppDelegate.swift in Sources */,
-				03555ACC26851782006E9EA1 /* Router.swift in Sources */,
+				03555ADE2686235C006E9EA1 /* Event.swift in Sources */,
+				03555AE426862386006E9EA1 /* Subscriber.swift in Sources */,
 				03555AB826840CBE006E9EA1 /* SceneDelegate.swift in Sources */,
+				03555AE02686236B006E9EA1 /* Stream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1516,6 +1533,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		030B2163267EC9BE0038C095 /* ProgrammaticUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 030B2162267EC9BE0038C095 /* XCRemoteSwiftPackageReference "SPM-ProgrammaticUI" */;
+			productName = ProgrammaticUI;
+		};
+		03555ADA26861B4E006E9EA1 /* ProgrammaticUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 030B2162267EC9BE0038C095 /* XCRemoteSwiftPackageReference "SPM-ProgrammaticUI" */;
 			productName = ProgrammaticUI;
