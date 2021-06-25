@@ -7,19 +7,6 @@
 
 import Foundation
 
-// Streams can be split up into smaller streams - so subscribers
-// can decide what they want to listen to
-
-// A stream is like a notificaton center
-
-// A stream can have its own thread - as long as subscribers
-// are listening properly
-
-// A substream is just an additional identifier. So if the main
-// stream is "all", a substream could be "ui", so the identifier would end up being "all.ui" and we could pass messages to "all.ui"
-
-// The main stream "all/main" would forward messages sent from publishers to the substreams that match. So essentially all a publisher needs to know is the main stream
-
 class Stream
 {
     // MARK: - Variables
@@ -29,7 +16,7 @@ class Stream
     
     weak var parent: Stream?
     
-    var identifier: String
+    var identifier: Identifier
     
     var substreams: Set<Stream>
     
@@ -42,12 +29,19 @@ class Stream
             i = parent.fullIdentifier
         }
         
-        return i + identifier
+        if i == ""
+        {
+            return identifier.value
+        }
+        else
+        {
+            return i + "." + identifier.value
+        }
     }
     
     // MARK: - Initialization
     
-    init(identifier: String)
+    init(identifier: Identifier)
     {
         self.id = UUID()
         self.identifier = identifier
@@ -59,9 +53,9 @@ class Stream
     
     // MARK: - Functions
     
-    func stream(with identifier: String) -> Stream?
+    func stream(with id: Identifier) -> Stream?
     {
-        if identifier == self.identifier
+        if id == identifier
         {
             return self
         }

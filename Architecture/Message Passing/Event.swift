@@ -18,8 +18,6 @@ class Event
     
     var data: EventData
     
-    var priority: Priority = .low
-    
     // MARK: - Initialization
     
     init(data: EventData)
@@ -33,7 +31,7 @@ extension Event: CustomStringConvertible
 {
     var description: String
     {
-        data.token
+        data.token.value
     }
 }
 

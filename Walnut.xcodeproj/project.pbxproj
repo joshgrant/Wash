@@ -79,7 +79,12 @@
 		03555AE02686236B006E9EA1 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555ADF2686236B006E9EA1 /* Stream.swift */; };
 		03555AE426862386006E9EA1 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AE326862386006E9EA1 /* Subscriber.swift */; };
 		03555AE62686388B006E9EA1 /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AE52686388B006E9EA1 /* EventData.swift */; };
-		03555AE82686390E006E9EA1 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AE72686390E006E9EA1 /* Priority.swift */; };
+		03555AEC268678EB006E9EA1 /* SecondaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AEB268678EB006E9EA1 /* SecondaryController.swift */; };
+		03555AEE2686797C006E9EA1 /* ViewControllerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AED2686797C006E9EA1 /* ViewControllerRouter.swift */; };
+		03555AF0268694AD006E9EA1 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AEF268694AD006E9EA1 /* Coordinator.swift */; };
+		03555AF226869A56006E9EA1 /* EventToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AF126869A56006E9EA1 /* EventToken.swift */; };
+		03555AF426869A78006E9EA1 /* WrappedSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AF326869A78006E9EA1 /* WrappedSubscriber.swift */; };
+		03555AF626869BE4006E9EA1 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AF526869BE4006E9EA1 /* Identifier.swift */; };
 		038CF5AB26751C9C00931595 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AA26751C9C00931595 /* RootController.swift */; };
 		038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AD26754D5A00931595 /* DashboardController.swift */; };
 		038CF60E26763E0A00931595 /* LibraryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60D26763E0A00931595 /* LibraryController.swift */; };
@@ -250,7 +255,12 @@
 		03555ADF2686236B006E9EA1 /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		03555AE326862386006E9EA1 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		03555AE52686388B006E9EA1 /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
-		03555AE72686390E006E9EA1 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
+		03555AEB268678EB006E9EA1 /* SecondaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryController.swift; sourceTree = "<group>"; };
+		03555AED2686797C006E9EA1 /* ViewControllerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRouter.swift; sourceTree = "<group>"; };
+		03555AEF268694AD006E9EA1 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		03555AF126869A56006E9EA1 /* EventToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventToken.swift; sourceTree = "<group>"; };
+		03555AF326869A78006E9EA1 /* WrappedSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedSubscriber.swift; sourceTree = "<group>"; };
+		03555AF526869BE4006E9EA1 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 		038CF5AA26751C9C00931595 /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		038CF5AD26754D5A00931595 /* DashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		038CF60D26763E0A00931595 /* LibraryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryController.swift; sourceTree = "<group>"; };
@@ -532,6 +542,7 @@
 			children = (
 				03555ADC26862352006E9EA1 /* Message Passing */,
 				03555AC9268516E0006E9EA1 /* main.swift */,
+				03555AEB268678EB006E9EA1 /* SecondaryController.swift */,
 				03555AC7268516DB006E9EA1 /* Application.swift */,
 				03555AB526840CBE006E9EA1 /* AppDelegate.swift */,
 				03555AB726840CBE006E9EA1 /* SceneDelegate.swift */,
@@ -539,6 +550,8 @@
 				03555ABE26840CBF006E9EA1 /* Assets.xcassets */,
 				03555AC026840CBF006E9EA1 /* LaunchScreen.storyboard */,
 				03555AC326840CBF006E9EA1 /* Info.plist */,
+				03555AED2686797C006E9EA1 /* ViewControllerRouter.swift */,
+				03555AEF268694AD006E9EA1 /* Coordinator.swift */,
 			);
 			path = Architecture;
 			sourceTree = "<group>";
@@ -556,8 +569,10 @@
 				03555ADD2686235C006E9EA1 /* Event.swift */,
 				03555ADF2686236B006E9EA1 /* Stream.swift */,
 				03555AE326862386006E9EA1 /* Subscriber.swift */,
+				03555AF326869A78006E9EA1 /* WrappedSubscriber.swift */,
 				03555AE52686388B006E9EA1 /* EventData.swift */,
-				03555AE72686390E006E9EA1 /* Priority.swift */,
+				03555AF126869A56006E9EA1 /* EventToken.swift */,
+				03555AF526869BE4006E9EA1 /* Identifier.swift */,
 			);
 			path = "Message Passing";
 			sourceTree = "<group>";
@@ -1147,15 +1162,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				03555AC8268516DC006E9EA1 /* Application.swift in Sources */,
+				03555AF626869BE4006E9EA1 /* Identifier.swift in Sources */,
 				03555ACA268516E0006E9EA1 /* main.swift in Sources */,
+				03555AF0268694AD006E9EA1 /* Coordinator.swift in Sources */,
 				03555AE62686388B006E9EA1 /* EventData.swift in Sources */,
-				03555AE82686390E006E9EA1 /* Priority.swift in Sources */,
 				03555ABA26840CBE006E9EA1 /* ViewController.swift in Sources */,
+				03555AF226869A56006E9EA1 /* EventToken.swift in Sources */,
+				03555AEE2686797C006E9EA1 /* ViewControllerRouter.swift in Sources */,
 				03555AB626840CBE006E9EA1 /* AppDelegate.swift in Sources */,
 				03555ADE2686235C006E9EA1 /* Event.swift in Sources */,
+				03555AEC268678EB006E9EA1 /* SecondaryController.swift in Sources */,
 				03555AE426862386006E9EA1 /* Subscriber.swift in Sources */,
 				03555AB826840CBE006E9EA1 /* SceneDelegate.swift in Sources */,
 				03555AE02686236B006E9EA1 /* Stream.swift in Sources */,
+				03555AF426869A78006E9EA1 /* WrappedSubscriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

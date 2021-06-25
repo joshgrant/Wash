@@ -9,7 +9,6 @@ import Foundation
 
 struct EventData
 {
-    /// A token is a unique string that identifies the data
-    var token: String
+    var token: EventToken
     var info: [AnyHashable: Any]?
 }

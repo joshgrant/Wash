@@ -12,13 +12,14 @@ class ViewController: UIViewController
     // MARK: - Variables
     
     var id = UUID()
+    var router: ViewControllerRouter
     
-    // 1. We have an object that manages the state
-    // 2. We have an object that manages the visual presentation
-    // 3. We have an object that responds to events (UI or system)
-    // 4. We have an object that contains the most recent data
-    // 5. We have an object that knows how to route
-    // 6. We have an object that coordinates the others
+    // 1. We have an object that manages the state (state machine)
+    // 2. We have an object that manages the visual presentation (presenter)
+    // 3. We have an object that responds to events (UI or system) (responder)
+    // 4. We have an object that contains the most recent data (structure/data/entity)
+    // 5. We have an object that knows how to route (router)
+    // 6. We have an object that coordinates the others (coordinator)
     // 7. We have an object that's responsible for verifying everything (tests)
     
     // Actually, with event passing, tests become super easy to write. Just call the publisher and verify that the stream contains the proper event.
@@ -27,9 +28,11 @@ class ViewController: UIViewController
     
     init()
     {
+        self.router = ViewControllerRouter()
         super.init(nibName: nil, bundle: nil)
         subscribe(to: AppDelegate.shared.mainStream)
         configureButton()
+        self.router.source = self
     }
     
     required init?(coder: NSCoder)
@@ -61,7 +64,7 @@ class ViewController: UIViewController
     @objc func buttonDidTouchUpInside(sender: UIButton)
     {
         let data = EventData(
-            token: "viewController.buttonPress",
+            token: .buttonPress,
             info: ["button": sender])
         let event = Event(data: data)
         AppDelegate.shared.mainStream.send(event: event)

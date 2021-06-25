@@ -21,7 +21,7 @@ extension Subscriber
 {
     func makeSubscription() -> WrappedSubscriber
     {
-        return WrappedSubscriber { event in
+        WrappedSubscriber { event in
             self.receive(event: event)
         }
     }
@@ -33,30 +33,14 @@ extension Subscriber
     }
 }
 
-struct WrappedSubscriber
-{
-    // MARK: - Variables
-    
-    private let id = UUID()
-    
-    let closure: (Event) -> Void
-    
-    // MARK: - Functions
-    
-    func receive(event: Event)
-    {
-        closure(event)
-    }
-}
-
-extension WrappedSubscriber: Hashable
+extension Subscriber
 {
     func hash(into hasher: inout Hasher)
     {
         hasher.combine(id)
     }
-
-    static func == (lhs: WrappedSubscriber, rhs: WrappedSubscriber) -> Bool
+    
+    static func == (lhs: Self, rhs: Self) -> Bool
     {
         lhs.id == rhs.id
     }

@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
         
-        let data = EventData(token: "sceneDelegate.windowVisible")
+        let data = EventData(token: .windowVisible)
         let event = Event(data: data)
         
         AppDelegate.shared.mainStream.send(event: event)
