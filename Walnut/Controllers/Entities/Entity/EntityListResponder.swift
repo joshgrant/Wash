@@ -28,10 +28,9 @@ class EntityListResponder: Responder
     
     @objc func userTouchedUpInsideAddButton(sender: UIButton)
     {
-        let message = Message(
-            token: MessageToken.EntityList.add,
-            info: ["sender": sender,
-                   "type": entityType])
+        let message = EntityListAddButtonMessage(
+            sender: sender,
+            entityType: entityType)
         AppDelegate.shared.mainStream.send(message: message)
     }
     
@@ -39,11 +38,11 @@ class EntityListResponder: Responder
         in tableView: UITableView,
         at indexPath: IndexPath)
     {
-        let message = Message(
-            token: MessageToken.EntityList.selectedCell,
-            info: ["tableView": tableView,
-                   "indexPath": indexPath,
-                   "type": entityType])
+        let message = EntityListCellMessage(
+            tableView: tableView,
+            indexPath: indexPath,
+            action: .selected,
+            entityType: entityType)
         AppDelegate.shared.mainStream.send(message: message)
     }
     
@@ -51,11 +50,11 @@ class EntityListResponder: Responder
         in tableView: UITableView,
         at indexPath: IndexPath)
     {
-        let message = Message(
-            token: MessageToken.EntityList.pinned,
-            info: ["tableView": tableView,
-                   "indexPath": indexPath,
-                   "type": entityType])
+        let message = EntityListCellMessage(
+            tableView: tableView,
+            indexPath: indexPath,
+            action: .pinned,
+            entityType: entityType)
         AppDelegate.shared.mainStream.send(message: message)
     }
     
@@ -63,11 +62,11 @@ class EntityListResponder: Responder
         in tableView: UITableView,
         at indexPath: IndexPath)
     {
-        let message = Message(
-            token: MessageToken.EntityList.deleted,
-            info: ["tableView": tableView,
-                   "indexPath": indexPath,
-                   "type": entityType])
+        let message = EntityListCellMessage(
+            tableView: tableView,
+            indexPath: indexPath,
+            action: .deleted,
+            entityType: entityType)
         AppDelegate.shared.mainStream.send(message: message)
     }
 }

@@ -7,32 +7,16 @@
 
 import Foundation
 
-class Message: Unique
+class Message: Unique, CustomStringConvertible
 {
-    // MARK: - Variables
-    
     var id = UUID()
-    
-    /// The `timestamp` is nil until the event is sent
     var timestamp: Date?
-    
-    // Message Data
-    var token: MessageToken
-    var info: [AnyHashable: Any]?
-    
-    // MARK: - Initialization
-    
-    init(token: MessageToken, info: [AnyHashable: Any]? = nil)
-    {
-        self.token = token
-        self.info = info
-    }
 }
 
-extension Message: CustomStringConvertible
+extension Message
 {
     var description: String
     {
-        token.value
+        "\(Self.self)"
     }
 }

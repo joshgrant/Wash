@@ -20,6 +20,7 @@ class EntityListRouter: Router
     
     // MARK: - Variables
     
+    var id = UUID()
     weak var context: Context?
     weak var root: NavigationController?
     
@@ -29,6 +30,7 @@ class EntityListRouter: Router
     {
         self.context = context
         self.root = root
+        subscribe(to: AppDelegate.shared.mainStream)
     }
     
     // MARK: - Functions
@@ -83,5 +85,31 @@ class EntityListRouter: Router
         
         let detail = entity.detailController(navigationController: root)
         root.pushViewController(detail, animated: true)
+    }
+    
+    private func handleEntityListSelectedCellMessage(_ message: EntityListCellMessage)
+    {
+        guard let context = context else {
+            assertionFailure("Failed to get the context")
+            return
+        }
+        let entity = message.entityType.all(context: context)[message.indexPath.row]
+        transitionToDetail(with: entity, completion: nil)
+    }
+}
+
+extension EntityListRouter: Subscriber
+{
+    func receive(message: Message)
+    {
+        switch message
+        {
+        case let x as EntityListAddButtonMessage:
+            transitionToAdd(with: x.entityType, completion: nil)
+        case let x as EntityListCellMessage where x.action == .selected:
+            handleEntityListSelectedCellMessage(x)
+        default:
+            assertionFailure("Received an unhandled message: \(message)")
+        }
     }
 }

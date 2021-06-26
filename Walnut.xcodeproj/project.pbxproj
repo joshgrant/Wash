@@ -133,6 +133,8 @@
 		03555B702686A487006E9EA1 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B402686A487006E9EA1 /* View.swift */; };
 		03555B712686A487006E9EA1 /* ControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B412686A487006E9EA1 /* ControllerModel.swift */; };
 		03555B722686A487006E9EA1 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B422686A487006E9EA1 /* ViewModel.swift */; };
+		03555B772687CECB006E9EA1 /* EntityListAddButtonMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B762687CECB006E9EA1 /* EntityListAddButtonMessage.swift */; };
+		03555B7D2687D160006E9EA1 /* EntityListCellMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B7C2687D160006E9EA1 /* EntityListCellMessage.swift */; };
 		038CF5AB26751C9C00931595 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AA26751C9C00931595 /* RootController.swift */; };
 		038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AD26754D5A00931595 /* DashboardController.swift */; };
 		038CF60E26763E0A00931595 /* LibraryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60D26763E0A00931595 /* LibraryController.swift */; };
@@ -357,6 +359,8 @@
 		03555B402686A487006E9EA1 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		03555B412686A487006E9EA1 /* ControllerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerModel.swift; sourceTree = "<group>"; };
 		03555B422686A487006E9EA1 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		03555B762687CECB006E9EA1 /* EntityListAddButtonMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListAddButtonMessage.swift; sourceTree = "<group>"; };
+		03555B7C2687D160006E9EA1 /* EntityListCellMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListCellMessage.swift; sourceTree = "<group>"; };
 		038CF5AA26751C9C00931595 /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		038CF5AD26754D5A00931595 /* DashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		038CF60D26763E0A00931595 /* LibraryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryController.swift; sourceTree = "<group>"; };
@@ -519,6 +523,7 @@
 		030B2199267FE2C70038C095 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				03555B752687CEB3006E9EA1 /* Messages */,
 				030B21A0267FEA230038C095 /* EntityListController.swift */,
 				03E70077268394D100B8B527 /* Table View */,
 				03E70076268394C600B8B527 /* View */,
@@ -827,6 +832,15 @@
 				03555B422686A487006E9EA1 /* ViewModel.swift */,
 			);
 			path = "V VM C CM";
+			sourceTree = "<group>";
+		};
+		03555B752687CEB3006E9EA1 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				03555B762687CECB006E9EA1 /* EntityListAddButtonMessage.swift */,
+				03555B7C2687D160006E9EA1 /* EntityListCellMessage.swift */,
+			);
+			path = Messages;
 			sourceTree = "<group>";
 		};
 		038CF5AC26754D2000931595 /* Controllers */ = {
@@ -1272,6 +1286,7 @@
 				030B21CE268121AA0038C095 /* SearchControllerDelegate.swift in Sources */,
 				038CF6DF2676840300931595 /* Condition+Extensions.swift in Sources */,
 				03555B0226869E74006E9EA1 /* Stream.swift in Sources */,
+				03555B772687CECB006E9EA1 /* EntityListAddButtonMessage.swift in Sources */,
 				03555B5F2686A487006E9EA1 /* UIColor+Extensions.swift in Sources */,
 				038CF61226764DA500931595 /* SettingsController.swift in Sources */,
 				030B2192267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift in Sources */,
@@ -1387,6 +1402,7 @@
 				038CF6C1267682C700931595 /* SourceType.swift in Sources */,
 				03555B0726869E7E006E9EA1 /* Identifier.swift in Sources */,
 				038CF6F2267687B800931595 /* LibraryTableViewDataSourceModel.swift in Sources */,
+				03555B7D2687D160006E9EA1 /* EntityListCellMessage.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				03555B712686A487006E9EA1 /* ControllerModel.swift in Sources */,
 				030B21C02681141F0038C095 /* ConditonDetailController.swift in Sources */,

@@ -13,6 +13,8 @@ class EntityListController: UIViewController
 {
     // MARK: - Variables
     
+    var id = UUID()
+    
     var type: Entity.Type
     
     weak var context: Context?
@@ -21,13 +23,10 @@ class EntityListController: UIViewController
     var tableViewModel: EntityListTableViewModel
     var tableView: TableView<EntityListTableViewModel>
     
-    lazy var responder: EntityListResponder = {
-        .init(entityType: type)
-    }()
+    var tableViewNeedsReload: Bool = false
     
-    lazy var router: EntityListRouter = {
-        .init(context: context, root: root)
-    }()
+    var responder: EntityListResponder
+    var router: EntityListRouter
     
     // Move these out of here?
     
@@ -48,7 +47,12 @@ class EntityListController: UIViewController
         self.root = navigationController
         self.tableViewModel = tableViewModel
         self.tableView = TableView(model: tableViewModel)
+        self.router = EntityListRouter(context: context, root: navigationController)
+        self.responder = EntityListResponder(entityType: type)
         super.init(nibName: nil, bundle: nil)
+        
+        subscribe(to: AppDelegate.shared.mainStream)
+        
         self.title = type.readableName.pluralize()
         
         navigationItem.rightBarButtonItem = makeBarButtonItem()
@@ -77,11 +81,17 @@ class EntityListController: UIViewController
     {
         super.viewWillAppear(animated)
         
-//        if stateMachine.dirty
-//        {
-//            interactor.reload()
-//            stateMachine.dirty = false
-//        }
+        if tableViewNeedsReload
+        {
+            guard let model = tableViewModel.dataSource.model as? EntityListTableViewDataSourceModel
+            else
+            {
+                assertionFailure("Incorrect table view data source model")
+                return
+            }
+            model.reload()
+            tableView.reloadData()
+        }
     }
     
     // MARK: - Factory
@@ -100,4 +110,18 @@ class EntityListController: UIViewController
 extension EntityListController: UISearchControllerDelegate
 {
     
+}
+
+extension EntityListController: Subscriber
+{
+    func receive(message: Message)
+    {
+        switch message
+        {
+        case is EntityListAddButtonMessage:
+            tableViewNeedsReload = true
+        default:
+            break
+        }
+    }
 }
