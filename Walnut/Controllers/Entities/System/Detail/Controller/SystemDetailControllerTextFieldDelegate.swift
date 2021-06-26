@@ -10,35 +10,19 @@ import UIKit
 
 class SystemDetailControllerTextFieldDelegate: NSObject, UITextFieldDelegate
 {
-    // MARK: - Variables
-    
-    weak var model: SystemDetailControllerModel?
-    weak var controller: SystemDetailController?
-    
-    // MARK: - Initialization
-    
-    init(model: SystemDetailControllerModel)
-    {
-        self.model = model
-    }
-    
     // MARK: - Functions
-    
-    func textFieldDidEndEditing(_ textField: UITextField)
-    {
-        model?.system.title = textField.text ?? ""
-        model?.system.managedObjectContext?.quickSave()
-        
-        controller?.title = textField.text ?? ""
-    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         textField.resignFirstResponder()
-        
-        // TODO: This delegate should NOT know about the controller!
-//        controller?.entityListStateMachine?.dirty = true
-        
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        let title = textField.text ?? ""
+        
+        let message = SystemDetailTitleEditedMessage(title: title)
+        AppDelegate.shared.mainStream.send(message: message)
     }
 }

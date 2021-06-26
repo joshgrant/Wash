@@ -120,6 +120,8 @@ extension EntityListController: Subscriber
         {
         case is EntityListAddButtonMessage:
             tableViewNeedsReload = true
+        case is SystemDetailTitleEditedMessage:
+            tableViewNeedsReload = true
         default:
             break
         }

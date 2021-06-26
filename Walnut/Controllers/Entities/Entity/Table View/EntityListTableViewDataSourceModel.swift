@@ -20,7 +20,7 @@ class EntityListTableViewDataSourceModel: TableViewDataSourceModel
     required init(cellModels: [[TableViewCellModel]])
     {
         super.init(cellModels: cellModels)
-        handleNotifications(true)
+//        handleNotifications(true)
     }
     
     convenience init(context: Context, type: Entity.Type)
@@ -59,21 +59,21 @@ class EntityListTableViewDataSourceModel: TableViewDataSourceModel
 
 // MARK: - Notifications
 
-extension EntityListTableViewDataSourceModel: Notifiable
-{
-    // TODO: This seems not great... notifications introduce spaghetti code
-    // and we can probably come up with a better way.
-    func startObservingNotifications()
-    {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(contextUpdateNotification(_:)),
-            name: .NSManagedObjectContextObjectsDidChange,
-            object: nil)
-    }
-    
-    @objc func contextUpdateNotification(_ notification: Notification)
-    {
-        reload()
-    }
-}
+//extension EntityListTableViewDataSourceModel: Notifiable
+//{
+//    // TODO: This seems not great... notifications introduce spaghetti code
+//    // and we can probably come up with a better way.
+//    func startObservingNotifications()
+//    {
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(contextUpdateNotification(_:)),
+//            name: .NSManagedObjectContextObjectsDidChange,
+//            object: nil)
+//    }
+//
+//    @objc func contextUpdateNotification(_ notification: Notification)
+//    {
+//        reload()
+//    }
+//}

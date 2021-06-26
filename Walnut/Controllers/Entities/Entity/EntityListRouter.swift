@@ -109,7 +109,7 @@ extension EntityListRouter: Subscriber
         case let x as EntityListCellMessage where x.action == .selected:
             handleEntityListSelectedCellMessage(x)
         default:
-            assertionFailure("Received an unhandled message: \(message)")
+            break
         }
     }
 }

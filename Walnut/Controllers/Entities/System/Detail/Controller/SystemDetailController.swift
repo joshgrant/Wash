@@ -8,65 +8,78 @@
 import Foundation
 import UIKit
 
-class SystemDetailController: ViewController<
-                                SystemDetailControllerModel,
-                                SystemDetailViewModel,
-                                SystemDetailView>
+class SystemDetailController: UIViewController
 {
     // MARK: - Variables
     
+    var id = UUID()
+    
+    var tableView: TableView<SystemDetailTableViewModel>
+    var tableViewModel: SystemDetailTableViewModel
+    
+    var system: System
+    var responder: SystemDetailResponder
+    var router: SystemDetailRouter
     var textFieldDelegate: SystemDetailControllerTextFieldDelegate
+    
+    var duplicateBarButtonItem: UIBarButtonItem
+    var pinBarButtonItem: UIBarButtonItem
     
     // MARK: - Initialization
     
-    required init(
-        controllerModel: SystemDetailControllerModel,
-        viewModel: SystemDetailViewModel,
-        delegate: SystemDetailControllerTextFieldDelegate)
+    init(
+        system: System,
+        navigationController: NavigationController)
     {
-        self.textFieldDelegate = delegate
+        let textFieldDelegate = SystemDetailControllerTextFieldDelegate()
         
-        super.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
-        
-        title = model.title
-    }
-    
-    convenience init(system: System, navigationController: NavigationController)
-    {
-        let controllerModel = SystemDetailControllerModel(system: system)
-        let textFieldDelegate = SystemDetailControllerTextFieldDelegate(model: controllerModel)
-        let viewModel = SystemDetailViewModel(
+        let tableViewModel = SystemDetailTableViewModel(
             system: system,
             navigationController: navigationController,
             delegate: textFieldDelegate)
         
-        self.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel,
-            delegate: textFieldDelegate)
+        let responder = SystemDetailResponder(system: system)
         
-        // To update the title
-        textFieldDelegate.controller = self
+        self.system = system
+        self.textFieldDelegate = textFieldDelegate
+        self.tableViewModel = tableViewModel
+        self.tableView = TableView(model: tableViewModel)
+        self.responder = responder
+        self.router = SystemDetailRouter()
         
-        // Menu Bar
-        configureNavigationItemRightBarButtonItems(system: system)
+        self.duplicateBarButtonItem = Self.makeDuplicateNavigationItem(responder: responder)
+        self.pinBarButtonItem = Self.makePinNavigationItem(system: system, responder: responder)
+        
+        super.init(nibName: nil, bundle: nil)
+        subscribe(to: AppDelegate.shared.mainStream)
+        
+        title = system.title
+        
+        view.embed(tableView)
+        
+        navigationItem.setRightBarButtonItems(
+            [duplicateBarButtonItem, pinBarButtonItem],
+            animated: false)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - View lifecycle
-
+    
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
-        
-        // TODO: TERRIBLE!
-        // TODO: It should be the cell... or maybe not?
-        
+        makeTextCellFirstResponderIfEmpty()
+    }
+    
+    func makeTextCellFirstResponderIfEmpty()
+    {
         let indexPath = IndexPath(row: 0, section: 0)
-        let cell = _view.tableView.cellForRow(at: indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
         guard let textCell = cell as? TextEditCell else { return }
-//
+        
         if let text = textCell.textField.text
         {
             if text.count > 0 { return }
@@ -75,56 +88,56 @@ class SystemDetailController: ViewController<
         textCell.textField.becomeFirstResponder()
     }
     
-    // MARK: - Configuration
-    
-    private func configureNavigationItemRightBarButtonItems(system: System)
-    {
-        let duplicateAction = Self.makeDuplicateAction()
-        let pinAction = Self.makePinAction(system: system)
-        
-        actionClosures.insert(duplicateAction)
-        actionClosures.insert(pinAction)
-        
-        let duplicateItem = Self.makeDuplicateNavigationItem(action: duplicateAction)
-        let pinItem = Self.makePinNavigationItem(system: system, action: pinAction)
-        
-        navigationItem.setRightBarButtonItems([duplicateItem, pinItem], animated: false)
-    }
-    
     // MARK: - Factory
     
-    static func makeDuplicateAction() -> ActionClosure
-    {
-        ActionClosure { sender in
-            print("Tapped on duplicate")
-        }
-    }
-    
-    static func makePinAction(system: System) -> ActionClosure
-    {
-        ActionClosure { sender in
-            print("Tapped on pin")
-            system.isPinned.toggle()
-        }
-    }
-    
-    static func makeDuplicateNavigationItem(action: ActionClosure) -> UIBarButtonItem
+    static func makeDuplicateNavigationItem(responder: SystemDetailResponder) -> UIBarButtonItem
     {
         UIBarButtonItem(
             image: Icon.copy.getImage(),
             style: .plain,
-            target: action,
-            action: #selector(action.perform(sender:)))
+            target: responder,
+            action: #selector(responder.userTouchedUpInsideDuplicate(sender:)))
     }
     
-    static func makePinNavigationItem(system: System, action: ActionClosure) -> UIBarButtonItem
+    static func makePinNavigationItem(system: System, responder: SystemDetailResponder) -> UIBarButtonItem
     {
         UIBarButtonItem(
             image: system.isPinned
                 ? Icon.pinFill.getImage()
                 : Icon.pin.getImage(),
             style: .plain,
-            target: action,
-            action: #selector(action.perform(sender:)))
+            target: responder,
+            action: #selector(responder.userTouchedUpInsidePin(sender:)))
+    }
+}
+
+extension SystemDetailController: Subscriber
+{
+    func receive(message: Message)
+    {
+        switch message
+        {
+        case let x as SystemDetailTitleEditedMessage:
+            handleSystemDetailTitleEditMessage(x)
+        case let x as SystemDetailPinnedMessage:
+            handleSystemDetailPinnedMessage(x)
+        default:
+            break
+        }
+    }
+    
+    func handleSystemDetailTitleEditMessage(_ message: SystemDetailTitleEditedMessage)
+    {
+        title = message.title
+        system.title = message.title
+    }
+    
+    func handleSystemDetailPinnedMessage(_ message: SystemDetailPinnedMessage)
+    {
+        let pinned = message.isPinned
+        
+        pinBarButtonItem.image = pinned
+            ? Icon.pinFill.getImage()
+            : Icon.pin.getImage()
     }
 }
