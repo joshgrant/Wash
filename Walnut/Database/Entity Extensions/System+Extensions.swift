@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreData
-import ProgrammaticUI
 
 extension System: Named {}
 extension System: Pinnable {}

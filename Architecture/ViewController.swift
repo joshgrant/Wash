@@ -63,10 +63,9 @@ class ViewController: UIViewController
     
     @objc func buttonDidTouchUpInside(sender: UIButton)
     {
-        let data = EventData(
+        let event = Event(
             token: .buttonPress,
-            info: ["button": sender])
-        let event = Event(data: data)
+            info: ["sender": sender])
         AppDelegate.shared.mainStream.send(event: event)
     }
 }

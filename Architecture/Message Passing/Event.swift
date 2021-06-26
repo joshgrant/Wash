@@ -16,23 +16,23 @@ class Event
     /// The `timestamp` is nil until the event is sent
     var timestamp: Date?
     
-    var data: EventData
+    // Event Data
+    var token: EventToken
+    var info: [AnyHashable: Any]?
     
     // MARK: - Initialization
     
-    init(data: EventData)
+    init(token: EventToken, info: [AnyHashable: Any]? = nil)
     {
         self.id = UUID()
-        self.data = data
+        self.token = token
+        self.info = info
     }
 }
 
 extension Event: CustomStringConvertible
 {
-    var description: String
-    {
-        data.token.value
-    }
+    var description: String { token.value }
 }
 
 extension Event: Hashable

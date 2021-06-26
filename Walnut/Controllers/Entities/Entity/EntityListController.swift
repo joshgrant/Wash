@@ -8,38 +8,67 @@
 import Foundation
 import CoreData
 import UIKit
-import ProgrammaticUI
 
-class EntityListController: ViewController<
-                                EntityListControllerModel,
-                                EntityListViewModel,
-                                EntityListView>
+class EntityListController: UIViewController
 {
+    // MARK: - Variables
+    
+    var type: Entity.Type
+    
+    weak var context: Context?
+    weak var root: NavigationController?
+    
+    var tableViewModel: EntityListTableViewModel
+    var tableView: TableView<EntityListTableViewModel>
+    
+    lazy var responder: EntityListResponder = {
+        .init(entityType: type)
+    }()
+    
+    lazy var router: EntityListRouter = {
+        .init(context: context, root: root)
+    }()
+    
+    // Move these out of here?
+    
+    var addButtonImage: UIImage? { Icon.add.getImage() }
+    var addButtonStyle: UIBarButtonItem.Style { .plain }
+    
     // MARK: - Initialization
-
-    convenience init(
+    
+    init(
+        type: Entity.Type,
         context: Context,
-        navigationController: NavigationController,
-        type: Entity.Type)
+        navigationController: NavigationController)
     {
-        let controllerModel = EntityListControllerModel(
-            type: type)
-        let viewModel = EntityListViewModel(
-            context: context,
-            navigationController: navigationController,
-            entityType: type)
+        let tableViewModel = EntityListTableViewModel(context: context, navigationController: navigationController, entityType: type)
         
-        self.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
+        self.type = type
+        self.context = context
+        self.root = navigationController
+        self.tableViewModel = tableViewModel
+        self.tableView = TableView(model: tableViewModel)
+        super.init(nibName: nil, bundle: nil)
+        self.title = type.readableName.pluralize()
         
-        title = controllerModel.title
-        navigationItem.rightBarButtonItem = _view.barButtonItem
-        
-        let controller = Self.makeSearchController(searchControllerDelegate: self)
-        
-        navigationItem.searchController = controller
+        navigationItem.rightBarButtonItem = makeBarButtonItem()
+        navigationItem.searchController = makeSearchController(searchControllerDelegate: self)
         navigationItem.hidesSearchBarWhenScrolling = true
+        
+        view.embed(tableView)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func makeBarButtonItem() -> UIBarButtonItem
+    {
+        UIBarButtonItem(
+            image: addButtonImage,
+            style: addButtonStyle,
+            target: responder,
+            action: #selector(responder.userTouchedUpInsideAddButton(sender:)))
     }
     
     // MARK: - View lifecycle
@@ -57,7 +86,7 @@ class EntityListController: ViewController<
     
     // MARK: - Factory
     
-    static func makeSearchController(searchControllerDelegate: UISearchControllerDelegate) -> UISearchController
+    func makeSearchController(searchControllerDelegate: UISearchControllerDelegate) -> UISearchController
     {
         // TODO: Make a better results controller
         let searchResultsController = UIViewController()

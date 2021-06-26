@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import ProgrammaticUI
 
 class LibraryTableViewDelegateModel: TableViewDelegateModel
 {
@@ -33,9 +32,9 @@ class LibraryTableViewDelegateModel: TableViewDelegateModel
             let entityType = EntityType.libraryVisible[selection.indexPath.row]
             let managedType = entityType.managedObjectType
             let listController = EntityListController(
+                type: managedType,
                 context: context,
-                navigationController: navigationController,
-                type: managedType)
+                navigationController: navigationController)
             navigationController.pushViewController(listController, animated: true)
         }
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ProgrammaticUI
 
 extension Stock: Named {}
 extension Stock: Pinnable {}

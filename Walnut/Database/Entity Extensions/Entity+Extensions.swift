@@ -8,7 +8,6 @@
 import Foundation
 import CoreData
 import UIKit
-import ProgrammaticUI
 
 public extension Entity
 {

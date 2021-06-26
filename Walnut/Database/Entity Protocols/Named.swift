@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ProgrammaticUI
 
 public protocol Named: Entity
 {

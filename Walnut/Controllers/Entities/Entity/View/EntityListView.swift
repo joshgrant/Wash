@@ -7,48 +7,35 @@
 
 import Foundation
 import UIKit
-import ProgrammaticUI
 
 class EntityListView: View<EntityListViewModel>
 {
     // MARK: - Variables
     
-    var tableView: TableView<EntityListTableViewModel>
-    var barButtonItem: UIBarButtonItem
-    weak var responder: EntityListResponder?
+//    var tableView: TableView<EntityListTableViewModel>
+//    weak var responder: EntityListResponder?
     
     // MARK: - Initialization
     
-    required init(model: EntityListViewModel)
-    {
-        tableView = TableView(model: model.tableViewModel)
-        barButtonItem = Self.makeAddBarButtonItem(
-            model: model,
-            responder: responder)
-        
-        super.init(model: model)
-        
-        embed(tableView)
-    }
-    
-    convenience init(
-        model: EntityListViewModel,
-        responder: EntityListResponder)
-    {
-        self.init(model: model)
-        self.responder = responder
-    }
+//    required init(model: EntityListViewModel)
+//    {
+//        tableView = TableView(model: model.tableViewModel)
+//
+//        super.init(model: model)
+//        
+//        embed(tableView)
+//    }
     
     // MARK: - Factory
     
-    static func makeAddBarButtonItem(
-        model: EntityListViewModel,
-        responder: EntityListResponder?) -> UIBarButtonItem
-    {
-        UIBarButtonItem(
-            image: model.addButtonImage,
-            style: model.addButtonStyle,
-            target: responder,
-            action: #selector(responder?.userTouchedUpInsideAddButton(sender:)))
-    }
+//    static func makeAddBarButtonItem(
+//        model: EntityListViewModel,
+//        responder: EntityListResponder?) -> UIBarButtonItem
+//    {
+//        UIBarButtonItem(
+//            image: model.addButtonImage,
+//            style: model.addButtonStyle,
+//            target: responder,
+//            action: #selector(responder?.userTouchedUpInsideAddButton(sender:)))
+//    }
 }

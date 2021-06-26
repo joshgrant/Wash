@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ProgrammaticUI
 
 typealias LaunchOptions = [UIApplication.LaunchOptionsKey: Any]
 
@@ -17,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     static var shared: AppDelegate { UIApplication.shared.delegate as! AppDelegate }
     
     var database = Database()
+    var mainStream = Stream(identifier: .main)
     
     // MARK: - Functions
     

@@ -8,11 +8,6 @@
 import Foundation
 import UIKit
 
-protocol Router
-{
-    associatedtype Route
-}
-
 class ViewControllerRouter: Router
 {
     enum Route
@@ -36,7 +31,7 @@ extension ViewControllerRouter: Subscriber
 {
     func receive(event: Event)
     {
-        switch event.data.token
+        switch event.token
         {
         case .buttonPress:
             route(to: .secondaryController)

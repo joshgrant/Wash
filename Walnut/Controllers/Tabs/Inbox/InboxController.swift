@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ProgrammaticUI
 
 class InboxController: ViewController<
                         InboxControllerModel,

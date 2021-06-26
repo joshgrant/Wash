@@ -1,14 +1,19 @@
 //
 //  String+Extensions.swift
-//  Walnut
+//  ProgrammaticUI
 //
-//  Created by Joshua Grant on 6/21/21.
+//  Created by Joshua Grant on 6/13/21.
 //
 
 import Foundation
 
 public extension String
 {
+    var localized: String
+    {
+        NSLocalizedString(self, comment: "")
+    }
+    
     func insertSpacesBetweenCamelCaseWords() -> String
     {
         var output: String = ""

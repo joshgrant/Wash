@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ProgrammaticUI
 
 class SystemDetailView: View<SystemDetailViewModel>
 {

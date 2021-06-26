@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ProgrammaticUI
 
 public class SettingsControllerModel: ControllerModel
 {
