@@ -7,33 +7,32 @@
 
 import UIKit
 
-class DashboardController: ViewController<
-                            DashboardControllerModel,
-                            DashboardViewModel,
-                            DashboardView>
+class DashboardController: ViewController
 {
+    // MARK: - Variables
+    
+    var tabBarItemTitle: String { "Dashboard".localized }
+    var tabBarImage: UIImage? { Icon.dashboard.getImage() }
+    var tabBarTag: Int { 0 }
+    
+    var tableView: TableView<DashboardTableViewModel>
+    var tableViewModel: DashboardTableViewModel
+    
     // MARK: - Initialization
     
-    override init(
-        controllerModel: DashboardControllerModel,
-        viewModel: DashboardViewModel)
+    init(context: Context)
     {
-        super.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
+        let tableViewModel = DashboardTableViewModel(context: context)
         
+        self.tableView = TableView(model: tableViewModel)
+        self.tableViewModel = tableViewModel
+        
+        super.init()
+        
+        title = tabBarItemTitle
         tabBarItem = makeTabBarItem()
-        title = model.tabBarItemTitle
-    }
-    
-    convenience init(context: Context)
-    {
-        let controllerModel = DashboardControllerModel()
-        let viewModel = DashboardViewModel(context: context)
         
-        self.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
+        view.embed(tableView)
     }
 }
 
@@ -42,8 +41,8 @@ extension DashboardController: ViewControllerTabBarDelegate
     func makeTabBarItem() -> UITabBarItem
     {
         UITabBarItem(
-            title: model.tabBarItemTitle,
-            image: model.tabBarImage,
-            tag: model.tabBarTag)
+            title: tabBarItemTitle,
+            image: tabBarImage,
+            tag: tabBarTag)
     }
 }

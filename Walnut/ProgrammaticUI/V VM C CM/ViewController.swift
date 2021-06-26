@@ -7,30 +7,13 @@
 
 import UIKit
 
-open class ViewController<
-    CM: ControllerModel,
-    VM: ViewModel,
-    V: View<VM>>: UIViewController
+open class ViewController: UIViewController
 {
-    // MARK: - Variables
-    
-    public var actionClosures: Set<ActionClosure> = []
-    
-    /// I have to add the underscore to not conflict with the default view from the view controller
-    /// Maybe this isn't necessary - but the UIView isn't able to be genericized
-    public var _view: V
-    public var model: CM
-    
     // MARK: - Initialization
     
-    public init(controllerModel: CM, viewModel: VM)
+    init()
     {
-        model = controllerModel
-        _view = V(model: viewModel)
-        
         super.init(nibName: nil, bundle: nil)
-        
-        view = _view
     }
     
     @available(*, unavailable)

@@ -7,22 +7,22 @@
 
 import UIKit
 
-class SettingsController: ViewController<
-                            SettingsControllerModel,
-                            SettingsViewModel,
-                            SettingsView>
+class SettingsController: ViewController
 {
-    override init(
-        controllerModel: SettingsControllerModel,
-        viewModel: SettingsViewModel)
+    // MARK: - Variables
+    
+    public var tabBarItemTitle: String { "Settings".localized }
+    public var tabBarImage: UIImage? { Icon.settings.getImage() }
+    public var tabBarTag: Int { 3 }
+    
+    // MARK: - Initialization
+    
+    override init()
     {
-        super.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
+        super.init()
         
         tabBarItem = makeTabBarItem()
-        title = model.tabBarItemTitle
-        view.backgroundColor = model.backgroundColor
+        title = tabBarItemTitle
     }
 }
 
@@ -31,31 +31,8 @@ extension SettingsController: ViewControllerTabBarDelegate
     func makeTabBarItem() -> UITabBarItem
     {
         UITabBarItem(
-            title: model.tabBarItemTitle,
-            image: model.tabBarImage,
-            tag: model.tabBarTag)
-    }
-}
-
-extension SettingsController
-{
-    static func makeControllerModel() -> SettingsControllerModel
-    {
-        SettingsControllerModel()
-    }
-    
-    static func makeViewModel() -> SettingsViewModel
-    {
-        SettingsViewModel()
-    }
-    
-    static func makeController() -> SettingsController
-    {
-        let controllerModel = makeControllerModel()
-        let viewModel = makeViewModel()
-        
-        return SettingsController(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
+            title: tabBarItemTitle,
+            image: tabBarImage,
+            tag: tabBarTag)
     }
 }

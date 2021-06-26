@@ -34,10 +34,10 @@ func makeTabBarViewControllers(context: Context) -> [UIViewController]
     let libraryController = LibraryController(context: context, navigationController: libraryNavigation)
     libraryNavigation.setViewControllers([libraryController], animated: false)
     
-    let inboxController = InboxController.makeController()
+    let inboxController = InboxController()
     let inboxNavigation = NavigationController(rootViewController: inboxController)
     
-    let settingsController = SettingsController.makeController()
+    let settingsController = SettingsController()
     let settingsNavigation = NavigationController(rootViewController: settingsController)
     
     return [

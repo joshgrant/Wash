@@ -28,16 +28,6 @@
 		030B21AF26810F090038C095 /* EntityListTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21AE26810F080038C095 /* EntityListTableViewDelegateModel.swift */; };
 		030B21B126810F2A0038C095 /* EntityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21B026810F2A0038C095 /* EntityListView.swift */; };
 		030B21B326810F3C0038C095 /* EntityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21B226810F3C0038C095 /* EntityListViewModel.swift */; };
-		030B21B626810FCF0038C095 /* StockDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21B526810FCF0038C095 /* StockDetailController.swift */; };
-		030B21B8268113ED0038C095 /* TransferFlowDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21B7268113ED0038C095 /* TransferFlowDetailController.swift */; };
-		030B21BA268113FF0038C095 /* ProcessDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21B9268113FF0038C095 /* ProcessDetailController.swift */; };
-		030B21BC268114080038C095 /* EventDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21BB268114080038C095 /* EventDetailController.swift */; };
-		030B21BE268114130038C095 /* ConversionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21BD268114130038C095 /* ConversionDetailController.swift */; };
-		030B21C02681141F0038C095 /* ConditonDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21BF2681141F0038C095 /* ConditonDetailController.swift */; };
-		030B21C2268114290038C095 /* DimensionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21C1268114290038C095 /* DimensionDetailController.swift */; };
-		030B21C4268114320038C095 /* UnitDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21C3268114320038C095 /* UnitDetailController.swift */; };
-		030B21C62681143C0038C095 /* SymbolDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21C52681143C0038C095 /* SymbolDetailController.swift */; };
-		030B21C8268114480038C095 /* NoteDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21C7268114480038C095 /* NoteDetailController.swift */; };
 		030B21CE268121AA0038C095 /* SearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */; };
 		030B21D126815D930038C095 /* Notifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D026815D930038C095 /* Notifiable.swift */; };
 		030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D2268167730038C095 /* StatesHeaderViewModel.swift */; };
@@ -127,18 +117,6 @@
 		038CF60E26763E0A00931595 /* LibraryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60D26763E0A00931595 /* LibraryController.swift */; };
 		038CF61026763E1200931595 /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60F26763E1200931595 /* InboxController.swift */; };
 		038CF61226764DA500931595 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF61126764DA500931595 /* SettingsController.swift */; };
-		038CF6192676506A00931595 /* DashboardControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6182676506A00931595 /* DashboardControllerModel.swift */; };
-		038CF61C267651D600931595 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF61B267651D600931595 /* DashboardViewModel.swift */; };
-		038CF61E267651E800931595 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF61D267651E800931595 /* DashboardView.swift */; };
-		038CF623267652D500931595 /* LibraryControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF622267652D500931595 /* LibraryControllerModel.swift */; };
-		038CF625267652E000931595 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF624267652E000931595 /* LibraryViewModel.swift */; };
-		038CF628267652EC00931595 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF627267652EC00931595 /* LibraryView.swift */; };
-		038CF62A267652F700931595 /* InboxControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF629267652F700931595 /* InboxControllerModel.swift */; };
-		038CF62C267652FF00931595 /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF62B267652FF00931595 /* InboxView.swift */; };
-		038CF62E2676530700931595 /* InboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF62D2676530700931595 /* InboxViewModel.swift */; };
-		038CF6302676531100931595 /* SettingsControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF62F2676531100931595 /* SettingsControllerModel.swift */; };
-		038CF6322676531B00931595 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6312676531B00931595 /* SettingsView.swift */; };
-		038CF6342676532400931595 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6332676532400931595 /* SettingsViewModel.swift */; };
 		038CF6402676679700931595 /* DashboardTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF63F2676679700931595 /* DashboardTableViewModel.swift */; };
 		038CF6442676726900931595 /* DashboardTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6432676726900931595 /* DashboardTableViewDelegateModel.swift */; };
 		038CF6462676727500931595 /* DashboardTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6452676727500931595 /* DashboardTableViewDataSourceModel.swift */; };
@@ -233,16 +211,6 @@
 		030B21AE26810F080038C095 /* EntityListTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewDelegateModel.swift; sourceTree = "<group>"; };
 		030B21B026810F2A0038C095 /* EntityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListView.swift; sourceTree = "<group>"; };
 		030B21B226810F3C0038C095 /* EntityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListViewModel.swift; sourceTree = "<group>"; };
-		030B21B526810FCF0038C095 /* StockDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailController.swift; sourceTree = "<group>"; };
-		030B21B7268113ED0038C095 /* TransferFlowDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowDetailController.swift; sourceTree = "<group>"; };
-		030B21B9268113FF0038C095 /* ProcessDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessDetailController.swift; sourceTree = "<group>"; };
-		030B21BB268114080038C095 /* EventDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailController.swift; sourceTree = "<group>"; };
-		030B21BD268114130038C095 /* ConversionDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionDetailController.swift; sourceTree = "<group>"; };
-		030B21BF2681141F0038C095 /* ConditonDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditonDetailController.swift; sourceTree = "<group>"; };
-		030B21C1268114290038C095 /* DimensionDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionDetailController.swift; sourceTree = "<group>"; };
-		030B21C3268114320038C095 /* UnitDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDetailController.swift; sourceTree = "<group>"; };
-		030B21C52681143C0038C095 /* SymbolDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolDetailController.swift; sourceTree = "<group>"; };
-		030B21C7268114480038C095 /* NoteDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailController.swift; sourceTree = "<group>"; };
 		030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerDelegate.swift; sourceTree = "<group>"; };
 		030B21D026815D930038C095 /* Notifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifiable.swift; sourceTree = "<group>"; };
 		030B21D2268167730038C095 /* StatesHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesHeaderViewModel.swift; sourceTree = "<group>"; };
@@ -338,18 +306,6 @@
 		038CF60D26763E0A00931595 /* LibraryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryController.swift; sourceTree = "<group>"; };
 		038CF60F26763E1200931595 /* InboxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxController.swift; sourceTree = "<group>"; };
 		038CF61126764DA500931595 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
-		038CF6182676506A00931595 /* DashboardControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardControllerModel.swift; sourceTree = "<group>"; };
-		038CF61B267651D600931595 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
-		038CF61D267651E800931595 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
-		038CF622267652D500931595 /* LibraryControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryControllerModel.swift; sourceTree = "<group>"; };
-		038CF624267652E000931595 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
-		038CF627267652EC00931595 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
-		038CF629267652F700931595 /* InboxControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxControllerModel.swift; sourceTree = "<group>"; };
-		038CF62B267652FF00931595 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
-		038CF62D2676530700931595 /* InboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxViewModel.swift; sourceTree = "<group>"; };
-		038CF62F2676531100931595 /* SettingsControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControllerModel.swift; sourceTree = "<group>"; };
-		038CF6312676531B00931595 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		038CF6332676532400931595 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		038CF63F2676679700931595 /* DashboardTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTableViewModel.swift; sourceTree = "<group>"; };
 		038CF6432676726900931595 /* DashboardTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTableViewDelegateModel.swift; sourceTree = "<group>"; };
 		038CF6452676727500931595 /* DashboardTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTableViewDataSourceModel.swift; sourceTree = "<group>"; };
@@ -792,9 +748,6 @@
 			isa = PBXGroup;
 			children = (
 				038CF5AD26754D5A00931595 /* DashboardController.swift */,
-				038CF6182676506A00931595 /* DashboardControllerModel.swift */,
-				038CF61D267651E800931595 /* DashboardView.swift */,
-				038CF61B267651D600931595 /* DashboardViewModel.swift */,
 				038CF647267673DC00931595 /* Table View */,
 			);
 			path = Dashboard;
@@ -804,9 +757,6 @@
 			isa = PBXGroup;
 			children = (
 				038CF60D26763E0A00931595 /* LibraryController.swift */,
-				038CF622267652D500931595 /* LibraryControllerModel.swift */,
-				038CF627267652EC00931595 /* LibraryView.swift */,
-				038CF624267652E000931595 /* LibraryViewModel.swift */,
 				038CF6EB2676877600931595 /* Table View */,
 			);
 			path = Library;
@@ -816,9 +766,6 @@
 			isa = PBXGroup;
 			children = (
 				038CF60F26763E1200931595 /* InboxController.swift */,
-				038CF629267652F700931595 /* InboxControllerModel.swift */,
-				038CF62B267652FF00931595 /* InboxView.swift */,
-				038CF62D2676530700931595 /* InboxViewModel.swift */,
 			);
 			path = Inbox;
 			sourceTree = "<group>";
@@ -827,9 +774,6 @@
 			isa = PBXGroup;
 			children = (
 				038CF61126764DA500931595 /* SettingsController.swift */,
-				038CF62F2676531100931595 /* SettingsControllerModel.swift */,
-				038CF6312676531B00931595 /* SettingsView.swift */,
-				038CF6332676532400931595 /* SettingsViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -989,16 +933,6 @@
 		038CF6F426768F4C00931595 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				030B21BF2681141F0038C095 /* ConditonDetailController.swift */,
-				030B21BD268114130038C095 /* ConversionDetailController.swift */,
-				030B21C1268114290038C095 /* DimensionDetailController.swift */,
-				030B21BB268114080038C095 /* EventDetailController.swift */,
-				030B21C7268114480038C095 /* NoteDetailController.swift */,
-				030B21B9268113FF0038C095 /* ProcessDetailController.swift */,
-				030B21B526810FCF0038C095 /* StockDetailController.swift */,
-				030B21C52681143C0038C095 /* SymbolDetailController.swift */,
-				030B21B7268113ED0038C095 /* TransferFlowDetailController.swift */,
-				030B21C3268114320038C095 /* UnitDetailController.swift */,
 				030B2199267FE2C70038C095 /* Entity */,
 				038CF6F526768F5500931595 /* System */,
 			);
@@ -1197,7 +1131,6 @@
 				038CF651267675D500931595 /* PinnedHeaderViewModel.swift in Sources */,
 				03555B0426869E78006E9EA1 /* Subscriber.swift in Sources */,
 				038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */,
-				030B21C8268114480038C095 /* NoteDetailController.swift in Sources */,
 				038CF6DC267683FB00931595 /* Event+Extensions.swift in Sources */,
 				03555B492686A487006E9EA1 /* Container.swift in Sources */,
 				038CF65B2676779800931595 /* PriorityHeaderViewModel.swift in Sources */,
@@ -1208,11 +1141,9 @@
 				03555B662686A487006E9EA1 /* Bundle+Extensions.swift in Sources */,
 				03555B652686A487006E9EA1 /* NSSet+Extensions.swift in Sources */,
 				038CF69A2676829F00931595 /* RangeSource+Extensions.swift in Sources */,
-				038CF6322676531B00931595 /* SettingsView.swift in Sources */,
 				038CF6D8267683EE00931595 /* Stock+Extensions.swift in Sources */,
 				03555B6D2686A487006E9EA1 /* ActionClosure.swift in Sources */,
 				03555B822687D6A4006E9EA1 /* SystemDetailPinnedMessage.swift in Sources */,
-				038CF61E267651E800931595 /* DashboardView.swift in Sources */,
 				038CF6592676778F00931595 /* ForecastHeaderViewModel.swift in Sources */,
 				038CF64A2676745B00931595 /* PinnedCell.swift in Sources */,
 				038CF6982676829F00931595 /* Source+Extensions.swift in Sources */,
@@ -1228,10 +1159,7 @@
 				030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */,
 				038CF6C7267682C700931595 /* Priority.swift in Sources */,
 				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
-				038CF62A267652F700931595 /* InboxControllerModel.swift in Sources */,
 				038CF6E3267684E200931595 /* LibraryCell.swift in Sources */,
-				030B21BA268113FF0038C095 /* ProcessDetailController.swift in Sources */,
-				038CF62C267652FF00931595 /* InboxView.swift in Sources */,
 				038CF60E26763E0A00931595 /* LibraryController.swift in Sources */,
 				038CF69B2676829F00931595 /* Entity+Extensions.swift in Sources */,
 				038CF6E12676840E00931595 /* System+Extensions.swift in Sources */,
@@ -1255,18 +1183,14 @@
 				03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */,
 				030B21B126810F2A0038C095 /* EntityListView.swift in Sources */,
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
-				038CF623267652D500931595 /* LibraryControllerModel.swift in Sources */,
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
 				03555B0126869DF1006E9EA1 /* Unique.swift in Sources */,
 				038CF69D2676829F00931595 /* ImageBlock+Searchable.swift in Sources */,
 				030B21D92681697D0038C095 /* EntityListTableViewDelegate.swift in Sources */,
-				030B21C62681143C0038C095 /* SymbolDetailController.swift in Sources */,
 				03555B6E2686A487006E9EA1 /* NavigationController.swift in Sources */,
 				030B21A1267FEA230038C095 /* EntityListController.swift in Sources */,
 				038CF6EA2676865600931595 /* DetailCell.swift in Sources */,
 				03555B5A2686A487006E9EA1 /* TableViewModel.swift in Sources */,
-				038CF61C267651D600931595 /* DashboardViewModel.swift in Sources */,
-				038CF628267652EC00931595 /* LibraryView.swift in Sources */,
 				03555B4B2686A487006E9EA1 /* Context.swift in Sources */,
 				03555B0526869E7A006E9EA1 /* WrappedSubscriber.swift in Sources */,
 				03555B682686A487006E9EA1 /* TabBar.swift in Sources */,
@@ -1277,14 +1201,12 @@
 				03555B562686A487006E9EA1 /* ConfigurableTableViewCellProtocol.swift in Sources */,
 				03555AD8268528F9006E9EA1 /* EntityListResponder.swift in Sources */,
 				031681B9267DA6F100F493DA /* Pinnable.swift in Sources */,
-				038CF6342676532400931595 /* SettingsViewModel.swift in Sources */,
 				030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */,
 				03555B672686A487006E9EA1 /* SearchBarDelegate.swift in Sources */,
 				030B219B267FE3730038C095 /* EntityListTableViewDataSourceModel.swift in Sources */,
 				038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */,
 				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
 				03555B5E2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift in Sources */,
-				030B21B8268113ED0038C095 /* TransferFlowDetailController.swift in Sources */,
 				03555B502686A487006E9EA1 /* StateMachine.swift in Sources */,
 				03555B642686A487006E9EA1 /* String+Extensions.swift in Sources */,
 				03555B4E2686A487006E9EA1 /* Icon.swift in Sources */,
@@ -1299,17 +1221,12 @@
 				038CF6D2267682C700931595 /* EntityType.swift in Sources */,
 				03555B542686A487006E9EA1 /* TableViewDelegateModel.swift in Sources */,
 				03555B4A2686A487006E9EA1 /* DatabaseError.swift in Sources */,
-				038CF625267652E000931595 /* LibraryViewModel.swift in Sources */,
 				038CF6C1267682C700931595 /* SourceType.swift in Sources */,
 				03555B0726869E7E006E9EA1 /* Identifier.swift in Sources */,
 				038CF6F2267687B800931595 /* LibraryTableViewDataSourceModel.swift in Sources */,
 				03555B7D2687D160006E9EA1 /* EntityListCellMessage.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				03555B712686A487006E9EA1 /* ControllerModel.swift in Sources */,
-				030B21C02681141F0038C095 /* ConditonDetailController.swift in Sources */,
-				030B21BE268114130038C095 /* ConversionDetailController.swift in Sources */,
-				038CF6192676506A00931595 /* DashboardControllerModel.swift in Sources */,
-				030B21C2268114290038C095 /* DimensionDetailController.swift in Sources */,
 				03555B6A2686A487006E9EA1 /* ViewControllerTabBarDelegate.swift in Sources */,
 				03555B702686A487006E9EA1 /* View.swift in Sources */,
 				038CF6C8267682C700931595 /* CompletionType.swift in Sources */,
@@ -1321,7 +1238,6 @@
 				038CF6CA267682C700931595 /* AmountType.swift in Sources */,
 				03555B622686A487006E9EA1 /* Array+Extensions.swift in Sources */,
 				038CF6BE267682C700931595 /* DateStock.swift in Sources */,
-				038CF6302676531100931595 /* SettingsControllerModel.swift in Sources */,
 				03555B0326869E76006E9EA1 /* Message.swift in Sources */,
 				031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */,
 				03555B802687D5EE006E9EA1 /* SystemDetailTitleEditedMessage.swift in Sources */,
@@ -1335,17 +1251,14 @@
 				038CF5AB26751C9C00931595 /* RootController.swift in Sources */,
 				03555B882687D783006E9EA1 /* SystemDetailResponder.swift in Sources */,
 				030B21B326810F3C0038C095 /* EntityListViewModel.swift in Sources */,
-				030B21BC268114080038C095 /* EventDetailController.swift in Sources */,
 				038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */,
 				038CF6442676726900931595 /* DashboardTableViewDelegateModel.swift in Sources */,
 				038CF6902676829F00931595 /* Unit+Extensions.swift in Sources */,
 				03555B6F2686A487006E9EA1 /* ViewController.swift in Sources */,
 				03555B572686A487006E9EA1 /* TableViewCell.swift in Sources */,
-				030B21C4268114320038C095 /* UnitDetailController.swift in Sources */,
 				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
 				038CF6EE267687A500931595 /* LibraryTableViewModel.swift in Sources */,
-				030B21B626810FCF0038C095 /* StockDetailController.swift in Sources */,
 				03E700732683912F00B8B527 /* SystemDetailControllerTextFieldDelegate.swift in Sources */,
 				03555B532686A487006E9EA1 /* TableViewDataSourceModel.swift in Sources */,
 				038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */,
@@ -1354,7 +1267,6 @@
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
 				038CF6D0267682C700931595 /* Searchable.swift in Sources */,
-				038CF62E2676530700931595 /* InboxViewModel.swift in Sources */,
 				03555AAE2684096D006E9EA1 /* WindowState.swift in Sources */,
 				03555B6C2686A487006E9EA1 /* SpacerView.swift in Sources */,
 			);

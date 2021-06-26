@@ -7,33 +7,36 @@
 
 import UIKit
 
-class LibraryController: ViewController<
-                            LibraryControllerModel,
-                            LibraryViewModel,
-                            LibraryView>
+class LibraryController: ViewController
 {
-    // MARK: - Initialization
+    // MARK: - Variables
     
-    override init(
-        controllerModel: LibraryControllerModel,
-        viewModel: LibraryViewModel)
+    var tabBarItemTitle: String { "Library".localized }
+    var tabBarImage: UIImage? { Icon.library.getImage() }
+    var tabBarTag: Int { 1 }
+    
+    var tableView: TableView<LibraryTableViewModel>
+    var tableViewModel: LibraryTableViewModel
+    
+    // MARK: - Initialization
+
+    init(
+        context: Context,
+        navigationController: NavigationController)
     {
-        super.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
+        let tableViewModel = LibraryTableViewModel(
+            context: context,
+            navigationController: navigationController)
+        
+        self.tableViewModel = tableViewModel
+        self.tableView = TableView(model: tableViewModel)
+        
+        super.init()
         
         tabBarItem = makeTabBarItem()
-        title = model.tabBarItemTitle
-    }
-    
-    convenience init(context: Context, navigationController: NavigationController)
-    {
-        let controllerModel = LibraryControllerModel()
-        let viewModel = LibraryViewModel(context: context, navigationController: navigationController)
+        title = tabBarItemTitle
         
-        self.init(
-            controllerModel: controllerModel,
-            viewModel: viewModel)
+        view.embed(tableView)
     }
 }
 
@@ -42,8 +45,8 @@ extension LibraryController: ViewControllerTabBarDelegate
     func makeTabBarItem() -> UITabBarItem
     {
         UITabBarItem(
-            title: model.tabBarItemTitle,
-            image: model.tabBarImage,
-            tag: model.tabBarTag)
+            title: tabBarItemTitle,
+            image: tabBarImage,
+            tag: tabBarTag)
     }
 }

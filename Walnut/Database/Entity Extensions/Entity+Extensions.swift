@@ -112,26 +112,6 @@ extension Entity
         {
         case (let s as System):
             return SystemDetailController(system: s, navigationController: navigationController)
-        case (let s as Stock):
-            return StockDetailController(stock: s, navigationController: navigationController)
-        case (let t as TransferFlow):
-            return TransferFlowDetailController(flow: t, navigationController: navigationController)
-        case (let p as ProcessFlow):
-            return ProcessFlowDetailController(processFlow: p, navigationController: navigationController)
-        case (let e as Event):
-            return EventDetailController(event: e, navigationController: navigationController)
-        case (let c as Conversion):
-            return ConversionDetailController(conversion: c, navigationController: navigationController)
-        case (let c as Condition):
-            return ConditionDetailController(condition: c, navigationController: navigationController)
-        case (let d as Dimension):
-            return DimensionDetailController(dimension: d, navigationController: navigationController)
-        case (let u as Unit):
-            return UnitDetailController(unit: u, navigationController: navigationController)
-        case (let s as Symbol):
-            return SymbolDetailController(symbol: s, navigationController: navigationController)
-        case (let n as Note):
-            return NoteDetailController(note: n, navigationController: navigationController)
         default:
             assertionFailure("Unhandled entity: \(self)")
             return UIViewController()
