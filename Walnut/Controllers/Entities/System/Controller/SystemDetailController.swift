@@ -18,7 +18,6 @@ class SystemDetailController: UIViewController
     var responder: SystemDetailResponder
     var router: SystemDetailRouter
     var tableViewManager: SystemDetailTableViewManager
-    var textFieldDelegate: SystemDetailControllerTextFieldDelegate
     
     var duplicateBarButtonItem: UIBarButtonItem
     var pinBarButtonItem: UIBarButtonItem
@@ -29,16 +28,12 @@ class SystemDetailController: UIViewController
         system: System,
         navigationController: NavigationController?)
     {
-        let textFieldDelegate = SystemDetailControllerTextFieldDelegate()
-        
         let responder = SystemDetailResponder(system: system)
         
         self.system = system
-        self.textFieldDelegate = textFieldDelegate
         self.responder = responder
         self.tableViewManager = .init(
             system: system,
-            delegate: textFieldDelegate,
             navigationController: navigationController)
         self.router = SystemDetailRouter()
         
@@ -57,7 +52,8 @@ class SystemDetailController: UIViewController
             animated: false)
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -98,31 +94,36 @@ extension SystemDetailController: Subscriber
     {
         switch message
         {
-        case let x as SystemDetailTitleEditedMessage:
-            handleSystemDetailTitleEditMessage(x)
-        case let x as SystemDetailPinnedMessage:
+        case let x as EntityPinnedMessage:
             handleSystemDetailPinnedMessage(x)
+        case let x as TextEditCellMessage:
+            handleTextEditCellMessage(x)
         default:
             break
         }
     }
     
-    func handleSystemDetailTitleEditMessage(_ message: SystemDetailTitleEditedMessage)
+    func handleTextEditCellMessage(_ message: TextEditCellMessage)
     {
-        title = message.title
-        system.title = message.title
-        system.managedObjectContext?.quickSave()
+        if message.entity == system
+        {
+            title = message.title
+            system.title = message.title
+            system.managedObjectContext?.quickSave()
+        }
     }
     
-    func handleSystemDetailPinnedMessage(_ message: SystemDetailPinnedMessage)
+    func handleSystemDetailPinnedMessage(_ message: EntityPinnedMessage)
     {
+        guard message.entity == system else { return }
+        
         let pinned = message.isPinned
         
         pinBarButtonItem.image = pinned
             ? Icon.pinFill.getImage()
             : Icon.pin.getImage()
         
-        system.isPinned = message.isPinned
+        system.isPinned = pinned
         system.managedObjectContext?.quickSave()
     }
 }

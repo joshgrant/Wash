@@ -8,40 +8,43 @@
 import Foundation
 import UIKit
 
-class IdealInfoCellModel: TableViewCellModel
+class InfoCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
-    let title: String = "Ideal".localized
-    var percentage: Int
-    var infoAction: ActionClosure? // TODO: Not optional, or use convenience
+    let title: String
+    let detail: String
     
     // MARK: - Initialization
     
-    required init(percentage: Int, infoAction: ActionClosure?)
+    required init(title: String, detail: String)
     {
-        self.percentage = percentage
-        self.infoAction = infoAction
+        self.title = title
+        self.detail = detail
     }
     
-    static var cellClass: AnyClass { IdealInfoCell.self }
+    static var cellClass: AnyClass { InfoCell.self }
 }
 
-class IdealInfoCell: TableViewCell<IdealInfoCellModel>
+class InfoCell: TableViewCell<InfoCellModel>
 {
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
+    override init(
+        style: UITableViewCell.CellStyle,
+        reuseIdentifier: String?)
     {
-        super.init(style: .value1, reuseIdentifier: reuseIdentifier)
+        super.init(
+            style: .value1,
+            reuseIdentifier: reuseIdentifier)
     }
     
     // MARK: - Configuration
     
-    override func configure(with model: IdealInfoCellModel)
+    override func configure(with model: InfoCellModel)
     {
         textLabel?.text = model.title
-        detailTextLabel?.text = "\(model.percentage)%"
+        detailTextLabel?.text = model.detail
         
         accessoryType = .detailButton
     }

@@ -36,6 +36,42 @@ extension Stock
             validStates = NSSet(array: newValue)
         }
     }
+    
+    var unwrappedInflows: [Flow]
+    {
+        get
+        {
+            inflows?.toArray() ?? []
+        }
+        set
+        {
+            inflows = NSSet(array: newValue)
+        }
+    }
+    
+    var unwrappedOutflows: [Flow]
+    {
+        get
+        {
+            outflows?.toArray() ?? []
+        }
+        set
+        {
+            outflows = NSSet(array: newValue)
+        }
+    }
+    
+    var unwrappedEvents: [Event]
+    {
+        get
+        {
+            events?.toArray() ?? []
+        }
+        set
+        {
+            events = NSSet(array: newValue)
+        }
+    }
 }
 
 extension Stock

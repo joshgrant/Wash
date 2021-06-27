@@ -31,7 +31,8 @@ class DashboardTableViewModel: TableViewModel
         [
             PinnedCellModel.self,
             TextCellModel.self,
-            DetailCellModel.self
+            DetailCellModel.self,
+            RightImageCellModel.self
             // TODO:
             // Flow Cell
             // Event Cell

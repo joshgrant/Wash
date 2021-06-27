@@ -1,5 +1,5 @@
 //
-//  SystemDetailPinnedMessage.swift
+//  EntityPinnedMessage.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 6/26/21.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-class SystemDetailPinnedMessage: Message
+class EntityPinnedMessage: Message
 {
     // MARK: - Variables
     
     var isPinned: Bool
-    var system: System
+    var entity: Entity
     
     // MARK: - Initialization
     
-    init(isPinned: Bool, system: System)
+    init(isPinned: Bool, entity: Entity)
     {
         self.isPinned = isPinned
-        self.system = system
+        self.entity = entity
     }
 }

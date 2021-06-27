@@ -8,25 +8,42 @@
 import Foundation
 import UIKit
 
-class TextEditCellModel: TableViewCellModel
+class TextEditCellModel: NSObject, TableViewCellModel
 {
     // MARK: - Variables
     
     var text: String?
     var placeholder: String
-    weak var delegate: UITextFieldDelegate?
+    var entity: Entity
     
     // MARK: - Initialization
     
-    init(text: String?, placeholder: String, delegate: UITextFieldDelegate?)
+    init(text: String?, placeholder: String, entity: Entity)
     {
         self.text = text
         self.placeholder = placeholder
-        self.delegate = delegate
+        self.entity = entity
     }
     
     static var cellClass: AnyClass { TextEditCell.self }
 }
+
+extension TextEditCellModel: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        let title = textField.text ?? ""
+        let message = TextEditCellMessage(title: title, entity: entity)
+        AppDelegate.shared.mainStream.send(message: message)
+    }
+}
+
 
 class TextEditCell: TableViewCell<TextEditCellModel>
 {
@@ -63,6 +80,6 @@ class TextEditCell: TableViewCell<TextEditCellModel>
     {
         textField.placeholder = model.placeholder
         textField.text = model.text
-        textField.delegate = model.delegate
+        textField.delegate = model
     }
 }

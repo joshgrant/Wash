@@ -26,8 +26,8 @@ class EntityListTableViewManager: NSObject
     
     init(
         entityType: Entity.Type,
-        context: Context,
-        navigationController: NavigationController)
+        context: Context?,
+        navigationController: NavigationController?)
     {
         self.tableView = UITableView(frame: .zero, style: .grouped)
         
@@ -78,9 +78,11 @@ class EntityListTableViewManager: NSObject
         ]
     }
     
-    static func makeCellModels(context: Context, entityType: Entity.Type) -> [[TableViewCellModel]]
+    static func makeCellModels(context: Context?, entityType: Entity.Type) -> [[TableViewCellModel]]
     {
-        [
+        guard let context = context else { return [] }
+        
+        return [
             makeEntityListCellModels(
                 context: context,
                 entityType: entityType)

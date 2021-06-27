@@ -19,17 +19,14 @@ class SystemDetailTableViewManager: NSObject
     var tableView: UITableView
     
     weak var navigationController: NavigationController?
-    weak var delegate: UITextFieldDelegate?
     
     // MARK: - Initialization
     
     init(
         system: System,
-        delegate: UITextFieldDelegate,
         navigationController: NavigationController?)
     {
         self.system = system
-        self.delegate = delegate
         self.navigationController = navigationController
         
         tableView = UITableView(frame: .zero, style: .grouped)
@@ -82,7 +79,7 @@ class SystemDetailTableViewManager: NSObject
         [
             TextEditCellModel.self,
             TextCellModel.self,
-            IdealInfoCellModel.self,
+            InfoCellModel.self,
             SuggestedFlowCellModel.self,
             DetailCellModel.self
             // Title cell
@@ -133,12 +130,12 @@ extension SystemDetailTableViewManager: UITableViewDelegate
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-        headerViews.count.map { CGFloat(44) }[section]
+        44
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
     {
-        headerViews.count.map { CGFloat(44) }[section]
+        44
     }
 }
 
@@ -171,17 +168,18 @@ extension SystemDetailTableViewManager
         
         section.append(TextEditCellModel(
                         text: system.title,
-                        placeholder: "Name",
-                        delegate: delegate))
+                        placeholder: "Name".localized,
+                        entity: system))
         
-        section.append(IdealInfoCellModel(
-                        percentage: system.percentIdeal,
-                        infoAction: nil))
+        section.append(InfoCellModel(
+                        title: "Ideal".localized,
+                        detail: "\(system.percentIdeal)%"))
         
-        //        if let flow = system.suggestedFlow
-        //        {
-        //            section.append(SuggestedFlowCellModel(title: flow.title))
-        //        }
+        let suggestedFlows: [Flow] = system.unwrapped(\System.suggestedFlows)
+        if let flow = suggestedFlows.first
+        {
+            section.append(SuggestedFlowCellModel(title: flow.title))
+        }
         
         return section
     }
@@ -191,7 +189,10 @@ extension SystemDetailTableViewManager
         let stocks = system.unwrappedStocks
         return stocks.map
         {
-            DetailCellModel(title: $0.title, detail: $0.currentDescription)
+            DetailCellModel(
+                title: $0.title,
+                detail: $0.currentDescription,
+                disclosure: true)
         }
     }
     
@@ -200,7 +201,10 @@ extension SystemDetailTableViewManager
         let flows = system.unwrappedFlows
         return flows.map
         {
-            DetailCellModel(title: $0.title, detail: "None")
+            DetailCellModel(
+                title: $0.title,
+                detail: "None",
+                disclosure: true)
         }
     }
     
@@ -209,7 +213,10 @@ extension SystemDetailTableViewManager
         let events = system.unwrappedEvents
         return events.map
         {
-            DetailCellModel(title: $0.title, detail: "None")
+            DetailCellModel(
+                title: $0.title,
+                detail: "None",
+                disclosure: true)
         }
     }
     
@@ -218,7 +225,10 @@ extension SystemDetailTableViewManager
         let notes = system.unwrappedNotes
         return notes.map
         {
-            DetailCellModel(title: $0.title, detail: $0.firstLine ?? "None")
+            DetailCellModel(
+                title: $0.title,
+                detail: $0.firstLine ?? "None",
+                disclosure: true)
         }
     }
 }

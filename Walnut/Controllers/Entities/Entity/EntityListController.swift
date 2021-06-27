@@ -33,8 +33,8 @@ class EntityListController: UIViewController
     
     init(
         type: Entity.Type,
-        context: Context,
-        navigationController: NavigationController)
+        context: Context?,
+        navigationController: NavigationController?)
     {
         self.type = type
         self.context = context
@@ -107,7 +107,7 @@ extension EntityListController: Subscriber
         {
         case is EntityListAddButtonMessage:
             tableViewManager.needsReload = true
-        case is SystemDetailTitleEditedMessage:
+        case is TextEditCellMessage:
             tableViewManager.needsReload = true
         default:
             break

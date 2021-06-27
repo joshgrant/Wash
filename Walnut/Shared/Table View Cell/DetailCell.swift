@@ -13,13 +13,15 @@ class DetailCellModel: TableViewCellModel
     
     var title: String
     var detail: String
+    var disclosure: Bool
     
     // MARK: - Initialization
     
-    init(title: String, detail: String)
+    init(title: String, detail: String, disclosure: Bool)
     {
         self.title = title
         self.detail = detail
+        self.disclosure = disclosure
     }
     
     static var cellClass: AnyClass { DetailCell.self }
@@ -60,5 +62,10 @@ class DetailCell: TableViewCell<DetailCellModel>
     {
         titleLabel.text = model.title
         detailLabel.text = model.detail
+        detailLabel.textColor = .secondaryLabel
+        
+        accessoryType = model.disclosure
+            ? .disclosureIndicator
+            : .none
     }
 }

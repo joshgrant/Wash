@@ -14,9 +14,9 @@ class LibraryController: ViewController
     var tabBarItemTitle: String { "Library".localized }
     var tabBarImage: UIImage? { Icon.library.getImage() }
     var tabBarTag: Int { 1 }
-    
-    var tableView: TableView<LibraryTableViewModel>
-    var tableViewModel: LibraryTableViewModel
+
+    var router: LibraryTableViewRouter
+    var tableViewManager: LibraryTableViewManager
     
     // MARK: - Initialization
 
@@ -24,19 +24,15 @@ class LibraryController: ViewController
         context: Context,
         navigationController: NavigationController)
     {
-        let tableViewModel = LibraryTableViewModel(
-            context: context,
-            navigationController: navigationController)
-        
-        self.tableViewModel = tableViewModel
-        self.tableView = TableView(model: tableViewModel)
+        self.router = LibraryTableViewRouter(root: navigationController, context: context)
+        self.tableViewManager = LibraryTableViewManager(context: context)
         
         super.init()
         
         tabBarItem = makeTabBarItem()
         title = tabBarItemTitle
         
-        view.embed(tableView)
+        view.embed(tableViewManager.tableView)
     }
 }
 

@@ -32,9 +32,9 @@ class SystemDetailResponder: Responder
     @objc func userTouchedUpInsidePin(sender: UIBarButtonItem)
     {
         system.isPinned.toggle()
-        let message = SystemDetailPinnedMessage(
+        let message = EntityPinnedMessage(
             isPinned: system.isPinned,
-            system: system)
+            entity: system)
         AppDelegate.shared.mainStream.send(message: message)
     }
 }

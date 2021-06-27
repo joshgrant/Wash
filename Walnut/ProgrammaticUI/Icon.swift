@@ -48,4 +48,15 @@ public enum Icon: String
     {
         return UIImage(systemName: self.rawValue)
     }
+    
+    public func textIcon() -> String
+    {
+        switch self
+        {
+        case .stock: return "􀐚"
+        case .system: return "􀤆"
+        default:
+            return ""
+        }
+    }
 }

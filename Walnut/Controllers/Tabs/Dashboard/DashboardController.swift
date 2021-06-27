@@ -76,7 +76,7 @@ extension DashboardController: Subscriber
     {
         switch message
         {
-        case is SystemDetailPinnedMessage:
+        case is EntityPinnedMessage:
             tableViewNeedsToReload = true
         default:
             break

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class DashboardTableViewDataSourceModel: TableViewDataSourceModel
 {
@@ -68,16 +69,24 @@ class DashboardTableViewDataSourceModel: TableViewDataSourceModel
         {
             let title = $0.title
             let detail = "Mon, Apr 3"
-            return DetailCellModel(title: title, detail: detail)
+            return DetailCellModel(
+                title: title,
+                detail: detail,
+                disclosure: true)
         }
     }
     
     static func makePinnedModels(context: Context) -> [TableViewCellModel]
     {
         let pins = getPinnedObjects(context: context)
-        return pins.map
+        return pins.compactMap
         {
-            TextCellModel(title: $0.title, disclosureIndicator: true)
+            guard let type = EntityType.type(from: $0) else { return nil }
+
+            return RightImageCellModel(
+                title: $0.title,
+                detail: type.icon,
+                disclosure: true)
         }
     }
     

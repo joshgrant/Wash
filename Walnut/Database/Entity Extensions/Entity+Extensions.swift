@@ -114,6 +114,8 @@ extension Entity
         {
         case (let s as System):
             return SystemDetailController(system: s, navigationController: navigationController)
+        case (let s as Stock):
+            return StockDetailController(stock: s, navigationController: navigationController)
         default:
             assertionFailure("Unhandled entity: \(self)")
             return UIViewController()
