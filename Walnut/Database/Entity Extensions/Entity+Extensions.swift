@@ -108,7 +108,7 @@ extension Entity
 
 extension Entity
 {
-    func detailController(navigationController: NavigationController) -> UIViewController
+    func detailController(navigationController: NavigationController?) -> UIViewController
     {
         switch self
         {

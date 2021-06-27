@@ -14,12 +14,10 @@ class SystemDetailController: UIViewController
     
     var id = UUID()
     
-    var tableView: TableView<SystemDetailTableViewModel>
-    var tableViewModel: SystemDetailTableViewModel
-    
     var system: System
     var responder: SystemDetailResponder
     var router: SystemDetailRouter
+    var tableViewManager: SystemDetailTableViewManager
     var textFieldDelegate: SystemDetailControllerTextFieldDelegate
     
     var duplicateBarButtonItem: UIBarButtonItem
@@ -29,22 +27,19 @@ class SystemDetailController: UIViewController
     
     init(
         system: System,
-        navigationController: NavigationController)
+        navigationController: NavigationController?)
     {
         let textFieldDelegate = SystemDetailControllerTextFieldDelegate()
-        
-        let tableViewModel = SystemDetailTableViewModel(
-            system: system,
-            navigationController: navigationController,
-            delegate: textFieldDelegate)
         
         let responder = SystemDetailResponder(system: system)
         
         self.system = system
         self.textFieldDelegate = textFieldDelegate
-        self.tableViewModel = tableViewModel
-        self.tableView = TableView(model: tableViewModel)
         self.responder = responder
+        self.tableViewManager = .init(
+            system: system,
+            delegate: textFieldDelegate,
+            navigationController: navigationController)
         self.router = SystemDetailRouter()
         
         self.duplicateBarButtonItem = Self.makeDuplicateNavigationItem(responder: responder)
@@ -55,7 +50,7 @@ class SystemDetailController: UIViewController
         
         title = system.title
         
-        view.embed(tableView)
+        view.embed(tableViewManager.tableView)
         
         navigationItem.setRightBarButtonItems(
             [duplicateBarButtonItem, pinBarButtonItem],
@@ -71,21 +66,7 @@ class SystemDetailController: UIViewController
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
-        makeTextCellFirstResponderIfEmpty()
-    }
-    
-    func makeTextCellFirstResponderIfEmpty()
-    {
-        let indexPath = IndexPath(row: 0, section: 0)
-        let cell = tableView.cellForRow(at: indexPath)
-        guard let textCell = cell as? TextEditCell else { return }
-        
-        if let text = textCell.textField.text
-        {
-            if text.count > 0 { return }
-        }
-        
-        textCell.textField.becomeFirstResponder()
+        tableViewManager.makeTextCellFirstResponderIfEmpty()
     }
     
     // MARK: - Factory

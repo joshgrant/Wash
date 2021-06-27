@@ -39,7 +39,7 @@ extension System
         // and stocks...
         // Maybe we should come up with a data generator?
         
-        let total: Int = 0
+        let total: Int = 100
         
 //        for stock in unwrappedStocks
 //        {
