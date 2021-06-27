@@ -20,11 +20,7 @@ class EntityListController: UIViewController
     weak var context: Context?
     weak var root: NavigationController?
     
-    var tableViewModel: EntityListTableViewModel
-    var tableView: TableView<EntityListTableViewModel>
-    
-    var tableViewNeedsReload: Bool = false
-    
+    var tableViewManager: EntityListTableViewManager
     var responder: EntityListResponder
     var router: EntityListRouter
     
@@ -40,15 +36,16 @@ class EntityListController: UIViewController
         context: Context,
         navigationController: NavigationController)
     {
-        let tableViewModel = EntityListTableViewModel(context: context, navigationController: navigationController, entityType: type)
-        
         self.type = type
         self.context = context
         self.root = navigationController
-        self.tableViewModel = tableViewModel
-        self.tableView = TableView(model: tableViewModel)
-        self.router = EntityListRouter(context: context, root: navigationController)
-        self.responder = EntityListResponder(entityType: type)
+        self.tableViewManager = .init(
+            entityType: type,
+            context: context,
+            navigationController: navigationController)
+        self.router = .init(context: context, root: navigationController)
+        self.responder = .init(entityType: type)
+        
         super.init(nibName: nil, bundle: nil)
         
         subscribe(to: AppDelegate.shared.mainStream)
@@ -59,10 +56,11 @@ class EntityListController: UIViewController
         navigationItem.searchController = makeSearchController(searchControllerDelegate: self)
         navigationItem.hidesSearchBarWhenScrolling = true
         
-        view.embed(tableView)
+        view.embed(tableViewManager.tableView)
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -80,18 +78,7 @@ class EntityListController: UIViewController
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        
-        if tableViewNeedsReload
-        {
-            guard let model = tableViewModel.dataSource.model as? EntityListTableViewDataSourceModel
-            else
-            {
-                assertionFailure("Incorrect table view data source model")
-                return
-            }
-            model.reload()
-            tableView.reloadData()
-        }
+        tableViewManager.reloadIfNeeded()
     }
     
     // MARK: - Factory
@@ -119,9 +106,9 @@ extension EntityListController: Subscriber
         switch message
         {
         case is EntityListAddButtonMessage:
-            tableViewNeedsReload = true
+            tableViewManager.needsReload = true
         case is SystemDetailTitleEditedMessage:
-            tableViewNeedsReload = true
+            tableViewManager.needsReload = true
         default:
             break
         }

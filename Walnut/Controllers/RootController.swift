@@ -27,8 +27,9 @@ class RootController: TabBarController
 
 func makeTabBarViewControllers(context: Context) -> [UIViewController]
 {
-    let dashboardController = DashboardController(context: context)
-    let dashboardNavigation = NavigationController(rootViewController: dashboardController)
+    let dashboardNavigation = NavigationController()
+    let dashboardController = DashboardController(context: context, navigationController: dashboardNavigation)
+    dashboardNavigation.setViewControllers([dashboardController], animated: true)
     
     let libraryNavigation = NavigationController()
     let libraryController = LibraryController(context: context, navigationController: libraryNavigation)

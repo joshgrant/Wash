@@ -11,9 +11,9 @@ class DashboardTableViewModel: TableViewModel
 {
     // MARK: - Initialization
     
-    convenience init(context: Context)
+    convenience init(context: Context, navigationController: NavigationController)
     {
-        let delegateModel = DashboardTableViewDelegateModel()
+        let delegateModel = DashboardTableViewDelegateModel(context: context, navigationController: navigationController)
         let dataSourceModel = DashboardTableViewDataSourceModel(context: context)
         let cellModelTypes = Self.makeCellModelTypes()
         

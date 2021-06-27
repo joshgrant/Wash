@@ -26,4 +26,9 @@ open class TableViewDataSourceModel
     {
         cellModels[section].count
     }
+    
+    func reload()
+    {
+        assertionFailure("Override this method in your subclasses")
+    }
 }

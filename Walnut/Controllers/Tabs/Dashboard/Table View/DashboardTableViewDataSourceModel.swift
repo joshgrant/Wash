@@ -10,12 +10,27 @@ import CoreData
 
 class DashboardTableViewDataSourceModel: TableViewDataSourceModel
 {
+    // MARK: - Variables
+    
+    weak var context: Context?
+    
     // MARK: - Initialization
     
     convenience init(context: Context)
     {
         let cellModels = Self.makeCellModels(context: context)
         self.init(cellModels: cellModels)
+        self.context = context
+    }
+    
+    override func reload()
+    {
+        guard let context = context else {
+            assertionFailure("The context was nil")
+            return
+        }
+        
+        self.cellModels = Self.makeCellModels(context: context)
     }
     
     // MARK: - Factory
@@ -68,10 +83,13 @@ class DashboardTableViewDataSourceModel: TableViewDataSourceModel
     
     static func getPinnedObjects(context: Context) -> [Pinnable]
     {
-        let request = Entity.makePinnedObjectsFetchRequest()
+        let request = Entity.makePinnedObjectsFetchRequest(context: context)
         do
         {
-            return try context.fetch(request).compactMap { $0 as? Pinnable }
+            let result = try context.fetch(request)
+            print(result)
+            
+            return result.compactMap { $0 as? Pinnable }
         }
         catch
         {

@@ -45,11 +45,13 @@ public extension Entity
         [NSSortDescriptor(keyPath: \Entity.id, ascending: false)]
     }
     
-    static func makePinnedObjectsFetchRequest() -> NSFetchRequest<Entity>
+    static func makePinnedObjectsFetchRequest(context: Context) -> NSFetchRequest<NSFetchRequestResult>
     {
-        let fetchRequest: NSFetchRequest<Entity> = Entity.fetchRequest()
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest()
+        fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Entity", in: context)
         fetchRequest.predicate = makePinnedObjectsPredicate()
         fetchRequest.sortDescriptors = makePinnedObjectsSortDescriptors()
+        fetchRequest.fetchBatchSize = 20
         fetchRequest.shouldRefreshRefetchedObjects = true
         return fetchRequest
     }

@@ -11,28 +11,51 @@ class DashboardController: ViewController
 {
     // MARK: - Variables
     
+    var id = UUID()
+    
     var tabBarItemTitle: String { "Dashboard".localized }
     var tabBarImage: UIImage? { Icon.dashboard.getImage() }
     var tabBarTag: Int { 0 }
     
     var tableView: TableView<DashboardTableViewModel>
     var tableViewModel: DashboardTableViewModel
+    var tableViewNeedsToReload: Bool = false
     
     // MARK: - Initialization
     
-    init(context: Context)
+    init(context: Context, navigationController: NavigationController)
     {
-        let tableViewModel = DashboardTableViewModel(context: context)
+        let tableViewModel = DashboardTableViewModel(context: context, navigationController: navigationController)
         
         self.tableView = TableView(model: tableViewModel)
         self.tableViewModel = tableViewModel
         
         super.init()
+        subscribe(to: AppDelegate.shared.mainStream)
         
         title = tabBarItemTitle
         tabBarItem = makeTabBarItem()
         
         view.embed(tableView)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        if tableViewNeedsToReload
+        {
+            reloadTableView()
+            tableViewNeedsToReload = false
+        }
+    }
+    
+    func reloadTableView()
+    {
+        tableViewModel.dataSource.model.reload()
+        tableView.reloadData()
     }
 }
 
@@ -44,5 +67,19 @@ extension DashboardController: ViewControllerTabBarDelegate
             title: tabBarItemTitle,
             image: tabBarImage,
             tag: tabBarTag)
+    }
+}
+
+extension DashboardController: Subscriber
+{
+    func receive(message: Message)
+    {
+        switch message
+        {
+        case is SystemDetailPinnedMessage:
+            tableViewNeedsToReload = true
+        default:
+            break
+        }
     }
 }

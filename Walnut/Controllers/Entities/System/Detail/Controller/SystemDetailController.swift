@@ -130,6 +130,7 @@ extension SystemDetailController: Subscriber
     {
         title = message.title
         system.title = message.title
+        system.managedObjectContext?.quickSave()
     }
     
     func handleSystemDetailPinnedMessage(_ message: SystemDetailPinnedMessage)
@@ -139,5 +140,8 @@ extension SystemDetailController: Subscriber
         pinBarButtonItem.image = pinned
             ? Icon.pinFill.getImage()
             : Icon.pin.getImage()
+        
+        system.isPinned = message.isPinned
+        system.managedObjectContext?.quickSave()
     }
 }

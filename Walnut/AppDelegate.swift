@@ -35,8 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             name: "Default Configuration",
             sessionRole: connectingSceneSession.role)
     }
-
-    func application(
-        _ application: UIApplication,
-        didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
+    
+    func applicationWillTerminate(_ application: UIApplication)
+    {
+        database.context.quickSave()
+    }
 }

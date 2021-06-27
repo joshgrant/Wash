@@ -20,20 +20,14 @@
 		030B2192267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */; };
 		030B2194267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */; };
 		030B2196267FE0560038C095 /* SystemDetailTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */; };
-		030B219B267FE3730038C095 /* EntityListTableViewDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */; };
 		030B21A1267FEA230038C095 /* EntityListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A0267FEA230038C095 /* EntityListController.swift */; };
-		030B21A3267FEC610038C095 /* EntityListTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */; };
 		030B21A52680E7390038C095 /* Conversion+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A42680E7390038C095 /* Conversion+Extensions.swift */; };
 		030B21A72680E8230038C095 /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A62680E8230038C095 /* Note+Extensions.swift */; };
-		030B21AF26810F090038C095 /* EntityListTableViewDelegateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21AE26810F080038C095 /* EntityListTableViewDelegateModel.swift */; };
-		030B21B126810F2A0038C095 /* EntityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21B026810F2A0038C095 /* EntityListView.swift */; };
-		030B21B326810F3C0038C095 /* EntityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21B226810F3C0038C095 /* EntityListViewModel.swift */; };
 		030B21CE268121AA0038C095 /* SearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */; };
 		030B21D126815D930038C095 /* Notifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D026815D930038C095 /* Notifiable.swift */; };
 		030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D2268167730038C095 /* StatesHeaderViewModel.swift */; };
 		030B21D5268168450038C095 /* InflowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */; };
 		030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */; };
-		030B21D92681697D0038C095 /* EntityListTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D82681697D0038C095 /* EntityListTableViewDelegate.swift */; };
 		031681AF267D655B00F493DA /* DashboardFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681AE267D655B00F493DA /* DashboardFlowCell.swift */; };
 		031681B1267D656500F493DA /* DashboardForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B0267D656500F493DA /* DashboardForecastCell.swift */; };
 		031681B3267D656F00F493DA /* DashboardPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B2267D656F00F493DA /* DashboardPriorityCell.swift */; };
@@ -112,6 +106,7 @@
 		03555B842687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B832687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift */; };
 		03555B862687D77A006E9EA1 /* SystemDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */; };
 		03555B882687D783006E9EA1 /* SystemDetailResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B872687D783006E9EA1 /* SystemDetailResponder.swift */; };
+		03555B8A268834F4006E9EA1 /* EntityListTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B89268834F4006E9EA1 /* EntityListTableViewManager.swift */; };
 		038CF5AB26751C9C00931595 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AA26751C9C00931595 /* RootController.swift */; };
 		038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AD26754D5A00931595 /* DashboardController.swift */; };
 		038CF60E26763E0A00931595 /* LibraryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60D26763E0A00931595 /* LibraryController.swift */; };
@@ -203,20 +198,14 @@
 		030B2191267FE0280038C095 /* SystemDetailTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewDelegateModel.swift; sourceTree = "<group>"; };
 		030B2193267FE03F0038C095 /* SystemDetailTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewDataSourceModel.swift; sourceTree = "<group>"; };
 		030B2195267FE0560038C095 /* SystemDetailTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewModel.swift; sourceTree = "<group>"; };
-		030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewDataSourceModel.swift; sourceTree = "<group>"; };
 		030B21A0267FEA230038C095 /* EntityListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListController.swift; sourceTree = "<group>"; };
-		030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewModel.swift; sourceTree = "<group>"; };
 		030B21A42680E7390038C095 /* Conversion+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversion+Extensions.swift"; sourceTree = "<group>"; };
 		030B21A62680E8230038C095 /* Note+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
-		030B21AE26810F080038C095 /* EntityListTableViewDelegateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewDelegateModel.swift; sourceTree = "<group>"; };
-		030B21B026810F2A0038C095 /* EntityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListView.swift; sourceTree = "<group>"; };
-		030B21B226810F3C0038C095 /* EntityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListViewModel.swift; sourceTree = "<group>"; };
 		030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerDelegate.swift; sourceTree = "<group>"; };
 		030B21D026815D930038C095 /* Notifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifiable.swift; sourceTree = "<group>"; };
 		030B21D2268167730038C095 /* StatesHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InflowsHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutflowsHeaderViewModel.swift; sourceTree = "<group>"; };
-		030B21D82681697D0038C095 /* EntityListTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewDelegate.swift; sourceTree = "<group>"; };
 		031681AE267D655B00F493DA /* DashboardFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlowCell.swift; sourceTree = "<group>"; };
 		031681B0267D656500F493DA /* DashboardForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardForecastCell.swift; sourceTree = "<group>"; };
 		031681B2267D656F00F493DA /* DashboardPriorityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPriorityCell.swift; sourceTree = "<group>"; };
@@ -301,6 +290,7 @@
 		03555B832687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailDuplicatedMessage.swift; sourceTree = "<group>"; };
 		03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailRouter.swift; sourceTree = "<group>"; };
 		03555B872687D783006E9EA1 /* SystemDetailResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailResponder.swift; sourceTree = "<group>"; };
+		03555B89268834F4006E9EA1 /* EntityListTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewManager.swift; sourceTree = "<group>"; };
 		038CF5AA26751C9C00931595 /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		038CF5AD26754D5A00931595 /* DashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		038CF60D26763E0A00931595 /* LibraryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryController.swift; sourceTree = "<group>"; };
@@ -439,9 +429,8 @@
 				030B21A0267FEA230038C095 /* EntityListController.swift */,
 				03555AD7268528F9006E9EA1 /* EntityListResponder.swift */,
 				03555AAB2683C51B006E9EA1 /* EntityListRouter.swift */,
+				03555B89268834F4006E9EA1 /* EntityListTableViewManager.swift */,
 				03555B752687CEB3006E9EA1 /* Messages */,
-				03E70077268394D100B8B527 /* Table View */,
-				03E70076268394C600B8B527 /* View */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -950,31 +939,11 @@
 		038CF6F726768F5B00931595 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				03555B7E2687D5E1006E9EA1 /* Messages */,
 				030B2190267FE00D0038C095 /* Controller */,
+				03555B7E2687D5E1006E9EA1 /* Messages */,
 				030B2174267F7D550038C095 /* Table View */,
 			);
 			path = Detail;
-			sourceTree = "<group>";
-		};
-		03E70076268394C600B8B527 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				030B21B026810F2A0038C095 /* EntityListView.swift */,
-				030B21B226810F3C0038C095 /* EntityListViewModel.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		03E70077268394D100B8B527 /* Table View */ = {
-			isa = PBXGroup;
-			children = (
-				030B219A267FE3730038C095 /* EntityListTableViewDataSourceModel.swift */,
-				030B21AE26810F080038C095 /* EntityListTableViewDelegateModel.swift */,
-				030B21A2267FEC610038C095 /* EntityListTableViewModel.swift */,
-				030B21D82681697D0038C095 /* EntityListTableViewDelegate.swift */,
-			);
-			path = "Table View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1113,7 +1082,7 @@
 				03555B612686A487006E9EA1 /* UIBarButtonItem+Extensions.swift in Sources */,
 				03555B5B2686A487006E9EA1 /* TableHeaderView.swift in Sources */,
 				038CF6642676828E00931595 /* Model.xcdatamodeld in Sources */,
-				030B21AF26810F090038C095 /* EntityListTableViewDelegateModel.swift in Sources */,
+				03555B8A268834F4006E9EA1 /* EntityListTableViewManager.swift in Sources */,
 				038CF6932676829F00931595 /* DynamicSource+Extensions.swift in Sources */,
 				038CF6C4267682C700931595 /* HistoryEvent.swift in Sources */,
 				038CF6C5267682C700931595 /* Comparison.swift in Sources */,
@@ -1181,12 +1150,10 @@
 				03555B4D2686A487006E9EA1 /* Coordinator.swift in Sources */,
 				03555B4F2686A487006E9EA1 /* ObserverForSceneUpdatesEventResponder.swift in Sources */,
 				03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */,
-				030B21B126810F2A0038C095 /* EntityListView.swift in Sources */,
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
 				03555B0126869DF1006E9EA1 /* Unique.swift in Sources */,
 				038CF69D2676829F00931595 /* ImageBlock+Searchable.swift in Sources */,
-				030B21D92681697D0038C095 /* EntityListTableViewDelegate.swift in Sources */,
 				03555B6E2686A487006E9EA1 /* NavigationController.swift in Sources */,
 				030B21A1267FEA230038C095 /* EntityListController.swift in Sources */,
 				038CF6EA2676865600931595 /* DetailCell.swift in Sources */,
@@ -1203,7 +1170,6 @@
 				031681B9267DA6F100F493DA /* Pinnable.swift in Sources */,
 				030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */,
 				03555B672686A487006E9EA1 /* SearchBarDelegate.swift in Sources */,
-				030B219B267FE3730038C095 /* EntityListTableViewDataSourceModel.swift in Sources */,
 				038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */,
 				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
 				03555B5E2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift in Sources */,
@@ -1215,7 +1181,6 @@
 				03555B4C2686A487006E9EA1 /* Database.swift in Sources */,
 				031681B5267D66E100F493DA /* TextCell.swift in Sources */,
 				038CF6402676679700931595 /* DashboardTableViewModel.swift in Sources */,
-				030B21A3267FEC610038C095 /* EntityListTableViewModel.swift in Sources */,
 				03555B602686A487006E9EA1 /* UIImage+Extensions.swift in Sources */,
 				03555B552686A487006E9EA1 /* TableViewDelegate.swift in Sources */,
 				038CF6D2267682C700931595 /* EntityType.swift in Sources */,
@@ -1250,7 +1215,6 @@
 				038CF6922676829F00931595 /* Net+Extensions.swift in Sources */,
 				038CF5AB26751C9C00931595 /* RootController.swift in Sources */,
 				03555B882687D783006E9EA1 /* SystemDetailResponder.swift in Sources */,
-				030B21B326810F3C0038C095 /* EntityListViewModel.swift in Sources */,
 				038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */,
 				038CF6442676726900931595 /* DashboardTableViewDelegateModel.swift in Sources */,
 				038CF6902676829F00931595 /* Unit+Extensions.swift in Sources */,

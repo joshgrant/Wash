@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class LibraryCellModel: TableViewCellModel
 {
@@ -37,6 +38,11 @@ class LibraryCellModel: TableViewCellModel
 
 class LibraryCell: TableViewCell<LibraryCellModel>
 {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
+    {
+        super.init(style: .value1, reuseIdentifier: reuseIdentifier)
+    }
+    
     override func configure(with model: LibraryCellModel)
     {
         self.accessoryType = .disclosureIndicator
