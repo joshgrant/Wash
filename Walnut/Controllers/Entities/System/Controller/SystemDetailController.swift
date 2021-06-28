@@ -35,7 +35,7 @@ class SystemDetailController: UIViewController
         self.tableViewManager = .init(
             system: system,
             navigationController: navigationController)
-        self.router = SystemDetailRouter()
+        self.router = SystemDetailRouter(system: system, root: navigationController)
         
         self.duplicateBarButtonItem = Self.makeDuplicateNavigationItem(responder: responder)
         self.pinBarButtonItem = Self.makePinNavigationItem(system: system, responder: responder)

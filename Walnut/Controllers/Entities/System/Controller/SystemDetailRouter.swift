@@ -16,7 +16,7 @@ class SystemDetailRouter: Router
         // If the entity is nil, we're trying to create one
         case idealInfo
         case stockDetail(stock: Stock?)
-        case flowDetail(flow: TransferFlow?)
+        case flowDetail(flow: Flow?)
         case eventDetail(event: Event?)
         case subsystemDetail(system: System?)
         case noteDetail(note: Note?)
@@ -26,7 +26,18 @@ class SystemDetailRouter: Router
     
     // MARK: - Variables
     
-    var root: NavigationController?
+    var id = UUID()
+    
+    var system: System
+    weak var root: NavigationController?
+    // MARK: - Initialization
+    
+    init(system: System, root: NavigationController?)
+    {
+        self.system = system
+        self.root = root
+        subscribe(to: AppDelegate.shared.mainStream)
+    }
     
     // MARK: - Functions
     
@@ -34,6 +45,56 @@ class SystemDetailRouter: Router
         to destination: Destination,
         completion: (() -> Void)?)
     {
-        print("IMPLEMENT ROUTING")
+        switch destination
+        {
+        case .stockDetail(let stock):
+            guard let stockDetail = stock?.detailController(navigationController: root) else
+            {
+                assertionFailure()
+                return
+            }
+            root?.pushViewController(stockDetail, animated: true)
+        default:
+            assertionFailure()
+            break
+        }
+    }
+}
+
+extension SystemDetailRouter: Subscriber
+{
+    func receive(message: Message)
+    {
+        switch message
+        {
+        case let x as SystemDetailTableViewSelectedMessage:
+            handle(message: x)
+        default:
+            break
+        }
+    }
+    
+    func handle(message: SystemDetailTableViewSelectedMessage)
+    {
+        let indexPath = message.indexPath
+        
+        switch indexPath.section
+        {
+        case 1: // Stocks
+            let stock = system.unwrappedStocks[indexPath.row]
+            return route(to: .stockDetail(stock: stock), completion: nil)
+        case 2: // Flows
+            let flow = system.unwrappedFlows[indexPath.row]
+            return route(to: .flowDetail(flow: flow), completion: nil)
+        case 3: // Events
+            let event = system.unwrappedEvents[indexPath.row]
+            return route(to: .eventDetail(event: event), completion: nil)
+        case 4: // Notes
+            let note = system.unwrappedNotes[indexPath.row]
+            return route(to: .noteDetail(note: note), completion: nil)
+        default:
+            assertionFailure("Section doesn't exist")
+            break
+        }
     }
 }

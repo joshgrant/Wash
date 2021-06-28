@@ -107,7 +107,7 @@ class SystemDetailTableViewManager: NSObject
                 navigationController: navigationController),
             SystemDetailFlowsHeaderViewModel(),
             EventsHeaderViewModel(),
-            SubSystemsHeaderViewModel(),
+//            SubSystemsHeaderViewModel(),
             NotesHeaderViewModel()
         ]
     }
@@ -136,6 +136,15 @@ extension SystemDetailTableViewManager: UITableViewDelegate
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
     {
         44
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        let message = SystemDetailTableViewSelectedMessage(
+            tableView: tableView,
+            indexPath: indexPath)
+        AppDelegate.shared.mainStream.send(message: message)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

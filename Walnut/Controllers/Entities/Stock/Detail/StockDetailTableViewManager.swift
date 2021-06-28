@@ -16,6 +16,7 @@ class StockDetailTableViewManager: NSObject
     var headerViews: [TableHeaderView]
     var cellModels: [[TableViewCellModel]]
     
+    var needsReload: Bool = false
     var tableView: UITableView
     
     // MARK: - Initialization
@@ -40,6 +41,15 @@ class StockDetailTableViewManager: NSObject
         
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    
+    // MARK: - Functions
+    
+    func reload()
+    {
+        self.cellModels = Self.makeCellModels(stock: stock)
+        tableView.reloadData()
+        needsReload = false
     }
     
     // MARK: - Factory
@@ -75,7 +85,7 @@ class StockDetailTableViewManager: NSObject
                 entity: stock),
             DetailCellModel(
                 title: "Type".localized,
-                detail: "Decimal, State Machine",
+                detail: stockTypeDetail(stock: stock),
                 disclosure: true),
             DetailCellModel(
                 title: "Dimension".localized,
@@ -89,6 +99,33 @@ class StockDetailTableViewManager: NSObject
                 title: "Net".localized,
                 detail: "3980/month")
         ]
+    }
+    
+    static func stockTypeDetail(stock: Stock) -> String
+    {
+        var amountType: String
+        
+        switch stock.amountType
+        {
+        case .boolean:
+            amountType = "Boolean".localized
+        case .integer:
+            amountType = "Integer".localized
+        case .decimal:
+            amountType = "Decimal".localized
+        }
+        
+        amountType += ", "
+        
+        switch stock.stateMachine
+        {
+        case true:
+            amountType += "State Machine".localized
+        case false:
+            amountType += "Continuous".localized
+        }
+        
+        return amountType
     }
     
     static func makeInflowCellModels(stock: Stock) -> [TableViewCellModel]
@@ -150,7 +187,7 @@ class StockDetailTableViewManager: NSObject
     {
         return [
             InfoHeaderViewModel(),
-            StatesHeaderViewModel(),
+            StatesHeaderViewModel(), // Only if the stock has states...
             InflowsHeaderViewModel(),
             OutflowsHeaderViewModel(),
             EventsHeaderViewModel(),
@@ -174,6 +211,15 @@ extension StockDetailTableViewManager: UITableViewDelegate
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
     {
         44
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        let message = TableViewSelectionMessage(
+            tableView: tableView,
+            indexPath: indexPath,
+            token: .stockDetail)
+        StockDetailController.stream.send(message: message)
     }
 }
 

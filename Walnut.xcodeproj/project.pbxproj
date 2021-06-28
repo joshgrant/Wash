@@ -113,6 +113,12 @@
 		0370FEBF2688C9B9001E099B /* LibraryTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEBE2688C9B9001E099B /* LibraryTableViewManager.swift */; };
 		0370FEC12688CAE2001E099B /* LibraryTableViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC02688CAE2001E099B /* LibraryTableViewRouter.swift */; };
 		0370FEC42688CB14001E099B /* LibraryCellSelectionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC32688CB14001E099B /* LibraryCellSelectionMessage.swift */; };
+		0370FEC626892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC526892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift */; };
+		0370FECA268A0940001E099B /* StockValueTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC9268A0940001E099B /* StockValueTypeController.swift */; };
+		0370FECC268A0962001E099B /* StockValueTypeTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FECB268A0962001E099B /* StockValueTypeTableViewManager.swift */; };
+		0370FECE268A0A87001E099B /* CheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FECD268A0A87001E099B /* CheckmarkCell.swift */; };
+		0370FED2268A0DDE001E099B /* TableViewSelectionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FED1268A0DDE001E099B /* TableViewSelectionMessage.swift */; };
+		0370FED4268A0EE0001E099B /* StockDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FED3268A0EE0001E099B /* StockDetailRouter.swift */; };
 		038CF5AB26751C9C00931595 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AA26751C9C00931595 /* RootController.swift */; };
 		038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF5AD26754D5A00931595 /* DashboardController.swift */; };
 		038CF60E26763E0A00931595 /* LibraryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60D26763E0A00931595 /* LibraryController.swift */; };
@@ -299,6 +305,12 @@
 		0370FEBE2688C9B9001E099B /* LibraryTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewManager.swift; sourceTree = "<group>"; };
 		0370FEC02688CAE2001E099B /* LibraryTableViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewRouter.swift; sourceTree = "<group>"; };
 		0370FEC32688CB14001E099B /* LibraryCellSelectionMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCellSelectionMessage.swift; sourceTree = "<group>"; };
+		0370FEC526892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewSelectedMessage.swift; sourceTree = "<group>"; };
+		0370FEC9268A0940001E099B /* StockValueTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockValueTypeController.swift; sourceTree = "<group>"; };
+		0370FECB268A0962001E099B /* StockValueTypeTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockValueTypeTableViewManager.swift; sourceTree = "<group>"; };
+		0370FECD268A0A87001E099B /* CheckmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkCell.swift; sourceTree = "<group>"; };
+		0370FED1268A0DDE001E099B /* TableViewSelectionMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewSelectionMessage.swift; sourceTree = "<group>"; };
+		0370FED3268A0EE0001E099B /* StockDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailRouter.swift; sourceTree = "<group>"; };
 		038CF5AA26751C9C00931595 /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		038CF5AD26754D5A00931595 /* DashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		038CF60D26763E0A00931595 /* LibraryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryController.swift; sourceTree = "<group>"; };
@@ -710,6 +722,7 @@
 			children = (
 				03555B832687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift */,
 				03555B812687D6A4006E9EA1 /* SystemDetailPinnedMessage.swift */,
+				0370FEC526892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -717,9 +730,9 @@
 		03555B8D268842F1006E9EA1 /* Stock */ = {
 			isa = PBXGroup;
 			children = (
-				03555B8E26884308006E9EA1 /* StockDetailController.swift */,
-				0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */,
-				03555B9026884378006E9EA1 /* StockDetailTableViewManager.swift */,
+				0370FED5268A16E3001E099B /* Dimension */,
+				0370FEC8268A0914001E099B /* Value Type */,
+				0370FEC7268A090F001E099B /* Detail */,
 			);
 			path = Stock;
 			sourceTree = "<group>";
@@ -738,6 +751,34 @@
 				0370FEC32688CB14001E099B /* LibraryCellSelectionMessage.swift */,
 			);
 			path = Messages;
+			sourceTree = "<group>";
+		};
+		0370FEC7268A090F001E099B /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				03555B8E26884308006E9EA1 /* StockDetailController.swift */,
+				0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */,
+				03555B9026884378006E9EA1 /* StockDetailTableViewManager.swift */,
+				0370FED1268A0DDE001E099B /* TableViewSelectionMessage.swift */,
+				0370FED3268A0EE0001E099B /* StockDetailRouter.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		0370FEC8268A0914001E099B /* Value Type */ = {
+			isa = PBXGroup;
+			children = (
+				0370FEC9268A0940001E099B /* StockValueTypeController.swift */,
+				0370FECB268A0962001E099B /* StockValueTypeTableViewManager.swift */,
+			);
+			path = "Value Type";
+			sourceTree = "<group>";
+		};
+		0370FED5268A16E3001E099B /* Dimension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dimension;
 			sourceTree = "<group>";
 		};
 		038CF5AC26754D2000931595 /* Controllers */ = {
@@ -818,6 +859,7 @@
 				030B2182267FB15B0038C095 /* TextEditCell.swift */,
 				0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */,
 				0370FEBC2688C170001E099B /* RightImageCell.swift */,
+				0370FECD268A0A87001E099B /* CheckmarkCell.swift */,
 			);
 			path = "Table View Cell";
 			sourceTree = "<group>";
@@ -935,8 +977,8 @@
 		038CF6F426768F4C00931595 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				03555B8D268842F1006E9EA1 /* Stock */,
 				030B2199267FE2C70038C095 /* Entity */,
+				03555B8D268842F1006E9EA1 /* Stock */,
 				038CF6F526768F5500931595 /* System */,
 			);
 			path = Entities;
@@ -1103,6 +1145,7 @@
 				030B2188267FB6C80038C095 /* SuggestedFlowCell.swift in Sources */,
 				038CF651267675D500931595 /* PinnedHeaderViewModel.swift in Sources */,
 				03555B0426869E78006E9EA1 /* Subscriber.swift in Sources */,
+				0370FEC626892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift in Sources */,
 				038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */,
 				038CF6DC267683FB00931595 /* Event+Extensions.swift in Sources */,
 				03555B492686A487006E9EA1 /* Container.swift in Sources */,
@@ -1164,6 +1207,7 @@
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
 				03555B0126869DF1006E9EA1 /* Unique.swift in Sources */,
 				038CF69D2676829F00931595 /* ImageBlock+Searchable.swift in Sources */,
+				0370FED2268A0DDE001E099B /* TableViewSelectionMessage.swift in Sources */,
 				03555B6E2686A487006E9EA1 /* NavigationController.swift in Sources */,
 				030B21A1267FEA230038C095 /* EntityListController.swift in Sources */,
 				038CF6EA2676865600931595 /* DetailCell.swift in Sources */,
@@ -1172,12 +1216,14 @@
 				03555B0526869E7A006E9EA1 /* WrappedSubscriber.swift in Sources */,
 				03555B682686A487006E9EA1 /* TabBar.swift in Sources */,
 				030B21D126815D930038C095 /* Notifiable.swift in Sources */,
+				0370FECA268A0940001E099B /* StockValueTypeController.swift in Sources */,
 				03555B582686A487006E9EA1 /* TableViewCellModel.swift in Sources */,
 				030B21A72680E8230038C095 /* Note+Extensions.swift in Sources */,
 				03555B5D2686A487006E9EA1 /* UIView+Extensions.swift in Sources */,
 				03555B562686A487006E9EA1 /* ConfigurableTableViewCellProtocol.swift in Sources */,
 				03555AD8268528F9006E9EA1 /* EntityListResponder.swift in Sources */,
 				031681B9267DA6F100F493DA /* Pinnable.swift in Sources */,
+				0370FECC268A0962001E099B /* StockValueTypeTableViewManager.swift in Sources */,
 				030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */,
 				03555B672686A487006E9EA1 /* SearchBarDelegate.swift in Sources */,
 				038CF6572676777600931595 /* FlowsHeaderViewModel.swift in Sources */,
@@ -1185,6 +1231,7 @@
 				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
 				03555B5E2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift in Sources */,
 				0370FEB62688B3F0001E099B /* SubtitleDetailCell.swift in Sources */,
+				0370FED4268A0EE0001E099B /* StockDetailRouter.swift in Sources */,
 				03555B502686A487006E9EA1 /* StateMachine.swift in Sources */,
 				03555B642686A487006E9EA1 /* String+Extensions.swift in Sources */,
 				03555B4E2686A487006E9EA1 /* Icon.swift in Sources */,
@@ -1233,6 +1280,7 @@
 				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
 				03555B532686A487006E9EA1 /* TableViewDataSourceModel.swift in Sources */,
+				0370FECE268A0A87001E099B /* CheckmarkCell.swift in Sources */,
 				038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */,
 				03555B632686A487006E9EA1 /* Int+Extensions.swift in Sources */,
 				038CF6862676829F00931595 /* Named.swift in Sources */,

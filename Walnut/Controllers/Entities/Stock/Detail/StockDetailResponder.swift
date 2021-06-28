@@ -31,4 +31,9 @@ class StockDetailResponder: Responder
             entity: stock)
         AppDelegate.shared.mainStream.send(message: message)
     }
+    
+    func userSelectedCell(at indexPath: IndexPath, in tableView: UITableView)
+    {
+        
+    }
 }

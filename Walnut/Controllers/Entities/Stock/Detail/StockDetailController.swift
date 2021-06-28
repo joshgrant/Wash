@@ -15,8 +15,15 @@ class StockDetailController: UIViewController
     var id = UUID()
     
     var stock: Stock
+    var router: StockDetailRouter
     var responder: StockDetailResponder
     var tableViewManager: StockDetailTableViewManager
+    
+    static let stream: Stream = {
+        let stream = Stream(identifier: .stockDetail)
+        AppDelegate.shared.mainStream.add(substream: stream)
+        return stream
+    }()
     
     var pinBarButtonItem: UIBarButtonItem
     
@@ -27,12 +34,14 @@ class StockDetailController: UIViewController
         let responder = StockDetailResponder(stock: stock)
         
         self.stock = stock
+        self.router = StockDetailRouter(stock: stock, root: navigationController)
         self.responder = responder
         self.tableViewManager = StockDetailTableViewManager(stock: stock)
         
         self.pinBarButtonItem = Self.makePinNavigationItem(stock: stock, responder: responder)
         
         super.init(nibName: nil, bundle: nil)
+        subscribe(to: Self.stream)
         subscribe(to: AppDelegate.shared.mainStream)
         
         title = stock.title
@@ -45,6 +54,14 @@ class StockDetailController: UIViewController
     required init?(coder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        tableViewManager.reload()
     }
     
     // MARK: - Functions
@@ -67,16 +84,18 @@ extension StockDetailController: Subscriber
     {
         switch message
         {
-        case let x as TextEditCellMessage:
-            handleTextEditCellMessage(x)
-        case let x as EntityPinnedMessage:
-            handleStockPinnedMessage(x)
+        case let m as TextEditCellMessage:
+            handle(m)
+        case let m as EntityPinnedMessage:
+            handle(m)
+        case let m as TableViewSelectionMessage:
+            handle(m)
         default:
             break
         }
     }
     
-    func handleTextEditCellMessage(_ message: TextEditCellMessage)
+    func handle(_ message: TextEditCellMessage)
     {
         guard message.entity == stock else { return }
         
@@ -86,7 +105,7 @@ extension StockDetailController: Subscriber
     }
     
     // TODO: The same as the system detail
-    func handleStockPinnedMessage(_ message: EntityPinnedMessage)
+    func handle(_ message: EntityPinnedMessage)
     {
         guard message.entity == stock else { return }
         
@@ -98,5 +117,11 @@ extension StockDetailController: Subscriber
         
         stock.isPinned = pinned
         stock.managedObjectContext?.quickSave()
+    }
+    
+    func handle(_ message: TableViewSelectionMessage)
+    {
+        guard message.token == .valueTypeDetail else { return }
+        tableViewManager.needsReload = true
     }
 }
