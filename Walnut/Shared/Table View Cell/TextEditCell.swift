@@ -15,14 +15,16 @@ class TextEditCellModel: NSObject, TableViewCellModel
     var text: String?
     var placeholder: String
     var entity: Entity
+    weak var stream: Stream?
     
     // MARK: - Initialization
     
-    init(text: String?, placeholder: String, entity: Entity)
+    init(text: String?, placeholder: String, entity: Entity, stream: Stream? = nil)
     {
         self.text = text
         self.placeholder = placeholder
         self.entity = entity
+        self.stream = stream
     }
     
     static var cellClass: AnyClass { TextEditCell.self }
@@ -40,7 +42,15 @@ extension TextEditCellModel: UITextFieldDelegate
     {
         let title = textField.text ?? ""
         let message = TextEditCellMessage(title: title, entity: entity)
-        AppDelegate.shared.mainStream.send(message: message)
+        
+        if let stream = stream
+        {
+            stream.send(message: message)
+        }
+        else
+        {
+            AppDelegate.shared.mainStream.send(message: message)
+        }
     }
 }
 

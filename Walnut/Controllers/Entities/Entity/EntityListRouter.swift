@@ -66,6 +66,8 @@ class EntityListRouter: Router
         }
         
         let entity = entityType.init(context: context)
+        entity.createdDate = Date()
+        
         let detail = entity.detailController(navigationController: root)
         root.pushViewController(detail, animated: true)
         context.quickSave()

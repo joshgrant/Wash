@@ -8,10 +8,13 @@
 import Foundation
 import UIKit
 
+// TODO: Not loving the tokens.
 enum Token
 {
     case stockDetail
     case valueTypeDetail
+    case transferFlowDetail
+    case linkSearch
 }
 
 class TableViewSelectionMessage: Message

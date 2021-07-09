@@ -62,6 +62,7 @@ extension LibraryTableViewManager: UITableViewDelegate
             tableView: tableView,
             indexPath: indexPath)
         AppDelegate.shared.mainStream.send(message: message)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat

@@ -12,11 +12,14 @@ class TransferFlowDetailController: UIViewController
 {
     // MARK: - Variables
     
+    var id = UUID()
+    
     var flow: TransferFlow
     
     var router: TransferFlowDetailRouter
     var responder: TransferFlowDetailResponder
     var tableViewManager: TransferFlowDetailTableViewManager
+    weak var context: Context?
     
     var pinButton: UIBarButtonItem
     var runButton: UIBarButtonItem
@@ -29,20 +32,23 @@ class TransferFlowDetailController: UIViewController
     
     // MARK: - Initialization
     
-    init(flow: TransferFlow)
+    init(flow: TransferFlow, navigationController: NavigationController?, context: Context?)
     {
         let responder = TransferFlowDetailResponder(flow: flow)
         
         self.flow = flow
         
-        self.router = TransferFlowDetailRouter()
+        self.router = TransferFlowDetailRouter(root: navigationController, context: context)
         self.responder = responder
-        self.tableViewManager = TransferFlowDetailTableViewManager()
+        self.tableViewManager = TransferFlowDetailTableViewManager(flow: flow, stream: Self.stream)
         
         self.pinButton = Self.makePinButton(flow: flow, responder: responder)
         self.runButton = Self.makeRunButton(responder: responder)
         
+        self.context = context
+        
         super.init(nibName: nil, bundle: nil)
+        subscribe(to: Self.stream)
         
         view.embed(tableViewManager.tableView)
     }
@@ -71,5 +77,29 @@ class TransferFlowDetailController: UIViewController
             style: .plain,
             target: responder,
             action: #selector(responder.runButtonDidTouchUpInside(_:)))
+    }
+}
+
+extension TransferFlowDetailController: Subscriber
+{
+    func receive(message: Message)
+    {
+        switch message
+        {
+        case let m as TextEditCellMessage:
+            handleTextEditCellMessage(m)
+        default:
+            break
+        }
+    }
+    
+    private func handleTextEditCellMessage(_ message: TextEditCellMessage)
+    {
+        if message.entity == flow
+        {
+            title = message.title
+            flow.title = message.title
+            flow.managedObjectContext?.quickSave()
+        }
     }
 }

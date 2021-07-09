@@ -41,9 +41,12 @@
         <relationship name="sourceOfNet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Net" inverseName="dynamicSource" inverseEntity="Net"/>
     </entity>
     <entity name="Entity" representedClassName="Entity" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deletedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isHidden" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isPinned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="updatedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="linkedNotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="links" inverseEntity="Note"/>
         <relationship name="linkedSymbols" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Symbol" inverseName="links" inverseEntity="Symbol"/>
     </entity>
@@ -234,7 +237,7 @@
         <element name="Conversion" positionX="0" positionY="45" width="128" height="104"/>
         <element name="Dimension" positionX="18" positionY="63" width="128" height="88"/>
         <element name="DynamicSource" positionX="18" positionY="153" width="128" height="73"/>
-        <element name="Entity" positionX="9" positionY="54" width="128" height="118"/>
+        <element name="Entity" positionX="9" positionY="54" width="128" height="149"/>
         <element name="Event" positionX="36" positionY="81" width="128" height="164"/>
         <element name="Flow" positionX="-9" positionY="36" width="128" height="178"/>
         <element name="History" positionX="9" positionY="54" width="128" height="119"/>

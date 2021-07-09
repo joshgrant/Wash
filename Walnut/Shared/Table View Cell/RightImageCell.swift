@@ -47,11 +47,17 @@ class RightImageCell: TableViewCell<RightImageCellModel>
         self.rightImageView = UIImageView()
         self.rightImageView.tintColor = .secondaryLabel
         
-        mainStackView = UIStackView(arrangedSubviews: [titleLabel, SpacerView(), rightImageView])
+        mainStackView = UIStackView(arrangedSubviews: [
+                                        titleLabel,
+                                        SpacerView(),
+                                        rightImageView])
         mainStackView.set(height: 44)
         mainStackView.alignment = .center
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        rightImageView.translatesAutoresizingMaskIntoConstraints = false
         
         let padding = UIEdgeInsets(
             top: 0, left: 16,
@@ -60,7 +66,8 @@ class RightImageCell: TableViewCell<RightImageCellModel>
         contentView.embed(
             mainStackView,
             padding: padding,
-            bottomPriority: .defaultLow)
+            bottomPriority: .defaultLow,
+            rightPriority: .defaultLow)
     }
     
     override func configure(with model: RightImageCellModel)

@@ -16,7 +16,11 @@ public extension UIView
         bottom: Constraint,
         left: Constraint)
 
-    @discardableResult func embed(_ view: UIView, padding: UIEdgeInsets = .zero, bottomPriority: UILayoutPriority = .required) -> Constraints
+    @discardableResult func embed(
+        _ view: UIView,
+        padding: UIEdgeInsets = .zero,
+        bottomPriority: UILayoutPriority = .required,
+        rightPriority: UILayoutPriority = .required) -> Constraints
     {
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -28,6 +32,7 @@ public extension UIView
         let leading = view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding.left)
         
         bottom.priority = bottomPriority
+        right.priority = rightPriority
         
         NSLayoutConstraint.activate([top, right, bottom, leading])
         

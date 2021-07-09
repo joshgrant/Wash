@@ -11,6 +11,15 @@ import UIKit
 
 public extension Entity
 {
+    override func awakeFromInsert()
+    {
+        super.awakeFromInsert()
+        self.createdDate = Date()
+    }
+}
+
+public extension Entity
+{
     func unwrapped<E, T: Hashable, K: Hashable>(_ keypath: KeyPath<E, T>) -> [K]
     {
         guard let self = self as? E else {
@@ -116,6 +125,8 @@ extension Entity
             return SystemDetailController(system: s, navigationController: navigationController)
         case (let s as Stock):
             return StockDetailController(stock: s, navigationController: navigationController)
+        case (let f as TransferFlow):
+            return TransferFlowDetailController(flow: f, navigationController: navigationController, context: managedObjectContext)
         default:
             assertionFailure("Unhandled entity: \(self)")
             return UIViewController()
