@@ -70,7 +70,7 @@
         <relationship name="systems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="System" inverseName="flows" inverseEntity="System"/>
     </entity>
     <entity name="History" representedClassName="History" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="eventTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="historyOfEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="history" inverseEntity="Event"/>
         <relationship name="historyOfFlow" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Flow" inverseName="history" inverseEntity="Flow"/>
@@ -237,7 +237,7 @@
         <element name="Entity" positionX="9" positionY="54" width="128" height="118"/>
         <element name="Event" positionX="36" positionY="81" width="128" height="164"/>
         <element name="Flow" positionX="-9" positionY="36" width="128" height="178"/>
-        <element name="History" positionX="9" positionY="54" width="128" height="133"/>
+        <element name="History" positionX="9" positionY="54" width="128" height="119"/>
         <element name="Image" positionX="18" positionY="90" width="128" height="88"/>
         <element name="ImageBlock" positionX="27" positionY="72" width="128" height="73"/>
         <element name="Net" positionX="36" positionY="81" width="128" height="73"/>

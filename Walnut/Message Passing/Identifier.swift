@@ -17,6 +17,7 @@ struct Identifier
         value: "main.userInterface")
     static let stockDetail = Identifier(
         value: "main.stockDetail")
+    static let transferFlow = Identifier(value: "main.transferFlow")
 }
 
 extension Identifier: Equatable

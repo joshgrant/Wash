@@ -174,6 +174,7 @@ extension StockValueTypeTableViewManager: UITableViewDelegate
             token: .valueTypeDetail
         )
         
+        AppDelegate.shared.mainStream.send(message: message)
     }
     
     func path(for amountType: AmountType) -> IndexPath
