@@ -101,7 +101,7 @@ class SystemDetailTableViewManager: NSObject
         }
         
         return [
-            InfoHeaderViewModel(),
+            TableHeaderViewModel.info,
             StocksHeaderViewModel(
                 system: system,
                 navigationController: navigationController),

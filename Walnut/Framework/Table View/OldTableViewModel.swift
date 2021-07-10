@@ -1,5 +1,5 @@
 //
-//  TableViewModel.swift
+//  OldTableViewModel.swift
 //  
 //
 //  Created by Joshua Grant on 6/6/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class TableViewModel: ViewModel
+open class OldTableViewModel: ViewModel
 {
     // MARK: - Variables
     

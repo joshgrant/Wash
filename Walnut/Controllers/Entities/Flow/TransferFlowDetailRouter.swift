@@ -13,7 +13,8 @@ class TransferFlowDetailRouter: Router
     
     enum Destination
     {
-        case stockPicker
+        case stockFrom
+        case stockTo
         case eventDetail(event: Event)
         case historyDetail(history: History)
     }
@@ -22,20 +23,26 @@ class TransferFlowDetailRouter: Router
     
     var id = UUID()
     
+    var flow: TransferFlow
+    
     weak var root: NavigationController?
-    weak var stream: Stream?
     weak var context: Context?
+    
+    weak var _stream: Stream?
+    var stream: Stream { return _stream ?? AppDelegate.shared.mainStream }
+    
+    var presentedDestination: Destination?
     
     // MARK: - Initialization
     
-    init(root: NavigationController?, context: Context?, stream: Stream? = nil)
+    init(flow: TransferFlow, root: NavigationController?, context: Context?, _stream: Stream? = nil)
     {
-        let s = stream ?? AppDelegate.shared.mainStream
+        self.flow = flow
         
         self.root = root
-        self.stream = s
+        self._stream = _stream
         self.context = context
-        subscribe(to: s)
+        subscribe(to: stream)
     }
     
     // MARK: - Functions
@@ -44,13 +51,39 @@ class TransferFlowDetailRouter: Router
     {
         switch destination
         {
-        case .stockPicker:
-            print("Route to stock picker")
+        case .stockTo:
+            routeToStockTo()
+        case .stockFrom:
+            routeToStockFrom()
         case .eventDetail(let event):
             print("Route to event detail: \(event)")
         case .historyDetail(let history):
             print("Route to history: \(history)")
         }
+    }
+    
+    private func routeToStockFrom()
+    {
+        let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
+        let navigationController = NavigationController(rootViewController: searchController)
+        root?.present(
+            navigationController,
+            animated: true,
+            completion: { [weak self] in
+                self?.presentedDestination = .stockTo
+            })
+    }
+    
+    private func routeToStockTo()
+    {
+        let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
+        let navigationController = NavigationController(rootViewController: searchController)
+        root?.present(
+            navigationController,
+            animated: true,
+            completion: { [weak self] in
+                self?.presentedDestination = .stockTo
+            })
     }
 }
 
@@ -74,11 +107,11 @@ extension TransferFlowDetailRouter: Subscriber
         {
             switch message.indexPath.section
             {
-            case 0: // Info
+            case TableViewSectionType.info.index:
                 handleInfoSectionSelection(row: message.indexPath.row)
-            case 1: // Events Section
+            case TableViewSectionType.events.index:
                 handleEventSectionSelection(row: message.indexPath.row)
-            case 2: // History Section
+            case TableViewSectionType.history.index:
                 handleHistorySectionSelection(row: message.indexPath.row)
             default:
                 assertionFailure("Not a valid index path")
@@ -90,22 +123,15 @@ extension TransferFlowDetailRouter: Subscriber
     {
         switch row
         {
-        case 1: // From
-        // TODO: Open stock detail picker
-            let searchController = LinkSearchController(entityType: Stock.self, context: context)
-            let navigationController = NavigationController(rootViewController: searchController)
-            root?.present(
-                navigationController,
-                animated: true,
-                completion: nil)
-        case 2: // To
-        // TODO: Open detail stock picker
+        case TableViewRowType.from.index:
+            route(to: .stockFrom, completion: nil)
+        case TableViewRowType.to.index:
+            route(to: .stockTo, completion: nil)
+        case TableViewRowType.amount.index:
+            // TODO: Open amount picker
             break
-        case 3: // Amount
-        // TODO: Open amount picker
-            break
-        case 4: // Duration
-        // TODO: Open duration picker
+        case TableViewRowType.duration.index: 
+            // TODO: Open duration picker
             break
         default:
             break

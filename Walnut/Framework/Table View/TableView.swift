@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class TableView<M: TableViewModel>: UITableView
+open class TableView<M: OldTableViewModel>: UITableView
 {
     // MARK: - Variables
     

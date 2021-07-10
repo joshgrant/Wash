@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2172267F7C130038C095 /* SystemDetailController.swift */; };
-		030B2177267F7D790038C095 /* InfoHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2176267F7D790038C095 /* InfoHeaderViewModel.swift */; };
 		030B2179267F7EBD0038C095 /* EventsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2178267F7EBD0038C095 /* EventsHeaderViewModel.swift */; };
 		030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */; };
 		030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */; };
@@ -71,7 +70,7 @@
 		03555B572686A487006E9EA1 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B212686A487006E9EA1 /* TableViewCell.swift */; };
 		03555B582686A487006E9EA1 /* TableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B222686A487006E9EA1 /* TableViewCellModel.swift */; };
 		03555B592686A487006E9EA1 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B232686A487006E9EA1 /* TableView.swift */; };
-		03555B5A2686A487006E9EA1 /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B242686A487006E9EA1 /* TableViewModel.swift */; };
+		03555B5A2686A487006E9EA1 /* OldTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B242686A487006E9EA1 /* OldTableViewModel.swift */; };
 		03555B5B2686A487006E9EA1 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B262686A487006E9EA1 /* TableHeaderView.swift */; };
 		03555B5C2686A487006E9EA1 /* TableHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B272686A487006E9EA1 /* TableHeaderViewModel.swift */; };
 		03555B5D2686A487006E9EA1 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B2A2686A487006E9EA1 /* UIView+Extensions.swift */; };
@@ -186,6 +185,9 @@
 		03FAACB62698D22800CB7AB6 /* LinkSearchControllerTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACB52698D22800CB7AB6 /* LinkSearchControllerTableViewManager.swift */; };
 		03FAACB82698D52100CB7AB6 /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACB72698D52100CB7AB6 /* LinkCell.swift */; };
 		03FAACBA2698D95600CB7AB6 /* LinkSearchCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACB92698D95600CB7AB6 /* LinkSearchCriteria.swift */; };
+		03FAACBC2699067300CB7AB6 /* TransferFlowUpdateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACBB2699067300CB7AB6 /* TransferFlowUpdateMessage.swift */; };
+		03FAACBF2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACBE2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift */; };
+		03FAACC126991A2500CB7AB6 /* TransferFlowDetailTableViewManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACC026991A2500CB7AB6 /* TransferFlowDetailTableViewManager+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,7 +209,6 @@
 
 /* Begin PBXFileReference section */
 		030B2172267F7C130038C095 /* SystemDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailController.swift; sourceTree = "<group>"; };
-		030B2176267F7D790038C095 /* InfoHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B2178267F7EBD0038C095 /* EventsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailFlowsHeaderViewModel.swift; sourceTree = "<group>"; };
@@ -276,7 +277,7 @@
 		03555B212686A487006E9EA1 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		03555B222686A487006E9EA1 /* TableViewCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellModel.swift; sourceTree = "<group>"; };
 		03555B232686A487006E9EA1 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
-		03555B242686A487006E9EA1 /* TableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		03555B242686A487006E9EA1 /* OldTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldTableViewModel.swift; sourceTree = "<group>"; };
 		03555B262686A487006E9EA1 /* TableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 		03555B272686A487006E9EA1 /* TableHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableHeaderViewModel.swift; sourceTree = "<group>"; };
 		03555B2A2686A487006E9EA1 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -391,6 +392,9 @@
 		03FAACB52698D22800CB7AB6 /* LinkSearchControllerTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkSearchControllerTableViewManager.swift; sourceTree = "<group>"; };
 		03FAACB72698D52100CB7AB6 /* LinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		03FAACB92698D95600CB7AB6 /* LinkSearchCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkSearchCriteria.swift; sourceTree = "<group>"; };
+		03FAACBB2699067300CB7AB6 /* TransferFlowUpdateMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowUpdateMessage.swift; sourceTree = "<group>"; };
+		03FAACBE2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFetchedResultsController+Extensions.swift"; sourceTree = "<group>"; };
+		03FAACC026991A2500CB7AB6 /* TransferFlowDetailTableViewManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferFlowDetailTableViewManager+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,7 +427,6 @@
 			children = (
 				030B2178267F7EBD0038C095 /* EventsHeaderViewModel.swift */,
 				030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */,
-				030B2176267F7D790038C095 /* InfoHeaderViewModel.swift */,
 				030B217E267F7EE80038C095 /* NotesHeaderViewModel.swift */,
 				030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */,
 				030B21D2268167730038C095 /* StatesHeaderViewModel.swift */,
@@ -469,6 +472,7 @@
 		030B21C926811E540038C095 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				03FAACBD2699076B00CB7AB6 /* CoreData */,
 				03555B292686A487006E9EA1 /* UIKIt */,
 				03555B2F2686A487006E9EA1 /* Foundation */,
 			);
@@ -633,7 +637,7 @@
 			isa = PBXGroup;
 			children = (
 				03555B232686A487006E9EA1 /* TableView.swift */,
-				03555B242686A487006E9EA1 /* TableViewModel.swift */,
+				03555B242686A487006E9EA1 /* OldTableViewModel.swift */,
 				03555B1F2686A487006E9EA1 /* Cell */,
 				03555B192686A487006E9EA1 /* Data Source */,
 				03555B1C2686A487006E9EA1 /* Delegate */,
@@ -781,7 +785,6 @@
 				03555B8E26884308006E9EA1 /* StockDetailController.swift */,
 				0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */,
 				03555B9026884378006E9EA1 /* StockDetailTableViewManager.swift */,
-				0370FED1268A0DDE001E099B /* TableViewSelectionMessage.swift */,
 				0370FED3268A0EE0001E099B /* StockDetailRouter.swift */,
 			);
 			path = Detail;
@@ -808,8 +811,10 @@
 			children = (
 				0370FED7268A1837001E099B /* TransferFlowDetailController.swift */,
 				0370FED9268A1844001E099B /* TransferFlowDetailTableViewManager.swift */,
+				03FAACC026991A2500CB7AB6 /* TransferFlowDetailTableViewManager+Extensions.swift */,
 				0370FEDB268A184E001E099B /* TransferFlowDetailRouter.swift */,
 				0370FEDD268A1859001E099B /* TransferFlowDetailResponder.swift */,
+				03FAACBB2699067300CB7AB6 /* TransferFlowUpdateMessage.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -878,6 +883,7 @@
 		038CF6482676744B00931595 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				0370FED1268A0DDE001E099B /* TableViewSelectionMessage.swift */,
 				030B2175267F7D5E0038C095 /* Section Header */,
 				038CF64B2676756500931595 /* Table View Cell */,
 			);
@@ -1039,6 +1045,14 @@
 				03FAACB92698D95600CB7AB6 /* LinkSearchCriteria.swift */,
 			);
 			path = "Link Search";
+			sourceTree = "<group>";
+		};
+		03FAACBD2699076B00CB7AB6 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				03FAACBE2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1221,6 +1235,7 @@
 				030B217F267F7EE80038C095 /* NotesHeaderViewModel.swift in Sources */,
 				038CF6D9267683EE00931595 /* Symbol+Extensions.swift in Sources */,
 				0370FED8268A1837001E099B /* TransferFlowDetailController.swift in Sources */,
+				03FAACBC2699067300CB7AB6 /* TransferFlowUpdateMessage.swift in Sources */,
 				03555B522686A487006E9EA1 /* TableViewDataSource.swift in Sources */,
 				03555B482686A487006E9EA1 /* Model.swift in Sources */,
 				0370FEBD2688C170001E099B /* RightImageCell.swift in Sources */,
@@ -1266,7 +1281,7 @@
 				03555B6E2686A487006E9EA1 /* NavigationController.swift in Sources */,
 				030B21A1267FEA230038C095 /* EntityListController.swift in Sources */,
 				038CF6EA2676865600931595 /* DetailCell.swift in Sources */,
-				03555B5A2686A487006E9EA1 /* TableViewModel.swift in Sources */,
+				03555B5A2686A487006E9EA1 /* OldTableViewModel.swift in Sources */,
 				03555B4B2686A487006E9EA1 /* Context.swift in Sources */,
 				03555B0526869E7A006E9EA1 /* WrappedSubscriber.swift in Sources */,
 				03555B682686A487006E9EA1 /* TabBar.swift in Sources */,
@@ -1307,13 +1322,13 @@
 				0370FEBB2688BD7A001E099B /* StockDetailResponder.swift in Sources */,
 				03555B7D2687D160006E9EA1 /* EntityListCellMessage.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
+				03FAACBF2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift in Sources */,
 				03555B712686A487006E9EA1 /* ControllerModel.swift in Sources */,
 				03555B6A2686A487006E9EA1 /* ViewControllerTabBarDelegate.swift in Sources */,
 				0370FEE2268A1F4A001E099B /* ToggleCellMessage.swift in Sources */,
 				03555B702686A487006E9EA1 /* View.swift in Sources */,
 				038CF6C8267682C700931595 /* CompletionType.swift in Sources */,
 				03555B0626869E7C006E9EA1 /* MessageToken.swift in Sources */,
-				030B2177267F7D790038C095 /* InfoHeaderViewModel.swift in Sources */,
 				038CF6DD267683FB00931595 /* TransferFlow+Extensions.swift in Sources */,
 				038CF6962676829F00931595 /* Person+Extensions.swift in Sources */,
 				030B2179267F7EBD0038C095 /* EventsHeaderViewModel.swift in Sources */,
@@ -1329,6 +1344,7 @@
 				030B21A52680E7390038C095 /* Conversion+Extensions.swift in Sources */,
 				03555B842687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift in Sources */,
 				038CF6922676829F00931595 /* Net+Extensions.swift in Sources */,
+				03FAACC126991A2500CB7AB6 /* TransferFlowDetailTableViewManager+Extensions.swift in Sources */,
 				038CF5AB26751C9C00931595 /* RootController.swift in Sources */,
 				03555B882687D783006E9EA1 /* SystemDetailResponder.swift in Sources */,
 				038CF5AE26754D5A00931595 /* DashboardController.swift in Sources */,

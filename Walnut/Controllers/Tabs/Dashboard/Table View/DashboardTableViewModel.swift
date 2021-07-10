@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DashboardTableViewModel: TableViewModel
+class DashboardTableViewModel: OldTableViewModel
 {
     // MARK: - Initialization
     

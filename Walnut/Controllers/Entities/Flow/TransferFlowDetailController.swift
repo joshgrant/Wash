@@ -38,7 +38,7 @@ class TransferFlowDetailController: UIViewController
         
         self.flow = flow
         
-        self.router = TransferFlowDetailRouter(root: navigationController, context: context)
+        self.router = TransferFlowDetailRouter(flow: flow, root: navigationController, context: context, _stream: Self.stream)
         self.responder = responder
         self.tableViewManager = TransferFlowDetailTableViewManager(flow: flow, stream: Self.stream)
         
@@ -87,13 +87,15 @@ extension TransferFlowDetailController: Subscriber
         switch message
         {
         case let m as TextEditCellMessage:
-            handleTextEditCellMessage(m)
+            handle(m)
+        case let m as LinkSelectionMessage:
+            handle(m)
         default:
             break
         }
     }
     
-    private func handleTextEditCellMessage(_ message: TextEditCellMessage)
+    private func handle(_ message: TextEditCellMessage)
     {
         if message.entity == flow
         {
@@ -101,5 +103,23 @@ extension TransferFlowDetailController: Subscriber
             flow.title = message.title
             flow.managedObjectContext?.quickSave()
         }
+    }
+    
+    private func handle(_ message: LinkSelectionMessage)
+    {
+        let stock = message.entity as! Stock
+        let destination = router.presentedDestination!
+        
+        switch destination
+        {
+        case .stockFrom:
+            flow.from = stock
+        case .stockTo:
+            flow.to = stock
+        default:
+            break
+        }
+        
+        tableViewManager.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
 }

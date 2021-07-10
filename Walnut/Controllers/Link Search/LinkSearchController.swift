@@ -17,19 +17,25 @@ class LinkSearchController: UIViewController
     
     var tableViewManager: LinkSearchControllerTableViewManager
     weak var context: Context?
+    weak var _stream: Stream?
+    var stream: Stream { return _stream ?? AppDelegate.shared.mainStream }
     
     // MARK: - Initialization
     
-    init(entityType: NamedEntity.Type, context: Context?)
+    init(entity: Entity, entityType: NamedEntity.Type, context: Context?, _stream: Stream? = nil)
     {
+        self._stream = _stream
+        
         tableViewManager = LinkSearchControllerTableViewManager(
-            entityType: entityType,
-            context: context)
+            entityToLinkTo: entity,
+            entityLinkType: entityType,
+            context: context,
+            _stream: _stream)
         
         self.context = context
         
         super.init(nibName: nil, bundle: nil)
-        subscribe(to: AppDelegate.shared.mainStream)
+        subscribe(to: stream)
         
         view.embed(tableViewManager.tableView)
         
@@ -71,18 +77,15 @@ extension LinkSearchController: Subscriber
     {
         switch message
         {
-        case let m as TableViewSelectionMessage:
+        case let m as LinkSelectionMessage:
             handle(m)
         default:
             break
         }
     }
     
-    private func handle(_ message: TableViewSelectionMessage)
+    private func handle(_ message: LinkSelectionMessage)
     {
-        if message.token == .linkSearch
-        {
-            dismiss(animated: true, completion: nil)
-        }
+        dismiss(animated: true, completion: nil)
     }
 }

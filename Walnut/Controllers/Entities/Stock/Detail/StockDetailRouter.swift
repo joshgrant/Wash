@@ -77,9 +77,7 @@ extension StockDetailRouter: Subscriber
     {
         guard message.token == .stockDetail else { return }
         
-        let indexPath = message.indexPath
-        
-        switch (indexPath.section, indexPath.row)
+        switch (message.indexPath.section, message.indexPath.row)
         {
         case (0, 1): // Value type
             route(to: .valueType, completion: nil)

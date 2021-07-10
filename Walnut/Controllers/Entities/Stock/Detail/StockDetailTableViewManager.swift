@@ -186,7 +186,7 @@ class StockDetailTableViewManager: NSObject
     static func makeHeaderViewModels() -> [TableHeaderViewModel]
     {
         return [
-            InfoHeaderViewModel(),
+            TableHeaderViewModel.info,
             StatesHeaderViewModel(), // Only if the stock has states...
             InflowsHeaderViewModel(),
             OutflowsHeaderViewModel(),

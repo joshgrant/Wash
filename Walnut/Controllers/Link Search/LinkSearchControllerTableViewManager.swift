@@ -13,31 +13,37 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
 {
     // MARK: - Variables
     
+    var entity: Entity
+    
     var tableView: UITableView
     var tableViewDataSourceReference: UITableViewDiffableDataSourceReference!
     var searchCriteria: LinkSearchCriteria
     var fetchResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
     weak var context: Context?
+    weak var _stream: Stream?
+    var stream: Stream { _stream ?? AppDelegate.shared.mainStream }
     
     var shouldAnimate: Bool = false
     
     // MARK: - Initialization
     
-    init(entityType: NamedEntity.Type, context: Context?)
+    init(entityToLinkTo: Entity, entityLinkType: NamedEntity.Type, context: Context?, _stream: Stream? = nil)
     {
+        self.entity = entityToLinkTo
         self.tableView = UITableView(frame: .zero, style: .plain)
-                
         self.context = context
+        self._stream = _stream
         
         let searchCriteria = LinkSearchCriteria(
             searchString: "",
-            entityType: entityType,
+            entityType: entityLinkType,
             context: context)
         
         self.searchCriteria = searchCriteria
         
         super.init()
+        
         
         let cellProvider: UITableViewDiffableDataSourceReferenceCellProvider = { [weak self] tableView, indexPath, id in
             let result = self?.fetchResultsController.fetchedObjects?[indexPath.row]
@@ -71,11 +77,10 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let message = TableViewSelectionMessage(
-            tableView: tableView,
-            indexPath: indexPath,
-            token: .linkSearch)
-        AppDelegate.shared.mainStream.send(message: message)
+        let link = fetchResultsController.item(at: indexPath) as! Entity
+        let message = LinkSelectionMessage(entity: link)
+        stream.send(message: message)
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
