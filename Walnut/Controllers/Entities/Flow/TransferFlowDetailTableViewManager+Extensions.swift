@@ -194,9 +194,11 @@ extension DetailCellModel
     
     static func duration(flow: TransferFlow) -> DetailCellModel
     {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.dateTimeStyle = .numeric
-        let duration = formatter.string(for: flow.duration)!
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour, .minute, .second]
+        formatter.collapsesLargestUnit = true
+        formatter.unitsStyle = .short
+        let duration = formatter.string(from: flow.duration)!
         
         return DetailCellModel(
             title: "Duration".localized,
