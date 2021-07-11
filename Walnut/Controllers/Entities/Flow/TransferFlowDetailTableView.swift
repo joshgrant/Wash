@@ -137,7 +137,7 @@ class TransferFlowDetailTableView: TableView
             let dateString = history.date!.format(with: .historyCellFormatter)
             var detailString: String = ""
 
-            if let value = history.valueSource?.amountOfStock?.currentValue as? Double
+            if let value = history.valueSource?.amountOfStock?.amountValue
             {
                 detailString = String(format: "%.2f", value)
             }

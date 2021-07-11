@@ -23,7 +23,8 @@ class StocksHeaderViewModel: TableHeaderViewModel
         }
         
         searchButtonActionClosure = ActionClosure { sender in
-            print("SEARCH")
+            let message = SectionHeaderSearchMessage(entityToSearchFrom: system, typeToSearch: Stock.self)
+            AppDelegate.shared.mainStream.send(message: message)
         }
         
         addButtonActionClosure = ActionClosure { sender in

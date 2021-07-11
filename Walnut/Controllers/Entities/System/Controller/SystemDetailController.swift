@@ -132,7 +132,13 @@ extension SystemDetailController: Subscriber
             handle(m)
         case let m as SectionHeaderAddMessage:
             handle(m)
+        case let m as SectionHeaderSearchMessage:
+            handle(m)
         case let m as CancelCreationMessage:
+            handle(m)
+        case let m as LinkSelectionMessage:
+            handle(m)
+        case let m as TableViewSelectionMessage:
             handle(m)
         default:
             break
@@ -200,6 +206,19 @@ extension SystemDetailController: Subscriber
         }
     }
     
+    private func handle(_ message: SectionHeaderSearchMessage)
+    {
+        let linkController = LinkSearchController(
+            origin: .systemStockSearch,
+            entity: message.entityToSearchFrom,
+            entityType: message.typeToSearch,
+            context: message.entityToSearchFrom.managedObjectContext)
+        
+        let navigationController = UINavigationController(rootViewController: linkController)
+        
+        present(navigationController, animated: true, completion: nil)
+    }
+    
     private func handle(_ message: CancelCreationMessage)
     {
         let context = message.entity.managedObjectContext
@@ -207,5 +226,29 @@ extension SystemDetailController: Subscriber
         context?.quickSave()
         
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func handle(_ message: LinkSelectionMessage)
+    {
+        if message.origin == .systemStockSearch
+        {
+            let link = message.entity as! Stock
+            system.addToStocks(link)
+            system.managedObjectContext?.quickSave()
+            tableView.shouldReload = true
+        }
+    }
+    
+    private func handle(_ message: TableViewSelectionMessage)
+    {
+        guard message.tableView == tableView else { return }
+        
+        switch message.cellModel.selectionIdentifier
+        {
+        case .stock(let stock):
+            router.route(to: .stockDetail(stock: stock), completion: nil)
+        default:
+            break
+        }
     }
 }

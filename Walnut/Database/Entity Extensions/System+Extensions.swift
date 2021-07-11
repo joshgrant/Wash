@@ -41,12 +41,14 @@ extension System
         
         let total: Int = 100
         
-//        for stock in unwrappedStocks
-//        {
-//            let amount = stock.currentValue
-//            let ideal = stock.idealValue
-//           // TODO: Calculate the delta
-//        }
+        for stock in unwrappedStocks
+        {
+            let amount = stock.amountValue
+            let ideal = stock.idealValue
+           // TODO: Calculate the delta
+            print("Amount: \(amount)")
+            print("Ideal: \(ideal)")
+        }
         
         // TODO: Recursively call on children systems
         

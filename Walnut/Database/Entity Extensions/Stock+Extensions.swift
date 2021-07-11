@@ -10,6 +10,24 @@ import Foundation
 extension Stock: Named {}
 extension Stock: Pinnable {}
 
+extension Stock
+{
+    public override func awakeFromInsert()
+    {
+        super.awakeFromInsert()
+        
+        guard let context = managedObjectContext else { fatalError() }
+        
+        let value = ValueSource(context: context)
+        value.value = 0
+        
+        let idealValue = ValueSource(context: context)
+        idealValue.value = 0
+        
+        amount = value
+        ideal = idealValue
+    }
+}
 
 extension Stock
 {
@@ -76,8 +94,30 @@ extension Stock
 
 extension Stock
 {
-    var currentValue: Any? { amount?.computedValue }
-    var idealValue: Any? { ideal?.computedValue }
+//    var currentValue: Any? { amount?.computedValue }
+//    var idealValue: Any? { ideal?.computedValue }
+    
+    var amountValue: Double
+    {
+        switch amount
+        {
+        case let a as ValueSource:
+            return a.value
+        default:
+            fatalError("Unhandled source")
+        }
+    }
+    
+    var idealValue: Double
+    {
+        switch ideal
+        {
+        case let i as ValueSource:
+            return i.value
+        default:
+            fatalError("Unhandled source")
+        }
+    }
 }
 
 extension Stock
@@ -94,7 +134,12 @@ extension Stock
     
     var currentDescription: String
     {
-        return "\(currentValue ?? "")"
+        return String(format: "%.2f", amountValue)
+    }
+    
+    var idealDescription: String
+    {
+        return String(format: "%.2f", idealValue)
     }
     
     var netDescription: String

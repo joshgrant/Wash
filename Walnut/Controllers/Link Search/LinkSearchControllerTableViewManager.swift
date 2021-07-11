@@ -92,7 +92,7 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let link = fetchResultsController.item(at: indexPath) as! Entity
-        let message = LinkSelectionMessage(entity: link)
+        let message = LinkSelectionMessage(entity: link, origin: origin)
         stream.send(message: message)
         
         tableView.deselectRow(at: indexPath, animated: true)

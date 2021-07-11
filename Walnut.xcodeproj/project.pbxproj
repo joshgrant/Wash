@@ -409,8 +409,7 @@
 				030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */,
 				030B2180267F7EF70038C095 /* SubSystemsHeaderViewModel.swift */,
 				030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */,
-				03FAACE3269B934C00CB7AB6 /* SectionHeaderAddMessage.swift */,
-				03FAACE5269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift */,
+				0393A88A269BA78B00D2BF81 /* Header Messages */,
 			);
 			path = "Section Header";
 			sourceTree = "<group>";
@@ -934,6 +933,15 @@
 				03555B7E2687D5E1006E9EA1 /* Messages */,
 			);
 			path = System;
+			sourceTree = "<group>";
+		};
+		0393A88A269BA78B00D2BF81 /* Header Messages */ = {
+			isa = PBXGroup;
+			children = (
+				03FAACE3269B934C00CB7AB6 /* SectionHeaderAddMessage.swift */,
+				03FAACE5269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift */,
+			);
+			path = "Header Messages";
 			sourceTree = "<group>";
 		};
 		03FAACAE2698CC8900CB7AB6 /* Link Search */ = {

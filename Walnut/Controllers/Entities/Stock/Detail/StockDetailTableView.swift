@@ -63,17 +63,22 @@ class StockDetailTableView: TableView
             DetailCellModel(
                 selectionIdentifier: .dimension,
                 title: "Dimension".localized,
-                detail: "Currency",
+                detail: stock.dimensionDescription,
                 disclosure: true),
             DetailCellModel(
                 selectionIdentifier: .current,
                 title: "Current".localized,
-                detail: "Relaxed", // FIXME: Wrong
+                detail: stock.currentDescription,
                 disclosure: true), // TODO: Subtitle
+            DetailCellModel(
+                selectionIdentifier: .ideal,
+                title: "Ideal".localized,
+                detail: stock.idealDescription,
+                disclosure: true),
             InfoCellModel(
                 selectionIdentifier: .net,
                 title: "Net".localized,
-                detail: "3980/month") // FIXME: Wrong
+                detail: stock.netDescription) // FIXME: Wrong
         ]
     }
     
