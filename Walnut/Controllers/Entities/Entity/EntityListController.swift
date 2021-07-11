@@ -18,7 +18,7 @@ class EntityListController: UIViewController
     var type: Entity.Type
     
     weak var context: Context?
-    weak var root: NavigationController?
+    weak var root: UINavigationController?
     
     var tableViewManager: EntityListTableViewManager
     var responder: EntityListResponder
@@ -34,7 +34,7 @@ class EntityListController: UIViewController
     init(
         type: Entity.Type,
         context: Context?,
-        navigationController: NavigationController?)
+        navigationController: UINavigationController?)
     {
         self.type = type
         self.context = context

@@ -14,7 +14,7 @@ class EntityListTableViewManager: NSObject
     
     var entityType: Entity.Type
     weak var context: Context?
-    weak var navigationController: NavigationController?
+    weak var navigationController: UINavigationController?
     
     var cellModels: [[TableViewCellModel]]
     
@@ -27,7 +27,7 @@ class EntityListTableViewManager: NSObject
     init(
         entityType: Entity.Type,
         context: Context?,
-        navigationController: NavigationController?)
+        navigationController: UINavigationController?)
     {
         self.tableView = UITableView(frame: .zero, style: .grouped)
         

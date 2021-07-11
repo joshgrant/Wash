@@ -22,11 +22,11 @@ class EntityListRouter: Router
     
     var id = UUID()
     weak var context: Context?
-    weak var root: NavigationController?
+    weak var root: UINavigationController?
     
     // MARK: - Initialization
     
-    init(context: Context?, root: NavigationController?)
+    init(context: Context?, root: UINavigationController?)
     {
         self.context = context
         self.root = root

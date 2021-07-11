@@ -22,11 +22,11 @@ class StockDetailRouter: Router
     var id = UUID()
     
     var stock: Stock
-    var root: NavigationController?
+    var root: UINavigationController?
     
     // MARK: - Initialization
     
-    init(stock: Stock, root: NavigationController?)
+    init(stock: Stock, root: UINavigationController?)
     {
         self.stock = stock
         self.root = root

@@ -32,7 +32,7 @@ class TransferFlowDetailController: UIViewController
     
     // MARK: - Initialization
     
-    init(flow: TransferFlow, navigationController: NavigationController?, context: Context?)
+    init(flow: TransferFlow, navigationController: UINavigationController?, context: Context?)
     {
         let responder = TransferFlowDetailResponder(flow: flow)
         

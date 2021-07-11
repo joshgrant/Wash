@@ -41,3 +41,17 @@ open class TableHeaderViewModel
         self.icon = icon
     }
 }
+
+extension TableHeaderViewModel
+{
+    static let info = TableHeaderViewModel(
+        title: "Info".localized)
+    static let events = TableHeaderViewModel(
+        title: "Events".localized)
+    static let history = TableHeaderViewModel(
+        title: "History".localized)
+    static let pinned = TableHeaderViewModel(title: "Pinned".localized, icon: .pin)
+    static let flows = TableHeaderViewModel(title: "Flows".localized, icon: .flow)
+    static let forecast = TableHeaderViewModel(title: "Forecast".localized, icon: .forecast)
+    static let priority = TableHeaderViewModel(title: "Priority".localized, icon: .priority)
+}

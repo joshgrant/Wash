@@ -12,7 +12,7 @@ protocol Router
 {
     associatedtype Destination
     
-    var root: NavigationController? { get set }
+    var root: UINavigationController? { get set }
     
     func route(to destination: Destination, completion: (() -> Void)?)
 }

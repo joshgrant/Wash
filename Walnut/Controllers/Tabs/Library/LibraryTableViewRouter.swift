@@ -19,12 +19,12 @@ class LibraryTableViewRouter: Router
     // MARK: - Variables
     
     var id = UUID()
-    weak var root: NavigationController?
+    weak var root: UINavigationController?
     weak var context: Context?
     
     // MARK: - Initialization
     
-    init(root: NavigationController?, context: Context?)
+    init(root: UINavigationController?, context: Context?)
     {
         self.root = root
         self.context = context

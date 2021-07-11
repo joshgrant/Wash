@@ -29,7 +29,7 @@ class StockDetailController: UIViewController
     
     // MARK: - Initialization
     
-    init(stock: Stock, navigationController: NavigationController?)
+    init(stock: Stock, navigationController: UINavigationController?)
     {
         let responder = StockDetailResponder(stock: stock)
         

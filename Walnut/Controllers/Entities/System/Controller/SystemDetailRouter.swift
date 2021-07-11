@@ -29,10 +29,10 @@ class SystemDetailRouter: Router
     var id = UUID()
     
     var system: System
-    weak var root: NavigationController?
+    weak var root: UINavigationController?
     // MARK: - Initialization
     
-    init(system: System, root: NavigationController?)
+    init(system: System, root: UINavigationController?)
     {
         self.system = system
         self.root = root

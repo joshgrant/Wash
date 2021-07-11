@@ -25,7 +25,7 @@ class TransferFlowDetailRouter: Router
     
     var flow: TransferFlow
     
-    weak var root: NavigationController?
+    weak var root: UINavigationController?
     weak var context: Context?
     
     weak var _stream: Stream?
@@ -35,7 +35,7 @@ class TransferFlowDetailRouter: Router
     
     // MARK: - Initialization
     
-    init(flow: TransferFlow, root: NavigationController?, context: Context?, _stream: Stream? = nil)
+    init(flow: TransferFlow, root: UINavigationController?, context: Context?, _stream: Stream? = nil)
     {
         self.flow = flow
         
@@ -65,7 +65,7 @@ class TransferFlowDetailRouter: Router
     private func routeToStockFrom()
     {
         let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
-        let navigationController = NavigationController(rootViewController: searchController)
+        let navigationController = UINavigationController(rootViewController: searchController)
         presentedDestination = .stockFrom
         root?.present(
             navigationController,
@@ -76,7 +76,7 @@ class TransferFlowDetailRouter: Router
     private func routeToStockTo()
     {
         let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
-        let navigationController = NavigationController(rootViewController: searchController)
+        let navigationController = UINavigationController(rootViewController: searchController)
         presentedDestination = .stockTo
         root?.present(
             navigationController,

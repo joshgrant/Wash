@@ -11,27 +11,49 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
 {
     // MARK: - Variables
     
-    var model: TableViewModel
+    var shouldReload: Bool = false
+    
+    var model: TableViewModel!
     var stream: Stream
     
     // MARK: - Initialization
     
-    required init(model: TableViewModel, stream: Stream? = nil, style: UITableView.Style = .grouped)
+    init(stream: Stream? = nil, style: UITableView.Style = .grouped)
     {
-        self.model = model
         self.stream = stream ?? AppDelegate.shared.mainStream
-        
         super.init(frame: .zero, style: style)
-        
+        model = makeModel()
         configure()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - View lifecycle
+    
+    override func didMoveToWindow()
+    {
+        super.didMoveToWindow()
+        
+        guard let _ = window else { return }
+        
+        if shouldReload
+        {
+            model = makeModel() // TODO: Maybe do a diff?
+            reloadData()
+            shouldReload = false
+        }
+    }
+    
     // MARK: - Configuration
+    
+    func makeModel() -> TableViewModel
+    {
+        fatalError("Implement in subclass")
+    }
     
     private func configure()
     {

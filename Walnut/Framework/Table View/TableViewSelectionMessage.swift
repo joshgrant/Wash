@@ -19,3 +19,14 @@ class TableViewSelectionMessage: Message
         self.cellModel = cellModel
     }
 }
+
+class TableViewEntitySelectionMessage: TableViewSelectionMessage
+{
+    var entity: Entity
+    
+    init(entity: Entity, tableView: UITableView, cellModel: TableViewCellModel)
+    {
+        self.entity = entity
+        super.init(tableView: tableView, cellModel: cellModel)
+    }
+}

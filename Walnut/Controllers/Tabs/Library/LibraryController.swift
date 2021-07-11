@@ -22,7 +22,7 @@ class LibraryController: ViewController
 
     init(
         context: Context,
-        navigationController: NavigationController)
+        navigationController: UINavigationController)
     {
         self.router = LibraryTableViewRouter(root: navigationController, context: context)
         self.tableViewManager = LibraryTableViewManager(context: context)

@@ -26,7 +26,7 @@ class SystemDetailController: UIViewController
     
     init(
         system: System,
-        navigationController: NavigationController?)
+        navigationController: UINavigationController?)
     {
         let responder = SystemDetailResponder(system: system)
         

@@ -18,13 +18,13 @@ class SystemDetailTableViewManager: NSObject
     
     var tableView: UITableView
     
-    weak var navigationController: NavigationController?
+    weak var navigationController: UINavigationController?
     
     // MARK: - Initialization
     
     init(
         system: System,
-        navigationController: NavigationController?)
+        navigationController: UINavigationController?)
     {
         self.system = system
         self.navigationController = navigationController

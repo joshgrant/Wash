@@ -11,7 +11,7 @@ class StocksHeaderViewModel: TableHeaderViewModel
 {
     // MARK: - Initialization
     
-    convenience init(system: System, navigationController: NavigationController?)
+    convenience init(system: System, navigationController: UINavigationController?)
     {
         self.init(
             title: "Stocks".localized,

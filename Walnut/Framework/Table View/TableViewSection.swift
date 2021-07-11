@@ -9,20 +9,16 @@ import Foundation
 
 class TableViewSection
 {
-    var rows: [TableViewRow]
-    
     var header: TableHeaderViewModel?
     var models: [TableViewCellModel]
     var footer: String?
     
     init(header: TableHeaderViewModel? = nil,
-         rows: [TableViewRow],
+         models: [TableViewCellModel],
          footer: String? = nil)
     {
-        self.rows = rows
-        
         self.header = header
-        models = rows.map { $0.model }
+        self.models = models
         self.footer = footer
     }
 }

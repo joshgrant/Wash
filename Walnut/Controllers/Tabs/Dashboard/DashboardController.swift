@@ -17,18 +17,13 @@ class DashboardController: ViewController
     var tabBarImage: UIImage? { Icon.dashboard.getImage() }
     var tabBarTag: Int { 0 }
     
-    var tableView: TableView<DashboardTableViewModel>
-    var tableViewModel: DashboardTableViewModel
-    var tableViewNeedsToReload: Bool = false
+    var tableView: DashboardTableView
     
     // MARK: - Initialization
     
-    init(context: Context, navigationController: NavigationController)
+    init(context: Context, navigationController: UINavigationController)
     {
-        let tableViewModel = DashboardTableViewModel(context: context, navigationController: navigationController)
-        
-        self.tableView = TableView(model: tableViewModel)
-        self.tableViewModel = tableViewModel
+        self.tableView = DashboardTableView(context: context)
         
         super.init()
         subscribe(to: AppDelegate.shared.mainStream)
@@ -78,8 +73,21 @@ extension DashboardController: Subscriber
         {
         case is EntityPinnedMessage:
             tableViewNeedsToReload = true
+        case let m as TableViewEntitySelectionMessage:
+            handle(m)
         default:
             break
         }
+    }
+    
+    private func handle(_ message: TableViewEntitySelectionMessage)
+    {
+        guard let _ = message.tableView as? DashboardTableView else { return }
+        
+        let detailController = message
+            .entity
+            .detailController(navigationController: navigationController)
+        
+        navigationController?.pushViewController(detailController, animated: true)
     }
 }

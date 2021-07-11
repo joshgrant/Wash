@@ -49,6 +49,11 @@
         <attribute name="updatedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="linkedNotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="links" inverseEntity="Note"/>
         <relationship name="linkedSymbols" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Symbol" inverseName="links" inverseEntity="Symbol"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Event" representedClassName="Event" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="conditionTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
