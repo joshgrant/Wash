@@ -19,6 +19,8 @@ class TextEditCellModel: NSObject, TableViewCellModel
     var entity: Entity
     weak var stream: Stream?
     
+    var notifyOnDismissal: Bool = true
+    
     // MARK: - Initialization
     
     init(
@@ -48,17 +50,13 @@ extension TextEditCellModel: UITextFieldDelegate
     
     func textFieldDidEndEditing(_ textField: UITextField)
     {
+        guard notifyOnDismissal else { return }
+        
         let title = textField.text ?? ""
         let message = TextEditCellMessage(title: title, entity: entity)
         
-        if let stream = stream
-        {
-            stream.send(message: message)
-        }
-        else
-        {
-            AppDelegate.shared.mainStream.send(message: message)
-        }
+        let stream = stream ?? AppDelegate.shared.mainStream
+        stream.send(message: message)
     }
 }
 

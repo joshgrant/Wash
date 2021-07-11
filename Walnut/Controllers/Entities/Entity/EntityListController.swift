@@ -106,6 +106,8 @@ extension EntityListController: Subscriber
             handle(m)
         case let m as EntityListDeleteMessage:
             handle(m)
+        case is CancelCreationMessage:
+            tableView.shouldReload = true
         default:
             break
         }

@@ -150,6 +150,7 @@
 		038CF6E3267684E200931595 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E2267684E200931595 /* LibraryCell.swift */; };
 		038CF6EA2676865600931595 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E92676865600931595 /* DetailCell.swift */; };
 		0393A887269B9B4E00D2BF81 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */; };
+		0393A889269B9DDF00D2BF81 /* CancelCreationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A888269B9DDF00D2BF81 /* CancelCreationMessage.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -344,6 +345,7 @@
 		038CF6E2267684E200931595 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
 		038CF6E92676865600931595 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
+		0393A888269B9DDF00D2BF81 /* CancelCreationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelCreationMessage.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -680,6 +682,7 @@
 				03555B832687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift */,
 				03555B812687D6A4006E9EA1 /* SystemDetailPinnedMessage.swift */,
 				0370FEC526892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift */,
+				0393A888269B9DDF00D2BF81 /* CancelCreationMessage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -1185,6 +1188,7 @@
 				03555B672686A487006E9EA1 /* SearchBarDelegate.swift in Sources */,
 				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
 				03555B5E2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift in Sources */,
+				0393A889269B9DDF00D2BF81 /* CancelCreationMessage.swift in Sources */,
 				0370FEB62688B3F0001E099B /* SubtitleDetailCell.swift in Sources */,
 				0370FED4268A0EE0001E099B /* StockDetailRouter.swift in Sources */,
 				03555B502686A487006E9EA1 /* StateMachine.swift in Sources */,

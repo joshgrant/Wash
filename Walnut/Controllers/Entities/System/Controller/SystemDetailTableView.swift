@@ -134,15 +134,20 @@ class SystemDetailTableView: TableView
     
     // MARK: - Utility
     
-    func makeTextCellFirstResponderIfEmpty()
+    private func titleCell() -> TextEditCell
     {
         let indexPath = IndexPath(row: 0, section: 0)
         let cell = cellForRow(at: indexPath)
-        guard let textCell = cell as? TextEditCell else { return }
+        return cell as! TextEditCell
+    }
+    
+    func makeTextCellFirstResponderIfEmpty()
+    {
+        let cell = titleCell()
         
-        if textCell.isEmpty
+        if cell.isEmpty
         {
-            textCell.textField.becomeFirstResponder()
+            cell.textField.becomeFirstResponder()
         }
     }
 }

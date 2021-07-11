@@ -40,14 +40,8 @@ class SystemDetailController: UIViewController, RouterDelegate
         super.init(nibName: nil, bundle: nil)
         router.delegate = self
         subscribe(to: AppDelegate.shared.mainStream)
-        
-        title = system.title
-        
         view.embed(tableView)
-        
-        navigationItem.setRightBarButtonItems(
-            [duplicateBarButtonItem, pinBarButtonItem],
-            animated: false)
+        configureNavigationItem(cellContent: system.title)
     }
     
     required init?(coder: NSCoder)
@@ -55,13 +49,52 @@ class SystemDetailController: UIViewController, RouterDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
+    deinit
+    {
         unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool)
+    {
         super.viewDidAppear(animated)
         tableView.makeTextCellFirstResponderIfEmpty()
+    }
+    
+    func configureNavigationItem(cellContent: String)
+    {
+        if system.title.isEmpty
+        {
+            let actionClosure = ActionClosure { [unowned self] sender in
+                let message = CancelCreationMessage(entity: self.system)
+                AppDelegate.shared.mainStream.send(message: message)
+            }
+            
+            // TODO: When to cancel, and when to delete?
+            
+            let cancelItem = BarButtonItem(title: "Cancel".localized, actionClosure: actionClosure)
+            navigationItem.setLeftBarButton(cancelItem, animated: true)
+            navigationItem.setRightBarButton(nil, animated: true)
+        }
+        else if cellContent.isEmpty
+        {
+            let actionClosure = ActionClosure { [unowned self] sender in
+                let message = CancelCreationMessage(entity: self.system)
+                AppDelegate.shared.mainStream.send(message: message)
+            }
+            
+            // TODO: When to cancel, and when to delete?
+            
+            let cancelItem = BarButtonItem(title: "Delete".localized, actionClosure: actionClosure)
+            navigationItem.setLeftBarButton(cancelItem, animated: true)
+            navigationItem.setRightBarButtonItems(nil, animated: true)
+        }
+        else
+        {
+            title = system.title
+            
+            navigationItem.setLeftBarButton(nil, animated: true)
+            navigationItem.setRightBarButtonItems([duplicateBarButtonItem, pinBarButtonItem], animated: true)
+        }
     }
     
     // MARK: - Factory
@@ -99,6 +132,8 @@ extension SystemDetailController: Subscriber
             handle(m)
         case let m as SectionHeaderAddMessage:
             handle(m)
+        case let m as CancelCreationMessage:
+            handle(m)
         default:
             break
         }
@@ -106,9 +141,16 @@ extension SystemDetailController: Subscriber
     
     func handle(_ message: TextEditCellMessage)
     {
+        defer
+        {
+            configureNavigationItem(cellContent: message.title)
+        }
+        
+        // Interesting business rule... don't handle changes if it's empty?
+        if message.title.isEmpty { return }
+        
         if message.entity == system
         {
-            title = message.title
             system.title = message.title
             system.managedObjectContext?.quickSave()
         }
@@ -156,5 +198,14 @@ extension SystemDetailController: Subscriber
         default:
             break
         }
+    }
+    
+    private func handle(_ message: CancelCreationMessage)
+    {
+        let context = message.entity.managedObjectContext
+        context?.delete(message.entity)
+        context?.quickSave()
+        
+        navigationController?.popViewController(animated: true)
     }
 }

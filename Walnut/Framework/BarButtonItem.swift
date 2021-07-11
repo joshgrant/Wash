@@ -24,6 +24,17 @@ class BarButtonItem: UIBarButtonItem
         self.action = #selector(actionClosure.perform(sender:))
     }
     
+    init(title: String, actionClosure: ActionClosure)
+    {
+        self.actionClosure = actionClosure
+        
+        super.init()
+        
+        self.title = title
+        self.target = actionClosure
+        self.action = #selector(actionClosure.perform(sender:))
+    }
+    
     @available(*, unavailable)
     required init?(coder: NSCoder)
     {

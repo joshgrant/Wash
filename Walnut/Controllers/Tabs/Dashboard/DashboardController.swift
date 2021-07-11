@@ -59,6 +59,8 @@ extension DashboardController: Subscriber
         case is EntityPinnedMessage:
             fallthrough
         case is EntityListDeleteMessage:
+            fallthrough
+        case is CancelCreationMessage:
             tableView.shouldReload = true
         case let m as TableViewEntitySelectionMessage:
             handle(m)

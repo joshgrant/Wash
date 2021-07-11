@@ -177,7 +177,7 @@ class DashboardTableView: TableView
         
         let request: NSFetchRequest<System> = System.fetchRequest()
         request.predicate = NSPredicate(value: true)
-        request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "ideal", ascending: true)]
         
         do
         {
