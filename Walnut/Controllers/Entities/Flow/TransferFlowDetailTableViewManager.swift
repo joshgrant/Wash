@@ -112,3 +112,15 @@ extension TransferFlowDetailTableViewManager: UITableViewDataSource
         return model.makeCell(in: tableView, at: indexPath)
     }
 }
+
+extension TransferFlowDetailTableViewManager
+{
+    func handleSelection(at indexPath: IndexPath)
+    {
+        switch (indexPath.section, indexPath.row)
+        {
+        case (TableViewSectionType.info, TableViewRowType.from):
+            break
+        }
+    }
+}

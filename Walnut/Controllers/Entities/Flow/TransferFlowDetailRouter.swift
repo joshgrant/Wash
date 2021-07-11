@@ -66,24 +66,22 @@ class TransferFlowDetailRouter: Router
     {
         let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
         let navigationController = NavigationController(rootViewController: searchController)
+        presentedDestination = .stockFrom
         root?.present(
             navigationController,
             animated: true,
-            completion: { [weak self] in
-                self?.presentedDestination = .stockTo
-            })
+            completion: nil)
     }
     
     private func routeToStockTo()
     {
         let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
         let navigationController = NavigationController(rootViewController: searchController)
+        presentedDestination = .stockTo
         root?.present(
             navigationController,
             animated: true,
-            completion: { [weak self] in
-                self?.presentedDestination = .stockTo
-            })
+            completion: nil)
     }
 }
 
@@ -100,18 +98,17 @@ extension TransferFlowDetailRouter: Subscriber
         }
     }
     
-    // TODO: Should have some enum for the table view sections
     private func handleTableViewSelectionMessage(_ message: TableViewSelectionMessage)
     {
         if message.token == .transferFlowDetail
         {
             switch message.indexPath.section
             {
-            case TableViewSectionType.info.index:
+            case TableViewSectionType.info:
                 handleInfoSectionSelection(row: message.indexPath.row)
-            case TableViewSectionType.events.index:
+            case TableViewSectionType.events:
                 handleEventSectionSelection(row: message.indexPath.row)
-            case TableViewSectionType.history.index:
+            case TableViewSectionType.history:
                 handleHistorySectionSelection(row: message.indexPath.row)
             default:
                 assertionFailure("Not a valid index path")
@@ -123,14 +120,14 @@ extension TransferFlowDetailRouter: Subscriber
     {
         switch row
         {
-        case TableViewRowType.from.index:
+        case TableViewRowType.from.rawValue:
             route(to: .stockFrom, completion: nil)
-        case TableViewRowType.to.index:
+        case TableViewRowType.to.rawValue:
             route(to: .stockTo, completion: nil)
-        case TableViewRowType.amount.index:
+        case TableViewRowType.amount.rawValue:
             // TODO: Open amount picker
             break
-        case TableViewRowType.duration.index: 
+        case TableViewRowType.duration.rawValue:
             // TODO: Open duration picker
             break
         default:

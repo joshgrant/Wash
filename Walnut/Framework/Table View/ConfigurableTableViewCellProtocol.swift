@@ -9,7 +9,6 @@ import Foundation
 
 public protocol ConfigurableTableViewCellProtocol
 {
-    associatedtype TVCM
-    
-    func configure(with model: TVCM)
+    associatedtype CellModel
+    func configure(with model: CellModel)
 }

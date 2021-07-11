@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class TableHeaderViewModel: ViewModel
+open class TableHeaderViewModel
 {
     // MARK: - Variables
     
@@ -26,7 +26,7 @@ open class TableHeaderViewModel: ViewModel
     public var hasAddButton: Bool { addButtonActionClosure != nil }
     public var hasEditButton: Bool { editButtonActionClosure != nil }
     
-    public var editButtonTitle: String { "Edit".localized }
+    public var editButtonTitle: String { "Edit".localized } // TODO: Move to constants
     
     // MARK: - Initialization
     

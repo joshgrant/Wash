@@ -108,6 +108,7 @@ extension TransferFlowDetailController: Subscriber
     private func handle(_ message: LinkSelectionMessage)
     {
         let stock = message.entity as! Stock
+        // TODO: This crashes
         let destination = router.presentedDestination!
         
         switch destination

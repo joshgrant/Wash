@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class TableViewCell<TVCM: TableViewCellModel>: UITableViewCell, ConfigurableTableViewCellProtocol
+open class TableViewCell<CellModel: TableViewCellModel>: UITableViewCell, ConfigurableTableViewCellProtocol
 {
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
@@ -21,10 +21,10 @@ open class TableViewCell<TVCM: TableViewCellModel>: UITableViewCell, Configurabl
     {
         fatalError("Load this view programmatically")
     }
-
+    
     /// This can't be in an extension because the compiler won't
     /// allow it to be overridden
-    open func configure(with model: TVCM)
+    open func configure(with model: CellModel)
     {
         assertionFailure("Failed to properly configure the table view cell.")
     }

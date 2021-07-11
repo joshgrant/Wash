@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class View<VM: ViewModel>: UIView
+open class View<VM: AnyObject>: UIView
 {
     public var model: VM
     
