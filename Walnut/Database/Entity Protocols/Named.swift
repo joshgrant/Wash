@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias NamedEntity = Entity & Named
+public typealias NamedEntity = Entity & Named
 
 public protocol Named: Entity
 {

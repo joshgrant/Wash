@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class StockDetailRouter: Router
 {
@@ -20,16 +21,14 @@ class StockDetailRouter: Router
     // MARK: - Variables
     
     var id = UUID()
-    
     var stock: Stock
-    var root: UINavigationController?
+    weak var delegate: RouterDelegate?
     
     // MARK: - Initialization
     
-    init(stock: Stock, root: UINavigationController?)
+    init(stock: Stock)
     {
         self.stock = stock
-        self.root = root
         subscribe(to: StockDetailController.stream)
     }
     
@@ -51,7 +50,7 @@ class StockDetailRouter: Router
     private func routeToValueType()
     {
         let controller = StockValueTypeController(stock: stock)
-        root?.pushViewController(controller, animated: true)
+        delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
     private func routeToDimension()
@@ -75,13 +74,13 @@ extension StockDetailRouter: Subscriber
     
     private func handle(_ message: TableViewSelectionMessage)
     {
-        guard message.token == .stockDetail else { return }
+        guard let _ = message.tableView as? StockDetailTableView else { return }
         
-        switch (message.indexPath.section, message.indexPath.row)
+        switch message.cellModel.selectionIdentifier
         {
-        case (0, 1): // Value type
+        case .valueType:
             route(to: .valueType, completion: nil)
-        case (0, 2): // Dimension
+        case .dimension:
             route(to: .dimension, completion: nil)
         default:
             assertionFailure("Unhandled cell selection")

@@ -12,12 +12,12 @@ class EntityListAddButtonMessage: Message
 {
     // MARK: - Variables
     
-    weak var sender: UIButton?
+    weak var sender: AnyObject?
     var entityType: Entity.Type
     
     // MARK: - Initialization
     
-    init(sender: UIButton, entityType: Entity.Type)
+    init(sender: AnyObject, entityType: Entity.Type)
     {
         self.sender = sender
         self.entityType = entityType

@@ -117,16 +117,16 @@ extension Entity
 
 extension Entity
 {
-    func detailController(navigationController: UINavigationController?) -> UIViewController
+    func detailController() -> UIViewController
     {
         switch self
         {
         case (let s as System):
-            return SystemDetailController(system: s, navigationController: navigationController)
+            return SystemDetailController(system: s)
         case (let s as Stock):
-            return StockDetailController(stock: s, navigationController: navigationController)
+            return StockDetailController(stock: s)
         case (let f as TransferFlow):
-            return TransferFlowDetailController(flow: f, navigationController: navigationController, context: managedObjectContext)
+            return TransferFlowDetailController(flow: f, context: managedObjectContext)
         default:
             assertionFailure("Unhandled entity: \(self)")
             return UIViewController()

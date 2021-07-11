@@ -22,14 +22,13 @@ class EntityListRouter: Router
     
     var id = UUID()
     weak var context: Context?
-    weak var root: UINavigationController?
+    weak var delegate: RouterDelegate?
     
     // MARK: - Initialization
     
-    init(context: Context?, root: UINavigationController?)
+    init(context: Context?)
     {
         self.context = context
-        self.root = root
         subscribe(to: AppDelegate.shared.mainStream)
     }
     
@@ -56,10 +55,7 @@ class EntityListRouter: Router
         with entityType: Entity.Type,
         completion: (() -> Void)?)
     {
-        guard
-            let context = context,
-            let root = root
-        else
+        guard let context = context else
         {
             completion?()
             return
@@ -68,8 +64,8 @@ class EntityListRouter: Router
         let entity = entityType.init(context: context)
         entity.createdDate = Date()
         
-        let detail = entity.detailController(navigationController: root)
-        root.pushViewController(detail, animated: true)
+        let detail = entity.detailController()
+        delegate?.navigationController?.pushViewController(detail, animated: true)
         context.quickSave()
         
         completion?()
@@ -79,14 +75,8 @@ class EntityListRouter: Router
         with entity: Entity,
         completion: (() -> Void)?)
     {
-        guard let root = root else
-        {
-            assertionFailure("Failed to route to detail")
-            return
-        }
-        
-        let detail = entity.detailController(navigationController: root)
-        root.pushViewController(detail, animated: true)
+        let detail = entity.detailController()
+        delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
     private func handleEntityListSelectedCellMessage(_ message: EntityListCellMessage)

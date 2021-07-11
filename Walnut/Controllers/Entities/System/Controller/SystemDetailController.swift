@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SystemDetailController: UIViewController
+class SystemDetailController: UIViewController, RouterDelegate
 {
     // MARK: - Variables
     
@@ -25,22 +25,21 @@ class SystemDetailController: UIViewController
     // MARK: - Initialization
     
     init(
-        system: System,
-        navigationController: UINavigationController?)
+        system: System)
     {
         let responder = SystemDetailResponder(system: system)
         
         self.system = system
         self.responder = responder
         self.tableViewManager = .init(
-            system: system,
-            navigationController: navigationController)
-        self.router = SystemDetailRouter(system: system, root: navigationController)
+            system: system)
+        self.router = SystemDetailRouter(system: system)
         
         self.duplicateBarButtonItem = Self.makeDuplicateNavigationItem(responder: responder)
         self.pinBarButtonItem = Self.makePinNavigationItem(system: system, responder: responder)
         
         super.init(nibName: nil, bundle: nil)
+        router.delegate = self
         subscribe(to: AppDelegate.shared.mainStream)
         
         title = system.title

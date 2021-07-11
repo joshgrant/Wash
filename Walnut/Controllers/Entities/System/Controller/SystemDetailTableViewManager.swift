@@ -18,16 +18,12 @@ class SystemDetailTableViewManager: NSObject
     
     var tableView: UITableView
     
-    weak var navigationController: UINavigationController?
-    
     // MARK: - Initialization
     
     init(
-        system: System,
-        navigationController: UINavigationController?)
+        system: System)
     {
         self.system = system
-        self.navigationController = navigationController
         
         tableView = UITableView(frame: .zero, style: .grouped)
         
@@ -95,16 +91,9 @@ class SystemDetailTableViewManager: NSObject
     
     func makeHeaderViewModels() -> [TableHeaderViewModel]
     {
-        guard let navigationController = navigationController else
-        {
-            return []
-        }
-        
         return [
             TableHeaderViewModel.info,
-            StocksHeaderViewModel(
-                system: system,
-                navigationController: navigationController),
+            StocksHeaderViewModel(system: system),
             SystemDetailFlowsHeaderViewModel(),
             EventsHeaderViewModel(),
 //            SubSystemsHeaderViewModel(),
@@ -176,18 +165,22 @@ extension SystemDetailTableViewManager
         var section: [TableViewCellModel] = []
         
         section.append(TextEditCellModel(
+                        selectionIdentifier: .title,
                         text: system.title,
                         placeholder: "Name".localized,
                         entity: system))
         
         section.append(InfoCellModel(
+                        selectionIdentifier: .ideal,
                         title: "Ideal".localized,
                         detail: "\(system.percentIdeal)%"))
         
         let suggestedFlows: [Flow] = system.unwrapped(\System.suggestedFlows)
         if let flow = suggestedFlows.first
         {
-            section.append(SuggestedFlowCellModel(title: flow.title))
+            section.append(SuggestedFlowCellModel(
+                            selectionIdentifier: .flow(flow: flow),
+                            title: flow.title))
         }
         
         return section
@@ -199,6 +192,7 @@ extension SystemDetailTableViewManager
         return stocks.map
         {
             DetailCellModel(
+                selectionIdentifier: .stock(stock: $0),
                 title: $0.title,
                 detail: $0.currentDescription,
                 disclosure: true)
@@ -211,6 +205,7 @@ extension SystemDetailTableViewManager
         return flows.map
         {
             DetailCellModel(
+                selectionIdentifier: .flow(flow: $0),
                 title: $0.title,
                 detail: "None",
                 disclosure: true)
@@ -223,6 +218,7 @@ extension SystemDetailTableViewManager
         return events.map
         {
             DetailCellModel(
+                selectionIdentifier: .event(event: $0),
                 title: $0.title,
                 detail: "None",
                 disclosure: true)
@@ -235,6 +231,7 @@ extension SystemDetailTableViewManager
         return notes.map
         {
             DetailCellModel(
+                selectionIdentifier: .note(note: $0),
                 title: $0.title,
                 detail: $0.firstLine ?? "None",
                 disclosure: true)

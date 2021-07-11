@@ -12,13 +12,18 @@ class LinkCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     var title: String
     var subtitle: String
     
     // MARK: - Initialization
     
-    init(title: String, subtitle: String)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        title: String,
+        subtitle: String)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.subtitle = subtitle
     }

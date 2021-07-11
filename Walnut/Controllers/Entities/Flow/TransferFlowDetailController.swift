@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TransferFlowDetailController: UIViewController
+class TransferFlowDetailController: UIViewController, RouterDelegate
 {
     // MARK: - Variables
     
@@ -18,8 +18,10 @@ class TransferFlowDetailController: UIViewController
     
     var router: TransferFlowDetailRouter
     var responder: TransferFlowDetailResponder
-    var tableViewManager: TransferFlowDetailTableViewManager
+    
     weak var context: Context?
+    
+    var tableView: TransferFlowDetailTableView
     
     var pinButton: UIBarButtonItem
     var runButton: UIBarButtonItem
@@ -32,15 +34,20 @@ class TransferFlowDetailController: UIViewController
     
     // MARK: - Initialization
     
-    init(flow: TransferFlow, navigationController: UINavigationController?, context: Context?)
+    init(flow: TransferFlow, context: Context?)
     {
         let responder = TransferFlowDetailResponder(flow: flow)
         
         self.flow = flow
         
-        self.router = TransferFlowDetailRouter(flow: flow, root: navigationController, context: context, _stream: Self.stream)
+        self.router = TransferFlowDetailRouter(
+            flow: flow,
+            context: context,
+            _stream: Self.stream)
         self.responder = responder
-        self.tableViewManager = TransferFlowDetailTableViewManager(flow: flow, stream: Self.stream)
+        self.tableView = TransferFlowDetailTableView(
+            flow: flow,
+            stream: Self.stream)
         
         self.pinButton = Self.makePinButton(flow: flow, responder: responder)
         self.runButton = Self.makeRunButton(responder: responder)
@@ -48,9 +55,11 @@ class TransferFlowDetailController: UIViewController
         self.context = context
         
         super.init(nibName: nil, bundle: nil)
-        subscribe(to: Self.stream)
         
-        view.embed(tableViewManager.tableView)
+        subscribe(to: Self.stream)
+        router.delegate = self
+        
+        view.embed(tableView)
     }
     
     required init?(coder: NSCoder) {
@@ -108,7 +117,7 @@ extension TransferFlowDetailController: Subscriber
     private func handle(_ message: LinkSelectionMessage)
     {
         let stock = message.entity as! Stock
-        // TODO: This crashes
+        // FIXME: This crashes
         let destination = router.presentedDestination!
         
         switch destination
@@ -121,6 +130,6 @@ extension TransferFlowDetailController: Subscriber
             break
         }
         
-        tableViewManager.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
 }

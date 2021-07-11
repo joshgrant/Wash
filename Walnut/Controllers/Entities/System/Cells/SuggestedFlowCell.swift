@@ -12,12 +12,16 @@ class SuggestedFlowCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     var title: String
     
     // MARK: - Initialization
     
-    init(title: String)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        title: String)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
     }
     

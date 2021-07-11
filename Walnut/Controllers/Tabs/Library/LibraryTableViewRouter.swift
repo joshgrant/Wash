@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class LibraryTableViewRouter: Router
 {
@@ -19,16 +20,14 @@ class LibraryTableViewRouter: Router
     // MARK: - Variables
     
     var id = UUID()
-    weak var root: UINavigationController?
+    weak var delegate: RouterDelegate?
     weak var context: Context?
     
     // MARK: - Initialization
     
-    init(root: UINavigationController?, context: Context?)
+    init(context: Context?)
     {
-        self.root = root
         self.context = context
-        
         subscribe(to: AppDelegate.shared.mainStream)
     }
     
@@ -49,9 +48,8 @@ class LibraryTableViewRouter: Router
     {
         let listController = EntityListController(
             type: entityType,
-            context: context,
-            navigationController: root)
-        root?.pushViewController(listController, animated: true)
+            context: context)
+        delegate?.navigationController?.pushViewController(listController, animated: true)
     }
 }
 

@@ -11,13 +11,18 @@ class CheckmarkCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     var title: String
     var checked: Bool
     
     // MARK: - Initialization
     
-    init(title: String, checked: Bool)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        title: String,
+        checked: Bool)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.checked = checked
     }

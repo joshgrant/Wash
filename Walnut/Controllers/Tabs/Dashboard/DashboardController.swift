@@ -33,25 +33,6 @@ class DashboardController: ViewController
         
         view.embed(tableView)
     }
-    
-    // MARK: - View lifecycle
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
-        super.viewWillAppear(animated)
-        
-        if tableViewNeedsToReload
-        {
-            reloadTableView()
-            tableViewNeedsToReload = false
-        }
-    }
-    
-    func reloadTableView()
-    {
-        tableViewModel.dataSource.model.reload()
-        tableView.reloadData()
-    }
 }
 
 extension DashboardController: ViewControllerTabBarDelegate
@@ -72,7 +53,7 @@ extension DashboardController: Subscriber
         switch message
         {
         case is EntityPinnedMessage:
-            tableViewNeedsToReload = true
+            tableView.shouldReload = true
         case let m as TableViewEntitySelectionMessage:
             handle(m)
         default:
@@ -86,7 +67,7 @@ extension DashboardController: Subscriber
         
         let detailController = message
             .entity
-            .detailController(navigationController: navigationController)
+            .detailController()
         
         navigationController?.pushViewController(detailController, animated: true)
     }

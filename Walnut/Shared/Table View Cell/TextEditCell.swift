@@ -12,6 +12,8 @@ class TextEditCellModel: NSObject, TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
+    
     var text: String?
     var placeholder: String
     var entity: Entity
@@ -19,8 +21,14 @@ class TextEditCellModel: NSObject, TableViewCellModel
     
     // MARK: - Initialization
     
-    init(text: String?, placeholder: String, entity: Entity, stream: Stream? = nil)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        text: String?,
+        placeholder: String,
+        entity: Entity,
+        stream: Stream? = nil)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.text = text
         self.placeholder = placeholder
         self.entity = entity

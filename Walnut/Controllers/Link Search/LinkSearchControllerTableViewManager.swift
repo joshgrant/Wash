@@ -52,7 +52,11 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
                 fatalError("What the crap")
             }
             
-            let model = RightImageCellModel(title: result.title, detail: .link, disclosure: false)
+            let model = RightImageCellModel(
+                selectionIdentifier: .link(link: result),
+                title: result.title,
+                detail: .link,
+                disclosure: false)
             return model.makeCell(in: tableView, at: indexPath)
         }
         
@@ -104,7 +108,11 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
             fatalError("What the crap")
         }
         
-        let model = RightImageCellModel(title: result.title, detail: .link, disclosure: false)
+        let model = RightImageCellModel(
+            selectionIdentifier: .link(link: result),
+            title: result.title,
+            detail: .link,
+            disclosure: false)
         return model.makeCell(in: tableView, at: indexPath)
     }
 }

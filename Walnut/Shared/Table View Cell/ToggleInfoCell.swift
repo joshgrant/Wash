@@ -12,13 +12,18 @@ class ToggleCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     var title: String
     var toggleState: Bool
     
     // MARK: - Initialization
     
-    init(title: String, toggleState: Bool)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        title: String,
+        toggleState: Bool)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.toggleState = toggleState
     }

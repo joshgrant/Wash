@@ -7,8 +7,82 @@
 
 import UIKit
 
+public enum ValueType
+{
+    case boolean
+    case decimal
+    case integer
+    
+    var title: String
+    {
+        switch self
+        {
+        case .boolean: return "Boolean".localized
+        case .decimal: return "Decimal".localized
+        case .integer: return "Integer".localized
+        }
+    }
+}
+
+public enum TransitionType
+{
+    case continuous
+    case stateMachine
+    
+    var title: String
+    {
+        switch self
+        {
+        case .continuous: return "Continuous".localized
+        case .stateMachine: return "State Machine".localized
+        }
+    }
+}
+
+public enum SelectionIdentifier
+{
+    
+    case title
+    case ideal
+    case type
+    case dimension
+    case current
+    case net
+    
+    case entity(entity: Entity)
+    case entityType(type: EntityType)
+    
+    case pinned(entity: Pinnable)
+        
+    case fromStock(stock: Stock?)
+    case toStock(stock: Stock?)
+    case stock(stock: Stock)
+    
+    case flowAmount
+    case flowDuration
+    case requiresUserCompletion
+    case inflow(flow: Flow)
+    case outflow(flow: Flow)
+    case flow(flow: Flow)
+    
+    case link(link: Named)
+    
+    case event(event: Event)
+    
+    case history(history: History)
+    
+    case note(note: Note)
+    
+    case system(system: System)
+    
+    case valueType(type: ValueType)
+    case transitionType(type: TransitionType)
+}
+
 public protocol TableViewCellModel
 {
+    var selectionIdentifier: SelectionIdentifier { get set }
+    
     static var cellClass: AnyClass { get }
     static var cellReuseIdentifier: String { get }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public typealias ActionPerformClosure = ((_ sender: Any) -> Void)
+public typealias ActionPerformClosure = ((_ sender: AnyObject) -> Void)
 
 open class ActionClosure
 {
@@ -25,7 +25,7 @@ open class ActionClosure
     
     // MARK: - Functions
     
-    @objc public func perform(sender: Any)
+    @objc public func perform(sender: AnyObject)
     {
         // HMM, how to get the app state here?
         // Right now, when the bar button is selected, the action's return value will

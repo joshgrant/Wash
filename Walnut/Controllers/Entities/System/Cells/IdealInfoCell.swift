@@ -12,13 +12,18 @@ class InfoCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     let title: String
     let detail: String
     
     // MARK: - Initialization
     
-    required init(title: String, detail: String)
+    required init(
+        selectionIdentifier: SelectionIdentifier,
+        title: String,
+        detail: String)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.detail = detail
     }

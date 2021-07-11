@@ -80,22 +80,27 @@ class StockDetailTableViewManager: NSObject
     {
         [
             TextEditCellModel(
+                selectionIdentifier: .title,
                 text: stock.title,
                 placeholder: "Title".localized,
                 entity: stock),
             DetailCellModel(
+                selectionIdentifier: .type,
                 title: "Type".localized,
                 detail: stockTypeDetail(stock: stock),
                 disclosure: true),
             DetailCellModel(
+                selectionIdentifier: .dimension,
                 title: "Dimension".localized,
                 detail: "Currency",
                 disclosure: true),
             DetailCellModel(
+                selectionIdentifier: .current,
                 title: "Current".localized,
                 detail: "Relaxed",
                 disclosure: true), // TODO Subtitle
             InfoCellModel(
+                selectionIdentifier: .net,
                 title: "Net".localized,
                 detail: "3980/month")
         ]
@@ -133,6 +138,7 @@ class StockDetailTableViewManager: NSObject
         let inflows = stock.unwrappedInflows
         return inflows.map { flow in
             SubtitleDetailCellModel(
+                selectionIdentifier: .inflow(flow: flow),
                 title: flow.title,
                 subtitle: "AMOUNT???",
                 detail: "Some -> Some",
@@ -145,6 +151,7 @@ class StockDetailTableViewManager: NSObject
         let outflows = stock.unwrappedOutflows
         return outflows.map {
             SubtitleDetailCellModel(
+                selectionIdentifier: .outflow(flow: $0),
                 title: $0.title,
                 subtitle: "from -> to",
                 detail: "AMOUNT???",
@@ -159,6 +166,7 @@ class StockDetailTableViewManager: NSObject
             let flowCount = $0.flows?.count ?? 0
             let flowSubtitle = "\(flowCount) flow\(flowCount == 1 ? "" : "s")"
             return DetailCellModel(
+                selectionIdentifier: .event(event: $0),
                 title: $0.title,
                 detail: flowSubtitle,
                 disclosure: true)
@@ -171,6 +179,7 @@ class StockDetailTableViewManager: NSObject
         return notes.map {
             // TODO: Subtitle
             return DetailCellModel(
+                selectionIdentifier: .note(note: $0),
                 title: $0.title,
                 detail: $0.firstLine ?? "",
                 disclosure: true)
@@ -215,10 +224,8 @@ extension StockDetailTableViewManager: UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let message = TableViewSelectionMessage(
-            tableView: tableView,
-            indexPath: indexPath,
-            token: .stockDetail)
+        let cellModel = cellModels[indexPath.section][indexPath.row]
+        let message = TableViewSelectionMessage(tableView: tableView, cellModel: cellModel)
         StockDetailController.stream.send(message: message)
     }
 }

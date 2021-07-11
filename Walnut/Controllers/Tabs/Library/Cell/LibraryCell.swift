@@ -12,22 +12,32 @@ class LibraryCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     var icon: Icon
     var title: String
     var count: Int
     
     // MARK: - Initialization
     
-    init(icon: Icon, title: String, count: Int)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        icon: Icon,
+        title: String,
+        count: Int)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.icon = icon
         self.title = title
         self.count = count
     }
     
-    convenience init(entityType: EntityType, context: Context)
+    convenience init(
+        selectionIdentifier: SelectionIdentifier,
+        entityType: EntityType,
+        context: Context)
     {
         self.init(
+            selectionIdentifier: selectionIdentifier,
             icon: entityType.icon,
             title: entityType.title,
             count: entityType.count(in: context))

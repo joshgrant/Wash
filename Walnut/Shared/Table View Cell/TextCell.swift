@@ -10,14 +10,18 @@ import UIKit
 class TextCellModel: TableViewCellModel
 {
     // MARK: - Variables
-    
+    var selectionIdentifier: SelectionIdentifier
     var title: String
     var disclosureIndicator: Bool
     
     // MARK: - Initialization
     
-    init(title: String, disclosureIndicator: Bool = false)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        title: String,
+        disclosureIndicator: Bool = false)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.disclosureIndicator = disclosureIndicator
     }

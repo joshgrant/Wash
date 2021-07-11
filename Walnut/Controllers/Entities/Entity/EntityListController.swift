@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import UIKit
 
-class EntityListController: UIViewController
+class EntityListController: UIViewController, RouterDelegate
 {
     // MARK: - Variables
     
@@ -18,7 +18,6 @@ class EntityListController: UIViewController
     var type: Entity.Type
     
     weak var context: Context?
-    weak var root: UINavigationController?
     
     var tableViewManager: EntityListTableViewManager
     var responder: EntityListResponder
@@ -33,21 +32,18 @@ class EntityListController: UIViewController
     
     init(
         type: Entity.Type,
-        context: Context?,
-        navigationController: UINavigationController?)
+        context: Context?)
     {
         self.type = type
         self.context = context
-        self.root = navigationController
         self.tableViewManager = .init(
             entityType: type,
-            context: context,
-            navigationController: navigationController)
-        self.router = .init(context: context, root: navigationController)
+            context: context)
+        self.router = .init(context: context)
         self.responder = .init(entityType: type)
         
         super.init(nibName: nil, bundle: nil)
-        
+        router.delegate = self
         subscribe(to: AppDelegate.shared.mainStream)
         
         self.title = type.readableName.pluralize()

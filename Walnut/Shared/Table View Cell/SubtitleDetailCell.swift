@@ -12,6 +12,7 @@ class SubtitleDetailCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     var title: String
     var subtitle: String
     var detail: String?
@@ -22,11 +23,13 @@ class SubtitleDetailCellModel: TableViewCellModel
     // MARK: - Initialization
     
     init(
+        selectionIdentifier: SelectionIdentifier,
         title: String,
         subtitle: String,
         detail: String?,
         tall: Bool)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.subtitle = subtitle
         self.detail = detail

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LibraryController: ViewController
+class LibraryController: ViewController, RouterDelegate
 {
     // MARK: - Variables
     
@@ -24,10 +24,11 @@ class LibraryController: ViewController
         context: Context,
         navigationController: UINavigationController)
     {
-        self.router = LibraryTableViewRouter(root: navigationController, context: context)
+        self.router = LibraryTableViewRouter(context: context)
         self.tableViewManager = LibraryTableViewManager(context: context)
         
         super.init()
+        router.delegate = self
         
         tabBarItem = makeTabBarItem()
         title = tabBarItemTitle

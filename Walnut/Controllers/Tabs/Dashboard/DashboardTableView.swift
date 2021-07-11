@@ -61,6 +61,7 @@ class DashboardTableView: TableView
                 guard let type = EntityType.type(from: pin) else { return nil }
                 
                 return RightImageCellModel(
+                    selectionIdentifier: .pinned(entity: pin),
                     title: pin.title,
                     detail: type.icon,
                     disclosure: true)
@@ -90,6 +91,7 @@ class DashboardTableView: TableView
             let result = try context.fetch(request)
             return result.map { flow in
                 TextCellModel(
+                    selectionIdentifier: .flow(flow: flow),
                     title: flow.title,
                     disclosureIndicator: true)
             }
@@ -119,6 +121,7 @@ class DashboardTableView: TableView
             let events = Event.eventsFromSources(result)
             return events.map { event in
                 DetailCellModel(
+                    selectionIdentifier: .event(event: event),
                     title: event.title,
                     detail: "FIX ME",
                     disclosure: true)
@@ -154,6 +157,7 @@ class DashboardTableView: TableView
             let result = try context.fetch(request)
             return result.map { system in
                 DetailCellModel(
+                    selectionIdentifier: .system(system: system),
                     title: system.title,
                     detail: "FIXME", // TODO: Should be the ideal value
                     disclosure: true)

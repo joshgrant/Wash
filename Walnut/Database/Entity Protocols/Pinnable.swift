@@ -7,4 +7,4 @@
 
 import Foundation
 
-protocol Pinnable: Named {}
+public protocol Pinnable: Named {}

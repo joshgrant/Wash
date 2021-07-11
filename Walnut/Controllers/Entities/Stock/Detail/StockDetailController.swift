@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class StockDetailController: UIViewController
+class StockDetailController: UIViewController, RouterDelegate
 {
     // MARK: - Variables
     
@@ -29,12 +29,12 @@ class StockDetailController: UIViewController
     
     // MARK: - Initialization
     
-    init(stock: Stock, navigationController: UINavigationController?)
+    init(stock: Stock)
     {
         let responder = StockDetailResponder(stock: stock)
         
         self.stock = stock
-        self.router = StockDetailRouter(stock: stock, root: navigationController)
+        self.router = StockDetailRouter(stock: stock)
         self.responder = responder
         self.tableViewManager = StockDetailTableViewManager(stock: stock)
         
@@ -43,6 +43,8 @@ class StockDetailController: UIViewController
         super.init(nibName: nil, bundle: nil)
         subscribe(to: Self.stream)
         subscribe(to: AppDelegate.shared.mainStream)
+        
+        router.delegate = self
         
         title = stock.title
         
@@ -121,7 +123,7 @@ extension StockDetailController: Subscriber
     
     func handle(_ message: TableViewSelectionMessage)
     {
-        guard message.token == .valueTypeDetail else { return }
-        tableViewManager.needsReload = true
+        guard let tableView = message.tableView as? StockDetailTableView else { return }
+        tableView.shouldReload = true
     }
 }

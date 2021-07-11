@@ -11,14 +11,20 @@ class DetailCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     var title: String
     var detail: String
     var disclosure: Bool
     
     // MARK: - Initialization
     
-    init(title: String, detail: String, disclosure: Bool)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        title: String,
+        detail: String,
+        disclosure: Bool)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.detail = detail
         self.disclosure = disclosure

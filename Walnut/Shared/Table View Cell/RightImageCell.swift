@@ -12,14 +12,20 @@ class RightImageCellModel: TableViewCellModel
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier
     var title: String
     var detail: Icon
     var disclosure: Bool
     
     // MARK: - Initialization
     
-    init(title: String, detail: Icon, disclosure: Bool)
+    init(
+        selectionIdentifier: SelectionIdentifier,
+        title: String,
+        detail: Icon,
+        disclosure: Bool)
     {
+        self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.detail = detail
         self.disclosure = disclosure

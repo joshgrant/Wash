@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class TransferFlowDetailRouter: Router
 {
@@ -25,7 +26,7 @@ class TransferFlowDetailRouter: Router
     
     var flow: TransferFlow
     
-    weak var root: UINavigationController?
+    weak var delegate: RouterDelegate?
     weak var context: Context?
     
     weak var _stream: Stream?
@@ -35,11 +36,10 @@ class TransferFlowDetailRouter: Router
     
     // MARK: - Initialization
     
-    init(flow: TransferFlow, root: UINavigationController?, context: Context?, _stream: Stream? = nil)
+    init(flow: TransferFlow, context: Context?, _stream: Stream? = nil)
     {
         self.flow = flow
         
-        self.root = root
         self._stream = _stream
         self.context = context
         subscribe(to: stream)
@@ -56,9 +56,9 @@ class TransferFlowDetailRouter: Router
         case .stockFrom:
             routeToStockFrom()
         case .eventDetail(let event):
-            print("Route to event detail: \(event)")
+            routeToEventDetail(event)
         case .historyDetail(let history):
-            print("Route to history: \(history)")
+            routeToHistoryDetail(history)
         }
     }
     
@@ -67,10 +67,7 @@ class TransferFlowDetailRouter: Router
         let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
         let navigationController = UINavigationController(rootViewController: searchController)
         presentedDestination = .stockFrom
-        root?.present(
-            navigationController,
-            animated: true,
-            completion: nil)
+        delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
     }
     
     private func routeToStockTo()
@@ -78,10 +75,19 @@ class TransferFlowDetailRouter: Router
         let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
         let navigationController = UINavigationController(rootViewController: searchController)
         presentedDestination = .stockTo
-        root?.present(
-            navigationController,
-            animated: true,
-            completion: nil)
+        delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
+    }
+    
+    private func routeToEventDetail(_ event: Event)
+    {
+        let detail = event.detailController()
+        delegate?.navigationController?.pushViewController(detail, animated: true)
+    }
+    
+    private func routeToHistoryDetail(_ history: History)
+    {
+        let detail = history.detailController()
+        delegate?.navigationController?.pushViewController(detail, animated: true)
     }
 }
 
@@ -100,48 +106,27 @@ extension TransferFlowDetailRouter: Subscriber
     
     private func handleTableViewSelectionMessage(_ message: TableViewSelectionMessage)
     {
-        if message.token == .transferFlowDetail
+        guard let _ = message.tableView as? TransferFlowDetailTableView else { return }
+        
+        // TODO: `fromStock` and `toStock` shouldn't Necessarily open up the link
+        // screen. Rather, we should have a link button for each of the cells
+        
+        switch message.cellModel.selectionIdentifier
         {
-            switch message.indexPath.section
-            {
-            case TableViewSectionType.info:
-                handleInfoSectionSelection(row: message.indexPath.row)
-            case TableViewSectionType.events:
-                handleEventSectionSelection(row: message.indexPath.row)
-            case TableViewSectionType.history:
-                handleHistorySectionSelection(row: message.indexPath.row)
-            default:
-                assertionFailure("Not a valid index path")
-            }
-        }
-    }
-    
-    private func handleInfoSectionSelection(row: Int)
-    {
-        switch row
-        {
-        case TableViewRowType.from.rawValue:
+        case .fromStock:
             route(to: .stockFrom, completion: nil)
-        case TableViewRowType.to.rawValue:
+        case .toStock:
             route(to: .stockTo, completion: nil)
-        case TableViewRowType.amount.rawValue:
-            // TODO: Open amount picker
+        case .flowAmount:
             break
-        case TableViewRowType.duration.rawValue:
-            // TODO: Open duration picker
+        case .flowDuration:
             break
+        case .event(let event):
+            route(to: .eventDetail(event: event), completion: nil)
+        case .history(let history):
+            route(to: .historyDetail(history: history), completion: nil)
         default:
             break
         }
-    }
-    
-    private func handleEventSectionSelection(row: Int)
-    {
-        
-    }
-    
-    private func handleHistorySectionSelection(row: Int)
-    {
-        
     }
 }

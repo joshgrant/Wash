@@ -14,7 +14,6 @@ class EntityListTableViewManager: NSObject
     
     var entityType: Entity.Type
     weak var context: Context?
-    weak var navigationController: UINavigationController?
     
     var cellModels: [[TableViewCellModel]]
     
@@ -26,14 +25,12 @@ class EntityListTableViewManager: NSObject
     
     init(
         entityType: Entity.Type,
-        context: Context?,
-        navigationController: UINavigationController?)
+        context: Context?)
     {
         self.tableView = UITableView(frame: .zero, style: .grouped)
         
         self.entityType = entityType
         self.context = context
-        self.navigationController = navigationController
         self.cellModels = Self.makeCellModels(
             context: context,
             entityType: entityType)
@@ -96,6 +93,7 @@ class EntityListTableViewManager: NSObject
             .compactMap { $0 as? Named }
             .map {
                 TextCellModel(
+                    selectionIdentifier: .entity(entity: $0),
                     title: $0.title,
                     disclosureIndicator: true)
             }
@@ -107,16 +105,23 @@ extension EntityListTableViewManager: UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        guard let context = context, let navigationController = navigationController else
-        {
-            assertionFailure("Failed to get the prereqs")
-            return
-        }
+//        guard let context = context, let navigationController = navigationController else
+//        {
+//            assertionFailure("Failed to get the prereqs")
+//            return
+//        }
+//
+//        let all = entityType.all(context: context)
+//        let entity = all[indexPath.row]
+//        let detailController = entity.detailController()
+//        navigationController.pushViewController(detailController, animated: true)
         
-        let all = entityType.all(context: context)
-        let entity = all[indexPath.row]
-        let detailController = entity.detailController(navigationController: navigationController)
-        navigationController.pushViewController(detailController, animated: true)
+        // FIXME: This should be handled by the router
+        
+        let cellModel = cellModels[indexPath.section][indexPath.row]
+        let message = TableViewSelectionMessage(tableView: tableView, cellModel: cellModel)
+        
+        AppDelegate.shared.mainStream.send(message: message)
     }
     
     func tableView(

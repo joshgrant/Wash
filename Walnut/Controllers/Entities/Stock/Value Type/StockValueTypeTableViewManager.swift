@@ -68,21 +68,26 @@ class StockValueTypeTableViewManager: NSObject
         [
             [
                 CheckmarkCellModel(
-                    title: "Boolean".localized,
+                    selectionIdentifier: .valueType(type: .boolean),
+                    title: ValueType.boolean.title,
                     checked: stock.amountType == .boolean),
                 CheckmarkCellModel(
-                    title: "Integer".localized,
+                    selectionIdentifier: .valueType(type: .integer),
+                    title: ValueType.integer.title,
                     checked: stock.amountType == .integer),
                 CheckmarkCellModel(
-                    title: "Decimal".localized,
+                    selectionIdentifier: .valueType(type: .decimal),
+                    title: ValueType.decimal.title,
                     checked: stock.amountType == .decimal)
             ],
             [
                 CheckmarkCellModel(
-                    title: "Continuous".localized,
+                    selectionIdentifier: .transitionType(type: .continuous),
+                    title: TransitionType.continuous.title,
                     checked: !stock.stateMachine),
                 CheckmarkCellModel(
-                    title: "State Machine".localized,
+                    selectionIdentifier: .transitionType(type: .stateMachine),
+                    title: TransitionType.stateMachine.title,
                     checked: stock.stateMachine)
             ]
         ]
@@ -152,7 +157,6 @@ extension StockValueTypeTableViewManager: UITableViewDelegate
         let newTransitionPath = path(for: stock.stateMachine)
         
         cellModels = Self.makeCellModels(stock: stock)
-        
 
         var pathsToReload: [IndexPath] = []
         
@@ -167,12 +171,10 @@ extension StockValueTypeTableViewManager: UITableViewDelegate
         }
         
         tableView.reloadRows(at: pathsToReload, with: .automatic)
-        
-        let message = TableViewSelectionMessage(
-            tableView: tableView,
-            indexPath: indexPath,
-            token: .valueTypeDetail
-        )
+
+        // FIXME: Not sure if this should be before or after updating the cell models
+        let model = cellModels[indexPath.section][indexPath.row]
+        let message = TableViewSelectionMessage(tableView: tableView, cellModel: model)
         
         AppDelegate.shared.mainStream.send(message: message)
     }

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import CoreData
 
-enum EntityType
+public enum EntityType
 {
     case system
     case stock

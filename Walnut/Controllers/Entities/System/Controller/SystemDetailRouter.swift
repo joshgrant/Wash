@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class SystemDetailRouter: Router
 {
@@ -29,13 +30,13 @@ class SystemDetailRouter: Router
     var id = UUID()
     
     var system: System
-    weak var root: UINavigationController?
+    weak var delegate: RouterDelegate?
+    
     // MARK: - Initialization
     
-    init(system: System, root: UINavigationController?)
+    init(system: System)
     {
         self.system = system
-        self.root = root
         subscribe(to: AppDelegate.shared.mainStream)
     }
     
@@ -48,12 +49,12 @@ class SystemDetailRouter: Router
         switch destination
         {
         case .stockDetail(let stock):
-            guard let stockDetail = stock?.detailController(navigationController: root) else
+            guard let stockDetail = stock?.detailController() else
             {
                 assertionFailure()
                 return
             }
-            root?.pushViewController(stockDetail, animated: true)
+            delegate?.navigationController?.pushViewController(stockDetail, animated: true)
         default:
             assertionFailure()
             break

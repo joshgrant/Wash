@@ -8,11 +8,16 @@
 import Foundation
 import UIKit
 
-protocol Router
+public protocol RouterDelegate: AnyObject
+{
+    var navigationController: UINavigationController? { get }
+}
+
+public protocol Router
 {
     associatedtype Destination
     
-    var root: UINavigationController? { get set }
+    var delegate: RouterDelegate? { get set }
     
     func route(to destination: Destination, completion: (() -> Void)?)
 }

@@ -47,7 +47,10 @@ class LibraryTableViewManager: NSObject
     {
         let cellModels = EntityType.libraryVisible.map
         {
-            LibraryCellModel(entityType: $0, context: context)
+            LibraryCellModel(
+                selectionIdentifier: .entityType(type: $0),
+                entityType: $0,
+                context: context)
         }
         
         return [cellModels]

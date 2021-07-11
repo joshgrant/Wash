@@ -1,5 +1,5 @@
 //
-//  TransferFlowUpdateMessage.swift
+//  LinkSelectionMessage.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 7/9/21.
