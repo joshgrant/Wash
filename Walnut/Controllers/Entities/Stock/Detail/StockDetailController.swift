@@ -17,7 +17,8 @@ class StockDetailController: UIViewController, RouterDelegate
     var stock: Stock
     var router: StockDetailRouter
     var responder: StockDetailResponder
-    var tableViewManager: StockDetailTableViewManager
+    
+    var tableView: StockDetailTableView
     
     static let stream: Stream = {
         let stream = Stream(identifier: .stockDetail)
@@ -36,19 +37,18 @@ class StockDetailController: UIViewController, RouterDelegate
         self.stock = stock
         self.router = StockDetailRouter(stock: stock)
         self.responder = responder
-        self.tableViewManager = StockDetailTableViewManager(stock: stock)
+        self.tableView = StockDetailTableView(stock: stock)
         
         self.pinBarButtonItem = Self.makePinNavigationItem(stock: stock, responder: responder)
         
         super.init(nibName: nil, bundle: nil)
+        router.delegate = self
         subscribe(to: Self.stream)
         subscribe(to: AppDelegate.shared.mainStream)
         
-        router.delegate = self
-        
         title = stock.title
         
-        view.embed(tableViewManager.tableView)
+        view.embed(tableView)
         
         navigationItem.setRightBarButtonItems([pinBarButtonItem], animated: false)
     }
@@ -56,14 +56,6 @@ class StockDetailController: UIViewController, RouterDelegate
     required init?(coder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - View lifecycle
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
-        super.viewWillAppear(animated)
-        tableViewManager.reload()
     }
     
     // MARK: - Functions

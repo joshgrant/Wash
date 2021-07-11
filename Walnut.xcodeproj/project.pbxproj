@@ -91,10 +91,8 @@
 		03555B842687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B832687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift */; };
 		03555B862687D77A006E9EA1 /* SystemDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */; };
 		03555B882687D783006E9EA1 /* SystemDetailResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B872687D783006E9EA1 /* SystemDetailResponder.swift */; };
-		03555B8A268834F4006E9EA1 /* EntityListTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B89268834F4006E9EA1 /* EntityListTableViewManager.swift */; };
 		03555B8C26883E72006E9EA1 /* SystemDetailTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B8B26883E72006E9EA1 /* SystemDetailTableViewManager.swift */; };
 		03555B8F26884308006E9EA1 /* StockDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B8E26884308006E9EA1 /* StockDetailController.swift */; };
-		03555B9126884378006E9EA1 /* StockDetailTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B9026884378006E9EA1 /* StockDetailTableViewManager.swift */; };
 		0370FEB62688B3F0001E099B /* SubtitleDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */; };
 		0370FEB92688B656001E099B /* TextEditCellMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEB82688B656001E099B /* TextEditCellMessage.swift */; };
 		0370FEBB2688BD7A001E099B /* StockDetailResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */; };
@@ -174,6 +172,7 @@
 		03FAACD0269B36E900CB7AB6 /* TableViewSelectionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACCF269B36E900CB7AB6 /* TableViewSelectionMessage.swift */; };
 		03FAACD2269B491D00CB7AB6 /* TransferFlowDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACD1269B491D00CB7AB6 /* TransferFlowDetailTableView.swift */; };
 		03FAACD4269B533900CB7AB6 /* StockDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACD3269B533900CB7AB6 /* StockDetailTableView.swift */; };
+		03FAACD6269B575C00CB7AB6 /* EntityListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACD5269B575C00CB7AB6 /* EntityListTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -284,10 +283,8 @@
 		03555B832687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailDuplicatedMessage.swift; sourceTree = "<group>"; };
 		03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailRouter.swift; sourceTree = "<group>"; };
 		03555B872687D783006E9EA1 /* SystemDetailResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailResponder.swift; sourceTree = "<group>"; };
-		03555B89268834F4006E9EA1 /* EntityListTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableViewManager.swift; sourceTree = "<group>"; };
 		03555B8B26883E72006E9EA1 /* SystemDetailTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewManager.swift; sourceTree = "<group>"; };
 		03555B8E26884308006E9EA1 /* StockDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailController.swift; sourceTree = "<group>"; };
-		03555B9026884378006E9EA1 /* StockDetailTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailTableViewManager.swift; sourceTree = "<group>"; };
 		0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleDetailCell.swift; sourceTree = "<group>"; };
 		0370FEB82688B656001E099B /* TextEditCellMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditCellMessage.swift; sourceTree = "<group>"; };
 		0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailResponder.swift; sourceTree = "<group>"; };
@@ -367,6 +364,7 @@
 		03FAACCF269B36E900CB7AB6 /* TableViewSelectionMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewSelectionMessage.swift; sourceTree = "<group>"; };
 		03FAACD1269B491D00CB7AB6 /* TransferFlowDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowDetailTableView.swift; sourceTree = "<group>"; };
 		03FAACD3269B533900CB7AB6 /* StockDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailTableView.swift; sourceTree = "<group>"; };
+		03FAACD5269B575C00CB7AB6 /* EntityListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,7 +433,7 @@
 				030B21A0267FEA230038C095 /* EntityListController.swift */,
 				03555AD7268528F9006E9EA1 /* EntityListResponder.swift */,
 				03555AAB2683C51B006E9EA1 /* EntityListRouter.swift */,
-				03555B89268834F4006E9EA1 /* EntityListTableViewManager.swift */,
+				03FAACD5269B575C00CB7AB6 /* EntityListTableView.swift */,
 				03555B752687CEB3006E9EA1 /* Messages */,
 			);
 			path = Entity;
@@ -710,7 +708,6 @@
 			children = (
 				03555B8E26884308006E9EA1 /* StockDetailController.swift */,
 				0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */,
-				03555B9026884378006E9EA1 /* StockDetailTableViewManager.swift */,
 				0370FED3268A0EE0001E099B /* StockDetailRouter.swift */,
 				03FAACD3269B533900CB7AB6 /* StockDetailTableView.swift */,
 			);
@@ -1093,7 +1090,6 @@
 				03555B612686A487006E9EA1 /* UIBarButtonItem+Extensions.swift in Sources */,
 				03555B5B2686A487006E9EA1 /* TableHeaderView.swift in Sources */,
 				038CF6642676828E00931595 /* Model.xcdatamodeld in Sources */,
-				03555B8A268834F4006E9EA1 /* EntityListTableViewManager.swift in Sources */,
 				038CF6932676829F00931595 /* DynamicSource+Extensions.swift in Sources */,
 				038CF6C4267682C700931595 /* HistoryEvent.swift in Sources */,
 				038CF6C5267682C700931595 /* Comparison.swift in Sources */,
@@ -1123,7 +1119,6 @@
 				03555B652686A487006E9EA1 /* NSSet+Extensions.swift in Sources */,
 				038CF69A2676829F00931595 /* RangeSource+Extensions.swift in Sources */,
 				038CF6D8267683EE00931595 /* Stock+Extensions.swift in Sources */,
-				03555B9126884378006E9EA1 /* StockDetailTableViewManager.swift in Sources */,
 				03555B8F26884308006E9EA1 /* StockDetailController.swift in Sources */,
 				03FAACC62699ECDE00CB7AB6 /* TableViewRow.swift in Sources */,
 				0370FEC12688CAE2001E099B /* LibraryTableViewRouter.swift in Sources */,
@@ -1210,6 +1205,7 @@
 				038CF6C1267682C700931595 /* SourceType.swift in Sources */,
 				03555B0726869E7E006E9EA1 /* Identifier.swift in Sources */,
 				0370FEBB2688BD7A001E099B /* StockDetailResponder.swift in Sources */,
+				03FAACD6269B575C00CB7AB6 /* EntityListTableView.swift in Sources */,
 				03555B7D2687D160006E9EA1 /* EntityListCellMessage.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				03FAACCC2699ED1500CB7AB6 /* TableViewModel.swift in Sources */,

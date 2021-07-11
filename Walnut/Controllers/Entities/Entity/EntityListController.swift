@@ -19,11 +19,12 @@ class EntityListController: UIViewController, RouterDelegate
     
     weak var context: Context?
     
-    var tableViewManager: EntityListTableViewManager
     var responder: EntityListResponder
     var router: EntityListRouter
     
     // Move these out of here?
+    
+    var tableView: EntityListTableView
     
     var addButtonImage: UIImage? { Icon.add.getImage() }
     var addButtonStyle: UIBarButtonItem.Style { .plain }
@@ -36,9 +37,7 @@ class EntityListController: UIViewController, RouterDelegate
     {
         self.type = type
         self.context = context
-        self.tableViewManager = .init(
-            entityType: type,
-            context: context)
+        self.tableView = EntityListTableView(entityType: type, context: context)
         self.router = .init(context: context)
         self.responder = .init(entityType: type)
         
@@ -52,7 +51,7 @@ class EntityListController: UIViewController, RouterDelegate
         navigationItem.searchController = makeSearchController(searchControllerDelegate: self)
         navigationItem.hidesSearchBarWhenScrolling = true
         
-        view.embed(tableViewManager.tableView)
+        view.embed(tableView)
     }
     
     required init?(coder: NSCoder)
@@ -67,14 +66,6 @@ class EntityListController: UIViewController, RouterDelegate
             style: addButtonStyle,
             target: responder,
             action: #selector(responder.userTouchedUpInsideAddButton(sender:)))
-    }
-    
-    // MARK: - View lifecycle
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
-        super.viewWillAppear(animated)
-        tableViewManager.reloadIfNeeded()
     }
     
     // MARK: - Factory
@@ -102,9 +93,9 @@ extension EntityListController: Subscriber
         switch message
         {
         case is EntityListAddButtonMessage:
-            tableViewManager.needsReload = true
+            fallthrough
         case is TextEditCellMessage:
-            tableViewManager.needsReload = true
+            tableView.shouldReload = true
         default:
             break
         }
