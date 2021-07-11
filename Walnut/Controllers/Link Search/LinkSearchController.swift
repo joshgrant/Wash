@@ -11,6 +11,14 @@ import UIKit
 // The wrapping view controller
 class LinkSearchController: UIViewController
 {
+    // MARK: - Defined types
+    
+    enum Origin
+    {
+        case stockFrom
+        case stockTo
+    }
+    
     // MARK: - Variables
     
     var id = UUID()
@@ -22,11 +30,17 @@ class LinkSearchController: UIViewController
     
     // MARK: - Initialization
     
-    init(entity: Entity, entityType: NamedEntity.Type, context: Context?, _stream: Stream? = nil)
+    init(
+        origin: Origin,
+        entity: Entity,
+        entityType: NamedEntity.Type,
+        context: Context?,
+        _stream: Stream? = nil)
     {
         self._stream = _stream
         
         tableViewManager = LinkSearchControllerTableViewManager(
+            origin: origin,
             entityToLinkTo: entity,
             entityLinkType: entityType,
             context: context,
@@ -59,10 +73,20 @@ class LinkSearchController: UIViewController
     
     // MARK: - View lifecycle
     
+    // TODO: These view lifecycle methods are scaryy....
+    // the problem is that the table view doesn't know how
+    // to automatically reload...
+    
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
         tableViewManager.shouldAnimate = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool)
+    {
+        super.viewDidDisappear(animated)
+        tableViewManager.shouldAnimate = false
     }
 }
 

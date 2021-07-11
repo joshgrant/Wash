@@ -29,7 +29,7 @@ class StockDetailRouter: Router
     init(stock: Stock)
     {
         self.stock = stock
-        subscribe(to: StockDetailController.stream)
+        subscribe(to: AppDelegate.shared.mainStream)
     }
     
     // MARK: - Functions
@@ -78,12 +78,11 @@ extension StockDetailRouter: Subscriber
         
         switch message.cellModel.selectionIdentifier
         {
-        case .valueType:
+        case .type:
             route(to: .valueType, completion: nil)
         case .dimension:
             route(to: .dimension, completion: nil)
         default:
-            assertionFailure("Unhandled cell selection")
             return
         }
     }

@@ -15,10 +15,15 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
     
     var entity: Entity
     
+    // TODO: MAYBE we can make a tableViewModel that uses
+    // a fetched results controller as a base
+    
     var tableView: UITableView
     var tableViewDataSourceReference: UITableViewDiffableDataSourceReference!
     var searchCriteria: LinkSearchCriteria
     var fetchResultsController: NSFetchedResultsController<NSFetchRequestResult>!
+    
+    var origin: LinkSearchController.Origin
     
     weak var context: Context?
     weak var _stream: Stream?
@@ -28,8 +33,14 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
     
     // MARK: - Initialization
     
-    init(entityToLinkTo: Entity, entityLinkType: NamedEntity.Type, context: Context?, _stream: Stream? = nil)
+    init(
+        origin: LinkSearchController.Origin,
+        entityToLinkTo: Entity,
+        entityLinkType: NamedEntity.Type,
+        context: Context?,
+        _stream: Stream? = nil)
     {
+        self.origin = origin
         self.entity = entityToLinkTo
         self.tableView = UITableView(frame: .zero, style: .plain)
         self.context = context
@@ -43,7 +54,6 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
         self.searchCriteria = searchCriteria
         
         super.init()
-        
         
         let cellProvider: UITableViewDiffableDataSourceReferenceCellProvider = { [weak self] tableView, indexPath, id in
             let result = self?.fetchResultsController.fetchedObjects?[indexPath.row]

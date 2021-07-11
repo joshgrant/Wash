@@ -16,15 +16,8 @@ class StockDetailController: UIViewController, RouterDelegate
     
     var stock: Stock
     var router: StockDetailRouter
-    var responder: StockDetailResponder
     
     var tableView: StockDetailTableView
-    
-    static let stream: Stream = {
-        let stream = Stream(identifier: .stockDetail)
-        AppDelegate.shared.mainStream.add(substream: stream)
-        return stream
-    }()
     
     var pinBarButtonItem: UIBarButtonItem
     
@@ -32,18 +25,14 @@ class StockDetailController: UIViewController, RouterDelegate
     
     init(stock: Stock)
     {
-        let responder = StockDetailResponder(stock: stock)
-        
         self.stock = stock
         self.router = StockDetailRouter(stock: stock)
-        self.responder = responder
         self.tableView = StockDetailTableView(stock: stock)
         
-        self.pinBarButtonItem = Self.makePinNavigationItem(stock: stock, responder: responder)
+        self.pinBarButtonItem = Self.makePinNavigationItem(stock: stock)
         
         super.init(nibName: nil, bundle: nil)
         router.delegate = self
-        subscribe(to: Self.stream)
         subscribe(to: AppDelegate.shared.mainStream)
         
         title = stock.title
@@ -60,15 +49,22 @@ class StockDetailController: UIViewController, RouterDelegate
     
     // MARK: - Functions
     
-    static func makePinNavigationItem(stock: Stock, responder: StockDetailResponder) -> UIBarButtonItem
+    static func makePinNavigationItem(stock: Stock) -> BarButtonItem
     {
-        UIBarButtonItem(
-            image: stock.isPinned
-                ? Icon.pinFill.getImage()
-                : Icon.pin.getImage(),
+        let icon: Icon = stock.isPinned ? .pinFill : .pin
+        
+        let actionClosure = ActionClosure { sender in
+            stock.isPinned.toggle()
+            let message = EntityPinnedMessage(
+                isPinned: stock.isPinned,
+                entity: stock)
+            AppDelegate.shared.mainStream.send(message: message)
+        }
+        
+        return BarButtonItem(
+            image: icon.getImage(),
             style: .plain,
-            target: responder,
-            action: #selector(responder.userTouchedUpInsidePin(sender:)))
+            actionClosure: actionClosure)
     }
 }
 
@@ -115,7 +111,7 @@ extension StockDetailController: Subscriber
     
     func handle(_ message: TableViewSelectionMessage)
     {
-        guard let tableView = message.tableView as? StockDetailTableView else { return }
-        tableView.shouldReload = true
+        guard let _ = message.tableView as? StockTypeTableView else { return }
+        self.tableView.shouldReload = true
     }
 }

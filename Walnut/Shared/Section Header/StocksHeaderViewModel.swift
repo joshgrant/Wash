@@ -40,12 +40,14 @@ class StocksHeaderViewModel: TableHeaderViewModel
             
             // FIXME: Need to handle this message
             
-            DispatchQueue.main.async {
-                let message = EntityListAddButtonMessage(
-                    sender: sender,
-                    entityType: Stock.self)
-                AppDelegate.shared.mainStream.send(message: message)
-            }
+//            DispatchQueue.main.async {
+//                let message = EntityListAddButtonMessage(
+//                    sender: sender,
+//                    entityType: Stock.self)
+//                AppDelegate.shared.mainStream.send(message: message)
+//            }
+            
+            print("FIXME")
         }
     }
 }

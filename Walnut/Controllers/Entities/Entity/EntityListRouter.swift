@@ -39,27 +39,20 @@ class EntityListRouter: Router
         switch destination
         {
         case .add(let entityType):
-            transitionToAdd(
-                with: entityType,
-                completion: completion)
+            routeToAdd(entityType: entityType)
         case .detail(let entity):
-            transitionToDetail(
-                with: entity,
-                completion: completion)
+            routeToDetail(entity: entity)
         }
     }
     
-    // MARK: - Utility
-    
-    private func transitionToAdd(
-        with entityType: Entity.Type,
-        completion: (() -> Void)?)
+    private func routeToAdd(entityType: Entity.Type)
     {
         guard let context = context else
         {
-            completion?()
             return
         }
+        
+        print("WEIRD")
         
         let entity = entityType.init(context: context)
         entity.createdDate = Date()
@@ -67,26 +60,12 @@ class EntityListRouter: Router
         let detail = entity.detailController()
         delegate?.navigationController?.pushViewController(detail, animated: true)
         context.quickSave()
-        
-        completion?()
     }
     
-    private func transitionToDetail(
-        with entity: Entity,
-        completion: (() -> Void)?)
+    private func routeToDetail(entity: Entity)
     {
         let detail = entity.detailController()
         delegate?.navigationController?.pushViewController(detail, animated: true)
-    }
-    
-    private func handleEntityListSelectedCellMessage(_ message: EntityListCellMessage)
-    {
-        guard let context = context else {
-            assertionFailure("Failed to get the context")
-            return
-        }
-        let entity = message.entityType.all(context: context)[message.indexPath.row]
-        transitionToDetail(with: entity, completion: nil)
     }
 }
 
@@ -96,10 +75,26 @@ extension EntityListRouter: Subscriber
     {
         switch message
         {
-        case let x as EntityListAddButtonMessage:
-            transitionToAdd(with: x.entityType, completion: nil)
-        case let x as EntityListCellMessage where x.action == .selected:
-            handleEntityListSelectedCellMessage(x)
+        case let m as EntityListAddButtonMessage:
+            handle(m)
+        case let m as TableViewSelectionMessage:
+            handle(m)
+        default:
+            break
+        }
+    }
+    
+    private func handle(_ message: EntityListAddButtonMessage)
+    {
+        route(to: .add(entityType: message.entityType), completion: nil)
+    }
+    
+    private func handle(_ message: TableViewSelectionMessage)
+    {
+        switch message.cellModel.selectionIdentifier
+        {
+        case .entity(let entity):
+            routeToDetail(entity: entity)
         default:
             break
         }

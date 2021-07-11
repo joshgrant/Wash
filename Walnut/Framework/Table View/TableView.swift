@@ -12,6 +12,16 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     // MARK: - Variables
     
     var shouldReload: Bool = false
+    {
+        didSet
+        {
+            if shouldReload
+            {
+                guard let _ = window else { return }
+                reload()
+            }
+        }
+    }
     
     var model: TableViewModel!
     var stream: Stream
@@ -37,15 +47,20 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     override func didMoveToWindow()
     {
         super.didMoveToWindow()
-        
         guard let _ = window else { return }
         
         if shouldReload
         {
-            model = makeModel() // TODO: Maybe do a diff?
-            reloadData()
-            shouldReload = false
+            reload()
         }
+    }
+    
+    private func reload()
+    {
+        model = makeModel() // TODO: Maybe do a diff?
+        configure()
+        reloadData()
+        shouldReload = false
     }
     
     // MARK: - Configuration
@@ -136,13 +151,13 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat
     {
         guard let _ = model.footers[section] else { return 1 }
-        return UITableView.automaticDimension
+        return 38
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
     {
         guard let _ = model.footers[section] else { return 0 }
-        return UITableView.automaticDimension
+        return 38
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView?

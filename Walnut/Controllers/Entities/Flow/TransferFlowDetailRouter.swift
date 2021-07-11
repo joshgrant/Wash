@@ -64,7 +64,12 @@ class TransferFlowDetailRouter: Router
     
     private func routeToStockFrom()
     {
-        let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
+        let searchController = LinkSearchController(
+            origin: .stockFrom,
+            entity: flow,
+            entityType: Stock.self,
+            context: context,
+            _stream: stream)
         let navigationController = UINavigationController(rootViewController: searchController)
         presentedDestination = .stockFrom
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
@@ -72,7 +77,12 @@ class TransferFlowDetailRouter: Router
     
     private func routeToStockTo()
     {
-        let searchController = LinkSearchController(entity: flow, entityType: Stock.self, context: context, _stream: stream)
+        let searchController = LinkSearchController(
+            origin: .stockTo,
+            entity: flow,
+            entityType: Stock.self,
+            context: context,
+            _stream: stream)
         let navigationController = UINavigationController(rootViewController: searchController)
         presentedDestination = .stockTo
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)

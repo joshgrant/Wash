@@ -13,18 +13,18 @@ class StockValueTypeController: UIViewController
     // MARK: - Variables
     
     var stock: Stock
-    var tableViewManager: StockValueTypeTableViewManager
+    var tableView: StockTypeTableView
     
     // MARK: - Initialization
     
     init(stock: Stock)
     {
         self.stock = stock
-        tableViewManager = StockValueTypeTableViewManager(stock: stock)
+        tableView = StockTypeTableView(stock: stock)
         
         super.init(nibName: nil, bundle: nil)
         
-        view.embed(tableViewManager.tableView)
+        view.embed(tableView)
     }
     
     required init?(coder: NSCoder)

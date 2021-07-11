@@ -116,11 +116,9 @@ extension TransferFlowDetailController: Subscriber
     
     private func handle(_ message: LinkSelectionMessage)
     {
-        let stock = message.entity as! Stock
-        // FIXME: This crashes
-        let destination = router.presentedDestination!
+        guard let stock = message.entity as? Stock else { return }
         
-        switch destination
+        switch router.presentedDestination
         {
         case .stockFrom:
             flow.from = stock
@@ -130,6 +128,8 @@ extension TransferFlowDetailController: Subscriber
             break
         }
         
-        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        flow.managedObjectContext?.quickSave()
+        
+        tableView.shouldReload = true
     }
 }

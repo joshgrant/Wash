@@ -21,7 +21,10 @@ extension Subscriber
     func makeSubscription() -> WrappedSubscriber
     {
         WrappedSubscriber { message in
-            self.receive(message: message)
+            // TODO: Maybe specify the thread we want to receive on
+            DispatchQueue.main.async {
+                self.receive(message: message)
+            }
         }
     }
     

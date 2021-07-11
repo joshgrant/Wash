@@ -78,49 +78,33 @@ extension EntityListTableView
 {
     func makePinAction(forRowAt indexPath: IndexPath) -> UIContextualAction?
     {
-        // FIXME: Use messages
-        
         guard let context = context else { return nil }
         
-        let entities = entityType.all(context: context)
-        let entity = entities[indexPath.row]
-        let isPinned = entity.isPinned
-        let title = isPinned ? "Unpin".localized : "Pin".localized
-        let pinAction = UIContextualAction(style: .normal, title: title) { action, view, completion in
+        let entity = entityType.all(context: context)[indexPath.row]
+        let title = entity.isPinned
+            ? "Unpin".localized
+            : "Pin".localized
+        
+        return .init(style: .normal, title: title) { action, view, completion in
+            let message = EntityListPinMessage(entity: entity)
+            AppDelegate.shared.mainStream.send(message: message)
             completion(true)
         }
-        return pinAction
     }
     
     func makeDeleteAction(forRowAt indexPath: IndexPath, in tableView: UITableView) -> UIContextualAction?
     {
-        // FIXME: Use messages
+        guard let context = self.context else {
+            return nil
+        }
         
+        let entity = entityType.all(context: context)[indexPath.row]
         let title = "Delete".localized
         
         return .init(style: .destructive, title: title) { action, view, completion in
-            guard let context = self.context else
-            {
-                completion(false);
-                return
-            }
-            
-            context.perform
-            {
-                let object = self.entityType.all(context: context)[indexPath.row]
-                context.delete(object)
-                context.quickSave()
-                
-                self.model = self.makeModel()
-                
-                DispatchQueue.main.async
-                {
-                    tableView.beginUpdates()
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
-                    tableView.endUpdates()
-                }
-            }
-            
+
+            let message = EntityListDeleteMessage(entity: entity, indexPath: indexPath)
+            AppDelegate.shared.mainStream.send(message: message)
             completion(true)
         }
     }

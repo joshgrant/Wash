@@ -23,7 +23,34 @@ class DashboardTableView: TableView
         super.init()
     }
     
-    // MARK: - Functions
+    // MARK: - Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        var entity: Entity
+        let cellModel = model.models[indexPath.section][indexPath.row]
+        
+        switch cellModel.selectionIdentifier
+        {
+        case .pinned(let e):
+            entity = e
+        case .entity(let e):
+            entity = e
+        case .system(let e):
+            entity = e
+        case .flow(let e):
+            entity = e
+        default:
+            fatalError("Unhandled selection identifier")
+        }
+        
+        let message = TableViewEntitySelectionMessage(entity: entity, tableView: tableView, cellModel: cellModel)
+        stream.send(message: message)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    // MARK: - Model
     
     override func makeModel() -> TableViewModel
     {

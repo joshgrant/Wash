@@ -9,6 +9,8 @@ import Foundation
 
 public typealias ActionPerformClosure = ((_ sender: AnyObject) -> Void)
 
+// How does the retain cycle work on this one?
+
 open class ActionClosure
 {
     // MARK: - Variables

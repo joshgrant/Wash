@@ -19,7 +19,6 @@ class EntityListController: UIViewController, RouterDelegate
     
     weak var context: Context?
     
-    var responder: EntityListResponder
     var router: EntityListRouter
     
     // Move these out of here?
@@ -39,7 +38,6 @@ class EntityListController: UIViewController, RouterDelegate
         self.context = context
         self.tableView = EntityListTableView(entityType: type, context: context)
         self.router = .init(context: context)
-        self.responder = .init(entityType: type)
         
         super.init(nibName: nil, bundle: nil)
         router.delegate = self
@@ -59,16 +57,23 @@ class EntityListController: UIViewController, RouterDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    func makeBarButtonItem() -> UIBarButtonItem
-    {
-        UIBarButtonItem(
-            image: addButtonImage,
-            style: addButtonStyle,
-            target: responder,
-            action: #selector(responder.userTouchedUpInsideAddButton(sender:)))
-    }
-    
     // MARK: - Factory
+    
+    func makeBarButtonItem() -> BarButtonItem
+    {
+        let actionClosure = ActionClosure { sender in
+            DispatchQueue.main.async { [unowned self] in
+                print("Once")
+                let message = EntityListAddButtonMessage.init(sender: sender, entityType: self.type)
+                AppDelegate.shared.mainStream.send(message: message)
+            }
+        }
+        
+        return BarButtonItem(
+            image: Icon.add.getImage(),
+            style: .plain,
+            actionClosure: actionClosure)
+    }
     
     func makeSearchController(searchControllerDelegate: UISearchControllerDelegate) -> UISearchController
     {
@@ -96,8 +101,39 @@ extension EntityListController: Subscriber
             fallthrough
         case is TextEditCellMessage:
             tableView.shouldReload = true
+        case let m as EntityListPinMessage:
+            handle(m)
+        case let m as EntityListDeleteMessage:
+            handle(m)
         default:
             break
+        }
+    }
+    
+    private func handle(_ message: EntityListPinMessage)
+    {
+        // Do nothing
+    }
+    
+    private func handle(_ message: EntityListDeleteMessage)
+    {
+        guard let context = context else { return }
+        
+        context.perform { [weak self] in
+            let object = message.entity
+            context.delete(object)
+            context.quickSave()
+            
+            guard let self = self else { return }
+            
+            self.tableView.model = self.tableView.makeModel()
+            
+            DispatchQueue.main.async
+            {
+                self.tableView.beginUpdates()
+                self.tableView.deleteRows(at: [message.indexPath], with: .automatic)
+                self.tableView.endUpdates()
+            }
         }
     }
 }

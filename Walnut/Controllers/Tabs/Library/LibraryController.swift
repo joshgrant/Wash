@@ -11,12 +11,14 @@ class LibraryController: ViewController, RouterDelegate
 {
     // MARK: - Variables
     
+    var id = UUID()
+    
     var tabBarItemTitle: String { "Library".localized }
     var tabBarImage: UIImage? { Icon.library.getImage() }
     var tabBarTag: Int { 1 }
 
     var router: LibraryTableViewRouter
-    var tableViewManager: LibraryTableViewManager
+    var tableView: LibraryTableView
     
     // MARK: - Initialization
 
@@ -25,15 +27,17 @@ class LibraryController: ViewController, RouterDelegate
         navigationController: UINavigationController)
     {
         self.router = LibraryTableViewRouter(context: context)
-        self.tableViewManager = LibraryTableViewManager(context: context)
+        self.tableView = LibraryTableView(context: context)
         
         super.init()
         router.delegate = self
         
+        subscribe(to: AppDelegate.shared.mainStream)
+        
         tabBarItem = makeTabBarItem()
         title = tabBarItemTitle
         
-        view.embed(tableViewManager.tableView)
+        view.embed(tableView)
     }
 }
 
@@ -45,5 +49,21 @@ extension LibraryController: ViewControllerTabBarDelegate
             title: tabBarItemTitle,
             image: tabBarImage,
             tag: tabBarTag)
+    }
+}
+
+extension LibraryController: Subscriber
+{
+    func receive(message: Message)
+    {
+        switch message
+        {
+        case is EntityListDeleteMessage:
+            fallthrough
+        case is EntityListAddButtonMessage:
+            tableView.shouldReload = true
+        default:
+            break
+        }
     }
 }

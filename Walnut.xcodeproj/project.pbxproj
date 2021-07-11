@@ -37,7 +37,6 @@
 		033FE6C9266CE38800BCF5AA /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE6C8266CE38800BCF5AA /* Application.swift */; };
 		03555AAC2683C51B006E9EA1 /* EntityListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AAB2683C51B006E9EA1 /* EntityListRouter.swift */; };
 		03555AAE2684096D006E9EA1 /* WindowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AAD2684096D006E9EA1 /* WindowState.swift */; };
-		03555AD8268528F9006E9EA1 /* EntityListResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AD7268528F9006E9EA1 /* EntityListResponder.swift */; };
 		03555AFF26869DE5006E9EA1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AFE26869DE5006E9EA1 /* Router.swift */; };
 		03555B0126869DF1006E9EA1 /* Unique.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B0026869DF1006E9EA1 /* Unique.swift */; };
 		03555B0226869E74006E9EA1 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AFA26869CDD006E9EA1 /* Stream.swift */; };
@@ -69,7 +68,6 @@
 		03555B5E2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B2B2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift */; };
 		03555B5F2686A487006E9EA1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B2C2686A487006E9EA1 /* UIColor+Extensions.swift */; };
 		03555B602686A487006E9EA1 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B2D2686A487006E9EA1 /* UIImage+Extensions.swift */; };
-		03555B612686A487006E9EA1 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B2E2686A487006E9EA1 /* UIBarButtonItem+Extensions.swift */; };
 		03555B622686A487006E9EA1 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B302686A487006E9EA1 /* Array+Extensions.swift */; };
 		03555B632686A487006E9EA1 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B312686A487006E9EA1 /* Int+Extensions.swift */; };
 		03555B642686A487006E9EA1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B322686A487006E9EA1 /* String+Extensions.swift */; };
@@ -95,14 +93,10 @@
 		03555B8F26884308006E9EA1 /* StockDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B8E26884308006E9EA1 /* StockDetailController.swift */; };
 		0370FEB62688B3F0001E099B /* SubtitleDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */; };
 		0370FEB92688B656001E099B /* TextEditCellMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEB82688B656001E099B /* TextEditCellMessage.swift */; };
-		0370FEBB2688BD7A001E099B /* StockDetailResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */; };
 		0370FEBD2688C170001E099B /* RightImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEBC2688C170001E099B /* RightImageCell.swift */; };
-		0370FEBF2688C9B9001E099B /* LibraryTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEBE2688C9B9001E099B /* LibraryTableViewManager.swift */; };
 		0370FEC12688CAE2001E099B /* LibraryTableViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC02688CAE2001E099B /* LibraryTableViewRouter.swift */; };
-		0370FEC42688CB14001E099B /* LibraryCellSelectionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC32688CB14001E099B /* LibraryCellSelectionMessage.swift */; };
 		0370FEC626892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC526892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift */; };
 		0370FECA268A0940001E099B /* StockValueTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC9268A0940001E099B /* StockValueTypeController.swift */; };
-		0370FECC268A0962001E099B /* StockValueTypeTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FECB268A0962001E099B /* StockValueTypeTableViewManager.swift */; };
 		0370FECE268A0A87001E099B /* CheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FECD268A0A87001E099B /* CheckmarkCell.swift */; };
 		0370FED4268A0EE0001E099B /* StockDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FED3268A0EE0001E099B /* StockDetailRouter.swift */; };
 		0370FED8268A1837001E099B /* TransferFlowDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FED7268A1837001E099B /* TransferFlowDetailController.swift */; };
@@ -173,6 +167,11 @@
 		03FAACD2269B491D00CB7AB6 /* TransferFlowDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACD1269B491D00CB7AB6 /* TransferFlowDetailTableView.swift */; };
 		03FAACD4269B533900CB7AB6 /* StockDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACD3269B533900CB7AB6 /* StockDetailTableView.swift */; };
 		03FAACD6269B575C00CB7AB6 /* EntityListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACD5269B575C00CB7AB6 /* EntityListTableView.swift */; };
+		03FAACD8269B610E00CB7AB6 /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACD7269B610E00CB7AB6 /* BarButtonItem.swift */; };
+		03FAACDA269B64A800CB7AB6 /* StockTypeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACD9269B64A800CB7AB6 /* StockTypeTableView.swift */; };
+		03FAACDC269B681800CB7AB6 /* LibraryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACDB269B681800CB7AB6 /* LibraryTableView.swift */; };
+		03FAACE0269B6D0700CB7AB6 /* EntityListPinMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACDF269B6D0700CB7AB6 /* EntityListPinMessage.swift */; };
+		03FAACE2269B6D1000CB7AB6 /* EntityListDeleteMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACE1269B6D1000CB7AB6 /* EntityListDeleteMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,7 +228,6 @@
 		033FE6C8266CE38800BCF5AA /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		03555AAB2683C51B006E9EA1 /* EntityListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListRouter.swift; sourceTree = "<group>"; };
 		03555AAD2684096D006E9EA1 /* WindowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowState.swift; sourceTree = "<group>"; };
-		03555AD7268528F9006E9EA1 /* EntityListResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListResponder.swift; sourceTree = "<group>"; };
 		03555AF826869CDD006E9EA1 /* MessageToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageToken.swift; sourceTree = "<group>"; };
 		03555AF926869CDD006E9EA1 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		03555AFA26869CDD006E9EA1 /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
@@ -261,7 +259,6 @@
 		03555B2B2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBarDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		03555B2C2686A487006E9EA1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		03555B2D2686A487006E9EA1 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
-		03555B2E2686A487006E9EA1 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
 		03555B302686A487006E9EA1 /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		03555B312686A487006E9EA1 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		03555B322686A487006E9EA1 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -287,14 +284,10 @@
 		03555B8E26884308006E9EA1 /* StockDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailController.swift; sourceTree = "<group>"; };
 		0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleDetailCell.swift; sourceTree = "<group>"; };
 		0370FEB82688B656001E099B /* TextEditCellMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditCellMessage.swift; sourceTree = "<group>"; };
-		0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailResponder.swift; sourceTree = "<group>"; };
 		0370FEBC2688C170001E099B /* RightImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightImageCell.swift; sourceTree = "<group>"; };
-		0370FEBE2688C9B9001E099B /* LibraryTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewManager.swift; sourceTree = "<group>"; };
 		0370FEC02688CAE2001E099B /* LibraryTableViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewRouter.swift; sourceTree = "<group>"; };
-		0370FEC32688CB14001E099B /* LibraryCellSelectionMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCellSelectionMessage.swift; sourceTree = "<group>"; };
 		0370FEC526892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewSelectedMessage.swift; sourceTree = "<group>"; };
 		0370FEC9268A0940001E099B /* StockValueTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockValueTypeController.swift; sourceTree = "<group>"; };
-		0370FECB268A0962001E099B /* StockValueTypeTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockValueTypeTableViewManager.swift; sourceTree = "<group>"; };
 		0370FECD268A0A87001E099B /* CheckmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkCell.swift; sourceTree = "<group>"; };
 		0370FED3268A0EE0001E099B /* StockDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailRouter.swift; sourceTree = "<group>"; };
 		0370FED7268A1837001E099B /* TransferFlowDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowDetailController.swift; sourceTree = "<group>"; };
@@ -365,6 +358,11 @@
 		03FAACD1269B491D00CB7AB6 /* TransferFlowDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowDetailTableView.swift; sourceTree = "<group>"; };
 		03FAACD3269B533900CB7AB6 /* StockDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailTableView.swift; sourceTree = "<group>"; };
 		03FAACD5269B575C00CB7AB6 /* EntityListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListTableView.swift; sourceTree = "<group>"; };
+		03FAACD7269B610E00CB7AB6 /* BarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButtonItem.swift; sourceTree = "<group>"; };
+		03FAACD9269B64A800CB7AB6 /* StockTypeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTypeTableView.swift; sourceTree = "<group>"; };
+		03FAACDB269B681800CB7AB6 /* LibraryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableView.swift; sourceTree = "<group>"; };
+		03FAACDF269B6D0700CB7AB6 /* EntityListPinMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListPinMessage.swift; sourceTree = "<group>"; };
+		03FAACE1269B6D1000CB7AB6 /* EntityListDeleteMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListDeleteMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -431,7 +429,6 @@
 			isa = PBXGroup;
 			children = (
 				030B21A0267FEA230038C095 /* EntityListController.swift */,
-				03555AD7268528F9006E9EA1 /* EntityListResponder.swift */,
 				03555AAB2683C51B006E9EA1 /* EntityListRouter.swift */,
 				03FAACD5269B575C00CB7AB6 /* EntityListTableView.swift */,
 				03555B752687CEB3006E9EA1 /* Messages */,
@@ -565,6 +562,7 @@
 				03555B362686A487006E9EA1 /* Tab Bar */,
 				03555B182686A487006E9EA1 /* Table View */,
 				03555B3E2686A487006E9EA1 /* V VM C CM */,
+				03FAACD7269B610E00CB7AB6 /* BarButtonItem.swift */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
@@ -615,7 +613,6 @@
 				03555B2B2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift */,
 				03555B2C2686A487006E9EA1 /* UIColor+Extensions.swift */,
 				03555B2D2686A487006E9EA1 /* UIImage+Extensions.swift */,
-				03555B2E2686A487006E9EA1 /* UIBarButtonItem+Extensions.swift */,
 				03FAACB32698CEF500CB7AB6 /* UIViewController+Extensions.swift */,
 			);
 			path = UIKIt;
@@ -662,6 +659,8 @@
 			children = (
 				03555B762687CECB006E9EA1 /* EntityListAddButtonMessage.swift */,
 				03555B7C2687D160006E9EA1 /* EntityListCellMessage.swift */,
+				03FAACDF269B6D0700CB7AB6 /* EntityListPinMessage.swift */,
+				03FAACE1269B6D1000CB7AB6 /* EntityListDeleteMessage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -695,19 +694,10 @@
 			path = Messages;
 			sourceTree = "<group>";
 		};
-		0370FEC22688CB07001E099B /* Messages */ = {
-			isa = PBXGroup;
-			children = (
-				0370FEC32688CB14001E099B /* LibraryCellSelectionMessage.swift */,
-			);
-			path = Messages;
-			sourceTree = "<group>";
-		};
 		0370FEC7268A090F001E099B /* Detail */ = {
 			isa = PBXGroup;
 			children = (
 				03555B8E26884308006E9EA1 /* StockDetailController.swift */,
-				0370FEBA2688BD7A001E099B /* StockDetailResponder.swift */,
 				0370FED3268A0EE0001E099B /* StockDetailRouter.swift */,
 				03FAACD3269B533900CB7AB6 /* StockDetailTableView.swift */,
 			);
@@ -718,7 +708,7 @@
 			isa = PBXGroup;
 			children = (
 				0370FEC9268A0940001E099B /* StockValueTypeController.swift */,
-				0370FECB268A0962001E099B /* StockValueTypeTableViewManager.swift */,
+				03FAACD9269B64A800CB7AB6 /* StockTypeTableView.swift */,
 			);
 			path = "Value Type";
 			sourceTree = "<group>";
@@ -765,11 +755,10 @@
 		038CF61F267652BA00931595 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				0370FEC22688CB07001E099B /* Messages */,
 				038CF6EC2676877D00931595 /* Cell */,
 				038CF60D26763E0A00931595 /* LibraryController.swift */,
-				0370FEBE2688C9B9001E099B /* LibraryTableViewManager.swift */,
 				0370FEC02688CAE2001E099B /* LibraryTableViewRouter.swift */,
+				03FAACDB269B681800CB7AB6 /* LibraryTableView.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -1087,7 +1076,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03555B612686A487006E9EA1 /* UIBarButtonItem+Extensions.swift in Sources */,
 				03555B5B2686A487006E9EA1 /* TableHeaderView.swift in Sources */,
 				038CF6642676828E00931595 /* Model.xcdatamodeld in Sources */,
 				038CF6932676829F00931595 /* DynamicSource+Extensions.swift in Sources */,
@@ -1102,6 +1090,7 @@
 				03555B772687CECB006E9EA1 /* EntityListAddButtonMessage.swift in Sources */,
 				03555B5F2686A487006E9EA1 /* UIColor+Extensions.swift in Sources */,
 				038CF61226764DA500931595 /* SettingsController.swift in Sources */,
+				03FAACD8269B610E00CB7AB6 /* BarButtonItem.swift in Sources */,
 				030B2188267FB6C80038C095 /* SuggestedFlowCell.swift in Sources */,
 				03555B0426869E78006E9EA1 /* Subscriber.swift in Sources */,
 				03FAACB62698D22800CB7AB6 /* LinkSearchControllerTableViewManager.swift in Sources */,
@@ -1110,6 +1099,7 @@
 				038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */,
 				038CF6DC267683FB00931595 /* Event+Extensions.swift in Sources */,
 				03555B492686A487006E9EA1 /* Container.swift in Sources */,
+				03FAACDC269B681800CB7AB6 /* LibraryTableView.swift in Sources */,
 				03555B512686A487006E9EA1 /* EventResponder.swift in Sources */,
 				0370FEB92688B656001E099B /* TextEditCellMessage.swift in Sources */,
 				03555B6B2686A487006E9EA1 /* TabBarController.swift in Sources */,
@@ -1135,6 +1125,7 @@
 				030B2186267FB2B50038C095 /* IdealInfoCell.swift in Sources */,
 				038CF6C3267682C700931595 /* TextStyle.swift in Sources */,
 				030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */,
+				03FAACDA269B64A800CB7AB6 /* StockTypeTableView.swift in Sources */,
 				038CF6C7267682C700931595 /* Priority.swift in Sources */,
 				03555B8C26883E72006E9EA1 /* SystemDetailTableViewManager.swift in Sources */,
 				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
@@ -1151,7 +1142,6 @@
 				038CF6952676829F00931595 /* Dimension+Extensions.swift in Sources */,
 				03555B452686A487006E9EA1 /* CollectionView.swift in Sources */,
 				030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */,
-				0370FEBF2688C9B9001E099B /* LibraryTableViewManager.swift in Sources */,
 				03555B862687D77A006E9EA1 /* SystemDetailRouter.swift in Sources */,
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
 				030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */,
@@ -1180,12 +1170,9 @@
 				03555B5D2686A487006E9EA1 /* UIView+Extensions.swift in Sources */,
 				0370FEDC268A184E001E099B /* TransferFlowDetailRouter.swift in Sources */,
 				03555B562686A487006E9EA1 /* ConfigurableTableViewCellProtocol.swift in Sources */,
-				03555AD8268528F9006E9EA1 /* EntityListResponder.swift in Sources */,
 				031681B9267DA6F100F493DA /* Pinnable.swift in Sources */,
-				0370FECC268A0962001E099B /* StockValueTypeTableViewManager.swift in Sources */,
 				030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */,
 				03555B672686A487006E9EA1 /* SearchBarDelegate.swift in Sources */,
-				0370FEC42688CB14001E099B /* LibraryCellSelectionMessage.swift in Sources */,
 				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
 				03555B5E2686A487006E9EA1 /* UISearchBarDelegate+Extensions.swift in Sources */,
 				0370FEB62688B3F0001E099B /* SubtitleDetailCell.swift in Sources */,
@@ -1204,7 +1191,6 @@
 				03555B4A2686A487006E9EA1 /* DatabaseError.swift in Sources */,
 				038CF6C1267682C700931595 /* SourceType.swift in Sources */,
 				03555B0726869E7E006E9EA1 /* Identifier.swift in Sources */,
-				0370FEBB2688BD7A001E099B /* StockDetailResponder.swift in Sources */,
 				03FAACD6269B575C00CB7AB6 /* EntityListTableView.swift in Sources */,
 				03555B7D2687D160006E9EA1 /* EntityListCellMessage.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
@@ -1218,6 +1204,7 @@
 				03555B0626869E7C006E9EA1 /* MessageToken.swift in Sources */,
 				038CF6DD267683FB00931595 /* TransferFlow+Extensions.swift in Sources */,
 				038CF6962676829F00931595 /* Person+Extensions.swift in Sources */,
+				03FAACE2269B6D1000CB7AB6 /* EntityListDeleteMessage.swift in Sources */,
 				030B2179267F7EBD0038C095 /* EventsHeaderViewModel.swift in Sources */,
 				038CF6CA267682C700931595 /* AmountType.swift in Sources */,
 				03555B622686A487006E9EA1 /* Array+Extensions.swift in Sources */,
@@ -1244,6 +1231,7 @@
 				038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */,
 				03555B632686A487006E9EA1 /* Int+Extensions.swift in Sources */,
 				038CF6862676829F00931595 /* Named.swift in Sources */,
+				03FAACE0269B6D0700CB7AB6 /* EntityListPinMessage.swift in Sources */,
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
 				038CF6D0267682C700931595 /* Searchable.swift in Sources */,

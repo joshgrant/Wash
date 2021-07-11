@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SystemDetailResponder: Responder
+class SystemDetailResponder
 {
     // MARK: - Variables
     

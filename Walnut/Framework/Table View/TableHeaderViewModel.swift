@@ -54,4 +54,6 @@ extension TableHeaderViewModel
     static let flows = TableHeaderViewModel(title: "Flows".localized, icon: .flow)
     static let forecast = TableHeaderViewModel(title: "Forecast".localized, icon: .forecast)
     static let priority = TableHeaderViewModel(title: "Priority".localized, icon: .priority)
+    static let valueType = TableHeaderViewModel(title: "Value Type".localized)
+    static let transitionType = TableHeaderViewModel(title: "Transition Type".localized)
 }

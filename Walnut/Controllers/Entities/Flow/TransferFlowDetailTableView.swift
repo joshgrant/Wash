@@ -39,7 +39,7 @@ class TransferFlowDetailTableView: TableView
         TableViewSection(
             header: .info,
             models: makeInfoSectionRows(flow: flow, stream: stream),
-            footer: "Adds a to-do button in the dashboard".localizedLowercase)
+            footer: "Adds a to-do button in the dashboard".localized)
     }
 
     func makeInfoSectionRows(flow: TransferFlow, stream: Stream) -> [TableViewCellModel]

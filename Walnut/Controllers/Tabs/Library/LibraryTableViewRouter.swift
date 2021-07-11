@@ -59,17 +59,24 @@ extension LibraryTableViewRouter: Subscriber
     {
         switch message
         {
-        case let x as LibraryCellSelectionMessage:
-            handleSelection(message: x)
+        case let m as TableViewSelectionMessage:
+            handle(m)
         default:
             break
         }
     }
     
-    private func handleSelection(message: LibraryCellSelectionMessage)
+    private func handle(_ message: TableViewSelectionMessage)
     {
-        let entityType = EntityType.libraryVisible[message.indexPath.row]
-        let managedType = entityType.managedObjectType
-        route(to: .detail(entityType: managedType), completion: nil)
+        guard let _ = message.tableView as? LibraryTableView else { return }
+        
+        switch message.cellModel.selectionIdentifier
+        {
+        case .entityType(let type):
+            let managedType = type.managedObjectType
+            route(to: .detail(entityType: managedType), completion: nil)
+        default:
+            break
+        }
     }
 }
