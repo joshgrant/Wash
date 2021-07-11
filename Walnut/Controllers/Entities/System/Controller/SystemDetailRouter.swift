@@ -14,13 +14,13 @@ class SystemDetailRouter: Router
     
     enum Destination
     {
-        // If the entity is nil, we're trying to create one
         case idealInfo
-        case stockDetail(stock: Stock?)
-        case flowDetail(flow: Flow?)
-        case eventDetail(event: Event?)
-        case subsystemDetail(system: System?)
-        case noteDetail(note: Note?)
+        case stockDetail(stock: Stock)
+        case transferFlowDetail(flow: TransferFlow)
+        case processFlowDetail(flow: ProcessFlow)
+        case eventDetail(event: Event)
+        case subsystemDetail(system: System)
+        case noteDetail(note: Note)
         
         case search(entityType: Entity.Type)
     }
@@ -40,6 +40,10 @@ class SystemDetailRouter: Router
         subscribe(to: AppDelegate.shared.mainStream)
     }
     
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
+    }
+    
     // MARK: - Functions
     
     func route(
@@ -49,12 +53,15 @@ class SystemDetailRouter: Router
         switch destination
         {
         case .stockDetail(let stock):
-            guard let stockDetail = stock?.detailController() else
-            {
-                assertionFailure()
-                return
-            }
-            delegate?.navigationController?.pushViewController(stockDetail, animated: true)
+            delegate?.navigationController?.pushViewController(stock.detailController(), animated: true, completion: completion)
+        case .transferFlowDetail(let flow):
+            delegate?.navigationController?.pushViewController(flow.detailController(), animated: true, completion: completion)
+        case .processFlowDetail(let flow):
+            delegate?.navigationController?.pushViewController(flow.detailController(), animated: true, completion: completion)
+        case .eventDetail(let event):
+            delegate?.navigationController?.pushViewController(event.detailController(), animated: true, completion: completion)
+        case .noteDetail(let note):
+            delegate?.navigationController?.pushViewController(note.detailController(), animated: true, completion: completion)
         default:
             assertionFailure()
             break
@@ -68,14 +75,14 @@ extension SystemDetailRouter: Subscriber
     {
         switch message
         {
-        case let x as SystemDetailTableViewSelectedMessage:
-            handle(message: x)
+        case let m as SystemDetailTableViewSelectedMessage:
+            handle(m)
         default:
             break
         }
     }
     
-    func handle(message: SystemDetailTableViewSelectedMessage)
+    func handle(_ message: SystemDetailTableViewSelectedMessage)
     {
         let indexPath = message.indexPath
         
@@ -86,7 +93,19 @@ extension SystemDetailRouter: Subscriber
             return route(to: .stockDetail(stock: stock), completion: nil)
         case 2: // Flows
             let flow = system.unwrappedFlows[indexPath.row]
-            return route(to: .flowDetail(flow: flow), completion: nil)
+            
+            if let flow = flow as? TransferFlow
+            {
+                return route(to: .transferFlowDetail(flow: flow), completion: nil)
+            }
+            else if let flow = flow as? ProcessFlow
+            {
+                return route(to: .processFlowDetail(flow: flow), completion: nil)
+            }
+            else
+            {
+                fatalError("Cannot use an abstract Flow")
+            }
         case 3: // Events
             let event = system.unwrappedEvents[indexPath.row]
             return route(to: .eventDetail(event: event), completion: nil)

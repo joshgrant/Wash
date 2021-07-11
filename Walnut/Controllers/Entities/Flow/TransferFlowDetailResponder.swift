@@ -28,7 +28,7 @@ class TransferFlowDetailResponder
         let message = EntityPinnedMessage(
             isPinned: flow.isPinned,
             entity: flow)
-        TransferFlowDetailController.stream.send(message: message)
+        AppDelegate.shared.mainStream.send(message: message)
     }
     
     @objc func runButtonDidTouchUpInside(_ sender: UIBarButtonItem)

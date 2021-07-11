@@ -31,13 +31,16 @@ class LibraryController: ViewController, RouterDelegate
         
         super.init()
         router.delegate = self
-        
         subscribe(to: AppDelegate.shared.mainStream)
         
         tabBarItem = makeTabBarItem()
         title = tabBarItemTitle
         
         view.embed(tableView)
+    }
+    
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
     }
 }
 

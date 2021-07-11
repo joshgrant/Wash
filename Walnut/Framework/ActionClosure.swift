@@ -10,6 +10,7 @@ import Foundation
 public typealias ActionPerformClosure = ((_ sender: AnyObject) -> Void)
 
 // How does the retain cycle work on this one?
+// Looks like sender is getting retained...
 
 open class ActionClosure
 {
@@ -29,11 +30,7 @@ open class ActionClosure
     
     @objc public func perform(sender: AnyObject)
     {
-        // HMM, how to get the app state here?
-        // Right now, when the bar button is selected, the action's return value will
-        // be consumed by the action... but we need the resulting appState to be modified...
-        // being passed to the main run loop...
-        _ = performClosure(sender)
+        performClosure(sender)
     }
 }
 

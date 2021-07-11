@@ -89,7 +89,6 @@
 		03555B842687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B832687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift */; };
 		03555B862687D77A006E9EA1 /* SystemDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */; };
 		03555B882687D783006E9EA1 /* SystemDetailResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B872687D783006E9EA1 /* SystemDetailResponder.swift */; };
-		03555B8C26883E72006E9EA1 /* SystemDetailTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B8B26883E72006E9EA1 /* SystemDetailTableViewManager.swift */; };
 		03555B8F26884308006E9EA1 /* StockDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B8E26884308006E9EA1 /* StockDetailController.swift */; };
 		0370FEB62688B3F0001E099B /* SubtitleDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */; };
 		0370FEB92688B656001E099B /* TextEditCellMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEB82688B656001E099B /* TextEditCellMessage.swift */; };
@@ -150,6 +149,7 @@
 		038CF6E12676840E00931595 /* System+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E02676840E00931595 /* System+Extensions.swift */; };
 		038CF6E3267684E200931595 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E2267684E200931595 /* LibraryCell.swift */; };
 		038CF6EA2676865600931595 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E92676865600931595 /* DetailCell.swift */; };
+		0393A887269B9B4E00D2BF81 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -172,6 +172,9 @@
 		03FAACDC269B681800CB7AB6 /* LibraryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACDB269B681800CB7AB6 /* LibraryTableView.swift */; };
 		03FAACE0269B6D0700CB7AB6 /* EntityListPinMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACDF269B6D0700CB7AB6 /* EntityListPinMessage.swift */; };
 		03FAACE2269B6D1000CB7AB6 /* EntityListDeleteMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACE1269B6D1000CB7AB6 /* EntityListDeleteMessage.swift */; };
+		03FAACE4269B934C00CB7AB6 /* SectionHeaderAddMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACE3269B934C00CB7AB6 /* SectionHeaderAddMessage.swift */; };
+		03FAACE6269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACE5269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift */; };
+		03FAACE8269B96E100CB7AB6 /* SystemDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACE7269B96E100CB7AB6 /* SystemDetailTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -280,7 +283,6 @@
 		03555B832687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailDuplicatedMessage.swift; sourceTree = "<group>"; };
 		03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailRouter.swift; sourceTree = "<group>"; };
 		03555B872687D783006E9EA1 /* SystemDetailResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailResponder.swift; sourceTree = "<group>"; };
-		03555B8B26883E72006E9EA1 /* SystemDetailTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableViewManager.swift; sourceTree = "<group>"; };
 		03555B8E26884308006E9EA1 /* StockDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailController.swift; sourceTree = "<group>"; };
 		0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleDetailCell.swift; sourceTree = "<group>"; };
 		0370FEB82688B656001E099B /* TextEditCellMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditCellMessage.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 		038CF6E02676840E00931595 /* System+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "System+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6E2267684E200931595 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
 		038CF6E92676865600931595 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
+		0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -363,6 +366,9 @@
 		03FAACDB269B681800CB7AB6 /* LibraryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableView.swift; sourceTree = "<group>"; };
 		03FAACDF269B6D0700CB7AB6 /* EntityListPinMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListPinMessage.swift; sourceTree = "<group>"; };
 		03FAACE1269B6D1000CB7AB6 /* EntityListDeleteMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListDeleteMessage.swift; sourceTree = "<group>"; };
+		03FAACE3269B934C00CB7AB6 /* SectionHeaderAddMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderAddMessage.swift; sourceTree = "<group>"; };
+		03FAACE5269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderSearchMessage.swift; sourceTree = "<group>"; };
+		03FAACE7269B96E100CB7AB6 /* SystemDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -401,6 +407,8 @@
 				030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */,
 				030B2180267F7EF70038C095 /* SubSystemsHeaderViewModel.swift */,
 				030B217C267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift */,
+				03FAACE3269B934C00CB7AB6 /* SectionHeaderAddMessage.swift */,
+				03FAACE5269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift */,
 			);
 			path = "Section Header";
 			sourceTree = "<group>";
@@ -420,7 +428,7 @@
 				030B2172267F7C130038C095 /* SystemDetailController.swift */,
 				03555B872687D783006E9EA1 /* SystemDetailResponder.swift */,
 				03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */,
-				03555B8B26883E72006E9EA1 /* SystemDetailTableViewManager.swift */,
+				03FAACE7269B96E100CB7AB6 /* SystemDetailTableView.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -614,6 +622,7 @@
 				03555B2C2686A487006E9EA1 /* UIColor+Extensions.swift */,
 				03555B2D2686A487006E9EA1 /* UIImage+Extensions.swift */,
 				03FAACB32698CEF500CB7AB6 /* UIViewController+Extensions.swift */,
+				0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */,
 			);
 			path = UIKIt;
 			sourceTree = "<group>";
@@ -1126,8 +1135,8 @@
 				038CF6C3267682C700931595 /* TextStyle.swift in Sources */,
 				030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */,
 				03FAACDA269B64A800CB7AB6 /* StockTypeTableView.swift in Sources */,
+				03FAACE4269B934C00CB7AB6 /* SectionHeaderAddMessage.swift in Sources */,
 				038CF6C7267682C700931595 /* Priority.swift in Sources */,
-				03555B8C26883E72006E9EA1 /* SystemDetailTableViewManager.swift in Sources */,
 				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
 				038CF6E3267684E200931595 /* LibraryCell.swift in Sources */,
 				038CF60E26763E0A00931595 /* LibraryController.swift in Sources */,
@@ -1149,6 +1158,7 @@
 				03FAACD0269B36E900CB7AB6 /* TableViewSelectionMessage.swift in Sources */,
 				03555B472686A487006E9EA1 /* Observer.swift in Sources */,
 				03FAACB42698CEF500CB7AB6 /* UIViewController+Extensions.swift in Sources */,
+				03FAACE6269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift in Sources */,
 				03555B692686A487006E9EA1 /* TabBarControllerDelegate.swift in Sources */,
 				03555B4D2686A487006E9EA1 /* Coordinator.swift in Sources */,
 				03555B4F2686A487006E9EA1 /* ObserverForSceneUpdatesEventResponder.swift in Sources */,
@@ -1223,8 +1233,10 @@
 				03FAACC42699ECCB00CB7AB6 /* TableViewSection.swift in Sources */,
 				038CF6902676829F00931595 /* Unit+Extensions.swift in Sources */,
 				03555B6F2686A487006E9EA1 /* ViewController.swift in Sources */,
+				03FAACE8269B96E100CB7AB6 /* SystemDetailTableView.swift in Sources */,
 				03555B572686A487006E9EA1 /* TableViewCell.swift in Sources */,
 				03FAACB02698CCA500CB7AB6 /* LinkSearchController.swift in Sources */,
+				0393A887269B9B4E00D2BF81 /* UINavigationController+Extensions.swift in Sources */,
 				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
 				0370FECE268A0A87001E099B /* CheckmarkCell.swift in Sources */,

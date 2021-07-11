@@ -15,6 +15,7 @@ class ToggleCellModel: TableViewCellModel
     var selectionIdentifier: SelectionIdentifier
     var title: String
     var toggleState: Bool
+    var actionClosure: ActionClosure
     
     // MARK: - Initialization
     
@@ -26,6 +27,14 @@ class ToggleCellModel: TableViewCellModel
         self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.toggleState = toggleState
+        
+        self.actionClosure = ActionClosure { sender in
+            guard let sender = sender as? UISwitch else { fatalError() }
+            let message = ToggleCellMessage(
+                state: sender.isOn,
+                selectionIdentifier: .requiresUserCompletion(state: sender.isOn))
+            AppDelegate.shared.mainStream.send(message: message)
+        }
     }
     
     static var cellClass: AnyClass { ToggleCell.self }
@@ -38,18 +47,13 @@ class ToggleCell: TableViewCell<ToggleCellModel>
         self.textLabel?.text = model.title
         
         let toggle = UISwitch()
+        
         toggle.isOn = model.toggleState
         toggle.addTarget(
-            self,
-            action: #selector(handleToggle(_:)),
+            model.actionClosure,
+            action: #selector(model.actionClosure.perform(sender:)),
             for: .valueChanged)
         
         self.accessoryView = toggle
-    }
-    
-    @objc func handleToggle(_ sender: UISwitch)
-    {
-        let message = ToggleCellMessage(state: sender.isOn)
-        AppDelegate.shared.mainStream.send(message: message)
     }
 }

@@ -57,16 +57,17 @@ class EntityListController: UIViewController, RouterDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
+    }
+    
     // MARK: - Factory
     
     func makeBarButtonItem() -> BarButtonItem
     {
-        let actionClosure = ActionClosure { sender in
-            DispatchQueue.main.async { [unowned self] in
-                print("Once")
-                let message = EntityListAddButtonMessage.init(sender: sender, entityType: self.type)
-                AppDelegate.shared.mainStream.send(message: message)
-            }
+        let actionClosure = ActionClosure { [unowned self] sender in
+            let message = EntityListAddButtonMessage.init(sender: sender, entityType: self.type)
+            AppDelegate.shared.mainStream.send(message: message)
         }
         
         return BarButtonItem(
@@ -130,6 +131,7 @@ extension EntityListController: Subscriber
             
             DispatchQueue.main.async
             {
+                // TODO: This is happening when the table view isn't in the window...
                 self.tableView.beginUpdates()
                 self.tableView.deleteRows(at: [message.indexPath], with: .automatic)
                 self.tableView.endUpdates()

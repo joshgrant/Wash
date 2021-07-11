@@ -60,7 +60,7 @@ public enum SelectionIdentifier
     
     case flowAmount
     case flowDuration
-    case requiresUserCompletion
+    case requiresUserCompletion(state: Bool)
     case inflow(flow: Flow)
     case outflow(flow: Flow)
     case flow(flow: Flow)
@@ -79,7 +79,7 @@ public enum SelectionIdentifier
     case transitionType(type: TransitionType)
 }
 
-public protocol TableViewCellModel
+public protocol TableViewCellModel: AnyObject
 {
     var selectionIdentifier: SelectionIdentifier { get set }
     

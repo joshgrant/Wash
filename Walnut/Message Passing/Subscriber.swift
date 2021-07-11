@@ -11,7 +11,7 @@ import Foundation
 // It performs some work
 // A subscriber can publish an event when it's done with its work
 
-protocol Subscriber: Unique
+protocol Subscriber: AnyObject, Unique
 {
     func receive(message: Message)
 }
@@ -20,17 +20,20 @@ extension Subscriber
 {
     func makeSubscription() -> WrappedSubscriber
     {
-        WrappedSubscriber { message in
-            // TODO: Maybe specify the thread we want to receive on
+        WrappedSubscriber(id: id) { [weak self] message in
             DispatchQueue.main.async {
-                self.receive(message: message)
+                self?.receive(message: message)
             }
         }
     }
     
     func subscribe(to stream: Stream)
     {
-        let wrappedSubscriber = self.makeSubscription()
-        stream.add(subscriber: wrappedSubscriber)
+        stream.add(subscriber: makeSubscription())
+    }
+    
+    func unsubscribe(from stream: Stream)
+    {
+        stream.remove(id: id)
     }
 }

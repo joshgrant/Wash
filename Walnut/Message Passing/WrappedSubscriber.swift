@@ -7,12 +7,18 @@
 
 import Foundation
 
-struct WrappedSubscriber: Unique
+class WrappedSubscriber: Unique
 {
     // MARK: - Variables
 
-    var id = UUID()
+    var id: UUID
     let closure: (Message) -> Void
+    
+    init(id: UUID, closure: @escaping (Message) -> Void)
+    {
+        self.id = id
+        self.closure = closure
+    }
     
     // MARK: - Functions
     

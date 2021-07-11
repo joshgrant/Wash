@@ -10,7 +10,7 @@ import UIKit
 
 class BarButtonItem: UIBarButtonItem
 {
-    var actionClosure: ActionClosure
+    var actionClosure: ActionClosure // This is strongly retained here...
     
     init(image: UIImage?, style: UIBarButtonItem.Style, actionClosure: ActionClosure)
     {

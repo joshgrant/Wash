@@ -101,9 +101,11 @@ extension Stream
         subscribers.insert(subscriber)
     }
     
-    func remove(subscriber: WrappedSubscriber)
+    func remove(id: UUID)
     {
-        subscribers.remove(subscriber)
+        subscribers = subscribers.filter({ subscriber in
+            subscriber.id != id
+        })
     }
 }
 

@@ -15,10 +15,10 @@ class TransferFlowDetailTableView: TableView
 
     // MARK: - Initialization
 
-    init(flow: TransferFlow, stream: Stream)
+    init(flow: TransferFlow)
     {
         self.flow = flow
-        super.init(stream: stream)
+        super.init()
     }
 
     // MARK: - Functions
@@ -26,7 +26,7 @@ class TransferFlowDetailTableView: TableView
     override func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeInfoSection(flow: flow, stream: stream),
+            makeInfoSection(flow: flow),
             makeEventsSection(flow: flow),
             makeHistorySection(flow: flow)
         ])
@@ -34,15 +34,15 @@ class TransferFlowDetailTableView: TableView
 
     // MARK: Info Section
 
-    func makeInfoSection(flow: TransferFlow, stream: Stream) -> TableViewSection
+    func makeInfoSection(flow: TransferFlow) -> TableViewSection
     {
         TableViewSection(
             header: .info,
-            models: makeInfoSectionRows(flow: flow, stream: stream),
+            models: makeInfoSectionRows(flow: flow),
             footer: "Adds a to-do button in the dashboard".localized)
     }
 
-    func makeInfoSectionRows(flow: TransferFlow, stream: Stream) -> [TableViewCellModel]
+    func makeInfoSectionRows(flow: TransferFlow) -> [TableViewCellModel]
     {
         let titleEdit = TextEditCellModel(
             selectionIdentifier: .title,
@@ -82,7 +82,7 @@ class TransferFlowDetailTableView: TableView
             disclosure: true)
 
         let requiresUserCompletion = ToggleCellModel(
-            selectionIdentifier: .requiresUserCompletion,
+            selectionIdentifier: .requiresUserCompletion(state: flow.requiresUserCompletion),
             title: "Requires user completion".localized,
             toggleState: flow.requiresUserCompletion)
 

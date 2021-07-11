@@ -33,6 +33,10 @@ class DashboardController: ViewController
         
         view.embed(tableView)
     }
+    
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
+    }
 }
 
 extension DashboardController: ViewControllerTabBarDelegate

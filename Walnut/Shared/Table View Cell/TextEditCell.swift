@@ -69,6 +69,11 @@ class TextEditCell: TableViewCell<TextEditCellModel>
     
     var textField: UITextField
     
+    var isEmpty: Bool
+    {
+        textField.text?.isEmpty ?? true
+    }
+    
     // MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)

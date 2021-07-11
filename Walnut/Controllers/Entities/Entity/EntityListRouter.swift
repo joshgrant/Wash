@@ -32,6 +32,10 @@ class EntityListRouter: Router
         subscribe(to: AppDelegate.shared.mainStream)
     }
     
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
+    }
+    
     // MARK: - Functions
     
     func route(to destination: Destination, completion: (() -> Void)?)
@@ -73,6 +77,8 @@ extension EntityListRouter: Subscriber
 {
     func receive(message: Message)
     {
+        print(message)
+        
         switch message
         {
         case let m as EntityListAddButtonMessage:

@@ -7,16 +7,20 @@
 
 import Foundation
 
+// TODO: could refactor this into a selection identifier message...
+
 class ToggleCellMessage: Message
 {
     // MARK: - Variables
     
     var state: Bool
+    var selectionIdentifier: SelectionIdentifier
     
     // MARK: - Initialization
     
-    init(state: Bool)
+    init(state: Bool, selectionIdentifier: SelectionIdentifier)
     {
         self.state = state
+        self.selectionIdentifier = selectionIdentifier
     }
 }

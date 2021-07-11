@@ -71,6 +71,10 @@ class LinkSearchController: UIViewController
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        unsubscribe(from: stream)
+    }
+    
     // MARK: - View lifecycle
     
     // TODO: These view lifecycle methods are scaryy....

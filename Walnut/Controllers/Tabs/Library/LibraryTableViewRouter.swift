@@ -31,6 +31,10 @@ class LibraryTableViewRouter: Router
         subscribe(to: AppDelegate.shared.mainStream)
     }
     
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
+    }
+    
     // MARK: - Functions
     
     func route(

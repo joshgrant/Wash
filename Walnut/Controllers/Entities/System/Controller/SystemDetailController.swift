@@ -17,7 +17,7 @@ class SystemDetailController: UIViewController, RouterDelegate
     var system: System
     var responder: SystemDetailResponder
     var router: SystemDetailRouter
-    var tableViewManager: SystemDetailTableViewManager
+    var tableView: SystemDetailTableView
     
     var duplicateBarButtonItem: UIBarButtonItem
     var pinBarButtonItem: UIBarButtonItem
@@ -31,8 +31,7 @@ class SystemDetailController: UIViewController, RouterDelegate
         
         self.system = system
         self.responder = responder
-        self.tableViewManager = .init(
-            system: system)
+        self.tableView = SystemDetailTableView(system: system)
         self.router = SystemDetailRouter(system: system)
         
         self.duplicateBarButtonItem = Self.makeDuplicateNavigationItem(responder: responder)
@@ -44,7 +43,7 @@ class SystemDetailController: UIViewController, RouterDelegate
         
         title = system.title
         
-        view.embed(tableViewManager.tableView)
+        view.embed(tableView)
         
         navigationItem.setRightBarButtonItems(
             [duplicateBarButtonItem, pinBarButtonItem],
@@ -56,12 +55,13 @@ class SystemDetailController: UIViewController, RouterDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - View lifecycle
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
+    }
     
-    override func viewDidAppear(_ animated: Bool)
-    {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tableViewManager.makeTextCellFirstResponderIfEmpty()
+        tableView.makeTextCellFirstResponderIfEmpty()
     }
     
     // MARK: - Factory
@@ -93,16 +93,18 @@ extension SystemDetailController: Subscriber
     {
         switch message
         {
-        case let x as EntityPinnedMessage:
-            handleSystemDetailPinnedMessage(x)
-        case let x as TextEditCellMessage:
-            handleTextEditCellMessage(x)
+        case let m as EntityPinnedMessage:
+            handle(m)
+        case let m as TextEditCellMessage:
+            handle(m)
+        case let m as SectionHeaderAddMessage:
+            handle(m)
         default:
             break
         }
     }
     
-    func handleTextEditCellMessage(_ message: TextEditCellMessage)
+    func handle(_ message: TextEditCellMessage)
     {
         if message.entity == system
         {
@@ -110,9 +112,13 @@ extension SystemDetailController: Subscriber
             system.title = message.title
             system.managedObjectContext?.quickSave()
         }
+        else
+        {
+            tableView.shouldReload = true
+        }
     }
     
-    func handleSystemDetailPinnedMessage(_ message: EntityPinnedMessage)
+    func handle(_ message: EntityPinnedMessage)
     {
         guard message.entity == system else { return }
         
@@ -124,5 +130,31 @@ extension SystemDetailController: Subscriber
         
         system.isPinned = pinned
         system.managedObjectContext?.quickSave()
+    }
+    
+    private func handle(_ message: SectionHeaderAddMessage)
+    {
+        guard message.entityToAddTo == system else { return }
+        guard let context = system.managedObjectContext else { return }
+        
+        let entity = message.entityType.init(context: context)
+        
+        switch entity
+        {
+        case let s as Stock:
+            system.addToStocks(s)
+            router.route(to: .stockDetail(stock: s), completion: nil)
+        case let f as TransferFlow:
+            system.addToFlows(f)
+            router.route(to: .transferFlowDetail(flow: f), completion: nil)
+        case let e as Event:
+            system.addToEvents(e)
+            router.route(to: .eventDetail(event: e), completion: nil)
+        case let n as Note:
+            system.addToNotes(n)
+            router.route(to: .noteDetail(note: n), completion: nil)
+        default:
+            break
+        }
     }
 }

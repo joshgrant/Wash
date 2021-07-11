@@ -45,6 +45,10 @@ class TransferFlowDetailRouter: Router
         subscribe(to: stream)
     }
     
+    deinit {
+        unsubscribe(from: stream)
+    }
+    
     // MARK: - Functions
     
     func route(to destination: Destination, completion: (() -> Void)?)

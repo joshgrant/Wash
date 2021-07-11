@@ -26,12 +26,6 @@ class TransferFlowDetailController: UIViewController, RouterDelegate
     var pinButton: UIBarButtonItem
     var runButton: UIBarButtonItem
     
-    static let stream: Stream = {
-        let stream = Stream(identifier: .transferFlow)
-        AppDelegate.shared.mainStream.add(substream: stream)
-        return stream
-    }()
-    
     // MARK: - Initialization
     
     init(flow: TransferFlow, context: Context?)
@@ -40,14 +34,9 @@ class TransferFlowDetailController: UIViewController, RouterDelegate
         
         self.flow = flow
         
-        self.router = TransferFlowDetailRouter(
-            flow: flow,
-            context: context,
-            _stream: Self.stream)
+        self.router = TransferFlowDetailRouter(flow: flow,context: context)
         self.responder = responder
-        self.tableView = TransferFlowDetailTableView(
-            flow: flow,
-            stream: Self.stream)
+        self.tableView = TransferFlowDetailTableView(flow: flow)
         
         self.pinButton = Self.makePinButton(flow: flow, responder: responder)
         self.runButton = Self.makeRunButton(responder: responder)
@@ -55,28 +44,42 @@ class TransferFlowDetailController: UIViewController, RouterDelegate
         self.context = context
         
         super.init(nibName: nil, bundle: nil)
-        
-        subscribe(to: Self.stream)
         router.delegate = self
+        subscribe(to: AppDelegate.shared.mainStream)
+        
+        title = flow.title
         
         view.embed(tableView)
+        
+        navigationItem.setRightBarButtonItems([pinButton, runButton], animated: false)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
+    }
+    
     // MARK: - Factory
     
     static func makePinButton(flow: TransferFlow, responder: TransferFlowDetailResponder) -> UIBarButtonItem
     {
-        UIBarButtonItem(
-            image: flow.isPinned
-                ? Icon.pinFill.getImage()
-                : Icon.pin.getImage(),
+        let icon: Icon = flow.isPinned ? .pinFill : .pin
+        
+        let actionClosure = ActionClosure { sender in
+            flow.isPinned.toggle()
+            let message = EntityPinnedMessage(
+                isPinned: flow.isPinned,
+                entity: flow)
+            AppDelegate.shared.mainStream.send(message: message)
+        }
+        
+        return BarButtonItem(
+            image: icon.getImage(),
             style: .plain,
-            target: responder,
-            action: #selector(responder.pinButtonDidTouchUpInside(_:)))
+            actionClosure: actionClosure)
     }
     
     static func makeRunButton(responder: TransferFlowDetailResponder) -> UIBarButtonItem
@@ -98,6 +101,10 @@ extension TransferFlowDetailController: Subscriber
         case let m as TextEditCellMessage:
             handle(m)
         case let m as LinkSelectionMessage:
+            handle(m)
+        case let m as ToggleCellMessage:
+            handle(m)
+        case let m as EntityPinnedMessage:
             handle(m)
         default:
             break
@@ -131,5 +138,28 @@ extension TransferFlowDetailController: Subscriber
         flow.managedObjectContext?.quickSave()
         
         tableView.shouldReload = true
+    }
+    
+    private func handle(_ message: ToggleCellMessage)
+    {
+        switch message.selectionIdentifier
+        {
+        case .requiresUserCompletion(let state):
+            flow.requiresUserCompletion = state
+        default:
+            break
+        }
+    }
+    
+    private func handle(_ message: EntityPinnedMessage)
+    {
+        guard message.entity == flow else { return }
+        
+        let pinned = message.isPinned
+        let icon: Icon = pinned ? .pinFill : .pin
+        
+        pinButton.image = icon.getImage()
+        flow.isPinned = pinned
+        flow.managedObjectContext?.quickSave()
     }
 }

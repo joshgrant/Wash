@@ -121,12 +121,18 @@ extension Entity
     {
         switch self
         {
-        case (let s as System):
+        case let s as System:
             return SystemDetailController(system: s)
-        case (let s as Stock):
+        case let s as Stock:
             return StockDetailController(stock: s)
-        case (let f as TransferFlow):
+        case let f as TransferFlow:
             return TransferFlowDetailController(flow: f, context: managedObjectContext)
+        case let e as Event:
+            print("Need detail controller for: \(e)")
+            return UIViewController()
+        case let n as Note:
+            print("Need detail controller for: \(n)")
+            return UIViewController()
         default:
             assertionFailure("Unhandled entity: \(self)")
             return UIViewController()

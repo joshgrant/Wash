@@ -47,6 +47,10 @@ class StockDetailController: UIViewController, RouterDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        unsubscribe(from: AppDelegate.shared.mainStream)
+    }
+    
     // MARK: - Functions
     
     static func makePinNavigationItem(stock: Stock) -> BarButtonItem
@@ -100,11 +104,9 @@ extension StockDetailController: Subscriber
         guard message.entity == stock else { return }
         
         let pinned = message.isPinned
+        let icon: Icon = pinned ? .pinFill : .pin
         
-        pinBarButtonItem.image = pinned
-            ? Icon.pinFill.getImage()
-            : Icon.pin.getImage()
-        
+        pinBarButtonItem.image = icon.getImage()
         stock.isPinned = pinned
         stock.managedObjectContext?.quickSave()
     }
