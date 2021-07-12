@@ -16,6 +16,8 @@ class StockDetailRouter: Router
     {
         case valueType
         case dimension
+        case current
+        case ideal
         case inflow(flow: TransferFlow)
         case outflow(flow: TransferFlow)
     }
@@ -50,6 +52,10 @@ class StockDetailRouter: Router
             routeToValueType()
         case .dimension:
             routeToDimension()
+        case .current:
+            routeToCurrent()
+        case .ideal:
+            routeToIdeal()
         case .inflow(let flow):
             routeToInflow(flow: flow)
         case .outflow(let flow):
@@ -73,6 +79,18 @@ class StockDetailRouter: Router
         
         let navigationController = UINavigationController(rootViewController: linkController)
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
+    }
+    
+    private func routeToIdeal()
+    {
+        let idealController = IdealDetailController(stock: stock)
+        delegate?.navigationController?.pushViewController(idealController, animated: true)
+    }
+    
+    private func routeToCurrent()
+    {
+        let currentController = CurrentDetailController(stock: stock)
+        delegate?.navigationController?.pushViewController(currentController, animated: true)
     }
     
     private func routeToInflow(flow: TransferFlow)

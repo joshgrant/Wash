@@ -64,6 +64,9 @@ extension DashboardController: Subscriber
             tableView.shouldReload = true
         case let m as TableViewEntitySelectionMessage:
             handle(m)
+        case is TextEditCellMessage:
+            // Not in all cases, but the ones that we have?
+            tableView.shouldReload = true
         default:
             break
         }

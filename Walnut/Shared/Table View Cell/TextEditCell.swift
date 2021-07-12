@@ -17,7 +17,7 @@ class TextEditCellModel: NSObject, TableViewCellModel
     var text: String?
     var placeholder: String
     var entity: Entity
-    weak var stream: Stream?
+    var keyboardType: UIKeyboardType
     
     var notifyOnDismissal: Bool = true
     
@@ -28,13 +28,13 @@ class TextEditCellModel: NSObject, TableViewCellModel
         text: String?,
         placeholder: String,
         entity: Entity,
-        stream: Stream? = nil)
+        keyboardType: UIKeyboardType = .default)
     {
         self.selectionIdentifier = selectionIdentifier
         self.text = text
         self.placeholder = placeholder
         self.entity = entity
-        self.stream = stream
+        self.keyboardType = keyboardType
     }
     
     static var cellClass: AnyClass { TextEditCell.self }
@@ -53,10 +53,12 @@ extension TextEditCellModel: UITextFieldDelegate
         guard notifyOnDismissal else { return }
         
         let title = textField.text ?? ""
-        let message = TextEditCellMessage(title: title, entity: entity)
+        let message = TextEditCellMessage(
+            selectionIdentifier: selectionIdentifier,
+            title: title,
+            entity: entity)
         
-        let stream = stream ?? AppDelegate.shared.mainStream
-        stream.send(message: message)
+        AppDelegate.shared.mainStream.send(message: message)
     }
 }
 
@@ -102,5 +104,6 @@ class TextEditCell: TableViewCell<TextEditCellModel>
         textField.placeholder = model.placeholder
         textField.text = model.text
         textField.delegate = model
+        textField.keyboardType = model.keyboardType
     }
 }

@@ -17,4 +17,9 @@ extension History
             eventTypeRaw = newValue.rawValue
         }
     }
+    
+    var valueDescription: String
+    {
+        String(format: "%.2f", valueSource!.value)
+    }
 }

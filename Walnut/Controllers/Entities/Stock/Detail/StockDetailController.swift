@@ -95,8 +95,19 @@ extension StockDetailController: Subscriber
     {
         guard message.entity == stock else { return }
         
-        title = message.title
-        stock.title = message.title
+        switch message.selectionIdentifier
+        {
+        case .ideal:
+            guard let content = Double(message.title) else { fatalError() }
+            stock.idealValue = content
+            tableView.shouldReload = true
+        case .title:
+            title = message.title
+            stock.title = message.title
+        default:
+            break
+        }
+        
         stock.managedObjectContext?.quickSave()
     }
     
@@ -115,8 +126,15 @@ extension StockDetailController: Subscriber
     
     private func handle(_ message: TableViewSelectionMessage)
     {
-        guard let _ = message.tableView as? StockTypeTableView else { return }
-        self.tableView.shouldReload = true
+        switch message.cellModel.selectionIdentifier
+        {
+        case .ideal:
+            router.route(to: .ideal, completion: nil)
+        case .valueType, .transitionType:
+            tableView.shouldReload = true
+        default:
+            break
+        }
     }
     
     private func handle(_ message: LinkSelectionMessage)

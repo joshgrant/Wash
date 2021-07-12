@@ -55,4 +55,6 @@ extension TableHeaderViewModel
     static let transitionType = TableHeaderViewModel(title: "Transition Type".localized)
     static let references = TableHeaderViewModel(title: "References".localized)
     static let links = TableHeaderViewModel(title: "Links".localized)
+    static let ideal = TableHeaderViewModel(title: "Ideal".localized)
+    static let current = TableHeaderViewModel(title: "Current".localized)
 }

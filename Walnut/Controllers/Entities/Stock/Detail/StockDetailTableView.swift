@@ -66,12 +66,12 @@ class StockDetailTableView: TableView
                 detail: stock.dimensionDescription,
                 disclosure: true),
             DetailCellModel(
-                selectionIdentifier: .current,
+                selectionIdentifier: .current(type: stock.amountType),
                 title: "Current".localized,
                 detail: stock.currentDescription,
                 disclosure: true), // TODO: Subtitle
             DetailCellModel(
-                selectionIdentifier: .ideal,
+                selectionIdentifier: .ideal(type: stock.amountType),
                 title: "Ideal".localized,
                 detail: stock.idealDescription,
                 disclosure: true),

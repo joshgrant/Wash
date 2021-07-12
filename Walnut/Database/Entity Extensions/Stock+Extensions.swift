@@ -110,12 +110,22 @@ extension Stock
     
     var idealValue: Double
     {
-        switch ideal
+        get
         {
-        case let i as ValueSource:
-            return i.value
-        default:
-            fatalError("Unhandled source")
+            switch ideal
+            {
+            case let i as ValueSource:
+                return i.value
+            default:
+                fatalError("Unhandled source")
+            }
+        }
+        set
+        {
+            guard let context = self.managedObjectContext else { return }
+            let valueSource = ValueSource(context: context)
+            valueSource.value = newValue
+            self.ideal = valueSource
         }
     }
 }

@@ -47,7 +47,7 @@ class SystemDetailTableView: TableView
                         entity: system))
         
         models.append(InfoCellModel(
-                        selectionIdentifier: .ideal,
+                        selectionIdentifier: .systemIdeal,
                         title: "Ideal".localized,
                         detail: "\(system.percentIdeal)%"))
         

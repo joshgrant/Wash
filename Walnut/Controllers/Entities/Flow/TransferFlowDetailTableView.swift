@@ -48,8 +48,7 @@ class TransferFlowDetailTableView: TableView
             selectionIdentifier: .title,
             text: flow.title,
             placeholder: "Title".localized,
-            entity: flow,
-            stream: stream)
+            entity: flow)
 
         let from = DetailCellModel(
             selectionIdentifier: .fromStock(stock: flow.from),

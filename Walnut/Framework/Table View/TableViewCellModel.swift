@@ -42,10 +42,11 @@ public enum TransitionType
 public enum SelectionIdentifier
 {
     case title
-    case ideal
+    case systemIdeal
+    case ideal(type: AmountType)
+    case current(type: AmountType)
     case type
     case dimension
-    case current
     case net
     
     case baseUnit(isOn: Bool)

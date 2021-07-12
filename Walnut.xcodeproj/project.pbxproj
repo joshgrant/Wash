@@ -181,6 +181,10 @@
 		03FC2C02269C09F900B8CB36 /* SymbolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C01269C09F900B8CB36 /* SymbolController.swift */; };
 		03FC2C04269C0A1A00B8CB36 /* SymbolTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C03269C0A1A00B8CB36 /* SymbolTableView.swift */; };
 		03FC2C07269C82F200B8CB36 /* FlowDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C06269C82F200B8CB36 /* FlowDetailCell.swift */; };
+		03FC2C0A269C976D00B8CB36 /* IdealDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C09269C976D00B8CB36 /* IdealDetailController.swift */; };
+		03FC2C0C269C977700B8CB36 /* IdealDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C0B269C977700B8CB36 /* IdealDetailTableView.swift */; };
+		03FC2C0F269C9E9000B8CB36 /* CurrentDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C0E269C9E9000B8CB36 /* CurrentDetailController.swift */; };
+		03FC2C11269C9E9900B8CB36 /* CurrentDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C10269C9E9900B8CB36 /* CurrentDetailTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -381,6 +385,10 @@
 		03FC2C01269C09F900B8CB36 /* SymbolController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolController.swift; sourceTree = "<group>"; };
 		03FC2C03269C0A1A00B8CB36 /* SymbolTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolTableView.swift; sourceTree = "<group>"; };
 		03FC2C06269C82F200B8CB36 /* FlowDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowDetailCell.swift; sourceTree = "<group>"; };
+		03FC2C09269C976D00B8CB36 /* IdealDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealDetailController.swift; sourceTree = "<group>"; };
+		03FC2C0B269C977700B8CB36 /* IdealDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealDetailTableView.swift; sourceTree = "<group>"; };
+		03FC2C0E269C9E9000B8CB36 /* CurrentDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDetailController.swift; sourceTree = "<group>"; };
+		03FC2C10269C9E9900B8CB36 /* CurrentDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDetailTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -699,6 +707,8 @@
 		03555B8D268842F1006E9EA1 /* Stock */ = {
 			isa = PBXGroup;
 			children = (
+				03FC2C0D269C9E8000B8CB36 /* Current Detail */,
+				03FC2C08269C976200B8CB36 /* Ideal Detail */,
 				0370FED5268A16E3001E099B /* Dimension */,
 				0370FEC8268A0914001E099B /* Value Type */,
 				0370FEC7268A090F001E099B /* Detail */,
@@ -1002,6 +1012,24 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		03FC2C08269C976200B8CB36 /* Ideal Detail */ = {
+			isa = PBXGroup;
+			children = (
+				03FC2C09269C976D00B8CB36 /* IdealDetailController.swift */,
+				03FC2C0B269C977700B8CB36 /* IdealDetailTableView.swift */,
+			);
+			path = "Ideal Detail";
+			sourceTree = "<group>";
+		};
+		03FC2C0D269C9E8000B8CB36 /* Current Detail */ = {
+			isa = PBXGroup;
+			children = (
+				03FC2C0E269C9E9000B8CB36 /* CurrentDetailController.swift */,
+				03FC2C10269C9E9900B8CB36 /* CurrentDetailTableView.swift */,
+			);
+			path = "Current Detail";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1135,6 +1163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03FC2C11269C9E9900B8CB36 /* CurrentDetailTableView.swift in Sources */,
 				03555B5B2686A487006E9EA1 /* TableHeaderView.swift in Sources */,
 				03FC2C04269C0A1A00B8CB36 /* SymbolTableView.swift in Sources */,
 				038CF6642676828E00931595 /* Model.xcdatamodeld in Sources */,
@@ -1145,6 +1174,7 @@
 				03555AAC2683C51B006E9EA1 /* EntityListRouter.swift in Sources */,
 				030B21CE268121AA0038C095 /* SearchControllerDelegate.swift in Sources */,
 				038CF6DF2676840300931595 /* Condition+Extensions.swift in Sources */,
+				03FC2C0A269C976D00B8CB36 /* IdealDetailController.swift in Sources */,
 				03555B0226869E74006E9EA1 /* Stream.swift in Sources */,
 				0370FEDE268A1859001E099B /* TransferFlowDetailResponder.swift in Sources */,
 				03FC2C02269C09F900B8CB36 /* SymbolController.swift in Sources */,
@@ -1201,6 +1231,7 @@
 				038CF6C6267682C700931595 /* ConditionType.swift in Sources */,
 				03FAACBA2698D95600CB7AB6 /* LinkSearchCriteria.swift in Sources */,
 				03FAACB82698D52100CB7AB6 /* LinkCell.swift in Sources */,
+				03FC2C0F269C9E9000B8CB36 /* CurrentDetailController.swift in Sources */,
 				038CF6952676829F00931595 /* Dimension+Extensions.swift in Sources */,
 				03555B452686A487006E9EA1 /* CollectionView.swift in Sources */,
 				030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */,
@@ -1228,6 +1259,7 @@
 				0393A88D269BB57100D2BF81 /* DimensionController.swift in Sources */,
 				03555B682686A487006E9EA1 /* TabBar.swift in Sources */,
 				030B21D126815D930038C095 /* Notifiable.swift in Sources */,
+				03FC2C0C269C977700B8CB36 /* IdealDetailTableView.swift in Sources */,
 				0370FECA268A0940001E099B /* StockValueTypeController.swift in Sources */,
 				03555B582686A487006E9EA1 /* TableViewCellModel.swift in Sources */,
 				030B21A72680E8230038C095 /* Note+Extensions.swift in Sources */,
