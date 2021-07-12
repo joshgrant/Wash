@@ -29,30 +29,19 @@ extension System
     
     var percentIdeal: Int
     {
-        // To find the ideal, we need to figure out the ideal value
-        // for all of the systems underneath + the current one
-        
-        // To find the ideal of the current system, take all of the stocks
-        // and check how ideal they are
-        
-        // To really verify this, we have to have both subsystems
-        // and stocks...
-        // Maybe we should come up with a data generator?
-        
-        let total: Int = 100
+        var totalAmount: Double = 0
+        var totalIdeal: Double = 0
         
         for stock in unwrappedStocks
         {
-            let amount = stock.amountValue
-            let ideal = stock.idealValue
-           // TODO: Calculate the delta
-            print("Amount: \(amount)")
-            print("Ideal: \(ideal)")
+            totalAmount += stock.amountValue
+            totalIdeal += stock.idealValue
         }
         
         // TODO: Recursively call on children systems
         
-        return total
+        let percent = totalAmount / totalIdeal
+        return Int(percent * 100)
     }
 }
 

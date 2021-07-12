@@ -94,17 +94,27 @@ extension Stock
 
 extension Stock
 {
-//    var currentValue: Any? { amount?.computedValue }
-//    var idealValue: Any? { ideal?.computedValue }
+    //    var currentValue: Any? { amount?.computedValue }
+    //    var idealValue: Any? { ideal?.computedValue }
     
     var amountValue: Double
     {
-        switch amount
+        get
         {
-        case let a as ValueSource:
-            return a.value
-        default:
-            fatalError("Unhandled source")
+            switch amount
+            {
+            case let a as ValueSource:
+                return a.value
+            default:
+                fatalError("Unhandled source")
+            }
+        }
+        set
+        {
+            guard let context = self.managedObjectContext else { return }
+            let valueSource = ValueSource(context: context)
+            valueSource.value = newValue
+            self.amount = valueSource
         }
     }
     

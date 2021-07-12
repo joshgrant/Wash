@@ -47,7 +47,8 @@ class StockDetailController: UIViewController, RouterDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
+    deinit
+    {
         unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
@@ -97,9 +98,15 @@ extension StockDetailController: Subscriber
         
         switch message.selectionIdentifier
         {
+        // TODO: Unwrap the type of ideal and current `.ideal(let type):` and use
+        // it to do Double/Bool/Int
         case .ideal:
             guard let content = Double(message.title) else { fatalError() }
             stock.idealValue = content
+            tableView.shouldReload = true
+        case .current:
+            guard let content = Double(message.title) else { fatalError() }
+            stock.amountValue = content
             tableView.shouldReload = true
         case .title:
             title = message.title
@@ -130,6 +137,8 @@ extension StockDetailController: Subscriber
         {
         case .ideal:
             router.route(to: .ideal, completion: nil)
+        case .current:
+            router.route(to: .current, completion: nil)
         case .valueType, .transitionType:
             tableView.shouldReload = true
         default:
