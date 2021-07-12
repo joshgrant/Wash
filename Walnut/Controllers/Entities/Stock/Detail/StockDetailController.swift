@@ -84,12 +84,14 @@ extension StockDetailController: Subscriber
             handle(m)
         case let m as TableViewSelectionMessage:
             handle(m)
+        case let m as LinkSelectionMessage:
+            handle(m)
         default:
             break
         }
     }
     
-    func handle(_ message: TextEditCellMessage)
+    private func handle(_ message: TextEditCellMessage)
     {
         guard message.entity == stock else { return }
         
@@ -99,7 +101,7 @@ extension StockDetailController: Subscriber
     }
     
     // TODO: The same as the system detail
-    func handle(_ message: EntityPinnedMessage)
+    private func handle(_ message: EntityPinnedMessage)
     {
         guard message.entity == stock else { return }
         
@@ -111,9 +113,21 @@ extension StockDetailController: Subscriber
         stock.managedObjectContext?.quickSave()
     }
     
-    func handle(_ message: TableViewSelectionMessage)
+    private func handle(_ message: TableViewSelectionMessage)
     {
         guard let _ = message.tableView as? StockTypeTableView else { return }
         self.tableView.shouldReload = true
+    }
+    
+    private func handle(_ message: LinkSelectionMessage)
+    {
+        guard message.origin == .stockDimension else { return }
+        guard let dimension = message.entity as? Dimension else { return }
+        
+        stock.dimension = dimension
+        dimension.addToDimensionOf(stock)
+        stock.managedObjectContext?.quickSave()
+        
+        tableView.shouldReload = true
     }
 }

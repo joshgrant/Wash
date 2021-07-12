@@ -18,6 +18,7 @@ class LinkSearchController: UIViewController
         case stockFrom
         case stockTo
         case systemStockSearch
+        case stockDimension
     }
     
     // MARK: - Variables

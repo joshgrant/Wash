@@ -33,7 +33,7 @@
     </entity>
     <entity name="Dimension" representedClassName="Dimension" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dimension" inverseName="parent" inverseEntity="Dimension"/>
-        <relationship name="dimensionOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="dimension" inverseEntity="Stock"/>
+        <relationship name="dimensionOf" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="dimension" inverseEntity="Stock"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dimension" inverseName="children" inverseEntity="Dimension"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfDimension" inverseEntity="Symbol"/>
         <relationship name="units" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Unit" inverseName="dimension" inverseEntity="Unit"/>

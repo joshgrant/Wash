@@ -18,7 +18,6 @@ class DimensionTableView: TableView
     init(dimension: Dimension)
     {
         self.dimension = dimension
-//        Foundation.Dimension.baseUnit()
         super.init()
     }
     
@@ -27,22 +26,15 @@ class DimensionTableView: TableView
     override func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            TableViewSection(models: [
-                TextEditCellModel(
-                    selectionIdentifier: .title,
-                    text: dimension.title,
-                    placeholder: "Title".localized,
-                    entity: dimension)
-//                ToggleCellModel(
-//                    selectionIdentifier: .baseUnit(isOn: dimension.parent == nil),
-//                    title: "Base Unit".localized,
-//                    toggleState: dimension.isBase),
-//                DetailCellModel(
-//                    selectionIdentifier: .relativeTo,
-//                    title: "Relative To".localized,
-//                    detail: dimension.parent,
-//                    disclosure: false)
-            ])
+            TableViewSection(
+                header: .info,
+                models: [
+                    TextEditCellModel(
+                        selectionIdentifier: .title,
+                        text: dimension.title,
+                        placeholder: "Title".localized,
+                        entity: dimension)
+                ])
         ])
     }
 }

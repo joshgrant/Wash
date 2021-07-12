@@ -65,7 +65,14 @@ class StockDetailRouter: Router
     
     private func routeToDimension()
     {
+        let linkController = LinkSearchController(
+            origin: .stockDimension,
+            entity: stock,
+            entityType: Dimension.self,
+            context: stock.managedObjectContext)
         
+        let navigationController = UINavigationController(rootViewController: linkController)
+        delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
     }
     
     private func routeToInflow(flow: TransferFlow)
