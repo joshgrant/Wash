@@ -128,17 +128,21 @@ class StockDetailTableView: TableView
     
     func makeInflowSectionModels(stock: Stock) -> [TableViewCellModel]
     {
-        stock
-            .unwrappedInflows
-            .map { flow in
-                // FIXME: Wrong
-                SubtitleDetailCellModel(
-                    selectionIdentifier: .inflow(flow: flow),
-                    title: flow.title,
-                    subtitle: "AMOUNT???",
-                    detail: "Some -> Some",
-                    tall: true)
+        let inflows = stock.unwrappedInflows
+        return inflows.map { flow in
+            
+            guard let flow = flow as? TransferFlow else
+            {
+                fatalError("Can stocks have process flows as well?")
             }
+            
+            return FlowDetailCellModel(
+                selectionIdentifier: .inflow(flow: flow),
+                title: flow.title,
+                from: flow.from?.title ?? "None".localized,
+                to: flow.to?.title ?? "None".localized,
+                detail: String(format: "%.2f", flow.amount))
+        }
     }
     
     // MARK: Outflows

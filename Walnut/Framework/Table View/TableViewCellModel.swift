@@ -63,8 +63,8 @@ public enum SelectionIdentifier
     case flowAmount
     case flowDuration
     case requiresUserCompletion(state: Bool)
-    case inflow(flow: Flow)
-    case outflow(flow: Flow)
+    case inflow(flow: TransferFlow)
+    case outflow(flow: TransferFlow)
     case flow(flow: Flow)
     
     case link(link: Named)

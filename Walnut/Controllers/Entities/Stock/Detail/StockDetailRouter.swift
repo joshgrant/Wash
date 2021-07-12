@@ -16,6 +16,8 @@ class StockDetailRouter: Router
     {
         case valueType
         case dimension
+        case inflow(flow: TransferFlow)
+        case outflow(flow: TransferFlow)
     }
     
     // MARK: - Variables
@@ -48,6 +50,10 @@ class StockDetailRouter: Router
             routeToValueType()
         case .dimension:
             routeToDimension()
+        case .inflow(let flow):
+            routeToInflow(flow: flow)
+        case .outflow(let flow):
+            routeToOutFlow(flow: flow)
         }
     }
     
@@ -60,6 +66,18 @@ class StockDetailRouter: Router
     private func routeToDimension()
     {
         
+    }
+    
+    private func routeToInflow(flow: TransferFlow)
+    {
+        let controller = flow.detailController()
+        delegate?.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    private func routeToOutFlow(flow: TransferFlow)
+    {
+        let controller = flow.detailController()
+        delegate?.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
@@ -86,6 +104,10 @@ extension StockDetailRouter: Subscriber
             route(to: .valueType, completion: nil)
         case .dimension:
             route(to: .dimension, completion: nil)
+        case .inflow(let flow):
+            route(to: .inflow(flow: flow), completion: nil)
+        case .outflow(let flow):
+            route(to: .outflow(flow: flow), completion: nil)
         default:
             return
         }
