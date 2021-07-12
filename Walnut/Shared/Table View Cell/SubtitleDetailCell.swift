@@ -60,10 +60,17 @@ class SubtitleDetailCell: TableViewCell<SubtitleDetailCellModel>
         self.subtitleLabel = UILabel()
         self.detailLabel = UILabel()
         
-        leftStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        subtitleLabel.textColor = .secondaryLabel
+        detailLabel.textColor = .secondaryLabel
+        
+        leftStackView = UIStackView(arrangedSubviews: [
+                                        SpacerView(height: 9),
+                                        titleLabel,
+                                        subtitleLabel,
+                                        SpacerView(height: 9)])
         leftStackView.axis = .vertical
         
-        mainStackView = UIStackView(arrangedSubviews: [leftStackView, detailLabel])
+        mainStackView = UIStackView(arrangedSubviews: [leftStackView, SpacerView(), detailLabel])
         mainStackView.axis = .horizontal
         
         let mainStackViewPaddding = UIEdgeInsets(

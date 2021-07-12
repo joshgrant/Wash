@@ -8,7 +8,18 @@
 import Foundation
 import CoreData
 
-//extension Symbol: Named {}
+extension Symbol: Named
+{
+    public var symbolName: Symbol?
+    {
+        get {
+            return self
+        }
+        set {
+            fatalError("Should never do this")
+        }
+    }
+}
 //extension Symbol: Listable {}
 
 extension Symbol: Searchable

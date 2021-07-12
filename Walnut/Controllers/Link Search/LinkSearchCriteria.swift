@@ -38,7 +38,7 @@ class LinkSearchCriteria
     {
         if searchString.count > 0
         {
-            let format = "name.name CONTAINS[c] %@"
+            let format = "symbolName.name CONTAINS[c] %@"
             return NSPredicate(format: format, searchString)
         }
         else
@@ -50,7 +50,7 @@ class LinkSearchCriteria
     func makeSortDescriptors() -> [NSSortDescriptor]
     {
         return [
-            NSSortDescriptor(key: "name.name", ascending: true)
+            NSSortDescriptor(key: "symbolName.name", ascending: true)
         ]
     }
     

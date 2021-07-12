@@ -113,12 +113,22 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return 44
+        let model = model.models[indexPath.section][indexPath.row]
+        
+        switch model
+        {
+        case is SubtitleDetailCellModel:
+            fallthrough
+        case is FlowDetailCellModel:
+            return 60
+        default:
+            return 44
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return 44
+        return self.tableView(tableView, estimatedHeightForRowAt: indexPath)
     }
     
     // MARK: Header

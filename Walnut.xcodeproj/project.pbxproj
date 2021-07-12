@@ -151,6 +151,8 @@
 		038CF6EA2676865600931595 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E92676865600931595 /* DetailCell.swift */; };
 		0393A887269B9B4E00D2BF81 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */; };
 		0393A889269B9DDF00D2BF81 /* CancelCreationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A888269B9DDF00D2BF81 /* CancelCreationMessage.swift */; };
+		0393A88D269BB57100D2BF81 /* DimensionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A88C269BB57100D2BF81 /* DimensionController.swift */; };
+		0393A88F269BB57B00D2BF81 /* DimensionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A88E269BB57B00D2BF81 /* DimensionTableView.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -176,6 +178,9 @@
 		03FAACE4269B934C00CB7AB6 /* SectionHeaderAddMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACE3269B934C00CB7AB6 /* SectionHeaderAddMessage.swift */; };
 		03FAACE6269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACE5269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift */; };
 		03FAACE8269B96E100CB7AB6 /* SystemDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACE7269B96E100CB7AB6 /* SystemDetailTableView.swift */; };
+		03FC2C02269C09F900B8CB36 /* SymbolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C01269C09F900B8CB36 /* SymbolController.swift */; };
+		03FC2C04269C0A1A00B8CB36 /* SymbolTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C03269C0A1A00B8CB36 /* SymbolTableView.swift */; };
+		03FC2C07269C82F200B8CB36 /* FlowDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FC2C06269C82F200B8CB36 /* FlowDetailCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -346,6 +351,8 @@
 		038CF6E92676865600931595 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		0393A888269B9DDF00D2BF81 /* CancelCreationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelCreationMessage.swift; sourceTree = "<group>"; };
+		0393A88C269BB57100D2BF81 /* DimensionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionController.swift; sourceTree = "<group>"; };
+		0393A88E269BB57B00D2BF81 /* DimensionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionTableView.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -371,6 +378,9 @@
 		03FAACE3269B934C00CB7AB6 /* SectionHeaderAddMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderAddMessage.swift; sourceTree = "<group>"; };
 		03FAACE5269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderSearchMessage.swift; sourceTree = "<group>"; };
 		03FAACE7269B96E100CB7AB6 /* SystemDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailTableView.swift; sourceTree = "<group>"; };
+		03FC2C01269C09F900B8CB36 /* SymbolController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolController.swift; sourceTree = "<group>"; };
+		03FC2C03269C0A1A00B8CB36 /* SymbolTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolTableView.swift; sourceTree = "<group>"; };
+		03FC2C06269C82F200B8CB36 /* FlowDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowDetailCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -802,15 +812,16 @@
 		038CF64B2676756500931595 /* Table View Cell */ = {
 			isa = PBXGroup;
 			children = (
-				0370FEB72688B644001E099B /* Messages */,
+				0370FECD268A0A87001E099B /* CheckmarkCell.swift */,
 				038CF6E92676865600931595 /* DetailCell.swift */,
+				03FC2C06269C82F200B8CB36 /* FlowDetailCell.swift */,
+				03FAACB72698D52100CB7AB6 /* LinkCell.swift */,
+				0370FEBC2688C170001E099B /* RightImageCell.swift */,
+				0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */,
 				031681B4267D66E100F493DA /* TextCell.swift */,
 				030B2182267FB15B0038C095 /* TextEditCell.swift */,
-				0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */,
-				0370FEBC2688C170001E099B /* RightImageCell.swift */,
-				0370FECD268A0A87001E099B /* CheckmarkCell.swift */,
 				0370FEDF268A1E1C001E099B /* ToggleInfoCell.swift */,
-				03FAACB72698D52100CB7AB6 /* LinkCell.swift */,
+				0370FEB72688B644001E099B /* Messages */,
 			);
 			path = "Table View Cell";
 			sourceTree = "<group>";
@@ -917,6 +928,8 @@
 		038CF6F426768F4C00931595 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				03FC2C00269C09E100B8CB36 /* Symbol */,
+				0393A88B269BB56200D2BF81 /* Dimension */,
 				0370FED6268A1824001E099B /* Flow */,
 				030B2199267FE2C70038C095 /* Entity */,
 				03555B8D268842F1006E9EA1 /* Stock */,
@@ -944,6 +957,15 @@
 			path = "Header Messages";
 			sourceTree = "<group>";
 		};
+		0393A88B269BB56200D2BF81 /* Dimension */ = {
+			isa = PBXGroup;
+			children = (
+				0393A88C269BB57100D2BF81 /* DimensionController.swift */,
+				0393A88E269BB57B00D2BF81 /* DimensionTableView.swift */,
+			);
+			path = Dimension;
+			sourceTree = "<group>";
+		};
 		03FAACAE2698CC8900CB7AB6 /* Link Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -961,6 +983,23 @@
 				03FAACBE2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		03FC2C00269C09E100B8CB36 /* Symbol */ = {
+			isa = PBXGroup;
+			children = (
+				03FC2C05269C7DFC00B8CB36 /* Detail */,
+			);
+			path = Symbol;
+			sourceTree = "<group>";
+		};
+		03FC2C05269C7DFC00B8CB36 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				03FC2C01269C09F900B8CB36 /* SymbolController.swift */,
+				03FC2C03269C0A1A00B8CB36 /* SymbolTableView.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1097,6 +1136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03555B5B2686A487006E9EA1 /* TableHeaderView.swift in Sources */,
+				03FC2C04269C0A1A00B8CB36 /* SymbolTableView.swift in Sources */,
 				038CF6642676828E00931595 /* Model.xcdatamodeld in Sources */,
 				038CF6932676829F00931595 /* DynamicSource+Extensions.swift in Sources */,
 				038CF6C4267682C700931595 /* HistoryEvent.swift in Sources */,
@@ -1107,6 +1147,7 @@
 				038CF6DF2676840300931595 /* Condition+Extensions.swift in Sources */,
 				03555B0226869E74006E9EA1 /* Stream.swift in Sources */,
 				0370FEDE268A1859001E099B /* TransferFlowDetailResponder.swift in Sources */,
+				03FC2C02269C09F900B8CB36 /* SymbolController.swift in Sources */,
 				03555B772687CECB006E9EA1 /* EntityListAddButtonMessage.swift in Sources */,
 				03555B5F2686A487006E9EA1 /* UIColor+Extensions.swift in Sources */,
 				038CF61226764DA500931595 /* SettingsController.swift in Sources */,
@@ -1125,6 +1166,7 @@
 				03555B6B2686A487006E9EA1 /* TabBarController.swift in Sources */,
 				03555B462686A487006E9EA1 /* CollectionViewCell.swift in Sources */,
 				038CF6942676829F00931595 /* State+Extensions.swift in Sources */,
+				0393A88F269BB57B00D2BF81 /* DimensionTableView.swift in Sources */,
 				03555B662686A487006E9EA1 /* Bundle+Extensions.swift in Sources */,
 				03555B652686A487006E9EA1 /* NSSet+Extensions.swift in Sources */,
 				038CF69A2676829F00931595 /* RangeSource+Extensions.swift in Sources */,
@@ -1183,6 +1225,7 @@
 				038CF6EA2676865600931595 /* DetailCell.swift in Sources */,
 				03555B4B2686A487006E9EA1 /* Context.swift in Sources */,
 				03555B0526869E7A006E9EA1 /* WrappedSubscriber.swift in Sources */,
+				0393A88D269BB57100D2BF81 /* DimensionController.swift in Sources */,
 				03555B682686A487006E9EA1 /* TabBar.swift in Sources */,
 				030B21D126815D930038C095 /* Notifiable.swift in Sources */,
 				0370FECA268A0940001E099B /* StockValueTypeController.swift in Sources */,
@@ -1234,6 +1277,7 @@
 				038CF6BE267682C700931595 /* DateStock.swift in Sources */,
 				03555B0326869E76006E9EA1 /* Message.swift in Sources */,
 				038CF6462676727500931595 /* DashboardTableView.swift in Sources */,
+				03FC2C07269C82F200B8CB36 /* FlowDetailCell.swift in Sources */,
 				03555AFF26869DE5006E9EA1 /* Router.swift in Sources */,
 				038CF6992676829F00931595 /* History+Extensions.swift in Sources */,
 				030B21A52680E7390038C095 /* Conversion+Extensions.swift in Sources */,

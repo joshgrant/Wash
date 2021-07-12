@@ -133,6 +133,10 @@ extension Entity
         case let n as Note:
             print("Need detail controller for: \(n)")
             return UIViewController()
+        case let d as Dimension:
+            return DimensionController(dimension: d)
+        case let s as Symbol:
+            return SymbolController(symbol: s)
         default:
             assertionFailure("Unhandled entity: \(self)")
             return UIViewController()

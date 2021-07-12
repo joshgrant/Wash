@@ -11,7 +11,7 @@ public typealias NamedEntity = Entity & Named
 
 public protocol Named: Entity
 {
-    var name: Symbol? { get set }
+    var symbolName: Symbol? { get set }
     var unwrappedName: String? { get set }
     var managedObjectContext: Context? { get }
 }
@@ -20,10 +20,10 @@ public extension Named
 {
     var unwrappedName: String? {
         get {
-            name?.name
+            symbolName?.name
         }
         set {
-            if let name = name {
+            if let name = symbolName {
                 name.name = newValue
             } else {
                 guard let context = self.managedObjectContext else {
@@ -31,7 +31,7 @@ public extension Named
                     return
                 }
                 
-                name = Symbol(context: context, name: newValue)
+                symbolName = Symbol(context: context, name: newValue)
             }
         }
     }

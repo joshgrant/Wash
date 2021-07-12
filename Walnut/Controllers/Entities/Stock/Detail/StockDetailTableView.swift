@@ -153,13 +153,19 @@ class StockDetailTableView: TableView
     func makeOutflowSectionModels(stock: Stock) -> [TableViewCellModel]
     {
         let outflows = stock.unwrappedOutflows
-        return outflows.map {
-            SubtitleDetailCellModel(
-                selectionIdentifier: .outflow(flow: $0),
-                title: $0.title,
-                subtitle: "from -> to",
-                detail: "AMOUNT???",
-                tall: true)
+        return outflows.map { flow in
+            
+            guard let flow = flow as? TransferFlow else
+            {
+                fatalError("Can stocks have process flows as well?")
+            }
+            
+            return FlowDetailCellModel(
+                selectionIdentifier: .outflow(flow: flow),
+                title: flow.title,
+                from: flow.from?.title ?? "None".localized,
+                to: flow.to?.title ?? "None".localized,
+                detail: String(format: "%.2f", flow.amount))
         }
     }
     

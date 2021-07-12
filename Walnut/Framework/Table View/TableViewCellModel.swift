@@ -41,13 +41,15 @@ public enum TransitionType
 
 public enum SelectionIdentifier
 {
-    
     case title
     case ideal
     case type
     case dimension
     case current
     case net
+    
+    case baseUnit(isOn: Bool)
+    case relativeTo
     
     case entity(entity: Entity)
     case entityType(type: EntityType)

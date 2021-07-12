@@ -44,16 +44,15 @@ open class TableHeaderViewModel
 
 extension TableHeaderViewModel
 {
-    static let info = TableHeaderViewModel(
-        title: "Info".localized)
-    static let events = TableHeaderViewModel(
-        title: "Events".localized)
-    static let history = TableHeaderViewModel(
-        title: "History".localized)
+    static let info = TableHeaderViewModel(title: "Info".localized)
+    static let events = TableHeaderViewModel(title: "Events".localized)
+    static let history = TableHeaderViewModel(title: "History".localized)
     static let pinned = TableHeaderViewModel(title: "Pinned".localized, icon: .pin)
     static let flows = TableHeaderViewModel(title: "Flows".localized, icon: .flow)
     static let forecast = TableHeaderViewModel(title: "Forecast".localized, icon: .forecast)
     static let priority = TableHeaderViewModel(title: "Priority".localized, icon: .priority)
     static let valueType = TableHeaderViewModel(title: "Value Type".localized)
     static let transitionType = TableHeaderViewModel(title: "Transition Type".localized)
+    static let references = TableHeaderViewModel(title: "References".localized)
+    static let links = TableHeaderViewModel(title: "Links".localized)
 }

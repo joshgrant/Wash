@@ -129,8 +129,10 @@ extension TransferFlowDetailController: Subscriber
         {
         case .stockFrom:
             flow.from = stock
+            stock.addToOutflows(flow)
         case .stockTo:
             flow.to = stock
+            stock.addToInflows(flow)
         default:
             break
         }
