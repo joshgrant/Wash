@@ -20,12 +20,19 @@ extension Stock
         
         let value = ValueSource(context: context)
         value.value = 0
+        amount = value
         
         let idealValue = ValueSource(context: context)
         idealValue.value = 0
-        
-        amount = value
         ideal = idealValue
+        
+        let minimumValue = ValueSource(context: context)
+        minimumValue.value = 0
+        minimum = minimumValue
+        
+        let maximumValue = ValueSource(context: context)
+        maximumValue.value = 0
+        maximum = maximumValue
     }
 }
 
@@ -103,8 +110,10 @@ extension Stock
         {
             switch amount
             {
-            case let a as ValueSource:
-                return a.value
+            case let s as ValueSource:
+                return s.value
+            case is InfiniteSource:
+                return Double.infinity
             default:
                 fatalError("Unhandled source")
             }
@@ -124,8 +133,10 @@ extension Stock
         {
             switch ideal
             {
-            case let i as ValueSource:
-                return i.value
+            case let s as ValueSource:
+                return s.value
+            case is InfiniteSource:
+                return Double.infinity
             default:
                 fatalError("Unhandled source")
             }
@@ -136,6 +147,52 @@ extension Stock
             let valueSource = ValueSource(context: context)
             valueSource.value = newValue
             self.ideal = valueSource
+        }
+    }
+    
+    var minimumValue: Double
+    {
+        get
+        {
+            switch minimum
+            {
+            case let s as ValueSource:
+                return s.value
+            case is InfiniteSource:
+                return -Double.infinity
+            default:
+                fatalError("Unhandled source")
+            }
+        }
+        set
+        {
+            guard let context = self.managedObjectContext else { return }
+            let valueSource = ValueSource(context: context)
+            valueSource.value = newValue
+            self.minimum = valueSource
+        }
+    }
+    
+    var maximumValue: Double
+    {
+        get
+        {
+            switch maximum
+            {
+            case let s as ValueSource:
+                return s.value
+            case is InfiniteSource:
+                return Double.infinity
+            default:
+                fatalError("Unhandled source")
+            }
+        }
+        set
+        {
+            guard let context = self.managedObjectContext else { return }
+            let valueSource = ValueSource(context: context)
+            valueSource.value = newValue
+            self.maximum = valueSource
         }
     }
 }
@@ -167,5 +224,15 @@ extension Stock
         // Uses the history to figure out
         // a timeframe and a value
         return "Need to compute"
+    }
+    
+    var minimumDescription: String
+    {
+        return String(format: "%.2f", minimumValue)
+    }
+    
+    var maximumDescription: String
+    {
+        return String(format: "%.2f", maximumValue)
     }
 }

@@ -27,21 +27,34 @@ extension System
     var unwrappedEvents: [Event] { unwrapped(\System.events) }
     var unwrappedNotes: [Note] { unwrapped(\System.notes) }
     
+    // TODO: Need to weight the stock.amountValues / idealValue evenly?
     var percentIdeal: Int
     {
-        var totalAmount: Double = 0
-        var totalIdeal: Double = 0
+        let count = Double(unwrappedStocks.count)
+        var total: Double = 0
         
         for stock in unwrappedStocks
         {
-            totalAmount += stock.amountValue
-            totalIdeal += stock.idealValue
+            total += calculateIdealPercent(stock: stock)
         }
         
-        // TODO: Recursively call on children systems
+        print(total)
         
-        let percent = totalAmount / totalIdeal
-        return Int(percent * 100)
+        return Int(total / count)
+    }
+    
+    /// Returns a value from 0 to 100
+    func calculateIdealPercent(stock: Stock) -> Double
+    {
+        let amount = stock.amountValue
+        let ideal = stock.idealValue
+        
+        if ideal == 0
+        {
+            return abs(ideal - amount)
+        }
+        
+        return ideal - amount / ideal
     }
 }
 

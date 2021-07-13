@@ -15,8 +15,7 @@ public func makeDateSourcesPredicate() -> NSPredicate
 
 public func makeDateSourcesSortDescriptors() -> [NSSortDescriptor]
 {
-    // We are sorting by `id` but it's unnecessary - just a requirement of a fetchedResultsController
-    [NSSortDescriptor(keyPath: \DynamicSource.id, ascending: true)]
+    [NSSortDescriptor(keyPath: \DynamicSource.createdDate, ascending: true)]
 }
 
 public func makeDateSourcesFetchRequest() -> NSFetchRequest<DynamicSource>

@@ -41,7 +41,11 @@ public extension Container
     
     func loadPersistentStores() throws
     {
-        loadPersistentStores { description, error in
+        loadPersistentStores { [unowned self] description, error in
+            
+            self.context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+            ContextPopulator.populate(context: self.context)
+            
             if let error = error as NSError?
             {
                 fatalError("\(error.userInfo)")

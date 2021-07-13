@@ -50,8 +50,7 @@ public extension Entity
     
     static func makePinnedObjectsSortDescriptors() -> [NSSortDescriptor]
     {
-        // TODO: Better keypath for sorting..
-        [NSSortDescriptor(keyPath: \Entity.id, ascending: false)]
+        [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: false)]
     }
     
     static func makePinnedObjectsFetchRequest(context: Context) -> NSFetchRequest<NSFetchRequestResult>

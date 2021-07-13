@@ -30,7 +30,6 @@ class StockDetailTableView: TableView
             makeStatesSection(stock: stock),
             makeInflowSection(stock: stock),
             makeOutflowSection(stock: stock),
-            makeEventsSection(stock: stock),
             makeNotesSection(stock: stock)
         ]
         
@@ -49,6 +48,33 @@ class StockDetailTableView: TableView
     
     func makeInfoSectionModels(stock: Stock) -> [TableViewCellModel]
     {
+        if stock.uniqueID == ContextPopulator.sinkId || stock.uniqueID == ContextPopulator.sourceId
+        {
+            return makeSinkSourceInfoSectionModels(stock: stock)
+        }
+        else
+        {
+            return makeDefaultInfoSectionModels(stock: stock)
+        }
+    }
+    
+    private func makeSinkSourceInfoSectionModels(stock: Stock) -> [TableViewCellModel]
+    {
+        [
+            TextCellModel(
+                selectionIdentifier: .title,
+                title: stock.title,
+                disclosureIndicator: false),
+            DetailCellModel(
+                selectionIdentifier: .infinity,
+                title: "Value".localized,
+                detail: "Infinity".localized,
+                disclosure: false)
+        ]
+    }
+    
+    private func makeDefaultInfoSectionModels(stock: Stock) -> [TableViewCellModel]
+    {
         [
             TextEditCellModel(
                 selectionIdentifier: .title,
@@ -64,6 +90,16 @@ class StockDetailTableView: TableView
                 selectionIdentifier: .dimension,
                 title: "Dimension".localized,
                 detail: stock.dimensionDescription,
+                disclosure: true),
+            DetailCellModel(
+                selectionIdentifier: .minimum,
+                title: "Minimum".localized,
+                detail: stock.minimumDescription,
+                disclosure: true),
+            DetailCellModel(
+                selectionIdentifier: .maximum,
+                title: "Maximum".localized,
+                detail: stock.maximumDescription,
                 disclosure: true),
             DetailCellModel(
                 selectionIdentifier: .current(type: stock.amountType),
@@ -119,11 +155,15 @@ class StockDetailTableView: TableView
     
     // MARK: Inflows
     
-    func makeInflowSection(stock: Stock) -> TableViewSection
+    func makeInflowSection(stock: Stock) -> TableViewSection?
     {
-        TableViewSection(
+        let models = makeInflowSectionModels(stock: stock)
+        
+        if models.count == 0 { return nil }
+        
+        return TableViewSection(
             header: InflowsHeaderViewModel(),
-            models: makeInflowSectionModels(stock: stock))
+            models: models)
     }
     
     func makeInflowSectionModels(stock: Stock) -> [TableViewCellModel]
@@ -147,11 +187,15 @@ class StockDetailTableView: TableView
     
     // MARK: Outflows
     
-    func makeOutflowSection(stock: Stock) -> TableViewSection
+    func makeOutflowSection(stock: Stock) -> TableViewSection?
     {
-        TableViewSection(
+        let models = makeOutflowSectionModels(stock: stock)
+        
+        if models.count == 0 { return nil }
+        
+        return TableViewSection(
             header: OutflowsHeaderViewModel(),
-            models: makeOutflowSectionModels(stock: stock))
+            models: models)
     }
     
     func makeOutflowSectionModels(stock: Stock) -> [TableViewCellModel]
@@ -170,29 +214,6 @@ class StockDetailTableView: TableView
                 from: flow.from?.title ?? "None".localized,
                 to: flow.to?.title ?? "None".localized,
                 detail: String(format: "%.2f", flow.amount))
-        }
-    }
-    
-    // MARK: Events
-    
-    func makeEventsSection(stock: Stock) -> TableViewSection
-    {
-        TableViewSection(
-            header: EventsHeaderViewModel(),
-            models: makeEventSectionModels(stock: stock))
-    }
-    
-    func makeEventSectionModels(stock: Stock) -> [TableViewCellModel]
-    {
-        let events = stock.unwrappedEvents
-        return events.map {
-            let flowCount = $0.flows?.count ?? 0
-            let flowSubtitle = "\(flowCount) flow\(flowCount == 1 ? "" : "s")"
-            return DetailCellModel(
-                selectionIdentifier: .event(event: $0),
-                title: $0.title,
-                detail: flowSubtitle,
-                disclosure: true)
         }
     }
     

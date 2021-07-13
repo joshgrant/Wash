@@ -13,12 +13,6 @@ public extension Context
 {
     // MARK: - Functions
     
-    /// At some point I'll want to override this or have a better entry point for tests...
-    func populate()
-    {
-        
-    }
-    
     func quickSave()
     {
         guard hasChanges else { return }
