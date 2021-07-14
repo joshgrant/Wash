@@ -14,6 +14,12 @@ class NewStockModel
     var stockType = ValueType.boolean
     var isStateMachine: Bool = false
     
+    var currentBool: Bool?
+    var idealBool: Bool?
+    
+    var minimum: Double = 0
+    var maximum: Double = 100
+    
     var valid: Bool
     {
         return title != nil

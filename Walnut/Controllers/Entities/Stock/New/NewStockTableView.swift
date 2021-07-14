@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// TODO: Disable state machine if boolean is true
+
 class NewStockTableView: TableView
 {
     // MARK: - Variables

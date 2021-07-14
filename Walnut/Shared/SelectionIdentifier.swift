@@ -58,4 +58,8 @@ public enum SelectionIdentifier
     
     case valueType(type: ValueType) // Also used in NewStock
     case transitionType(type: TransitionType)
+    
+    // Current Ideal Boolean
+    case currentBool(state: Bool)
+    case idealBool(state: Bool)
 }

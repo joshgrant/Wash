@@ -8,12 +8,13 @@
 import Foundation
 import UIKit
 
-class NewStockController: UIViewController
+class NewStockController: UIViewController, RouterDelegate
 {
     // MARK: - Variables
     
     var id = UUID()
     
+    var router: NewStockRouter
     var newStockModel: NewStockModel
     var tableView: NewStockTableView
     
@@ -28,8 +29,12 @@ class NewStockController: UIViewController
         let newStockModel = NewStockModel()
         self.newStockModel = newStockModel
         
+        router = NewStockRouter(newStockModel: newStockModel, context: context)
+        
         tableView = NewStockTableView(newStockModel: newStockModel)
         super.init(nibName: nil, bundle: nil)
+        router.delegate = self
+        
         subscribe(to: AppDelegate.shared.mainStream)
         
         view.embed(tableView)
@@ -47,7 +52,8 @@ class NewStockController: UIViewController
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
+    deinit
+    {
         unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
@@ -61,17 +67,32 @@ class NewStockController: UIViewController
     
     func routeToNext()
     {
-        print("Routing to next!")
-    }
-    
-    func routeToUnitSearch()
-    {
-        let linkController = LinkSearchController(
-            origin: .newStock,
-            entityType: Unit.self,
-            context: context,
-            hasAddButton: true)
-        navigationController?.pushViewController(linkController, animated: true)
+        if newStockModel.stockType == .boolean
+        {
+            // route to current/ideal state
+            router.route(
+                to: .currentIdealState,
+                completion: nil)
+        }
+        else if newStockModel.isStateMachine
+        {
+            router.route(
+                to: .states,
+                completion: nil)
+        }
+        else if newStockModel.stockType == .percent
+        {
+            router.route(
+                to: .currentIdealState,
+                completion: nil)
+        }
+        else
+        {
+             // Route to min/max controller
+            router.route(
+                to: .minMax,
+                completion: nil)
+        }
     }
 }
 
@@ -95,7 +116,7 @@ extension NewStockController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .newStockUnit:
-            routeToUnitSearch()
+            router.route(to: .unitSearch, completion: nil)
         case .valueType(let type):
             newStockModel.stockType = type
             tableView.reload(shouldReloadTableView: false)
@@ -111,6 +132,6 @@ extension NewStockController: Subscriber
         guard let unit = message.link as? Unit else { fatalError() }
         newStockModel.unit = unit
         tableView.shouldReload = true
-        navigationController?.popViewController(animated: true)
+        router.route(to: .back, completion: nil)
     }
 }

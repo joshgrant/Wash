@@ -159,6 +159,11 @@
 		03BF0BD7269F455100A866E5 /* NewUnitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BD6269F455100A866E5 /* NewUnitModel.swift */; };
 		03BF0BD9269F51E700A866E5 /* NewStockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BD8269F51E700A866E5 /* NewStockModel.swift */; };
 		03BF0BDB269F54BA00A866E5 /* ValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BDA269F54BA00A866E5 /* ValueType.swift */; };
+		03BF0BDD269F5CE200A866E5 /* NewStockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BDC269F5CE200A866E5 /* NewStockRouter.swift */; };
+		03BF0BE2269F5ED900A866E5 /* CurrentIdealController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE1269F5ED900A866E5 /* CurrentIdealController.swift */; };
+		03BF0BE4269F648500A866E5 /* CurrentIdealBooleanTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE3269F648500A866E5 /* CurrentIdealBooleanTableView.swift */; };
+		03BF0BE6269F648E00A866E5 /* CurrentIdealStateTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE5269F648E00A866E5 /* CurrentIdealStateTableView.swift */; };
+		03BF0BE8269F649900A866E5 /* CurrentIdealNumericTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE7269F649900A866E5 /* CurrentIdealNumericTableView.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -370,6 +375,11 @@
 		03BF0BD6269F455100A866E5 /* NewUnitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUnitModel.swift; sourceTree = "<group>"; };
 		03BF0BD8269F51E700A866E5 /* NewStockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStockModel.swift; sourceTree = "<group>"; };
 		03BF0BDA269F54BA00A866E5 /* ValueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueType.swift; sourceTree = "<group>"; };
+		03BF0BDC269F5CE200A866E5 /* NewStockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStockRouter.swift; sourceTree = "<group>"; };
+		03BF0BE1269F5ED900A866E5 /* CurrentIdealController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentIdealController.swift; sourceTree = "<group>"; };
+		03BF0BE3269F648500A866E5 /* CurrentIdealBooleanTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentIdealBooleanTableView.swift; sourceTree = "<group>"; };
+		03BF0BE5269F648E00A866E5 /* CurrentIdealStateTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentIdealStateTableView.swift; sourceTree = "<group>"; };
+		03BF0BE7269F649900A866E5 /* CurrentIdealNumericTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentIdealNumericTableView.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -988,9 +998,13 @@
 		03BF0BBE269DF5D600A866E5 /* New */ = {
 			isa = PBXGroup;
 			children = (
+				03BF0BE0269F5EB700A866E5 /* States */,
+				03BF0BDF269F5EAD00A866E5 /* Min Max Value */,
+				03BF0BDE269F5EA300A866E5 /* Current Ideal State */,
 				03BF0BBF269DF5E200A866E5 /* NewStockController.swift */,
 				03BF0BC1269DF5EB00A866E5 /* NewStockTableView.swift */,
 				03BF0BD8269F51E700A866E5 /* NewStockModel.swift */,
+				03BF0BDC269F5CE200A866E5 /* NewStockRouter.swift */,
 			);
 			path = New;
 			sourceTree = "<group>";
@@ -1011,6 +1025,31 @@
 				03BF0BD6269F455100A866E5 /* NewUnitModel.swift */,
 			);
 			path = New;
+			sourceTree = "<group>";
+		};
+		03BF0BDE269F5EA300A866E5 /* Current Ideal State */ = {
+			isa = PBXGroup;
+			children = (
+				03BF0BE1269F5ED900A866E5 /* CurrentIdealController.swift */,
+				03BF0BE3269F648500A866E5 /* CurrentIdealBooleanTableView.swift */,
+				03BF0BE5269F648E00A866E5 /* CurrentIdealStateTableView.swift */,
+				03BF0BE7269F649900A866E5 /* CurrentIdealNumericTableView.swift */,
+			);
+			path = "Current Ideal State";
+			sourceTree = "<group>";
+		};
+		03BF0BDF269F5EAD00A866E5 /* Min Max Value */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Min Max Value";
+			sourceTree = "<group>";
+		};
+		03BF0BE0269F5EB700A866E5 /* States */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = States;
 			sourceTree = "<group>";
 		};
 		03FAACAE2698CC8900CB7AB6 /* Link Search */ = {
@@ -1216,6 +1255,7 @@
 				0370FEDE268A1859001E099B /* TransferFlowDetailResponder.swift in Sources */,
 				03FC2C02269C09F900B8CB36 /* SymbolController.swift in Sources */,
 				03555B772687CECB006E9EA1 /* EntityListAddButtonMessage.swift in Sources */,
+				03BF0BDD269F5CE200A866E5 /* NewStockRouter.swift in Sources */,
 				03555B5F2686A487006E9EA1 /* UIColor+Extensions.swift in Sources */,
 				038CF61226764DA500931595 /* SettingsController.swift in Sources */,
 				03FAACD8269B610E00CB7AB6 /* BarButtonItem.swift in Sources */,
@@ -1233,6 +1273,7 @@
 				0370FEB92688B656001E099B /* TextEditCellMessage.swift in Sources */,
 				03BF0BC0269DF5E200A866E5 /* NewStockController.swift in Sources */,
 				03555B6B2686A487006E9EA1 /* TabBarController.swift in Sources */,
+				03BF0BE4269F648500A866E5 /* CurrentIdealBooleanTableView.swift in Sources */,
 				03555B462686A487006E9EA1 /* CollectionViewCell.swift in Sources */,
 				038CF6942676829F00931595 /* State+Extensions.swift in Sources */,
 				03555B662686A487006E9EA1 /* Bundle+Extensions.swift in Sources */,
@@ -1241,6 +1282,7 @@
 				038CF69A2676829F00931595 /* RangeSource+Extensions.swift in Sources */,
 				038CF6D8267683EE00931595 /* Stock+Extensions.swift in Sources */,
 				03555B8F26884308006E9EA1 /* StockDetailController.swift in Sources */,
+				03BF0BE8269F649900A866E5 /* CurrentIdealNumericTableView.swift in Sources */,
 				03FAACC62699ECDE00CB7AB6 /* TableViewRow.swift in Sources */,
 				0370FEC12688CAE2001E099B /* LibraryTableViewRouter.swift in Sources */,
 				03BF0BCA269F2E3B00A866E5 /* NewUnitTableView.swift in Sources */,
@@ -1330,6 +1372,7 @@
 				03555B0726869E7E006E9EA1 /* Identifier.swift in Sources */,
 				03FAACD6269B575C00CB7AB6 /* EntityListTableView.swift in Sources */,
 				03555B7D2687D160006E9EA1 /* EntityListCellMessage.swift in Sources */,
+				03BF0BE6269F648E00A866E5 /* CurrentIdealStateTableView.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				03FAACCC2699ED1500CB7AB6 /* TableViewModel.swift in Sources */,
 				03FAACBF2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift in Sources */,
@@ -1368,6 +1411,7 @@
 				03555B572686A487006E9EA1 /* TableViewCell.swift in Sources */,
 				03FAACB02698CCA500CB7AB6 /* LinkSearchController.swift in Sources */,
 				0393A887269B9B4E00D2BF81 /* UINavigationController+Extensions.swift in Sources */,
+				03BF0BE2269F5ED900A866E5 /* CurrentIdealController.swift in Sources */,
 				03BF0BD9269F51E700A866E5 /* NewStockModel.swift in Sources */,
 				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,

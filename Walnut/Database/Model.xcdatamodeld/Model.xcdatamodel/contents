@@ -7,6 +7,9 @@
         <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="blocks" inverseEntity="Note"/>
         <relationship name="tintColor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Color" inverseName="tintColorOf" inverseEntity="Color"/>
     </entity>
+    <entity name="BooleanSource" representedClassName="BooleanSource" parentEntity="Source" syncable="YES" codeGenerationType="class">
+        <attribute name="value" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Color" representedClassName="Color" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="brightness" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="hue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -168,6 +171,7 @@
         <relationship name="systems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="System" inverseName="stocks" inverseEntity="System"/>
         <relationship name="transferFlowsFrom" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TransferFlow" inverseName="from" inverseEntity="TransferFlow"/>
         <relationship name="transferFlowsTo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TransferFlow" inverseName="to" inverseEntity="TransferFlow"/>
+        <relationship name="unit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="stocks" inverseEntity="Unit"/>
         <relationship name="validStates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="State" inverseName="stocks" inverseEntity="State"/>
     </entity>
     <entity name="StockSource" representedClassName="StockSource" parentEntity="Source" syncable="YES" codeGenerationType="class">
@@ -219,6 +223,7 @@
         <attribute name="isBase" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="derivedUnits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Unit" inverseName="relativeTo" inverseEntity="Unit"/>
         <relationship name="relativeTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="derivedUnits" inverseEntity="Unit"/>
+        <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="unit" inverseEntity="Stock"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfUnit" inverseEntity="Symbol"/>
     </entity>
     <entity name="ValueSource" representedClassName="ValueSource" parentEntity="Source" syncable="YES" codeGenerationType="class">
@@ -245,7 +250,7 @@
         <element name="RangeSource" positionX="9" positionY="54" width="128" height="73"/>
         <element name="Source" positionX="0" positionY="135" width="128" height="134"/>
         <element name="State" positionX="0" positionY="135" width="128" height="89"/>
-        <element name="Stock" positionX="18" positionY="63" width="128" height="344"/>
+        <element name="Stock" positionX="18" positionY="63" width="128" height="359"/>
         <element name="StockSource" positionX="36" positionY="171" width="128" height="58"/>
         <element name="Symbol" positionX="27" positionY="72" width="128" height="209"/>
         <element name="System" positionX="36" positionY="81" width="128" height="149"/>
@@ -254,6 +259,7 @@
         <element name="TextBlock" positionX="-9" positionY="36" width="128" height="88"/>
         <element name="TransferFlow" positionX="-9" positionY="36" width="128" height="133"/>
         <element name="ValueSource" positionX="9" positionY="135" width="128" height="73"/>
-        <element name="Unit" positionX="0" positionY="144" width="128" height="104"/>
+        <element name="Unit" positionX="0" positionY="144" width="128" height="119"/>
+        <element name="BooleanSource" positionX="9" positionY="153" width="128" height="44"/>
     </elements>
 </model>
