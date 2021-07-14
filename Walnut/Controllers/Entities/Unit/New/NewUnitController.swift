@@ -93,6 +93,10 @@ extension NewUnitController: Subscriber
             handle(m)
         case let m as RightEditCellMessage:
             handle(m)
+        case let m as TableViewSelectionMessage:
+            handle(m)
+        case let m as LinkSelectionMessage:
+            handle(m)
         default:
             break
         }
@@ -106,5 +110,31 @@ extension NewUnitController: Subscriber
     private func handle(_ message: RightEditCellMessage)
     {
         navigationItem.rightBarButtonItem?.isEnabled = newUnitModel.valid
+    }
+    
+    private func handle(_ message: TableViewSelectionMessage)
+    {
+        let linkController = LinkSearchController(
+            origin: .newUnit(id: id),
+            entityType: Unit.self,
+            context: context,
+            hasAddButton: true)
+        
+        navigationController?.pushViewController(linkController, animated: true)
+    }
+    
+    private func handle(_ message: LinkSelectionMessage)
+    {
+        switch message.origin
+        {
+        case .newUnit(let id):
+            guard id == self.id else { return }
+            guard let unit = message.link as? Unit else { fatalError() }
+            newUnitModel.relativeTo = unit
+            tableView.shouldReload = true
+            navigationController?.popViewController(animated: true)
+        default:
+            break
+        }
     }
 }

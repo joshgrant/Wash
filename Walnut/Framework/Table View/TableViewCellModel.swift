@@ -7,23 +7,6 @@
 
 import UIKit
 
-public enum ValueType
-{
-    case boolean
-    case decimal
-    case integer
-    
-    var title: String
-    {
-        switch self
-        {
-        case .boolean: return "Boolean".localized
-        case .decimal: return "Decimal".localized
-        case .integer: return "Integer".localized
-        }
-    }
-}
-
 public enum TransitionType
 {
     case continuous

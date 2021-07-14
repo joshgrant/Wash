@@ -69,10 +69,58 @@
             filePath = "Walnut/Controllers/Link Search/LinkSearchControllerTableViewManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "LinkSearchControllerTableViewManager"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C626F398-754A-4F14-9BD5-D57023C582FD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Walnut/Controllers/Entities/Stock/New/NewStockTableView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "makeValueTypeSection(model:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C626F398-754A-4F14-9BD5-D57023C582FD - e7ea0f9746004e42"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Walnut.NewStockTableView.makeValueTypeSection(model: Walnut.NewStockModel) -&gt; Walnut.TableViewSection"
+                  moduleName = "Walnut"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/Applications/Xcode/New%20Projects/Walnut/Walnut/Controllers/Entities/Stock/New/NewStockTableView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "C626F398-754A-4F14-9BD5-D57023C582FD - 754499d0a3e9b97c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Walnut.ValueType) -&gt; Walnut.TableViewCellModel in Walnut.NewStockTableView.makeValueTypeSection(model: Walnut.NewStockModel) -&gt; Walnut.TableViewSection"
+                  moduleName = "Walnut"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/Applications/Xcode/New%20Projects/Walnut/Walnut/Controllers/Entities/Stock/New/NewStockTableView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

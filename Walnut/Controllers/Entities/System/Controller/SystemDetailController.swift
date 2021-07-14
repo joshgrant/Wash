@@ -229,7 +229,7 @@ extension SystemDetailController: Subscriber
     
     private func handle(_ message: LinkSelectionMessage)
     {
-        if message.origin == .systemStockSearch
+        if case .systemStockSearch = message.origin
         {
             let link = message.link as! Stock
             system.addToStocks(link)

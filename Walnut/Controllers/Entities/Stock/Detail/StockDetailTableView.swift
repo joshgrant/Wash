@@ -97,12 +97,12 @@ class StockDetailTableView: TableView
                 detail: stock.maximumDescription,
                 disclosure: true),
             DetailCellModel(
-                selectionIdentifier: .current(type: stock.amountType),
+                selectionIdentifier: .current(type: stock.valueType),
                 title: "Current".localized,
                 detail: stock.currentDescription,
                 disclosure: true), // TODO: Subtitle
             DetailCellModel(
-                selectionIdentifier: .ideal(type: stock.amountType),
+                selectionIdentifier: .ideal(type: stock.valueType),
                 title: "Ideal".localized,
                 detail: stock.idealDescription,
                 disclosure: true),
@@ -115,17 +115,7 @@ class StockDetailTableView: TableView
     
     func stockTypeDetail(stock: Stock) -> String
     {
-        var amountType: String
-        
-        switch stock.amountType
-        {
-        case .boolean:
-            amountType = "Boolean".localized
-        case .integer:
-            amountType = "Integer".localized
-        case .decimal:
-            amountType = "Decimal".localized
-        }
+        var amountType: String = stock.valueType.description
         
         amountType += ", "
         

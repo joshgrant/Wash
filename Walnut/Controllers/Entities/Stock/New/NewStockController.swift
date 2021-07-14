@@ -14,6 +14,7 @@ class NewStockController: UIViewController
     
     var id = UUID()
     
+    var newStockModel: NewStockModel
     var tableView: NewStockTableView
     
     weak var context: Context?
@@ -24,7 +25,10 @@ class NewStockController: UIViewController
     {
         self.context = context
         
-        tableView = NewStockTableView()
+        let newStockModel = NewStockModel()
+        self.newStockModel = newStockModel
+        
+        tableView = NewStockTableView(newStockModel: newStockModel)
         super.init(nibName: nil, bundle: nil)
         subscribe(to: AppDelegate.shared.mainStream)
         
@@ -73,6 +77,8 @@ extension NewStockController: Subscriber
         {
         case let m as TableViewSelectionMessage:
             handle(m)
+        case let m as LinkSelectionMessage:
+            handle(m)
         default:
             break
         }
@@ -80,11 +86,25 @@ extension NewStockController: Subscriber
     
     private func handle(_ message: TableViewSelectionMessage)
     {
-        guard case .newStockUnit = message.cellModel.selectionIdentifier else
+        switch message.cellModel.selectionIdentifier
         {
-            return
+        case .newStockUnit:
+            routeToUnitSearch()
+        case .valueType(let type):
+            newStockModel.stockType = type
+            tableView.reload(shouldReloadTableView: false)
+            tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+        default:
+            break
         }
-        
-        routeToUnitSearch()
+    }
+    
+    private func handle(_ message: LinkSelectionMessage)
+    {
+        guard case .newStock = message.origin else { return }
+        guard let unit = message.link as? Unit else { fatalError() }
+        newStockModel.unit = unit
+        tableView.shouldReload = true
+        navigationController?.popViewController(animated: true)
     }
 }

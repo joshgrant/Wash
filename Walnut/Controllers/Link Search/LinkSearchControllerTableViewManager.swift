@@ -33,12 +33,10 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate
     
     init(
         origin: LinkSearchController.Origin,
-//        entityToLinkTo: Entity,
         entityLinkType: NamedEntity.Type,
         context: Context?)
     {
         self.origin = origin
-//        self.entity = entityToLinkTo
         self.tableView = UITableView(frame: .zero, style: .plain)
         self.context = context
         

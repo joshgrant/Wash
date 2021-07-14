@@ -8,57 +8,43 @@
 import Foundation
 import UIKit
 
-public enum NewStockType: CaseIterable, CustomStringConvertible
-{
-    case boolean
-    case integer
-    case decimal
-    case percent
-    
-    public var description: String
-    {
-        switch self
-        {
-        case .boolean:
-            return "Boolean".localized
-        case .integer:
-            return "Integer".localized
-        case .decimal:
-            return "Decimal".localized
-        case .percent:
-            return "Percent".localized
-        }
-    }
-}
-
 class NewStockTableView: TableView
 {
-    var title: String?
-    var unit: Unit?
-    var stockType = NewStockType.boolean
-    var isStateMachine: Bool = false
+    // MARK: - Variables
+    
+    var newStockModel: NewStockModel
+    
+    // MARK: - Initialization
+    
+    init(newStockModel: NewStockModel)
+    {
+        self.newStockModel = newStockModel
+        super.init()
+    }
+    
+    // MARK: - Model
     
     override func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeInfoSection(),
-            makeValueTypeSection(),
-            makeStateMachineSection()
+            makeInfoSection(model: newStockModel),
+            makeValueTypeSection(model: newStockModel),
+            makeStateMachineSection(model: newStockModel)
         ])
     }
     
-    func makeInfoSection() -> TableViewSection
+    func makeInfoSection(model: NewStockModel) -> TableViewSection
     {
         let models: [TableViewCellModel] = [
             TextEditCellModel(
                 selectionIdentifier: .title,
-                text: title,
+                text: model.title,
                 placeholder: "Title".localized,
                 entity: nil),
             DetailCellModel(
                 selectionIdentifier: .newStockUnit,
                 title: "Unit".localized,
-                detail: unit?.title ?? "None".localized,
+                detail: model.unit?.title ?? "None".localized,
                 disclosure: true)
             
         ]
@@ -68,13 +54,13 @@ class NewStockTableView: TableView
             models: models)
     }
     
-    func makeValueTypeSection() -> TableViewSection
+    func makeValueTypeSection(model: NewStockModel) -> TableViewSection
     {
-        let models: [TableViewCellModel] = NewStockType.allCases.map { type in
+        let models: [TableViewCellModel] = ValueType.allCases.map { type in
             CheckmarkCellModel(
-                selectionIdentifier: .newStockType(type: type),
+                selectionIdentifier: .valueType(type: type),
                 title: type.description,
-                checked: type == stockType)
+                checked: type == model.stockType)
         }
         
         return TableViewSection(
@@ -82,13 +68,13 @@ class NewStockTableView: TableView
             models: models)
     }
     
-    func makeStateMachineSection() -> TableViewSection
+    func makeStateMachineSection(model: NewStockModel) -> TableViewSection
     {
         let models: [TableViewCellModel] = [
             ToggleCellModel(
                 selectionIdentifier: .stateMachine,
                 title: "Uses state machine".localized,
-                toggleState: isStateMachine)
+                toggleState: model.isStateMachine)
         ]
         
         return TableViewSection(

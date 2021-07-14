@@ -11,15 +11,14 @@ public enum SelectionIdentifier
 {
     case title
     case systemIdeal
-    case ideal(type: AmountType)
-    case current(type: AmountType)
+    case ideal(type: ValueType)
+    case current(type: ValueType)
     case infinity
     case type
     case dimension
     case net
     
     case newStockUnit
-    case newStockType(type: NewStockType)
     case stateMachine
     
     case newUnitName
@@ -57,6 +56,6 @@ public enum SelectionIdentifier
     
     case system(system: System)
     
-    case valueType(type: ValueType)
+    case valueType(type: ValueType) // Also used in NewStock
     case transitionType(type: TransitionType)
 }

@@ -37,17 +37,17 @@ class IdealDetailTableView: TableView
         var models: [TableViewCellModel] = []
         var keyboardType: UIKeyboardType = .decimalPad
         
-        if stock.amountType == .integer
+        if stock.valueType == .integer || stock.valueType == .percent
         {
             keyboardType = .numberPad
         }
         
-        if stock.amountType == .decimal || stock.amountType == .integer
+        if stock.valueType == .decimal || stock.valueType == .integer
         {
             models = [
                 // TODO: Should have the state machine here as well (to set ideal state machine value)
                 TextEditCellModel(
-                    selectionIdentifier: .ideal(type: stock.amountType),
+                    selectionIdentifier: .ideal(type: stock.valueType),
                     text: stock.idealDescription,
                     placeholder: "Ideal value".localized,
                     entity: stock,

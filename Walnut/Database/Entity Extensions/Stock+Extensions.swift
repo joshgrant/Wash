@@ -38,11 +38,11 @@ extension Stock
 
 extension Stock
 {
-    var amountType: AmountType
+    var valueType: ValueType
     {
         get
         {
-            AmountType(rawValue: amountTypeRaw) ?? .fallback
+            ValueType(rawValue: amountTypeRaw) ?? .fallback
         }
         set
         {
@@ -201,13 +201,8 @@ extension Stock
 {
     var typeDescription: String
     {
-        return amountType.description
+        return valueType.description
     }
-    
-//    var dimensionDescription: String
-//    {
-//        return dimension?.title ?? "None"
-//    }
     
     var currentDescription: String
     {

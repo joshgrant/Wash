@@ -31,17 +31,19 @@ class StockTypeTableView: TableView
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let oldAmountPath = path(for: stock.amountType)
+        let oldAmountPath = path(for: stock.valueType)
         let oldTransitionPath = path(for: stock.stateMachine)
         
         switch (indexPath.section, indexPath.row)
         {
         case (0, 0):
-            stock.amountType = .boolean
+            stock.valueType = .boolean
         case (0, 1):
-            stock.amountType = .integer
+            stock.valueType = .integer
         case (0, 2):
-            stock.amountType =  .decimal
+            stock.valueType = .decimal
+        case (0, 3):
+            stock.valueType = .percent
         case (1, 0):
             stock.stateMachine = false
         case (1, 1):
@@ -50,7 +52,7 @@ class StockTypeTableView: TableView
             break
         }
         
-        let newAmountPath = path(for: stock.amountType)
+        let newAmountPath = path(for: stock.valueType)
         let newTransitionPath = path(for: stock.stateMachine)
         
         model = makeModel()
@@ -76,17 +78,9 @@ class StockTypeTableView: TableView
         AppDelegate.shared.mainStream.send(message: message)
     }
     
-    func path(for amountType: AmountType) -> IndexPath
+    func path(for amountType: ValueType) -> IndexPath
     {
-        switch amountType
-        {
-        case .boolean:
-            return IndexPath(row: 0, section: 0)
-        case .integer:
-            return IndexPath(row: 1, section: 0)
-        case .decimal:
-            return IndexPath(row: 2, section: 0)
-        }
+        return IndexPath(row: Int(amountType.rawValue), section: 0)
     }
     
     func path(for stateMachine: Bool) -> IndexPath
@@ -122,20 +116,12 @@ class StockTypeTableView: TableView
     
     func makeValueTypeModels(stock: Stock) -> [TableViewCellModel]
     {
-        [
+        return ValueType.allCases.map { type in
             CheckmarkCellModel(
-                selectionIdentifier: .valueType(type: .boolean),
-                title: ValueType.boolean.title,
-                checked: stock.amountType == .boolean),
-            CheckmarkCellModel(
-                selectionIdentifier: .valueType(type: .integer),
-                title: ValueType.integer.title,
-                checked: stock.amountType == .integer),
-            CheckmarkCellModel(
-                selectionIdentifier: .valueType(type: .decimal),
-                title: ValueType.decimal.title,
-                checked: stock.amountType == .decimal)
-        ]
+                selectionIdentifier: .valueType(type: type),
+                title: type.description,
+                checked: stock.valueType == type)
+        }
     }
     
     // MARK: Transition Type

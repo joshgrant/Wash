@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 // The wrapping view controller
+// TODO: Need to dismiss this from the presenting controller
 class LinkSearchController: UIViewController
 {
     // MARK: - Defined types
@@ -20,6 +21,7 @@ class LinkSearchController: UIViewController
         case systemStockSearch
         case stockDimension
         case newStock
+        case newUnit(id: UUID)
     }
     
     // MARK: - Variables
@@ -32,31 +34,26 @@ class LinkSearchController: UIViewController
     var origin: Origin
     var hasAddButton: Bool
     var entityType: NamedEntity.Type
-//    var entity: Entity
     
     // MARK: - Initialization
     
     init(
         origin: Origin,
-//        entity: Entity,
         entityType: NamedEntity.Type,
         context: Context?,
         hasAddButton: Bool = false)
     {
         self.origin = origin
-//        self.entity = entity
         self.entityType = entityType
         self.context = context
         self.hasAddButton = hasAddButton
         
         tableViewManager = LinkSearchControllerTableViewManager(
             origin: origin,
-//            entityToLinkTo: entity,
             entityLinkType: entityType,
             context: context)
         
         super.init(nibName: nil, bundle: nil)
-        subscribe(to: AppDelegate.shared.mainStream)
         
         view.embed(tableViewManager.tableView)
         
@@ -85,11 +82,6 @@ class LinkSearchController: UIViewController
     required init?(coder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit
-    {
-        unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
     // MARK: - View lifecycle
@@ -130,21 +122,21 @@ extension LinkSearchController: UISearchControllerDelegate
     
 }
 
-extension LinkSearchController: Subscriber
-{
-    func receive(message: Message)
-    {
-        switch message
-        {
-        case let m as LinkSelectionMessage:
-            handle(m)
-        default:
-            break
-        }
-    }
-    
-    private func handle(_ message: LinkSelectionMessage)
-    {
-        dismiss(animated: true, completion: nil)
-    }
-}
+//extension LinkSearchController: Subscriber
+//{
+//    func receive(message: Message)
+//    {
+//        switch message
+//        {
+//        case let m as LinkSelectionMessage:
+//            handle(m)
+//        default:
+//            break
+//        }
+//    }
+//
+//    private func handle(_ message: LinkSelectionMessage)
+//    {
+////        dismiss(animated: true, completion: nil)
+//    }
+//}

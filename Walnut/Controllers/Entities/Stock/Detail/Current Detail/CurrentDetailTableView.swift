@@ -41,7 +41,7 @@ class CurrentDetailTableView: TableView
             // Current value
             // State machine value (if applicable)
             TextEditCellModel(
-                selectionIdentifier: .current(type: stock.amountType),
+                selectionIdentifier: .current(type: stock.valueType),
                 text: stock.currentDescription,
                 placeholder: "Current value".localized,
                 entity: stock,
