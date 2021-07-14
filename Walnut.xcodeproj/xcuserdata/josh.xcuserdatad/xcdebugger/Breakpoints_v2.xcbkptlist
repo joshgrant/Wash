@@ -85,8 +85,8 @@
             filePath = "Walnut/Controllers/Entities/Stock/New/NewStockTableView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "makeValueTypeSection(model:)"
             landmarkType = "7">
             <Locations>

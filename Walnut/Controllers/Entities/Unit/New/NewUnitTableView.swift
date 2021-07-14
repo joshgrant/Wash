@@ -52,13 +52,15 @@ class NewUnitTableView: TableView
                 title: "Name".localized,
                 detail: model.title,
                 detailPostfix: nil,
-                keyboardType: .default),
+                keyboardType: .default,
+                newStockModel: nil),
             RightEditCellModel(
                 selectionIdentifier: .newUnitSymbol,
                 title: "Symbol".localized,
                 detail: model.symbol,
                 detailPostfix: nil,
-                keyboardType: .default),
+                keyboardType: .default,
+                newStockModel: nil),
             ToggleCellModel(
                 selectionIdentifier: .baseUnit(isOn: model.isBaseUnit),
                 title: "Base unit",

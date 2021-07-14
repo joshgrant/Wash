@@ -34,6 +34,8 @@ class CurrentIdealNumericTableView: TableView
     private func makeGoalSection(newStockModel: NewStockModel) -> TableViewSection
     {
         var postfix: String?
+        var min: Float = 0
+        var max: Float = 100
         
         if newStockModel.stockType == .percent
         {
@@ -41,6 +43,9 @@ class CurrentIdealNumericTableView: TableView
         }
         else
         {
+            min = Float(newStockModel.minimum ?? 0)
+            max = Float(newStockModel.maximum ?? 0)
+            
             postfix = newStockModel.unit?.abbreviation
         }
         
@@ -49,16 +54,16 @@ class CurrentIdealNumericTableView: TableView
                 selectionIdentifier: .current(type: newStockModel.stockType),
                 title: "Current".localized,
                 value: Float(newStockModel.currentDouble ?? 0),
-                min: Float(newStockModel.minimum ?? 0),
-                max: Float(newStockModel.maximum ?? 100),
+                min: min,
+                max: max,
                 postfix: postfix,
                 keyboardType: .decimalPad),
             SliderRangeCellModel(
                 selectionIdentifier: .ideal(type: newStockModel.stockType),
                 title: "Ideal".localized,
                 value: Float(newStockModel.idealDouble ?? 0),
-                min: Float(newStockModel.minimum ?? 0),
-                max: Float(newStockModel.maximum ?? 100),
+                min: min,
+                max: max,
                 postfix: postfix,
                 keyboardType: .decimalPad)
         ]

@@ -33,4 +33,9 @@ class NewStockModel
     {
         currentDouble != nil && idealDouble != nil
     }
+    
+    var validForMinMax: Bool
+    {
+        minimum != nil && maximum != nil
+    }
 }

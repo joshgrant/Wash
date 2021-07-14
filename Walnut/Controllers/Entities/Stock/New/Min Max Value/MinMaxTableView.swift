@@ -34,19 +34,42 @@ class MinMaxTableView: TableView
     {
         let postfix: String? = model.unit?.abbreviation
         
+        let minDetail: String
+        let maxDetail: String
+        
+        if let min = model.minimum
+        {
+            minDetail = String(format: "%i", Int(min))
+        }
+        else
+        {
+            minDetail = ""
+        }
+        
+        if let max = model.maximum
+        {
+            maxDetail = String(format: "%i", Int(max))
+        }
+        else
+        {
+            maxDetail = ""
+        }
+        
         let models: [TableViewCellModel] = [
             RightEditCellModel(
                 selectionIdentifier: .minimum,
                 title: "Minimum".localized,
-                detail: model.minimum?.description,
+                detail: minDetail,
                 detailPostfix: postfix,
-                keyboardType: .decimalPad),
+                keyboardType: .decimalPad,
+                newStockModel: model),
             RightEditCellModel(
                 selectionIdentifier: .maximum,
                 title: "Maximum".localized,
-                detail: model.maximum?.description,
+                detail: maxDetail,
                 detailPostfix: postfix,
-                keyboardType: .decimalPad)
+                keyboardType: .decimalPad,
+                newStockModel: model)
         ]
         
         return TableViewSection(header: .constraints, models: models)

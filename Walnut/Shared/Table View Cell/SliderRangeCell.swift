@@ -50,6 +50,7 @@ class SliderRangeCell: TableViewCell<SliderRangeCellModel>
     var titleLabel: UILabel
     var rightField: UITextField
     var slider: UISlider
+    var postfixLabel: UILabel
     
     weak var model: SliderRangeCellModel?
      
@@ -60,17 +61,21 @@ class SliderRangeCell: TableViewCell<SliderRangeCellModel>
         titleLabel = UILabel()
         rightField = UITextField()
         slider = UISlider()
+        postfixLabel = UILabel()
         
         rightField.textColor = .secondaryLabel
+        postfixLabel.textColor = .secondaryLabel
+        
         rightField.textAlignment = .right
         
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
+        postfixLabel.setContentHuggingPriority(.required, for: .horizontal)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
         
-        let labelStackView = UIStackView(arrangedSubviews: [titleLabel, rightField])
+        let labelStackView = UIStackView(arrangedSubviews: [titleLabel, rightField, postfixLabel])
         
         let mainStackView = UIStackView(arrangedSubviews: [
                                             SpacerView(height: 9),
@@ -98,6 +103,7 @@ class SliderRangeCell: TableViewCell<SliderRangeCellModel>
         slider.maximumValue = model.max
         slider.minimumValueImage = Icon.min.getImage()
         slider.maximumValueImage = Icon.max.getImage()
+        slider.value = model.value
         slider.isContinuous = true
         
         titleLabel.text = model.title
@@ -108,6 +114,15 @@ class SliderRangeCell: TableViewCell<SliderRangeCellModel>
         rightField.delegate = self
         
         slider.addTarget(self, action: #selector(sliderDidChangeValue(_:)), for: .valueChanged)
+        
+        if let postfix = model.postfix
+        {
+            postfixLabel.text = postfix
+        }
+        else
+        {
+            postfixLabel.removeFromSuperview()
+        }
     }
     
     @objc func sliderDidChangeValue(_ sender: UISlider)
@@ -126,42 +141,66 @@ extension SliderRangeCell: UITextFieldDelegate
     
     func textFieldDidEndEditing(_ textField: UITextField)
     {
-        // Save?
-        print("Did end editing")
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
-    {
-        guard let text = textField.text else { return true }
-        guard let newRange = Range<String.Index>(range, in: text) else { return true }
-        guard let newString = textField.text?.replacingCharacters(in: newRange, with: string) else { return true }
-        guard let newValue = Float(newString) else { return true }
+        guard let newString = textField.text else { return }
+        guard let newValue = Float(newString) else { return }
         
         guard let min = model?.min, let max = model?.max else { fatalError() }
-        
+
         // TODO: Distinguish between integers and decimals
-        
+
         let format = "%i"
-        
+
         if newValue >= max
         {
             textField.text = String(format: format, Int(max))
             model?.value = max
             slider.value = max
-            return false
         }
         else if newValue <= min
         {
             textField.text = String(format: format, Int(min))
             model?.value = min
             slider.value = min
-            return false
         }
         else
         {
             model?.value = newValue
             slider.value = newValue
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
+//        guard let text = textField.text else { return true }
+//        guard let newRange = Range<String.Index>(range, in: text) else { return true }
+//        guard let newString = textField.text?.replacingCharacters(in: newRange, with: string) else { return true }
+//        guard let newValue = Float(newString) else { return true }
+//
+//        guard let min = model?.min, let max = model?.max else { fatalError() }
+//
+//        // TODO: Distinguish between integers and decimals
+//
+//        let format = "%i"
+//
+//        if newValue >= max
+//        {
+//            textField.text = String(format: format, Int(max))
+//            model?.value = max
+//            slider.value = max
+//            return false
+//        }
+//        else if newValue <= min
+//        {
+//            textField.text = String(format: format, Int(min))
+//            model?.value = min
+//            slider.value = min
+//            return false
+//        }
+//        else
+//        {
+//            model?.value = newValue
+//            slider.value = newValue
+//        }
         
         return true
     }

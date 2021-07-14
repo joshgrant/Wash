@@ -833,12 +833,12 @@
 				03FAACB72698D52100CB7AB6 /* LinkCell.swift */,
 				03BF0BCB269F308600A866E5 /* RightEditCell.swift */,
 				0370FEBC2688C170001E099B /* RightImageCell.swift */,
+				030BC430269F7CE800442CE9 /* SliderRangeCell.swift */,
 				0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */,
 				031681B4267D66E100F493DA /* TextCell.swift */,
 				030B2182267FB15B0038C095 /* TextEditCell.swift */,
 				0370FEDF268A1E1C001E099B /* ToggleInfoCell.swift */,
 				0370FEB72688B644001E099B /* Messages */,
-				030BC430269F7CE800442CE9 /* SliderRangeCell.swift */,
 			);
 			path = "Table View Cell";
 			sourceTree = "<group>";

@@ -24,14 +24,6 @@ class NewStockTableView: TableView
         super.init()
     }
     
-    // MARK: - Table View
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath)
-    {
-        guard let editCell = cell as? TextEditCell else { return }
-        editCell.textField.resignFirstResponder()
-    }
-    
     // MARK: - Model
     
     override func makeModel() -> TableViewModel
@@ -47,7 +39,7 @@ class NewStockTableView: TableView
     {
         let models: [TableViewCellModel] = [
             TextEditCellModel(
-                selectionIdentifier: .title,
+                selectionIdentifier: .newStockName,
                 text: model.title,
                 placeholder: "Title".localized,
                 entity: nil),
@@ -97,9 +89,18 @@ class NewStockTableView: TableView
         willDisplay cell: UITableViewCell,
         forRowAt indexPath: IndexPath)
     {
-        if indexPath.section == 0 && indexPath.row == 0
+        guard indexPath.section == 0 && indexPath.row == 0 else { return }
+        guard let textCell = cell as? TextEditCell else { return }
+        
+        if let text = textCell.textField.text
         {
-            guard let textCell = cell as? TextEditCell else { return }
+            if text.isEmpty
+            {
+                textCell.textField.becomeFirstResponder()
+            }
+        }
+        else
+        {
             textCell.textField.becomeFirstResponder()
         }
     }

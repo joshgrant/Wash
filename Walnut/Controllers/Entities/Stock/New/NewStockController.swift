@@ -106,6 +106,8 @@ extension NewStockController: Subscriber
             handle(m)
         case let m as LinkSelectionMessage:
             handle(m)
+        case let m as TextEditCellMessage:
+            handle(m)
         default:
             break
         }
@@ -133,5 +135,11 @@ extension NewStockController: Subscriber
         newStockModel.unit = unit
         tableView.shouldReload = true
         router.route(to: .back, completion: nil)
+    }
+    
+    private func handle(_ message: TextEditCellMessage)
+    {
+        guard case .newStockName = message.selectionIdentifier else { return }
+        newStockModel.title = message.title
     }
 }
