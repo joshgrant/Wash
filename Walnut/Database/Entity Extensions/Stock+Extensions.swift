@@ -204,10 +204,10 @@ extension Stock
         return amountType.description
     }
     
-    var dimensionDescription: String
-    {
-        return dimension?.title ?? "None"
-    }
+//    var dimensionDescription: String
+//    {
+//        return dimension?.title ?? "None"
+//    }
     
     var currentDescription: String
     {

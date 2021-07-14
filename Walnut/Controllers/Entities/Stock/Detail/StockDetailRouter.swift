@@ -15,7 +15,6 @@ class StockDetailRouter: Router
     enum Destination
     {
         case valueType
-        case dimension
         case current
         case ideal
         case inflow(flow: TransferFlow)
@@ -50,8 +49,6 @@ class StockDetailRouter: Router
         {
         case .valueType:
             routeToValueType()
-        case .dimension:
-            routeToDimension()
         case .current:
             routeToCurrent()
         case .ideal:
@@ -67,18 +64,6 @@ class StockDetailRouter: Router
     {
         let controller = StockValueTypeController(stock: stock)
         delegate?.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    private func routeToDimension()
-    {
-        let linkController = LinkSearchController(
-            origin: .stockDimension,
-            entity: stock,
-            entityType: Dimension.self,
-            context: stock.managedObjectContext)
-        
-        let navigationController = UINavigationController(rootViewController: linkController)
-        delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
     }
     
     private func routeToIdeal()
@@ -127,8 +112,6 @@ extension StockDetailRouter: Subscriber
         {
         case .type:
             route(to: .valueType, completion: nil)
-        case .dimension:
-            route(to: .dimension, completion: nil)
         case .inflow(let flow):
             route(to: .inflow(flow: flow), completion: nil)
         case .outflow(let flow):

@@ -16,7 +16,7 @@ class TextEditCellModel: NSObject, TableViewCellModel
     
     var text: String?
     var placeholder: String
-    var entity: Entity
+    var entity: Entity?
     var keyboardType: UIKeyboardType
     
     var notifyOnDismissal: Bool = true
@@ -27,7 +27,7 @@ class TextEditCellModel: NSObject, TableViewCellModel
         selectionIdentifier: SelectionIdentifier,
         text: String?,
         placeholder: String,
-        entity: Entity,
+        entity: Entity?,
         keyboardType: UIKeyboardType = .default)
     {
         self.selectionIdentifier = selectionIdentifier

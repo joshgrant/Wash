@@ -57,13 +57,11 @@ class SymbolTableView: TableView
             symbol.nameOfColor,
             symbol.nameOfFlow,
             symbol.nameOfNote,
-            symbol.nameOfUnit,
             symbol.nameOfEvent,
             symbol.nameOfState,
             symbol.nameOfStock,
             symbol.nameOfSystem,
             symbol.nameOfCondition,
-            symbol.nameOfDimension,
             symbol.nameOfConversion
         ]
         

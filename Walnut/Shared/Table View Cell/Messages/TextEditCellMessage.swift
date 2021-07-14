@@ -13,14 +13,14 @@ class TextEditCellMessage: Message
     
     var selectionIdentifier: SelectionIdentifier
     var title: String
-    var entity: Entity
+    var entity: Entity?
     
     // MARK: - Initialization
     
     init(
         selectionIdentifier: SelectionIdentifier,
         title: String,
-        entity: Entity)
+        entity: Entity?)
     {
         self.selectionIdentifier = selectionIdentifier
         self.title = title

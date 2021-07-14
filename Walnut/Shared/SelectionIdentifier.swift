@@ -18,6 +18,8 @@ public enum SelectionIdentifier
     case dimension
     case net
     
+    case newStockUnit
+    
     case minimum
     case maximum
     

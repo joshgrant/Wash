@@ -87,11 +87,6 @@ class StockDetailTableView: TableView
                 detail: stockTypeDetail(stock: stock),
                 disclosure: true),
             DetailCellModel(
-                selectionIdentifier: .dimension,
-                title: "Dimension".localized,
-                detail: stock.dimensionDescription,
-                disclosure: true),
-            DetailCellModel(
                 selectionIdentifier: .minimum,
                 title: "Minimum".localized,
                 detail: stock.minimumDescription,

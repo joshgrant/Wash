@@ -40,21 +40,30 @@ extension System
         
         print(total)
         
+        if count == 0 { return 100 }
+        
         return Int(total / count)
     }
     
     /// Returns a value from 0 to 100
     func calculateIdealPercent(stock: Stock) -> Double
     {
-        let amount = stock.amountValue
-        let ideal = stock.idealValue
+//        let minimum = stock.minimumValue
+//        let maximum = stock.maximumValue
+//        let current = stock.amountValue
+//        let ideal = stock.idealValue
+//
+//        // Use minimum and maximum to establish range for both current and ideal
+//        // Then, return the delta between the two
+//
+//        let range = maximum - minimum
+//
+//        let currentPercent = range - current / range
+//        let idealPercent = range - ideal / range
+//
+//        return idealPercent - currentPercent / idealPercent
         
-        if ideal == 0
-        {
-            return abs(ideal - amount)
-        }
-        
-        return ideal - amount / ideal
+        return 100
     }
 }
 

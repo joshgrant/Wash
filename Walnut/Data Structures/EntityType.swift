@@ -18,8 +18,6 @@ public enum EntityType
     case event
     case conversion
     case condition
-    case dimension
-    case unit // Not visible in the library list
     case symbol
     case note
     
@@ -33,8 +31,6 @@ public enum EntityType
             .event,
             .conversion,
             .condition,
-            .dimension,
-            .unit,
             .symbol,
             .note
         ]
@@ -51,8 +47,6 @@ public enum EntityType
         case .event: return "Events"
         case .conversion: return "Conversions"
         case .condition: return "Conditions"
-        case .dimension: return "Dimensions"
-        case .unit: return "Units"
         case .symbol: return "Symbols"
         case .note: return "Notes"
         }
@@ -69,8 +63,6 @@ public enum EntityType
         case .event: return .event
         case .conversion: return .conversion
         case .condition: return .condition
-        case .dimension: return .dimension
-        case .unit: return .unit
         case .symbol: return .symbol
         case .note: return .note
         }
@@ -87,8 +79,6 @@ public enum EntityType
         case .event: return Event.self
         case .conversion: return Conversion.self
         case .condition: return Condition.self
-        case .dimension: return Dimension.self
-        case .unit: return Unit.self
         case .symbol: return Symbol.self
         case .note: return Note.self
         }
@@ -125,8 +115,6 @@ public enum EntityType
         case is Event: return .event
         case is Conversion: return .conversion
         case is Condition: return .condition
-        case is Dimension: return .dimension
-        case is Unit: return .unit
         case is Symbol: return .symbol
         case is Note: return .note
         default:

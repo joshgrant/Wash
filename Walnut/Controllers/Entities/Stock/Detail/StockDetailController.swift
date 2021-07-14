@@ -85,8 +85,6 @@ extension StockDetailController: Subscriber
             handle(m)
         case let m as TableViewSelectionMessage:
             handle(m)
-        case let m as LinkSelectionMessage:
-            handle(m)
         default:
             break
         }
@@ -144,17 +142,5 @@ extension StockDetailController: Subscriber
         default:
             break
         }
-    }
-    
-    private func handle(_ message: LinkSelectionMessage)
-    {
-        guard message.origin == .stockDimension else { return }
-        guard let dimension = message.entity as? Dimension else { return }
-        
-        stock.dimension = dimension
-        dimension.addToDimensionOf(stock)
-        stock.managedObjectContext?.quickSave()
-        
-        tableView.shouldReload = true
     }
 }
