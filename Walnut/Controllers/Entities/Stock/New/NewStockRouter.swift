@@ -70,7 +70,8 @@ class NewStockRouter: Router
     
     private func routeToMinMax()
     {
-        
+        let minMaxController = MinMaxController(newStockModel: newStockModel, context: context)
+        delegate?.navigationController?.pushViewController(minMaxController, animated: true)
     }
     
     private func routeToUnitSearch()

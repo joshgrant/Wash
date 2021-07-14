@@ -50,11 +50,15 @@ class NewUnitTableView: TableView
             RightEditCellModel(
                 selectionIdentifier: .newUnitName,
                 title: "Name".localized,
-                detail: model.title),
+                detail: model.title,
+                detailPostfix: nil,
+                keyboardType: .default),
             RightEditCellModel(
                 selectionIdentifier: .newUnitSymbol,
                 title: "Symbol".localized,
-                detail: model.symbol),
+                detail: model.symbol,
+                detailPostfix: nil,
+                keyboardType: .default),
             ToggleCellModel(
                 selectionIdentifier: .baseUnit(isOn: model.isBaseUnit),
                 title: "Base unit",

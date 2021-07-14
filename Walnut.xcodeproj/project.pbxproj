@@ -24,6 +24,7 @@
 		030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D2268167730038C095 /* StatesHeaderViewModel.swift */; };
 		030B21D5268168450038C095 /* InflowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */; };
 		030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */; };
+		030BC431269F7CE800442CE9 /* SliderRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC430269F7CE800442CE9 /* SliderRangeCell.swift */; };
 		031681B5267D66E100F493DA /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B4267D66E100F493DA /* TextCell.swift */; };
 		031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B6267DA56700F493DA /* Flow+Extensions.swift */; };
 		031681B9267DA6F100F493DA /* Pinnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B8267DA6F100F493DA /* Pinnable.swift */; };
@@ -164,6 +165,8 @@
 		03BF0BE4269F648500A866E5 /* CurrentIdealBooleanTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE3269F648500A866E5 /* CurrentIdealBooleanTableView.swift */; };
 		03BF0BE6269F648E00A866E5 /* CurrentIdealStateTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE5269F648E00A866E5 /* CurrentIdealStateTableView.swift */; };
 		03BF0BE8269F649900A866E5 /* CurrentIdealNumericTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE7269F649900A866E5 /* CurrentIdealNumericTableView.swift */; };
+		03BF0BEA269F6C4100A866E5 /* MinMaxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE9269F6C4100A866E5 /* MinMaxController.swift */; };
+		03BF0BEC269F6C4A00A866E5 /* MinMaxTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BEB269F6C4A00A866E5 /* MinMaxTableView.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -234,6 +237,7 @@
 		030B21D2268167730038C095 /* StatesHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InflowsHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutflowsHeaderViewModel.swift; sourceTree = "<group>"; };
+		030BC430269F7CE800442CE9 /* SliderRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderRangeCell.swift; sourceTree = "<group>"; };
 		031681B4267D66E100F493DA /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		031681B6267DA56700F493DA /* Flow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+Extensions.swift"; sourceTree = "<group>"; };
 		031681B8267DA6F100F493DA /* Pinnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinnable.swift; sourceTree = "<group>"; };
@@ -380,6 +384,8 @@
 		03BF0BE3269F648500A866E5 /* CurrentIdealBooleanTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentIdealBooleanTableView.swift; sourceTree = "<group>"; };
 		03BF0BE5269F648E00A866E5 /* CurrentIdealStateTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentIdealStateTableView.swift; sourceTree = "<group>"; };
 		03BF0BE7269F649900A866E5 /* CurrentIdealNumericTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentIdealNumericTableView.swift; sourceTree = "<group>"; };
+		03BF0BE9269F6C4100A866E5 /* MinMaxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxController.swift; sourceTree = "<group>"; };
+		03BF0BEB269F6C4A00A866E5 /* MinMaxTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxTableView.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -832,6 +838,7 @@
 				030B2182267FB15B0038C095 /* TextEditCell.swift */,
 				0370FEDF268A1E1C001E099B /* ToggleInfoCell.swift */,
 				0370FEB72688B644001E099B /* Messages */,
+				030BC430269F7CE800442CE9 /* SliderRangeCell.swift */,
 			);
 			path = "Table View Cell";
 			sourceTree = "<group>";
@@ -1041,6 +1048,8 @@
 		03BF0BDF269F5EAD00A866E5 /* Min Max Value */ = {
 			isa = PBXGroup;
 			children = (
+				03BF0BE9269F6C4100A866E5 /* MinMaxController.swift */,
+				03BF0BEB269F6C4A00A866E5 /* MinMaxTableView.swift */,
 			);
 			path = "Min Max Value";
 			sourceTree = "<group>";
@@ -1326,6 +1335,7 @@
 				03FAACE6269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift in Sources */,
 				03555B692686A487006E9EA1 /* TabBarControllerDelegate.swift in Sources */,
 				03555B4D2686A487006E9EA1 /* Coordinator.swift in Sources */,
+				03BF0BEA269F6C4100A866E5 /* MinMaxController.swift in Sources */,
 				03555B4F2686A487006E9EA1 /* ObserverForSceneUpdatesEventResponder.swift in Sources */,
 				03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */,
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
@@ -1419,12 +1429,14 @@
 				038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */,
 				03555B632686A487006E9EA1 /* Int+Extensions.swift in Sources */,
 				038CF6862676829F00931595 /* Named.swift in Sources */,
+				03BF0BEC269F6C4A00A866E5 /* MinMaxTableView.swift in Sources */,
 				03FAACE0269B6D0700CB7AB6 /* EntityListPinMessage.swift in Sources */,
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
 				038CF6D0267682C700931595 /* Searchable.swift in Sources */,
 				03555AAE2684096D006E9EA1 /* WindowState.swift in Sources */,
 				03555B6C2686A487006E9EA1 /* SpacerView.swift in Sources */,
+				030BC431269F7CE800442CE9 /* SliderRangeCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

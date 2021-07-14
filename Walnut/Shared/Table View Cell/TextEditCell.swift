@@ -63,6 +63,8 @@ class TextEditCell: TableViewCell<TextEditCellModel>
             style: style,
             reuseIdentifier: reuseIdentifier)
         
+        selectionStyle = .none
+        
         let contentStackView = UIStackView(arrangedSubviews: [textField])
         contentStackView.set(height: 44)
         

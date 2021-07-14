@@ -55,6 +55,20 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        super.touchesEnded(touches, with: event)
+        
+        for touch in touches
+        {
+            if touch.view == self
+            {
+                endEditing(true)
+                return
+            }
+        }
+    }
+    
     func reload(shouldReloadTableView: Bool = true)
     {
         model = makeModel() // TODO: Maybe do a diff?

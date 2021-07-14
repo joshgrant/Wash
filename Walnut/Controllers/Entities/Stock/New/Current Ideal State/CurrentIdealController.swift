@@ -50,7 +50,7 @@ class CurrentIdealController: UIViewController
         }
         else
         {
-            tableView = CurrentIdealNumericTableView()
+            tableView = CurrentIdealNumericTableView(newStockModel: newStockModel)
         }
         
         super.init(nibName: nil, bundle: nil)
@@ -92,11 +92,11 @@ class CurrentIdealController: UIViewController
         stock.stateMachine = newStockModel.isStateMachine
         
         let minimumSource = ValueSource(context: context)
-        minimumSource.value = newStockModel.minimum
+        minimumSource.value = newStockModel.minimum ?? 0
         stock.minimum = minimumSource
         
         let maximumSource = ValueSource(context: context)
-        maximumSource.value = newStockModel.maximum
+        maximumSource.value = newStockModel.maximum ?? 100
         stock.maximum = maximumSource
         
         if newStockModel.stockType == .boolean
@@ -109,9 +109,15 @@ class CurrentIdealController: UIViewController
             idealSource.value = newStockModel.idealBool ?? true
             stock.ideal = idealSource
         }
-        else
+        else if newStockModel.stockType == .percent
         {
-            fatalError()
+            let amountSource = ValueSource(context: context)
+            amountSource.value = newStockModel.currentDouble ?? 0
+            stock.amount = amountSource
+            
+            let idealSource = ValueSource(context: context)
+            idealSource.value = newStockModel.idealDouble ?? 100
+            stock.ideal = idealSource
         }
         
         context.quickSave()

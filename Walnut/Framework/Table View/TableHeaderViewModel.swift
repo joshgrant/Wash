@@ -58,4 +58,6 @@ extension TableHeaderViewModel
     static let ideal = TableHeaderViewModel(title: "Ideal".localized)
     static let current = TableHeaderViewModel(title: "Current".localized)
     static let stateMachine = TableHeaderViewModel(title: "States".localized)
+    static let constraints = TableHeaderViewModel(title: "Constraints".localized)
+    static let goal = TableHeaderViewModel(title: "Goal".localized)
 }

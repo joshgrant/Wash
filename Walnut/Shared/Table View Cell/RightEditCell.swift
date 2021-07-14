@@ -15,14 +15,18 @@ class RightEditCellModel: NSObject, TableViewCellModel
     var selectionIdentifier: SelectionIdentifier
     var title: String
     var detail: String?
+    var detailPostfix: String?
+    var keyboardType: UIKeyboardType
     
     // MARK: - Initialization
     
-    init(selectionIdentifier: SelectionIdentifier, title: String, detail: String?)
+    init(selectionIdentifier: SelectionIdentifier, title: String, detail: String?, detailPostfix: String?, keyboardType: UIKeyboardType)
     {
         self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.detail = detail
+        self.detailPostfix = detailPostfix
+        self.keyboardType = keyboardType
     }
     
     static var cellClass: AnyClass { RightEditCell.self }
@@ -34,6 +38,7 @@ class RightEditCell: TableViewCell<RightEditCellModel>
     
     var titleLabel: UILabel
     var rightField: UITextField
+    var postfixLabel: UILabel
     var selectionIdentifier: SelectionIdentifier?
     
     // MARK: - Initialization
@@ -42,14 +47,21 @@ class RightEditCell: TableViewCell<RightEditCellModel>
     {
         titleLabel = UILabel()
         rightField = UITextField()
+        postfixLabel = UILabel()
+        
         rightField.textColor = .secondaryLabel
+        postfixLabel.textColor = .secondaryLabel
         
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
+        postfixLabel.setContentHuggingPriority(.required, for: .horizontal)
+        
         rightField.textAlignment = .right
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, rightField])
+        selectionStyle = .none
+        
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, rightField, postfixLabel])
         let contentInsets = UIEdgeInsets(
             top: 0, left: 16,
             bottom: 0, right: 16)
@@ -67,7 +79,17 @@ class RightEditCell: TableViewCell<RightEditCellModel>
         
         titleLabel.text = model.title
         rightField.text = model.detail
+        rightField.keyboardType = model.keyboardType
         rightField.delegate = self
+        
+        if let postfix = model.detailPostfix
+        {
+            postfixLabel.text = postfix
+        }
+        else
+        {
+            postfixLabel.removeFromSuperview()
+        }
     }
 }
 

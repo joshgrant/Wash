@@ -17,12 +17,20 @@ class NewStockModel
     var currentBool: Bool?
     var idealBool: Bool?
     
-    var minimum: Double = 0
-    var maximum: Double = 100
+    var currentDouble: Double?
+    var idealDouble: Double?
     
-    var valid: Bool
+    var minimum: Double?
+    var maximum: Double?
+    
+    var validForNewStock: Bool
     {
         return title != nil
             && unit != nil
+    }
+    
+    var validForPercentCurrentIdeal: Bool
+    {
+        currentDouble != nil && idealDouble != nil
     }
 }
