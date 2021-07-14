@@ -56,6 +56,12 @@ class NewUnitController: UIViewController
         unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillDisappear(true)
+        view.endEditing(true)
+    }
+    
     // MARK: - Functions
     
     @objc func cancelDidTouchUpInside(_ sender: UIBarButtonItem)
@@ -104,11 +110,22 @@ extension NewUnitController: Subscriber
     
     private func handle(_ message: ToggleCellMessage)
     {
+        newUnitModel.isBaseUnit = message.state
         navigationItem.rightBarButtonItem?.isEnabled = newUnitModel.valid
+        tableView.reloadForToggle(message: message)
     }
     
     private func handle(_ message: RightEditCellMessage)
     {
+        switch message.selectionIdentifier
+        {
+        case .newUnitName:
+            newUnitModel.title = message.content
+        case .newUnitSymbol:
+            newUnitModel.symbol = message.content
+        default:
+            break
+        }
         navigationItem.rightBarButtonItem?.isEnabled = newUnitModel.valid
     }
     
@@ -132,6 +149,7 @@ extension NewUnitController: Subscriber
             guard let unit = message.link as? Unit else { fatalError() }
             newUnitModel.relativeTo = unit
             tableView.shouldReload = true
+            navigationItem.rightBarButtonItem?.isEnabled = newUnitModel.valid
             navigationController?.popViewController(animated: true)
         default:
             break

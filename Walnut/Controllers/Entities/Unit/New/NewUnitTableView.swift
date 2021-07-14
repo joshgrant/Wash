@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class NewUnitTableView: TableView
 {
@@ -23,7 +24,8 @@ class NewUnitTableView: TableView
         subscribe(to: AppDelegate.shared.mainStream)
     }
     
-    deinit {
+    deinit
+    {
         unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
@@ -72,26 +74,9 @@ class NewUnitTableView: TableView
             header: .info,
             models: models)
     }
-}
-
-extension NewUnitTableView: Subscriber
-{
-    func receive(message: Message)
-    {
-        switch message
-        {
-        case let m as ToggleCellMessage:
-            handle(m)
-        case let m as RightEditCellMessage:
-            handle(m)
-        default:
-            break
-        }
-    }
     
-    private func handle(_ message: ToggleCellMessage)
+    func reloadForToggle(message: ToggleCellMessage)
     {
-        newUnitModel.isBaseUnit = message.state
         reload(shouldReloadTableView: false)
         
         beginUpdates()
@@ -108,15 +93,29 @@ extension NewUnitTableView: Subscriber
         
         endUpdates()
     }
+}
+
+extension NewUnitTableView: Subscriber
+{
+    func receive(message: Message)
+    {
+        switch message
+        {
+        case let m as RightEditCellMessage:
+            handle(m)
+        default:
+            break
+        }
+    }
     
     private func handle(_ message: RightEditCellMessage)
     {
         switch message.selectionIdentifier
         {
         case .newUnitName:
-            newUnitModel.title = message.content
-        case .newUnitSymbol:
-            newUnitModel.symbol = message.content
+            let nextCellIndexPath = IndexPath(row: 1, section: 0)
+            guard let cell = cellForRow(at: nextCellIndexPath) as? RightEditCell else { return }
+            cell.rightField.becomeFirstResponder()
         default:
             break
         }

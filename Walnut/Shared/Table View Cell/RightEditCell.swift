@@ -76,12 +76,14 @@ extension RightEditCell: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         textField.resignFirstResponder()
+        print("RESIGNED")
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField)
     {
         guard let identifier = selectionIdentifier else { fatalError() }
+        print("ENDED")
         
         let message = RightEditCellMessage(
             selectionIdentifier: identifier,

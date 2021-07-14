@@ -22,6 +22,14 @@ class NewStockTableView: TableView
         super.init()
     }
     
+    // MARK: - Table View
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        guard let editCell = cell as? TextEditCell else { return }
+        editCell.textField.resignFirstResponder()
+    }
+    
     // MARK: - Model
     
     override func makeModel() -> TableViewModel

@@ -51,6 +51,12 @@ class NewStockController: UIViewController
         unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillDisappear(true)
+        view.endEditing(true)
+    }
+    
     // MARK: - Functions
     
     func routeToNext()
