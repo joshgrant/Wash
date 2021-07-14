@@ -9,12 +9,12 @@ import Foundation
 
 class LinkSelectionMessage: Message
 {
-    var entity: Entity
+    var link: Entity
     var origin: LinkSearchController.Origin
     
-    init(entity: Entity, origin: LinkSearchController.Origin)
+    init(link: Entity, origin: LinkSearchController.Origin)
     {
-        self.entity = entity
+        self.link = link
         self.origin = origin
     }
 }

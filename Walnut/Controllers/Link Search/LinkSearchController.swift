@@ -19,6 +19,7 @@ class LinkSearchController: UIViewController
         case stockTo
         case systemStockSearch
         case stockDimension
+        case newStock
     }
     
     // MARK: - Variables
@@ -27,31 +28,35 @@ class LinkSearchController: UIViewController
     
     var tableViewManager: LinkSearchControllerTableViewManager
     weak var context: Context?
-    weak var _stream: Stream?
-    var stream: Stream { return _stream ?? AppDelegate.shared.mainStream }
+    
+    var origin: Origin
+    var hasAddButton: Bool
+    var entityType: NamedEntity.Type
+//    var entity: Entity
     
     // MARK: - Initialization
     
     init(
         origin: Origin,
-        entity: Entity,
+//        entity: Entity,
         entityType: NamedEntity.Type,
         context: Context?,
-        _stream: Stream? = nil)
+        hasAddButton: Bool = false)
     {
-        self._stream = _stream
+        self.origin = origin
+//        self.entity = entity
+        self.entityType = entityType
+        self.context = context
+        self.hasAddButton = hasAddButton
         
         tableViewManager = LinkSearchControllerTableViewManager(
             origin: origin,
-            entityToLinkTo: entity,
+//            entityToLinkTo: entity,
             entityLinkType: entityType,
-            context: context,
-            _stream: _stream)
-        
-        self.context = context
+            context: context)
         
         super.init(nibName: nil, bundle: nil)
-        subscribe(to: stream)
+        subscribe(to: AppDelegate.shared.mainStream)
         
         view.embed(tableViewManager.tableView)
         
@@ -63,18 +68,28 @@ class LinkSearchController: UIViewController
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false // It's not scrolled to top...
+        
+        if hasAddButton
+        {
+            let barButtonItem = UIBarButtonItem(systemItem: .add)
+            barButtonItem.target = self
+            barButtonItem.action = #selector(addButtonDidTouchUpInside(_:))
+            navigationItem.rightBarButtonItem = barButtonItem
+        }
 
         title = entityType.readableName
         
         tableViewManager.configureFetchResultsController()
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        unsubscribe(from: stream)
+    deinit
+    {
+        unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
     // MARK: - View lifecycle
@@ -93,6 +108,20 @@ class LinkSearchController: UIViewController
     {
         super.viewDidDisappear(animated)
         tableViewManager.shouldAnimate = false
+    }
+    
+    // MARK: - UI Action
+    
+    @objc func addButtonDidTouchUpInside(_ sender: UIBarButtonItem)
+    {
+        // Route to the entity "new" screen
+        guard let detail = EntityType.type(from: entityType)?.newController(context: context) else
+        {
+            assertionFailure("Failed to get the detail controller")
+            return 
+        }
+        
+        navigationController?.pushViewController(detail, animated: true)
     }
 }
 

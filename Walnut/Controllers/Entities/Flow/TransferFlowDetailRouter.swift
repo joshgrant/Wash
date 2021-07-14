@@ -70,10 +70,8 @@ class TransferFlowDetailRouter: Router
     {
         let searchController = LinkSearchController(
             origin: .stockFrom,
-            entity: flow,
             entityType: Stock.self,
-            context: context,
-            _stream: stream)
+            context: context)
         let navigationController = UINavigationController(rootViewController: searchController)
         presentedDestination = .stockFrom
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
@@ -83,10 +81,8 @@ class TransferFlowDetailRouter: Router
     {
         let searchController = LinkSearchController(
             origin: .stockTo,
-            entity: flow,
             entityType: Stock.self,
-            context: context,
-            _stream: stream)
+            context: context)
         let navigationController = UINavigationController(rootViewController: searchController)
         presentedDestination = .stockTo
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)

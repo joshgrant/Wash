@@ -152,6 +152,12 @@
 		03BF0BBC269D269B00A866E5 /* ContextPopulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BBB269D269B00A866E5 /* ContextPopulator.swift */; };
 		03BF0BC0269DF5E200A866E5 /* NewStockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BBF269DF5E200A866E5 /* NewStockController.swift */; };
 		03BF0BC2269DF5EB00A866E5 /* NewStockTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BC1269DF5EB00A866E5 /* NewStockTableView.swift */; };
+		03BF0BC4269F2AA400A866E5 /* Unit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BC3269F2AA400A866E5 /* Unit+Extensions.swift */; };
+		03BF0BC8269F2E3300A866E5 /* NewUnitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BC7269F2E3300A866E5 /* NewUnitController.swift */; };
+		03BF0BCA269F2E3B00A866E5 /* NewUnitTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BC9269F2E3B00A866E5 /* NewUnitTableView.swift */; };
+		03BF0BCC269F308600A866E5 /* RightEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BCB269F308600A866E5 /* RightEditCell.swift */; };
+		03BF0BCE269F314200A866E5 /* RightEditCellMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BCD269F314200A866E5 /* RightEditCellMessage.swift */; };
+		03BF0BD7269F455100A866E5 /* NewUnitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BD6269F455100A866E5 /* NewUnitModel.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -356,6 +362,12 @@
 		03BF0BBB269D269B00A866E5 /* ContextPopulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPopulator.swift; sourceTree = "<group>"; };
 		03BF0BBF269DF5E200A866E5 /* NewStockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStockController.swift; sourceTree = "<group>"; };
 		03BF0BC1269DF5EB00A866E5 /* NewStockTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStockTableView.swift; sourceTree = "<group>"; };
+		03BF0BC3269F2AA400A866E5 /* Unit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Unit+Extensions.swift"; sourceTree = "<group>"; };
+		03BF0BC7269F2E3300A866E5 /* NewUnitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUnitController.swift; sourceTree = "<group>"; };
+		03BF0BC9269F2E3B00A866E5 /* NewUnitTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUnitTableView.swift; sourceTree = "<group>"; };
+		03BF0BCB269F308600A866E5 /* RightEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightEditCell.swift; sourceTree = "<group>"; };
+		03BF0BCD269F314200A866E5 /* RightEditCellMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightEditCellMessage.swift; sourceTree = "<group>"; };
+		03BF0BD6269F455100A866E5 /* NewUnitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUnitModel.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -704,6 +716,7 @@
 			children = (
 				0370FEB82688B656001E099B /* TextEditCellMessage.swift */,
 				0370FEE1268A1F4A001E099B /* ToggleCellMessage.swift */,
+				03BF0BCD269F314200A866E5 /* RightEditCellMessage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -806,6 +819,7 @@
 				030B2182267FB15B0038C095 /* TextEditCell.swift */,
 				0370FEDF268A1E1C001E099B /* ToggleInfoCell.swift */,
 				0370FEB72688B644001E099B /* Messages */,
+				03BF0BCB269F308600A866E5 /* RightEditCell.swift */,
 			);
 			path = "Table View Cell";
 			sourceTree = "<group>";
@@ -860,6 +874,7 @@
 				038CF6DB267683FB00931595 /* TransferFlow+Extensions.swift */,
 				038CF67E2676829E00931595 /* ValueSource+Extensions.swift */,
 				030B21A62680E8230038C095 /* Note+Extensions.swift */,
+				03BF0BC3269F2AA400A866E5 /* Unit+Extensions.swift */,
 			);
 			path = "Entity Extensions";
 			sourceTree = "<group>";
@@ -917,6 +932,7 @@
 		038CF6F426768F4C00931595 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				03BF0BC5269F2E2400A866E5 /* Unit */,
 				030B2199267FE2C70038C095 /* Entity */,
 				0370FED6268A1824001E099B /* Flow */,
 				03555B8D268842F1006E9EA1 /* Stock */,
@@ -972,6 +988,24 @@
 			children = (
 				03BF0BBF269DF5E200A866E5 /* NewStockController.swift */,
 				03BF0BC1269DF5EB00A866E5 /* NewStockTableView.swift */,
+			);
+			path = New;
+			sourceTree = "<group>";
+		};
+		03BF0BC5269F2E2400A866E5 /* Unit */ = {
+			isa = PBXGroup;
+			children = (
+				03BF0BC6269F2E2800A866E5 /* New */,
+			);
+			path = Unit;
+			sourceTree = "<group>";
+		};
+		03BF0BC6269F2E2800A866E5 /* New */ = {
+			isa = PBXGroup;
+			children = (
+				03BF0BC7269F2E3300A866E5 /* NewUnitController.swift */,
+				03BF0BC9269F2E3B00A866E5 /* NewUnitTableView.swift */,
+				03BF0BD6269F455100A866E5 /* NewUnitModel.swift */,
 			);
 			path = New;
 			sourceTree = "<group>";
@@ -1190,6 +1224,7 @@
 				038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */,
 				038CF6DC267683FB00931595 /* Event+Extensions.swift in Sources */,
 				03555B492686A487006E9EA1 /* Container.swift in Sources */,
+				03BF0BCE269F314200A866E5 /* RightEditCellMessage.swift in Sources */,
 				03FAACDC269B681800CB7AB6 /* LibraryTableView.swift in Sources */,
 				03555B512686A487006E9EA1 /* EventResponder.swift in Sources */,
 				0370FEB92688B656001E099B /* TextEditCellMessage.swift in Sources */,
@@ -1198,12 +1233,14 @@
 				03555B462686A487006E9EA1 /* CollectionViewCell.swift in Sources */,
 				038CF6942676829F00931595 /* State+Extensions.swift in Sources */,
 				03555B662686A487006E9EA1 /* Bundle+Extensions.swift in Sources */,
+				03BF0BD7269F455100A866E5 /* NewUnitModel.swift in Sources */,
 				03555B652686A487006E9EA1 /* NSSet+Extensions.swift in Sources */,
 				038CF69A2676829F00931595 /* RangeSource+Extensions.swift in Sources */,
 				038CF6D8267683EE00931595 /* Stock+Extensions.swift in Sources */,
 				03555B8F26884308006E9EA1 /* StockDetailController.swift in Sources */,
 				03FAACC62699ECDE00CB7AB6 /* TableViewRow.swift in Sources */,
 				0370FEC12688CAE2001E099B /* LibraryTableViewRouter.swift in Sources */,
+				03BF0BCA269F2E3B00A866E5 /* NewUnitTableView.swift in Sources */,
 				03555B6D2686A487006E9EA1 /* ActionClosure.swift in Sources */,
 				03555B822687D6A4006E9EA1 /* SystemDetailPinnedMessage.swift in Sources */,
 				038CF6982676829F00931595 /* Source+Extensions.swift in Sources */,
@@ -1314,6 +1351,8 @@
 				03555AFF26869DE5006E9EA1 /* Router.swift in Sources */,
 				038CF6992676829F00931595 /* History+Extensions.swift in Sources */,
 				030B21A52680E7390038C095 /* Conversion+Extensions.swift in Sources */,
+				03BF0BCC269F308600A866E5 /* RightEditCell.swift in Sources */,
+				03BF0BC4269F2AA400A866E5 /* Unit+Extensions.swift in Sources */,
 				03555B842687D70D006E9EA1 /* SystemDetailDuplicatedMessage.swift in Sources */,
 				038CF6922676829F00931595 /* Net+Extensions.swift in Sources */,
 				038CF5AB26751C9C00931595 /* RootController.swift in Sources */,
@@ -1322,6 +1361,7 @@
 				03FAACC42699ECCB00CB7AB6 /* TableViewSection.swift in Sources */,
 				03555B6F2686A487006E9EA1 /* ViewController.swift in Sources */,
 				03FAACE8269B96E100CB7AB6 /* SystemDetailTableView.swift in Sources */,
+				03BF0BC8269F2E3300A866E5 /* NewUnitController.swift in Sources */,
 				03555B572686A487006E9EA1 /* TableViewCell.swift in Sources */,
 				03FAACB02698CCA500CB7AB6 /* LinkSearchController.swift in Sources */,
 				0393A887269B9B4E00D2BF81 /* UINavigationController+Extensions.swift in Sources */,

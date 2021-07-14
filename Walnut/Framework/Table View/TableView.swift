@@ -55,11 +55,16 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
-    private func reload()
+    func reload(shouldReloadTableView: Bool = true)
     {
         model = makeModel() // TODO: Maybe do a diff?
         configure()
-        reloadData()
+        
+        if shouldReloadTableView
+        {
+            reloadData()
+        }
+        
         shouldReload = false
     }
     

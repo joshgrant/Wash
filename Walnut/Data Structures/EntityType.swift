@@ -20,6 +20,7 @@ public enum EntityType
     case condition
     case symbol
     case note
+    case unit
     
     static var libraryVisible: [EntityType]
     {
@@ -32,7 +33,8 @@ public enum EntityType
             .conversion,
             .condition,
             .symbol,
-            .note
+            .note,
+            .unit
         ]
     }
     
@@ -40,15 +42,16 @@ public enum EntityType
     {
         switch self
         {
-        case .system: return "Systems"
-        case .stock: return "Stocks"
-        case .flow: return "Flows"
-        case .process: return "Processes"
-        case .event: return "Events"
-        case .conversion: return "Conversions"
-        case .condition: return "Conditions"
-        case .symbol: return "Symbols"
-        case .note: return "Notes"
+        case .system: return "Systems".localized
+        case .stock: return "Stocks".localized
+        case .flow: return "Flows".localized
+        case .process: return "Processes".localized
+        case .event: return "Events".localized
+        case .conversion: return "Conversions".localized
+        case .condition: return "Conditions".localized
+        case .symbol: return "Symbols".localized
+        case .note: return "Notes".localized
+        case .unit: return "Units".localized
         }
     }
     
@@ -65,6 +68,7 @@ public enum EntityType
         case .condition: return .condition
         case .symbol: return .symbol
         case .note: return .note
+        case .unit: return .unit
         }
     }
     
@@ -81,6 +85,7 @@ public enum EntityType
         case .condition: return Condition.self
         case .symbol: return Symbol.self
         case .note: return Note.self
+        case .unit: return Unit.self
         }
     }
     
@@ -104,6 +109,25 @@ public enum EntityType
         }
     }
     
+    static func type(from entityType: Entity.Type) -> EntityType?
+    {
+        switch entityType
+        {
+        case is System.Type: return .system
+        case is Stock.Type: return .stock
+        case is TransferFlow.Type: return .flow
+        case is ProcessFlow.Type: return .process
+        case is Event.Type: return .event
+        case is Conversion.Type: return .conversion
+        case is Condition.Type: return .condition
+        case is Symbol.Type: return .symbol
+        case is Note.Type: return .note
+        case is Unit.Type: return .unit
+        default:
+            return nil
+        }
+    }
+    
     static func type(from entity: Entity) -> EntityType?
     {
         switch entity
@@ -117,8 +141,22 @@ public enum EntityType
         case is Condition: return .condition
         case is Symbol: return .symbol
         case is Note: return .note
+        case is Unit: return .unit
         default:
             return nil
+        }
+    }
+    
+    func newController(context: Context?) -> UIViewController
+    {
+        switch self
+        {
+        case .unit:
+            return NewUnitController(context: context)
+        case .stock:
+            return NewStockController(context: context)
+        default:
+            fatalError("No controller")
         }
     }
 }

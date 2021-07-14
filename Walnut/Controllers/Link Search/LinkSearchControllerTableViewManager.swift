@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 import CoreData
 
-class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITableViewDataSource
+class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate
 {
     // MARK: - Variables
     
-    var entity: Entity
+//    var entity: Entity
     
     // TODO: MAYBE we can make a tableViewModel that uses
     // a fetched results controller as a base
@@ -26,8 +26,6 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
     var origin: LinkSearchController.Origin
     
     weak var context: Context?
-    weak var _stream: Stream?
-    var stream: Stream { _stream ?? AppDelegate.shared.mainStream }
     
     var shouldAnimate: Bool = false
     
@@ -35,16 +33,14 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
     
     init(
         origin: LinkSearchController.Origin,
-        entityToLinkTo: Entity,
+//        entityToLinkTo: Entity,
         entityLinkType: NamedEntity.Type,
-        context: Context?,
-        _stream: Stream? = nil)
+        context: Context?)
     {
         self.origin = origin
-        self.entity = entityToLinkTo
+//        self.entity = entityToLinkTo
         self.tableView = UITableView(frame: .zero, style: .plain)
         self.context = context
-        self._stream = _stream
         
         let searchCriteria = LinkSearchCriteria(
             searchString: "",
@@ -92,39 +88,39 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let link = fetchResultsController.item(at: indexPath) as! Entity
-        let message = LinkSelectionMessage(entity: link, origin: origin)
-        stream.send(message: message)
+        let message = LinkSelectionMessage(link: link, origin: origin)
+        AppDelegate.shared.mainStream.send(message: message)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK: - Data Source
-    
-    func numberOfSections(in tableView: UITableView) -> Int
-    {
-        1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        fetchResultsController.fetchedObjects?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-        let result = fetchResultsController.fetchedObjects?[indexPath.row]
-        
-        guard let result = result as? Named else {
-            fatalError("What the crap")
-        }
-        
-        let model = RightImageCellModel(
-            selectionIdentifier: .link(link: result),
-            title: result.title,
-            detail: .link,
-            disclosure: false)
-        return model.makeCell(in: tableView, at: indexPath)
-    }
+//    
+//    func numberOfSections(in tableView: UITableView) -> Int
+//    {
+//        1
+//    }
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+//    {
+//        fetchResultsController.fetchedObjects?.count ?? 0
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+//    {
+//        let result = fetchResultsController.fetchedObjects?[indexPath.row]
+//        
+//        guard let result = result as? Named else {
+//            fatalError("What the crap")
+//        }
+//        
+//        let model = RightImageCellModel(
+//            selectionIdentifier: .link(link: result),
+//            title: result.title,
+//            detail: .link,
+//            disclosure: false)
+//        return model.makeCell(in: tableView, at: indexPath)
+//    }
 }
 
 extension LinkSearchControllerTableViewManager: UISearchResultsUpdating

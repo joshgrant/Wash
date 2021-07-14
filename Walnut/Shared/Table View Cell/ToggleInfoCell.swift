@@ -15,7 +15,6 @@ class ToggleCellModel: TableViewCellModel
     var selectionIdentifier: SelectionIdentifier
     var title: String
     var toggleState: Bool
-    var actionClosure: ActionClosure
     
     // MARK: - Initialization
     
@@ -27,14 +26,6 @@ class ToggleCellModel: TableViewCellModel
         self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.toggleState = toggleState
-        
-        self.actionClosure = ActionClosure { sender in
-            guard let sender = sender as? UISwitch else { fatalError() }
-            let message = ToggleCellMessage(
-                state: sender.isOn,
-                selectionIdentifier: .requiresUserCompletion(state: sender.isOn))
-            AppDelegate.shared.mainStream.send(message: message)
-        }
     }
     
     static var cellClass: AnyClass { ToggleCell.self }
@@ -42,18 +33,31 @@ class ToggleCellModel: TableViewCellModel
 
 class ToggleCell: TableViewCell<ToggleCellModel>
 {
+    var selectionIdentifier: SelectionIdentifier?
+    
     override func configure(with model: ToggleCellModel)
     {
         self.textLabel?.text = model.title
+        self.selectionIdentifier = model.selectionIdentifier
         
         let toggle = UISwitch()
         
         toggle.isOn = model.toggleState
         toggle.addTarget(
-            model.actionClosure,
-            action: #selector(model.actionClosure.perform(sender:)),
+            self,
+            action: #selector(toggleDidChangeValue(_:)),
             for: .valueChanged)
         
         self.accessoryView = toggle
+    }
+    
+    @objc func toggleDidChangeValue(_ sender: UISwitch)
+    {
+        guard let identifier = selectionIdentifier else { fatalError() }
+        
+        let message = ToggleCellMessage(
+            state: sender.isOn,
+            selectionIdentifier: identifier)
+        AppDelegate.shared.mainStream.send(message: message)
     }
 }

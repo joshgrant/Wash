@@ -92,7 +92,8 @@ extension StockDetailController: Subscriber
     
     private func handle(_ message: TextEditCellMessage)
     {
-        guard message.entity == stock else { return }
+        // TODO: Make sure the message is stock and not stockFrom/stockTo
+        guard case .stock(let s) = message.selectionIdentifier, s == stock else { return }
         
         switch message.selectionIdentifier
         {

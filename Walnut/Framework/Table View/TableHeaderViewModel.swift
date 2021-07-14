@@ -57,4 +57,5 @@ extension TableHeaderViewModel
     static let links = TableHeaderViewModel(title: "Links".localized)
     static let ideal = TableHeaderViewModel(title: "Ideal".localized)
     static let current = TableHeaderViewModel(title: "Current".localized)
+    static let stateMachine = TableHeaderViewModel(title: "State Machine".localized)
 }

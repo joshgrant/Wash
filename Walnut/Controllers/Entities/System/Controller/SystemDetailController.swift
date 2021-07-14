@@ -155,7 +155,7 @@ extension SystemDetailController: Subscriber
         // Interesting business rule... don't handle changes if it's empty?
         if message.title.isEmpty { return }
         
-        if message.entity == system
+        if case .system(let s) = message.selectionIdentifier, s == system
         {
             system.title = message.title
             system.managedObjectContext?.quickSave()
@@ -210,7 +210,6 @@ extension SystemDetailController: Subscriber
     {
         let linkController = LinkSearchController(
             origin: .systemStockSearch,
-            entity: message.entityToSearchFrom,
             entityType: message.typeToSearch,
             context: message.entityToSearchFrom.managedObjectContext)
         
@@ -232,7 +231,7 @@ extension SystemDetailController: Subscriber
     {
         if message.origin == .systemStockSearch
         {
-            let link = message.entity as! Stock
+            let link = message.link as! Stock
             system.addToStocks(link)
             system.managedObjectContext?.quickSave()
             tableView.shouldReload = true

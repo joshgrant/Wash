@@ -40,33 +40,12 @@ class TextEditCellModel: NSObject, TableViewCellModel
     static var cellClass: AnyClass { TextEditCell.self }
 }
 
-extension TextEditCellModel: UITextFieldDelegate
-{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField)
-    {
-        guard notifyOnDismissal else { return }
-        
-        let title = textField.text ?? ""
-        let message = TextEditCellMessage(
-            selectionIdentifier: selectionIdentifier,
-            title: title,
-            entity: entity)
-        
-        AppDelegate.shared.mainStream.send(message: message)
-    }
-}
-
-
 class TextEditCell: TableViewCell<TextEditCellModel>
 {
     // MARK: - Variables
     
+    var selectionIdentifier: SelectionIdentifier?
+    var notifyOnDismissal: Bool = true
     var textField: UITextField
     
     var isEmpty: Bool
@@ -101,9 +80,35 @@ class TextEditCell: TableViewCell<TextEditCellModel>
     
     override func configure(with model: TextEditCellModel)
     {
+        self.notifyOnDismissal = model.notifyOnDismissal
+        self.selectionIdentifier = model.selectionIdentifier
+        
         textField.placeholder = model.placeholder
         textField.text = model.text
-        textField.delegate = model
+        textField.delegate = self
         textField.keyboardType = model.keyboardType
+    }
+}
+
+extension TextEditCell: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        guard notifyOnDismissal else { return }
+        
+        guard let identifier = selectionIdentifier else { fatalError() }
+        
+        let title = textField.text ?? ""
+        let message = TextEditCellMessage(
+            selectionIdentifier: identifier,
+            title: title)
+        
+        AppDelegate.shared.mainStream.send(message: message)
     }
 }

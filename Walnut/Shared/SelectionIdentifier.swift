@@ -19,6 +19,11 @@ public enum SelectionIdentifier
     case net
     
     case newStockUnit
+    case newStockType(type: NewStockType)
+    case stateMachine
+    
+    case newUnitName
+    case newUnitSymbol
     
     case minimum
     case maximum

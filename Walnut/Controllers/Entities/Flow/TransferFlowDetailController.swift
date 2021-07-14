@@ -113,7 +113,7 @@ extension TransferFlowDetailController: Subscriber
     
     private func handle(_ message: TextEditCellMessage)
     {
-        if message.entity == flow
+        if case .flow(let f) = message.selectionIdentifier, f == flow
         {
             title = message.title
             flow.title = message.title
@@ -123,7 +123,7 @@ extension TransferFlowDetailController: Subscriber
     
     private func handle(_ message: LinkSelectionMessage)
     {
-        guard let stock = message.entity as? Stock else { return }
+        guard let stock = message.link as? Stock else { return }
         
         switch router.presentedDestination
         {
