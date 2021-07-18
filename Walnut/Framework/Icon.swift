@@ -43,6 +43,13 @@ public enum Icon: String
     case min = "dial.min"
     case max = "dial.max.fill"
     
+    // Keyboard
+    case negative = "minus"
+    case infinity = "infinity"
+    case delete = "delete.left"
+    case enter = "return"
+    
+    
     case arrowDown = "arrowtriangle.down.fill"
     case arrowRight = "arrowtriangle.right.fill"
     

@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol Unique: Hashable
+public protocol Unique: Hashable
 {
     var id: UUID { get set }
 }
 
-extension Unique
+public extension Unique
 {
     func hash(into hasher: inout Hasher)
     {

@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-// TODO: Disable state machine if boolean is true
-
 class NewStockTableView: TableView
 {
     // MARK: - Variables
@@ -28,11 +26,13 @@ class NewStockTableView: TableView
     
     override func makeModel() -> TableViewModel
     {
-        TableViewModel(sections: [
+        let sections: [TableViewSection] = [
             makeInfoSection(model: newStockModel),
+            makeStateMachineSection(model: newStockModel),
             makeValueTypeSection(model: newStockModel),
-            makeStateMachineSection(model: newStockModel)
-        ])
+        ]
+        
+        return TableViewModel(sections: sections)
     }
     
     func makeInfoSection(model: NewStockModel) -> TableViewSection
@@ -58,11 +58,13 @@ class NewStockTableView: TableView
     
     func makeValueTypeSection(model: NewStockModel) -> TableViewSection
     {
-        let models: [TableViewCellModel] = ValueType.allCases.map { type in
-            CheckmarkCellModel(
+        let models: [TableViewCellModel] = ValueType.allCases.compactMap { type in
+
+            return CheckmarkCellModel(
                 selectionIdentifier: .valueType(type: type),
                 title: type.description,
-                checked: type == model.stockType)
+                checked: type == model.stockType,
+                enabled: !(type == .boolean && model.isStateMachine))
         }
         
         return TableViewSection(
@@ -75,7 +77,7 @@ class NewStockTableView: TableView
         let models: [TableViewCellModel] = [
             ToggleCellModel(
                 selectionIdentifier: .stateMachine,
-                title: "Uses state machine".localized,
+                title: "State Machine".localized,
                 toggleState: model.isStateMachine)
         ]
         

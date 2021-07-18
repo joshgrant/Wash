@@ -25,6 +25,9 @@
 		030B21D5268168450038C095 /* InflowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */; };
 		030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */; };
 		030BC431269F7CE800442CE9 /* SliderRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC430269F7CE800442CE9 /* SliderRangeCell.swift */; };
+		030BC433269F9BEC00442CE9 /* NewStockStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC432269F9BEC00442CE9 /* NewStockStateController.swift */; };
+		030BC435269F9BF300442CE9 /* NewStockStateTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC434269F9BF300442CE9 /* NewStockStateTableView.swift */; };
+		030BC43726A0ACD900442CE9 /* CenterActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC43626A0ACD900442CE9 /* CenterActionCell.swift */; };
 		031681B5267D66E100F493DA /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B4267D66E100F493DA /* TextCell.swift */; };
 		031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B6267DA56700F493DA /* Flow+Extensions.swift */; };
 		031681B9267DA6F100F493DA /* Pinnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031681B8267DA6F100F493DA /* Pinnable.swift */; };
@@ -167,6 +170,9 @@
 		03BF0BE8269F649900A866E5 /* CurrentIdealNumericTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE7269F649900A866E5 /* CurrentIdealNumericTableView.swift */; };
 		03BF0BEA269F6C4100A866E5 /* MinMaxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BE9269F6C4100A866E5 /* MinMaxController.swift */; };
 		03BF0BEC269F6C4A00A866E5 /* MinMaxTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BEB269F6C4A00A866E5 /* MinMaxTableView.swift */; };
+		03C4C47B26A182710066E6ED /* NewStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C47A26A182710066E6ED /* NewStateModel.swift */; };
+		03C4C47F26A18F4E0066E6ED /* StatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C47E26A18F4E0066E6ED /* StatePickerController.swift */; };
+		03C4C48326A4990E0066E6ED /* NumericKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48226A4990E0066E6ED /* NumericKeyboard.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -238,6 +244,9 @@
 		030B21D4268168450038C095 /* InflowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InflowsHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B21D62681688A0038C095 /* OutflowsHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutflowsHeaderViewModel.swift; sourceTree = "<group>"; };
 		030BC430269F7CE800442CE9 /* SliderRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderRangeCell.swift; sourceTree = "<group>"; };
+		030BC432269F9BEC00442CE9 /* NewStockStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStockStateController.swift; sourceTree = "<group>"; };
+		030BC434269F9BF300442CE9 /* NewStockStateTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStockStateTableView.swift; sourceTree = "<group>"; };
+		030BC43626A0ACD900442CE9 /* CenterActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterActionCell.swift; sourceTree = "<group>"; };
 		031681B4267D66E100F493DA /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		031681B6267DA56700F493DA /* Flow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+Extensions.swift"; sourceTree = "<group>"; };
 		031681B8267DA6F100F493DA /* Pinnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinnable.swift; sourceTree = "<group>"; };
@@ -386,6 +395,9 @@
 		03BF0BE7269F649900A866E5 /* CurrentIdealNumericTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentIdealNumericTableView.swift; sourceTree = "<group>"; };
 		03BF0BE9269F6C4100A866E5 /* MinMaxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxController.swift; sourceTree = "<group>"; };
 		03BF0BEB269F6C4A00A866E5 /* MinMaxTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxTableView.swift; sourceTree = "<group>"; };
+		03C4C47A26A182710066E6ED /* NewStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStateModel.swift; sourceTree = "<group>"; };
+		03C4C47E26A18F4E0066E6ED /* StatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePickerController.swift; sourceTree = "<group>"; };
+		03C4C48226A4990E0066E6ED /* NumericKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericKeyboard.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -820,6 +832,7 @@
 				03FC2C12269D1EC000B8CB36 /* SelectionIdentifier.swift */,
 				030B2175267F7D5E0038C095 /* Section Header */,
 				038CF64B2676756500931595 /* Table View Cell */,
+				03C4C48226A4990E0066E6ED /* NumericKeyboard.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -839,6 +852,7 @@
 				030B2182267FB15B0038C095 /* TextEditCell.swift */,
 				0370FEDF268A1E1C001E099B /* ToggleInfoCell.swift */,
 				0370FEB72688B644001E099B /* Messages */,
+				030BC43626A0ACD900442CE9 /* CenterActionCell.swift */,
 			);
 			path = "Table View Cell";
 			sourceTree = "<group>";
@@ -1057,8 +1071,28 @@
 		03BF0BE0269F5EB700A866E5 /* States */ = {
 			isa = PBXGroup;
 			children = (
+				03C4C47D26A18F3E0066E6ED /* Picker */,
+				03C4C47C26A18F3A0066E6ED /* New */,
 			);
 			path = States;
+			sourceTree = "<group>";
+		};
+		03C4C47C26A18F3A0066E6ED /* New */ = {
+			isa = PBXGroup;
+			children = (
+				030BC432269F9BEC00442CE9 /* NewStockStateController.swift */,
+				030BC434269F9BF300442CE9 /* NewStockStateTableView.swift */,
+				03C4C47A26A182710066E6ED /* NewStateModel.swift */,
+			);
+			path = New;
+			sourceTree = "<group>";
+		};
+		03C4C47D26A18F3E0066E6ED /* Picker */ = {
+			isa = PBXGroup;
+			children = (
+				03C4C47E26A18F4E0066E6ED /* StatePickerController.swift */,
+			);
+			path = Picker;
 			sourceTree = "<group>";
 		};
 		03FAACAE2698CC8900CB7AB6 /* Link Search */ = {
@@ -1309,6 +1343,8 @@
 				038CF6C3267682C700931595 /* TextStyle.swift in Sources */,
 				030B21D3268167730038C095 /* StatesHeaderViewModel.swift in Sources */,
 				03FAACDA269B64A800CB7AB6 /* StockTypeTableView.swift in Sources */,
+				03C4C47F26A18F4E0066E6ED /* StatePickerController.swift in Sources */,
+				030BC435269F9BF300442CE9 /* NewStockStateTableView.swift in Sources */,
 				03FAACE4269B934C00CB7AB6 /* SectionHeaderAddMessage.swift in Sources */,
 				038CF6C7267682C700931595 /* Priority.swift in Sources */,
 				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
@@ -1321,12 +1357,14 @@
 				038CF6BF267682C700931595 /* TimePeriod.swift in Sources */,
 				038CF6C6267682C700931595 /* ConditionType.swift in Sources */,
 				03FAACBA2698D95600CB7AB6 /* LinkSearchCriteria.swift in Sources */,
+				03C4C48326A4990E0066E6ED /* NumericKeyboard.swift in Sources */,
 				03FAACB82698D52100CB7AB6 /* LinkCell.swift in Sources */,
 				03FC2C0F269C9E9000B8CB36 /* CurrentDetailController.swift in Sources */,
 				03555B452686A487006E9EA1 /* CollectionView.swift in Sources */,
 				030B21D72681688A0038C095 /* OutflowsHeaderViewModel.swift in Sources */,
 				03555B862687D77A006E9EA1 /* SystemDetailRouter.swift in Sources */,
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
+				030BC433269F9BEC00442CE9 /* NewStockStateController.swift in Sources */,
 				030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */,
 				030B2183267FB15B0038C095 /* TextEditCell.swift in Sources */,
 				03FAACD0269B36E900CB7AB6 /* TableViewSelectionMessage.swift in Sources */,
@@ -1358,6 +1396,7 @@
 				0370FEDC268A184E001E099B /* TransferFlowDetailRouter.swift in Sources */,
 				03555B562686A487006E9EA1 /* ConfigurableTableViewCellProtocol.swift in Sources */,
 				031681B9267DA6F100F493DA /* Pinnable.swift in Sources */,
+				030BC43726A0ACD900442CE9 /* CenterActionCell.swift in Sources */,
 				030B217D267F7EDB0038C095 /* SystemDetailFlowsHeaderViewModel.swift in Sources */,
 				03555B672686A487006E9EA1 /* SearchBarDelegate.swift in Sources */,
 				030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */,
@@ -1369,6 +1408,7 @@
 				03FAACD2269B491D00CB7AB6 /* TransferFlowDetailTableView.swift in Sources */,
 				03555B642686A487006E9EA1 /* String+Extensions.swift in Sources */,
 				03555B4E2686A487006E9EA1 /* Icon.swift in Sources */,
+				03C4C47B26A182710066E6ED /* NewStateModel.swift in Sources */,
 				030B2181267F7EF70038C095 /* SubSystemsHeaderViewModel.swift in Sources */,
 				03555B5C2686A487006E9EA1 /* TableHeaderViewModel.swift in Sources */,
 				03555B4C2686A487006E9EA1 /* Database.swift in Sources */,

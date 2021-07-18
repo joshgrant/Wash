@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// TODO: Automatic "next" button updates when the data model changes...
+
 class CurrentIdealController: UIViewController
 {
     // If a state machine, each cell should be a
@@ -46,7 +48,7 @@ class CurrentIdealController: UIViewController
         }
         else if newStockModel.isStateMachine
         {
-            tableView = CurrentIdealStateTableView()
+            tableView = CurrentIdealStateTableView(newStockModel: newStockModel)
         }
         else
         {
@@ -61,6 +63,8 @@ class CurrentIdealController: UIViewController
         let rightItem = UIBarButtonItem(systemItem: .done)
         rightItem.target = self
         rightItem.action = #selector(rightBarButtonItemDidTouchUpInside(_:))
+        rightItem.isEnabled = newStockModel.validForCurrentIdeal
+        
         navigationItem.rightBarButtonItem = rightItem
     }
     
@@ -149,6 +153,17 @@ extension CurrentIdealController: Subscriber
             newStockModel.idealBool = state
             tableView.reload(shouldReloadTableView: false)
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+        case .currentState:
+            // Open up the state picker view
+            let detail = StatePickerController(newStockModel: newStockModel, isCurrent: true)
+            navigationController?.pushViewController(detail, animated: true)
+        case .idealState:
+            // Open up the state picker view
+            let detail = StatePickerController(newStockModel: newStockModel, isCurrent: false)
+            navigationController?.pushViewController(detail, animated: true)
+        case .statePicker:
+            tableView.shouldReload = true
+            navigationItem.rightBarButtonItem?.isEnabled = newStockModel.validForCurrentIdeal
         default:
             break
         }

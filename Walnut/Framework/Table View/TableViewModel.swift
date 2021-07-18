@@ -31,4 +31,12 @@ class TableViewModel
             }
         }
     }
+    
+    // TODO: This is a hack...
+    func sectionsUpdated()
+    {
+        models = sections.map { $0.models }
+        headers = sections.map { $0.header }
+        footers = sections.map { $0.footer }
+    }
 }

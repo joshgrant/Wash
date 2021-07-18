@@ -119,6 +119,7 @@ extension NewUnitTableView: Subscriber
         switch message.selectionIdentifier
         {
         case .newUnitName:
+            guard message.editType == .dismiss else { return }
             let nextCellIndexPath = IndexPath(row: 1, section: 0)
             guard let cell = cellForRow(at: nextCellIndexPath) as? RightEditCell else { return }
             cell.rightField.becomeFirstResponder()

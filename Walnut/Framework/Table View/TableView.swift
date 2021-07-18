@@ -89,7 +89,7 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
         fatalError("Implement in subclass")
     }
     
-    private func configure()
+    func configure()
     {
         for type in model.cellModelTypes
         {
@@ -134,6 +134,8 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     {
         let model = model.models[indexPath.section][indexPath.row]
         
+        // TODO: Table view should not know about special cells
+        // Cells should suggest sizing here
         switch model
         {
         case is SubtitleDetailCellModel:

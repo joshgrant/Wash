@@ -25,6 +25,14 @@ public enum SelectionIdentifier
     case newUnitName
     case newUnitSymbol
     
+    case addState
+    case stateTitle(state: NewStateModel)
+    case stateFrom(state: NewStateModel)
+    case stateTo(state: NewStateModel)
+    case statePicker(state: NewStateModel)
+    case currentState
+    case idealState
+    
     case minimum
     case maximum
     

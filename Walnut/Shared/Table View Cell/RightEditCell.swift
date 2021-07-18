@@ -66,6 +66,8 @@ class RightEditCell: TableViewCell<RightEditCellModel>
         
         rightField.textAlignment = .right
         
+        rightField.inputView = NumericKeyboard()
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
@@ -88,7 +90,7 @@ class RightEditCell: TableViewCell<RightEditCellModel>
         
         titleLabel.text = model.title
         rightField.text = model.detail
-        rightField.keyboardType = model.keyboardType
+//        rightField.keyboardType = model.keyboardType
         rightField.delegate = self
         
         if let postfix = model.detailPostfix

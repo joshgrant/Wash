@@ -40,11 +40,13 @@ class NewStockController: UIViewController, RouterDelegate
         view.embed(tableView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .cancel)
-        navigationItem.rightBarButtonItem = BarButtonItem(
+        let rightItem = UIBarButtonItem(
             title: "Next".localized,
-            actionClosure: ActionClosure { [weak self] sender in
-                self?.routeToNext()
-            })
+            style: .plain,
+            target: self,
+            action: #selector(rightBarButtonItemDidTouchUpInside(_:)))
+        navigationItem.rightBarButtonItem = rightItem
+        // TODO: Validate the right item...
     }
     
     required init?(coder: NSCoder)
@@ -57,42 +59,19 @@ class NewStockController: UIViewController, RouterDelegate
         unsubscribe(from: AppDelegate.shared.mainStream)
     }
     
+    // MARK: - View lifecycle
+    
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(true)
         view.endEditing(true)
     }
     
-    // MARK: - Functions
+    // MARK: Interface outlets
     
-    func routeToNext()
+    @objc func rightBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        if newStockModel.stockType == .boolean
-        {
-            // route to current/ideal state
-            router.route(
-                to: .currentIdealState,
-                completion: nil)
-        }
-        else if newStockModel.isStateMachine
-        {
-            router.route(
-                to: .states,
-                completion: nil)
-        }
-        else if newStockModel.stockType == .percent
-        {
-            router.route(
-                to: .currentIdealState,
-                completion: nil)
-        }
-        else
-        {
-             // Route to min/max controller
-            router.route(
-                to: .minMax,
-                completion: nil)
-        }
+        router.route(to: .next, completion: nil)
     }
 }
 
@@ -108,6 +87,8 @@ extension NewStockController: Subscriber
             handle(m)
         case let m as TextEditCellMessage:
             handle(m)
+        case let m as ToggleCellMessage:
+            handle(m)
         default:
             break
         }
@@ -122,7 +103,9 @@ extension NewStockController: Subscriber
         case .valueType(let type):
             newStockModel.stockType = type
             tableView.reload(shouldReloadTableView: false)
-            tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            tableView.beginUpdates()
+            tableView.reloadSections(IndexSet(integer: 2), with: .none)
+            tableView.endUpdates()
         default:
             break
         }
@@ -141,5 +124,25 @@ extension NewStockController: Subscriber
     {
         guard case .newStockName = message.selectionIdentifier else { return }
         newStockModel.title = message.title
+    }
+    
+    private func handle(_ message: ToggleCellMessage)
+    {
+        guard case .stateMachine = message.selectionIdentifier else { return }
+        newStockModel.isStateMachine = message.state
+        
+        if newStockModel.isStateMachine
+        {
+            if newStockModel.stockType == .boolean
+            {
+                newStockModel.stockType = .decimal
+            }
+        }
+        else if newStockModel.previouslyBoolean
+        {
+            newStockModel.stockType = .boolean
+        }
+        
+        tableView.shouldReload = true
     }
 }

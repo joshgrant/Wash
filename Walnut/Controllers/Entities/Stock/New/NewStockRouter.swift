@@ -14,6 +14,7 @@ class NewStockRouter: Router
     
     enum Destination
     {
+        case next
         case back
         case currentIdealState
         case states
@@ -42,6 +43,8 @@ class NewStockRouter: Router
     {
         switch destination
         {
+        case .next:
+            routeToNext()
         case .back:
             delegate?.navigationController?.popViewController(animated: true)
         case .currentIdealState:
@@ -55,6 +58,28 @@ class NewStockRouter: Router
         }
     }
     
+    private func routeToNext()
+    {
+        if newStockModel.stockType == .boolean
+        {
+            // route to current/ideal state
+            route(to: .currentIdealState, completion: nil)
+        }
+        else if newStockModel.isStateMachine
+        {
+            route(to: .states, completion: nil)
+        }
+        else if newStockModel.stockType == .percent
+        {
+            route(to: .currentIdealState, completion: nil)
+        }
+        else
+        {
+            // Route to min/max controller
+            route( to: .minMax, completion: nil)
+        }
+    }
+    
     private func routeToCurrentIdealState()
     {
         let currentIdealController = CurrentIdealController(
@@ -65,7 +90,8 @@ class NewStockRouter: Router
     
     private func routeToStates()
     {
-        
+        let stateController = NewStockStateController(newStockModel: newStockModel, context: context)
+        delegate?.navigationController?.pushViewController(stateController, animated: true)
     }
     
     private func routeToMinMax()
