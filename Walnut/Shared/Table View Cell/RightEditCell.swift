@@ -16,7 +16,7 @@ class RightEditCellModel: NSObject, TableViewCellModel
     var title: String
     var detail: String?
     var detailPostfix: String?
-    var keyboardType: UIKeyboardType
+    var keyboardType: UIKeyboardType?
     var newStockModel: NewStockModel?
     
     // MARK: - Initialization
@@ -26,7 +26,7 @@ class RightEditCellModel: NSObject, TableViewCellModel
         title: String,
         detail: String?,
         detailPostfix: String?,
-        keyboardType: UIKeyboardType,
+        keyboardType: UIKeyboardType?,
         newStockModel: NewStockModel?)
     {
         self.selectionIdentifier = selectionIdentifier
@@ -44,8 +44,6 @@ class RightEditCell: TableViewCell<RightEditCellModel>
 {
     // MARK: - Variables
     
-    weak var keyboard: NumericKeyboard?
-    
     var titleLabel: UILabel
     var rightField: UITextField
     var postfixLabel: UILabel
@@ -56,8 +54,6 @@ class RightEditCell: TableViewCell<RightEditCellModel>
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
-        let keyboard = NumericKeyboard()
-        
         titleLabel = UILabel()
         rightField = UITextField()
         postfixLabel = UILabel()
@@ -70,15 +66,7 @@ class RightEditCell: TableViewCell<RightEditCellModel>
         
         rightField.textAlignment = .right
         
-        keyboard.translatesAutoresizingMaskIntoConstraints = false
-        rightField.inputView = keyboard
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        keyboard.target = rightField
-
-        keyboard.delegate = self
-        self.keyboard = keyboard
         
         selectionStyle = .none
         
@@ -101,6 +89,19 @@ class RightEditCell: TableViewCell<RightEditCellModel>
         titleLabel.text = model.title
         rightField.text = model.detail
         rightField.delegate = self
+        
+        if let type = model.keyboardType
+        {
+            rightField.keyboardType = type
+        }
+        else
+        {
+            let keyboard = NumericKeyboard()
+            keyboard.translatesAutoresizingMaskIntoConstraints = false
+            keyboard.delegate = self
+            keyboard.target = rightField
+            rightField.inputView = keyboard
+        }
         
         if let postfix = model.detailPostfix
         {
@@ -136,44 +137,11 @@ extension RightEditCell: UITextFieldDelegate
     func textFieldDidEndEditing(_ textField: UITextField)
     {
         guard let model = model else { fatalError() }
-        guard let text = textField.text else { return }
-        
-        // TODO: handle this in the min/max controller, not here...
-        switch model.selectionIdentifier
-        {
-        case .minimum: // Shouldn't be greater than max
-            guard var newValue = Double(text) else { return }
-            
-            if let max = model.newStockModel?.maximum
-            {
-                if newValue >= max
-                {
-                    newValue = max
-                }
-            }
-            
-            model.newStockModel!.minimum = newValue
-            textField.text = String(format: "%i", Int(newValue))
-        case .maximum: // Shouldn't be less than min
-            guard var newValue = Double(text) else { return }
-            
-            if let min = model.newStockModel?.minimum
-            {
-                if newValue <= min
-                {
-                    newValue = min
-                }
-            }
-            
-            model.newStockModel!.maximum = newValue
-            textField.text = String(format: "%i", Int(newValue))
-        default:
-            break
-        }
+        guard let text = textField.text else { fatalError() }
         
         let message = RightEditCellMessage(
             selectionIdentifier: model.selectionIdentifier,
-            content: textField.text ?? "",
+            content: text,
             editType: .dismiss)
         
         AppDelegate.shared.mainStream.send(message: message)

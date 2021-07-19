@@ -14,6 +14,7 @@ class NewStockRouter: Router
     
     enum Destination
     {
+        case dismiss
         case next
         case back
         case currentIdealState
@@ -43,6 +44,8 @@ class NewStockRouter: Router
     {
         switch destination
         {
+        case .dismiss:
+            delegate?.navigationController?.dismiss(animated: true, completion: nil)
         case .next:
             routeToNext()
         case .back:

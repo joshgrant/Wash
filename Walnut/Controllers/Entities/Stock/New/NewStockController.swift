@@ -37,9 +37,15 @@ class NewStockController: UIViewController, RouterDelegate
         
         subscribe(to: AppDelegate.shared.mainStream)
         
+        title = "New Stock".localized
+        
         view.embed(tableView)
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .cancel)
+        let leftItem = UIBarButtonItem(systemItem: .cancel)
+        leftItem.target = self
+        leftItem.action = #selector(leftBarButtonItemDidTouchUpInside(_:))
+        navigationItem.leftBarButtonItem = leftItem
+        
         let rightItem = UIBarButtonItem(
             title: "Next".localized,
             style: .plain,
@@ -68,6 +74,11 @@ class NewStockController: UIViewController, RouterDelegate
     }
     
     // MARK: Interface outlets
+    
+    @objc func leftBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
+    {
+        router.route(to: .dismiss, completion: nil)
+    }
     
     @objc func rightBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {

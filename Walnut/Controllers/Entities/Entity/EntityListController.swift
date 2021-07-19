@@ -108,6 +108,8 @@ extension EntityListController: Subscriber
             handle(m)
         case is CancelCreationMessage:
             tableView.shouldReload = true
+        case is EntityInsertionMessage:
+            tableView.shouldReload = true
         default:
             break
         }

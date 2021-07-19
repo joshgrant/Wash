@@ -86,14 +86,14 @@ class NewStockStateTableView: TableView
                 title: "From".localized,
                 detail: from,
                 detailPostfix: postfix,
-                keyboardType: .numberPad,
+                keyboardType: nil,
                 newStockModel: nil),
             RightEditCellModel(
                 selectionIdentifier: .stateTo(state: state),
                 title: "To".localized,
                 detail: to,
                 detailPostfix: postfix,
-                keyboardType: .numberPad,
+                keyboardType: nil,
                 newStockModel: nil)
         ]
         

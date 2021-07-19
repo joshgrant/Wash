@@ -56,14 +56,22 @@ class EntityListRouter: Router
             return
         }
         
-        print("WEIRD")
-        
-        let entity = entityType.init(context: context)
-        entity.createdDate = Date()
-        
-        let detail = entity.detailController()
-        delegate?.navigationController?.pushViewController(detail, animated: true)
-        context.quickSave()
+        switch entityType
+        {
+        case is Stock.Type:
+            let detail = NewStockController(context: context)
+            let detailNavigation = UINavigationController(rootViewController: detail)
+//            detailNavigation.modalPresentationStyle = .fullScreen
+            detailNavigation.isModalInPresentation = true
+            delegate?.navigationController?.present(detailNavigation, animated: true, completion: nil)
+        default:
+            let entity = entityType.init(context: context)
+            entity.createdDate = Date()
+
+            let detail = entity.detailController()
+            delegate?.navigationController?.pushViewController(detail, animated: true)
+            context.quickSave()
+        }
     }
     
     private func routeToDetail(entity: Entity)

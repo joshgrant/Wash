@@ -61,14 +61,14 @@ class MinMaxTableView: TableView
                 title: "Minimum".localized,
                 detail: minDetail,
                 detailPostfix: postfix,
-                keyboardType: .decimalPad,
+                keyboardType: nil,
                 newStockModel: model),
             RightEditCellModel(
                 selectionIdentifier: .maximum,
                 title: "Maximum".localized,
                 detail: maxDetail,
                 detailPostfix: postfix,
-                keyboardType: .decimalPad,
+                keyboardType: nil,
                 newStockModel: model)
         ]
         

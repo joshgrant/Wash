@@ -175,6 +175,7 @@
 		03C4C48326A4990E0066E6ED /* NumericKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48226A4990E0066E6ED /* NumericKeyboard.swift */; };
 		03C4C48826A5F7510066E6ED /* Publishers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48726A5F7510066E6ED /* Publishers+Extensions.swift */; };
 		03C4C48A26A5F7E40066E6ED /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48926A5F7E40066E6ED /* Notification+Extensions.swift */; };
+		03C4C48C26A6004A0066E6ED /* EntityInsertionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48B26A6004A0066E6ED /* EntityInsertionMessage.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -402,6 +403,7 @@
 		03C4C48226A4990E0066E6ED /* NumericKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericKeyboard.swift; sourceTree = "<group>"; };
 		03C4C48726A5F7510066E6ED /* Publishers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Extensions.swift"; sourceTree = "<group>"; };
 		03C4C48926A5F7E40066E6ED /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
+		03C4C48B26A6004A0066E6ED /* EntityInsertionMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityInsertionMessage.swift; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -1032,6 +1034,7 @@
 				03BF0BC1269DF5EB00A866E5 /* NewStockTableView.swift */,
 				03BF0BD8269F51E700A866E5 /* NewStockModel.swift */,
 				03BF0BDC269F5CE200A866E5 /* NewStockRouter.swift */,
+				03C4C48B26A6004A0066E6ED /* EntityInsertionMessage.swift */,
 			);
 			path = New;
 			sourceTree = "<group>";
@@ -1430,6 +1433,7 @@
 				03555B4C2686A487006E9EA1 /* Database.swift in Sources */,
 				031681B5267D66E100F493DA /* TextCell.swift in Sources */,
 				03555B602686A487006E9EA1 /* UIImage+Extensions.swift in Sources */,
+				03C4C48C26A6004A0066E6ED /* EntityInsertionMessage.swift in Sources */,
 				038CF6D2267682C700931595 /* EntityType.swift in Sources */,
 				03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */,
 				03555B4A2686A487006E9EA1 /* DatabaseError.swift in Sources */,

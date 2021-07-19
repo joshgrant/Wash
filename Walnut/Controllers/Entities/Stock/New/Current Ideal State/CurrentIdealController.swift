@@ -125,6 +125,13 @@ class CurrentIdealController: UIViewController
         }
         
         context.quickSave()
+        
+        let message = EntityInsertionMessage(entity: stock)
+        AppDelegate.shared.mainStream.send(message: message)
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        dismiss(animated: true, completion: nil)
     }
 }
 

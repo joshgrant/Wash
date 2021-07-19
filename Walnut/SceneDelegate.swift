@@ -30,11 +30,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         
         window = UIWindow(windowScene: scene)
         
-//        let viewControllers = makeTabBarViewControllers(context: context)
-//        let root = RootController(viewControllers: viewControllers)
+        let viewControllers = makeTabBarViewControllers(context: context)
+        let root = RootController(viewControllers: viewControllers)
         
-        let controller = NewStockController(context: context)
-        let root = UINavigationController(rootViewController: controller)
+//        let controller = NewStockController(context: context)
+//        let root = UINavigationController(rootViewController: controller)
         
         window?.rootViewController = root
         window?.makeKeyAndVisible()

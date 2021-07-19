@@ -60,6 +60,55 @@ class MinMaxController: UIViewController
         navigationController?.pushViewController(currentIdeal, animated: true)
     }
     
+    // FIXME: Also a hack
+    func transferModelContentToCells()
+    {
+        let first = IndexPath(row: 0, section: 0)
+        let firstCell = tableView.cellForRow(at: first) as! RightEditCell
+        let second = IndexPath(row: 1, section: 0)
+        let secondCell = tableView.cellForRow(at: second) as! RightEditCell
+        
+        var min: String
+        var max: String
+        
+        if newStockModel.minimum == Double.infinity
+        {
+            min = "∞"
+        }
+        else if newStockModel.minimum == -Double.infinity
+        {
+            min = "-∞"
+        }
+        else if let minimum = newStockModel.minimum
+        {
+            min = String(format: "%i", Int(minimum))
+        }
+        else
+        {
+            min = ""
+        }
+        
+        if newStockModel.maximum == Double.infinity
+        {
+            max = "∞"
+        }
+        else if newStockModel.maximum == -Double.infinity
+        {
+            max = "-∞"
+        }
+        else if let maximum = newStockModel.maximum
+        {
+            max = String(format: "%i", Int(maximum))
+        }
+        else
+        {
+            max = ""
+        }
+        
+        firstCell.rightField.text = min
+        secondCell.rightField.text = max
+    }
+    
     // FIXME: This is a hack
     func transferCellContentToModels()
     {
@@ -122,11 +171,50 @@ extension MinMaxController: Subscriber
     
     private func handle(_ message: RightEditCellMessage)
     {
+        var value: Double
+        
+        if message.content == "∞"
+        {
+            value = Double.infinity
+        }
+        else if message.content == "-∞"
+        {
+            value = -Double.infinity
+        }
+        else
+        {
+            // TODO: Disallow pasting text into the fields unless it's only numbers...
+            value = Double(message.content) ?? 0
+        }
+        
+        switch message.selectionIdentifier
+        {
+        case .minimum:
+            if let max = newStockModel.maximum, value >= max
+            {
+                value = max
+            }
+            
+            newStockModel.minimum = value
+            // TODO: set the text on the text field...
+        case .maximum:
+            if let min = newStockModel.minimum, value <= min
+            {
+                value = min
+            }
+            
+            newStockModel.maximum = value
+            // TODO: Set the text on the text field...
+        default:
+            break
+        }
+        
         switch message.editType
         {
         case .beginEdit:
             navigationItem.rightBarButtonItem?.isEnabled = false
         case .dismiss:
+            transferModelContentToCells()
             navigationItem.rightBarButtonItem?.isEnabled = newStockModel.validForMinMax
         default:
             break
