@@ -44,6 +44,8 @@ class RightEditCell: TableViewCell<RightEditCellModel>
 {
     // MARK: - Variables
     
+    weak var keyboard: NumericKeyboard?
+    
     var titleLabel: UILabel
     var rightField: UITextField
     var postfixLabel: UILabel
@@ -54,6 +56,8 @@ class RightEditCell: TableViewCell<RightEditCellModel>
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
+        let keyboard = NumericKeyboard()
+        
         titleLabel = UILabel()
         rightField = UITextField()
         postfixLabel = UILabel()
@@ -66,9 +70,15 @@ class RightEditCell: TableViewCell<RightEditCellModel>
         
         rightField.textAlignment = .right
         
-        rightField.inputView = NumericKeyboard()
+        keyboard.translatesAutoresizingMaskIntoConstraints = false
+        rightField.inputView = keyboard
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        keyboard.target = rightField
+
+        keyboard.delegate = self
+        self.keyboard = keyboard
         
         selectionStyle = .none
         
@@ -90,7 +100,6 @@ class RightEditCell: TableViewCell<RightEditCellModel>
         
         titleLabel.text = model.title
         rightField.text = model.detail
-//        rightField.keyboardType = model.keyboardType
         rightField.delegate = self
         
         if let postfix = model.detailPostfix
@@ -187,5 +196,38 @@ extension RightEditCell: UITextFieldDelegate
         }
         
         return true
+    }
+}
+
+extension RightEditCell: NumericKeyboardDelegate
+{
+    func toggleSign(keyboard: NumericKeyboard)
+    {
+        if keyboard.negative
+        {
+            let characterSet = CharacterSet(charactersIn: "-")
+            rightField.text = rightField.text?.trimmingCharacters(in: characterSet)
+        }
+        else
+        {
+            rightField.text = "-" + (rightField.text ?? "")
+        }
+    }
+    
+    func setInfinity(keyboard: NumericKeyboard)
+    {
+        if keyboard.negative
+        {
+            rightField.text = "-∞"
+        }
+        else
+        {
+            rightField.text = "∞"
+        }
+    }
+    
+    func enter(keyboard: NumericKeyboard)
+    {
+        rightField.endEditing(false)
     }
 }
