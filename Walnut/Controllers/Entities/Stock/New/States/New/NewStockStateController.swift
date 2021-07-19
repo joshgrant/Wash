@@ -42,6 +42,14 @@ class NewStockStateController: UIViewController
         rightItem.isEnabled = newStockModel.validForStates
         
         navigationItem.rightBarButtonItem = rightItem
+        
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(keyboardWillChangeFrame(_:)),
+                name: UIResponder.keyboardWillChangeFrameNotification,
+                object: nil)
     }
     
     required init?(coder: NSCoder)
@@ -62,6 +70,22 @@ class NewStockStateController: UIViewController
             newStockModel: newStockModel,
             context: context)
         navigationController?.pushViewController(currentIdealController, animated: true)
+    }
+    
+    @objc func keyboardWillChangeFrame(_ notification: Notification)
+    {
+        let frame = view.convert(notification.keyboardFrame, from: nil)
+        let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
+        let intersection = safeAreaFrame.intersection(frame)
+        
+        UIView.animate(
+            withDuration: notification.animationDuration,
+            delay: 0,
+            options: notification.animationOptions,
+            animations: {
+                self.additionalSafeAreaInsets.bottom = intersection.height
+                self.view.layoutIfNeeded()
+            }, completion: nil)
     }
 }
 
@@ -101,7 +125,7 @@ extension NewStockStateController: Subscriber
             // need to be attached...
             // So we're creating a hack that adds a state directly to the
             // table view model....
-//            tableView.reload(shouldReloadTableView: false)
+            //            tableView.reload(shouldReloadTableView: false)
             
             tableView.beginUpdates()
             tableView.insertSections(IndexSet(integer: newStockModel.states.count), with: .automatic)
@@ -120,9 +144,31 @@ extension NewStockStateController: Subscriber
         switch message.selectionIdentifier
         {
         case .stateFrom(let state):
-            state.from = Double(message.content) // TODO: Better conversions here
+            if message.content == "∞"
+            {
+                state.from = Double.infinity
+            }
+            else if message.content == "-∞"
+            {
+                state.from = -Double.infinity
+            }
+            else
+            {
+                state.from = Double(message.content) // TODO: Better conversions here
+            }
         case .stateTo(let state):
-            state.to = Double(message.content)
+            if message.content == "∞"
+            {
+                state.to = Double.infinity
+            }
+            else if message.content == "-∞"
+            {
+                state.to = -Double.infinity
+            }
+            else
+            {
+                state.to = Double(message.content) // TODO: Better conversions here
+            }
         default:
             return
         }

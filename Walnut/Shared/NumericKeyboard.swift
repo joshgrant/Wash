@@ -13,6 +13,7 @@ protocol NumericKeyboardDelegate: AnyObject
     func toggleSign(keyboard: NumericKeyboard)
     func setInfinity(keyboard: NumericKeyboard)
     func enter(keyboard: NumericKeyboard)
+    func number(keyboard: NumericKeyboard)
 }
 
 class NumericKeyboard: UIView
@@ -225,6 +226,7 @@ class NumericKeyboard: UIView
             }
             
             target?.insertText("\(value)")
+            delegate?.number(keyboard: self)
         }
     }
     

@@ -173,6 +173,8 @@
 		03C4C47B26A182710066E6ED /* NewStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C47A26A182710066E6ED /* NewStateModel.swift */; };
 		03C4C47F26A18F4E0066E6ED /* StatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C47E26A18F4E0066E6ED /* StatePickerController.swift */; };
 		03C4C48326A4990E0066E6ED /* NumericKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48226A4990E0066E6ED /* NumericKeyboard.swift */; };
+		03C4C48826A5F7510066E6ED /* Publishers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48726A5F7510066E6ED /* Publishers+Extensions.swift */; };
+		03C4C48A26A5F7E40066E6ED /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48926A5F7E40066E6ED /* Notification+Extensions.swift */; };
 		03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E700742683916400B8B527 /* Notification.Name+Extensions.swift */; };
 		03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */; };
 		03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */; };
@@ -398,6 +400,8 @@
 		03C4C47A26A182710066E6ED /* NewStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStateModel.swift; sourceTree = "<group>"; };
 		03C4C47E26A18F4E0066E6ED /* StatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePickerController.swift; sourceTree = "<group>"; };
 		03C4C48226A4990E0066E6ED /* NumericKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericKeyboard.swift; sourceTree = "<group>"; };
+		03C4C48726A5F7510066E6ED /* Publishers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Extensions.swift"; sourceTree = "<group>"; };
+		03C4C48926A5F7E40066E6ED /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
 		03E700742683916400B8B527 /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -508,6 +512,7 @@
 		030B21C926811E540038C095 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				03C4C48626A5F7430066E6ED /* Combine */,
 				03FAACBD2699076B00CB7AB6 /* CoreData */,
 				03555B292686A487006E9EA1 /* UIKIt */,
 				03555B2F2686A487006E9EA1 /* Foundation */,
@@ -685,6 +690,7 @@
 				03555B342686A487006E9EA1 /* Bundle+Extensions.swift */,
 				03FAACAA2698BF1200CB7AB6 /* Date+Extensions.swift */,
 				03FAACAC2698BF6100CB7AB6 /* DateFormatter+Extensions.swift */,
+				03C4C48926A5F7E40066E6ED /* Notification+Extensions.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1095,6 +1101,14 @@
 			path = Picker;
 			sourceTree = "<group>";
 		};
+		03C4C48626A5F7430066E6ED /* Combine */ = {
+			isa = PBXGroup;
+			children = (
+				03C4C48726A5F7510066E6ED /* Publishers+Extensions.swift */,
+			);
+			path = Combine;
+			sourceTree = "<group>";
+		};
 		03FAACAE2698CC8900CB7AB6 /* Link Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -1332,6 +1346,7 @@
 				03555B6D2686A487006E9EA1 /* ActionClosure.swift in Sources */,
 				03555B822687D6A4006E9EA1 /* SystemDetailPinnedMessage.swift in Sources */,
 				038CF6982676829F00931595 /* Source+Extensions.swift in Sources */,
+				03C4C48826A5F7510066E6ED /* Publishers+Extensions.swift in Sources */,
 				03555B592686A487006E9EA1 /* TableView.swift in Sources */,
 				030B217F267F7EE80038C095 /* NotesHeaderViewModel.swift in Sources */,
 				038CF6D9267683EE00931595 /* Symbol+Extensions.swift in Sources */,
@@ -1347,6 +1362,7 @@
 				030BC435269F9BF300442CE9 /* NewStockStateTableView.swift in Sources */,
 				03FAACE4269B934C00CB7AB6 /* SectionHeaderAddMessage.swift in Sources */,
 				038CF6C7267682C700931595 /* Priority.swift in Sources */,
+				03C4C48A26A5F7E40066E6ED /* Notification+Extensions.swift in Sources */,
 				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
 				038CF6E3267684E200931595 /* LibraryCell.swift in Sources */,
 				038CF60E26763E0A00931595 /* LibraryController.swift in Sources */,

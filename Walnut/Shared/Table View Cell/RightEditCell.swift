@@ -137,11 +137,13 @@ extension RightEditCell: UITextFieldDelegate
     {
         guard let model = model else { fatalError() }
         guard let text = textField.text else { return }
-        guard var newValue = Double(text) else { return }
         
+        // TODO: handle this in the min/max controller, not here...
         switch model.selectionIdentifier
         {
         case .minimum: // Shouldn't be greater than max
+            guard var newValue = Double(text) else { return }
+            
             if let max = model.newStockModel?.maximum
             {
                 if newValue >= max
@@ -153,6 +155,8 @@ extension RightEditCell: UITextFieldDelegate
             model.newStockModel!.minimum = newValue
             textField.text = String(format: "%i", Int(newValue))
         case .maximum: // Shouldn't be less than min
+            guard var newValue = Double(text) else { return }
+            
             if let min = model.newStockModel?.minimum
             {
                 if newValue <= min
@@ -175,28 +179,28 @@ extension RightEditCell: UITextFieldDelegate
         AppDelegate.shared.mainStream.send(message: message)
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
-    {
-        guard let model = model else { fatalError() }
-        guard let text = textField.text else { return true }
-        guard let range = Range<String.Index>(range, in: text) else { return true }
-        let newText = text.replacingCharacters(in: range, with: string)
-//        guard var newValue = Double(newText) else { return true }
-        
-        defer
-        {
-            let message = RightEditCellMessage(
-                selectionIdentifier: model.selectionIdentifier,
-                content: newText,
-                editType: .edit)
-            
-            // TODO: Maybe streams should be tagged - like a "text stream" or something like that
-            // so we avoid sending huge updates to everybody
-            AppDelegate.shared.mainStream.send(message: message)
-        }
-        
-        return true
-    }
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+//    {
+//        guard let model = model else { fatalError() }
+//        guard let text = textField.text else { return true }
+//        guard let range = Range<String.Index>(range, in: text) else { return true }
+//        let newText = text.replacingCharacters(in: range, with: string)
+////        guard var newValue = Double(newText) else { return true }
+//
+//        defer
+//        {
+//            let message = RightEditCellMessage(
+//                selectionIdentifier: model.selectionIdentifier,
+//                content: newText,
+//                editType: .edit)
+//
+//            // TODO: Maybe streams should be tagged - like a "text stream" or something like that
+//            // so we avoid sending huge updates to everybody
+//            AppDelegate.shared.mainStream.send(message: message)
+//        }
+//
+//        return true
+//    }
 }
 
 extension RightEditCell: NumericKeyboardDelegate
@@ -212,6 +216,7 @@ extension RightEditCell: NumericKeyboardDelegate
         {
             rightField.text = "-" + (rightField.text ?? "")
         }
+        update()
     }
     
     func setInfinity(keyboard: NumericKeyboard)
@@ -224,10 +229,31 @@ extension RightEditCell: NumericKeyboardDelegate
         {
             rightField.text = "∞"
         }
+        update()
+    }
+    
+    func number(keyboard: NumericKeyboard)
+    {
+        update()
     }
     
     func enter(keyboard: NumericKeyboard)
     {
         rightField.endEditing(false)
+    }
+    
+    func update()
+    {
+        guard let model = model else { fatalError() }
+        guard let text = rightField.text else { fatalError() }
+        
+        let message = RightEditCellMessage(
+            selectionIdentifier: model.selectionIdentifier,
+            content: text,
+            editType: .edit)
+        
+        // TODO: Maybe streams should be tagged - like a "text stream" or something like that
+        // so we avoid sending huge updates to everybody
+        AppDelegate.shared.mainStream.send(message: message)
     }
 }
