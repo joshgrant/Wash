@@ -78,7 +78,8 @@ extension RootDependencyContainer: RootFactory
     private func makeInboxNavigationController() -> UINavigationController
     {
         let navigationController = UINavigationController()
-        let inboxController = InboxController()
+        let container = InboxControllerContainer()
+        let inboxController = InboxController(container: container)
         navigationController.setViewControllers([inboxController], animated: false)
         return navigationController
     }
@@ -86,8 +87,9 @@ extension RootDependencyContainer: RootFactory
     private func makeSettingsNavigationController() -> UINavigationController
     {
         let navigationController = UINavigationController()
-        let settingsController = SettingsController()
-        navigationController.setViewControllers([settingsController], animated: false)
+        let container = SettingsControllerContainer()
+        let controller = SettingsController(container: container)
+        navigationController.setViewControllers([controller], animated: false)
         return navigationController
     }
     

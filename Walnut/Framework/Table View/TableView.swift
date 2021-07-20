@@ -38,7 +38,7 @@ class TableView<Container: TableViewDependencyContainer>: UITableView, UITableVi
     {
         self.container = container
         super.init(frame: .zero, style: container.style)
-        container.model = makeModel()
+//        container.model = makeModel() // TODO: Fix this!!!
         configure()
     }
     
@@ -77,7 +77,8 @@ class TableView<Container: TableViewDependencyContainer>: UITableView, UITableVi
     
     func reload(shouldReloadTableView: Bool = true)
     {
-        container.model = makeModel() // TODO: Maybe do a diff?
+//        container.model = makeModel() // TODO: Maybe do a diff?
+        // TODO: Fix this too! Yikes really need diffing
         configure()
         
         if shouldReloadTableView
@@ -90,10 +91,10 @@ class TableView<Container: TableViewDependencyContainer>: UITableView, UITableVi
     
     // MARK: - Configuration
     
-    func makeModel() -> TableViewModel
-    {
-        fatalError("Implement in subclass")
-    }
+//    func makeModel() -> TableViewModel
+//    {
+//        fatalError("Implement in subclass")
+//    }
     
     func configure()
     {
