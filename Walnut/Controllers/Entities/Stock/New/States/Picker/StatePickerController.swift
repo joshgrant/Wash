@@ -14,6 +14,11 @@ enum StateType
     case ideal
 }
 
+protocol StatePickerFactory: Factory
+{
+    func makeTableView() -> TableView<StatePickerTableViewContainer>
+}
+
 class StatePickerDependencyContainer: DependencyContainer
 {
     // MARK: - Variables
@@ -21,16 +26,27 @@ class StatePickerDependencyContainer: DependencyContainer
     var model: NewStockModel
     var stateType: StateType
     var stream: Stream
-    var tableView: StatePickerTableView
     
     // MARK: - Initialization
     
-    init(model: NewStockModel, stateType: StateType, stream: Stream, tableView: StatePickerTableView? = nil)
+    init(model: NewStockModel, stateType: StateType, stream: Stream)
     {
         self.model = model
         self.stateType = stateType
         self.stream = stream
-        self.tableView = tableView ?? StatePickerTableView(newStockModel: model, stateType: stateType)
+    }
+}
+
+extension StatePickerDependencyContainer: StatePickerFactory
+{
+    func makeTableView() -> TableView<StatePickerTableViewContainer>
+    {
+        let container = StatePickerTableViewContainer(
+            newStockModel: model,
+            stateType: stateType,
+            stream: stream,
+            style: .grouped)
+        return .init(container: container)
     }
 }
 
@@ -39,11 +55,13 @@ class StatePickerController: ViewController<StatePickerDependencyContainer>
     // MARK: - Variables
     
     var id = UUID()
+    var tableView: TableView<StatePickerTableViewContainer>
 
     // MARK: - Initialization
     
-    override init(container: StatePickerDependencyContainer)
+    required init(container: StatePickerDependencyContainer)
     {
+        tableView = container.makeTableView()
         super.init(container: container)
         subscribe(to: container.stream)
     }
@@ -63,7 +81,7 @@ class StatePickerController: ViewController<StatePickerDependencyContainer>
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        view.embed(container.tableView)
+        view.embed(tableView)
     }
 }
 
@@ -85,12 +103,11 @@ extension StatePickerController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .statePicker(let state):
-            if container.isCurrent
+            switch container.stateType
             {
+            case .current:
                 container.model.currentState = state
-            }
-            else
-            {
+            case .ideal:
                 container.model.idealState = state
             }
         default:
@@ -101,32 +118,44 @@ extension StatePickerController: Subscriber
     }
 }
 
-class StatePickerTableView: TableView
+protocol StatePickerTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeStatesSection() -> TableViewSection
+}
+
+class StatePickerTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
     var newStockModel: NewStockModel
     var stateType: StateType
+    var stream: Stream
+    var style: UITableView.Style
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
-
-    init(newStockModel: NewStockModel, stateType: StateType)
+    
+    init(newStockModel: NewStockModel, stateType: StateType, stream: Stream, style: UITableView.Style)
     {
         self.newStockModel = newStockModel
         self.stateType = stateType
-        super.init()
+        self.stream = stream
+        self.style = style
     }
-    
-    // MARK: - Functions
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension StatePickerTableViewContainer: StatePickerTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeStatesSection(newStockModel: newStockModel)
+            makeStatesSection()
         ])
     }
     
-    private func makeStatesSection(newStockModel: NewStockModel) -> TableViewSection
+    func makeStatesSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = newStockModel.states.map { state in
             let checked: Bool

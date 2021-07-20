@@ -8,19 +8,34 @@
 import Foundation
 import UIKit
 
+protocol SystemDetailRouterFactory: Factory
+{
+    func makeRouter() -> SystemDetailRouter
+}
+
 class SystemDetailRouterContainer: DependencyContainer
 {
     // MARK: - Variables
     
     var system: System
+    var context: Context
     var stream: Stream
     
     // MARK: - Initialization
     
-    init(system: System, stream: Stream)
+    init(system: System, context: Context, stream: Stream)
     {
         self.system = system
+        self.context = context
         self.stream = stream
+    }
+}
+
+extension SystemDetailRouterContainer: SystemDetailRouterFactory
+{
+    func makeRouter() -> SystemDetailRouter
+    {
+        .init(container: self)
     }
 }
 
@@ -47,27 +62,32 @@ class SystemDetailRouter: Router<SystemDetailRouterContainer>
     
     func routeTostockDetail(stock: Stock)
     {
-        delegate?.navigationController?.pushViewController(stock.detailController(), animated: true)
+        let detail = stock.detailController(context: container.context, stream: container.stream)
+        delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
     func routeToTransferFlowDetail(flow: TransferFlow)
     {
-        delegate?.navigationController?.pushViewController(flow.detailController(), animated: true)
+        let detail = flow.detailController(context: container.context, stream: container.stream)
+        delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
     func routeToProcessFlowDetail(flow: ProcessFlow)
     {
-        delegate?.navigationController?.pushViewController(flow.detailController(), animated: true)
+        let detail = flow.detailController(context: container.context, stream: container.stream)
+        delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
     func routeToEventDetail(event: Event)
     {
-        delegate?.navigationController?.pushViewController(event.detailController(), animated: true)
+        let detail = event.detailController(context: container.context, stream: container.stream)
+        delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
     func routeToNoteDetail(note: Note)
     {
-        delegate?.navigationController?.pushViewController(note.detailController(), animated: true)
+        let detail = note.detailController(context: container.context, stream: container.stream)
+        delegate?.navigationController?.pushViewController(detail, animated: true)
     }
 }
 

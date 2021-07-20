@@ -10,70 +10,71 @@ import UIKit
 
 protocol StockDetailFactory: Factory
 {
+    func makeController() -> StockDetailController
+    func makePinNavigationItem() -> BarButtonItem
     func makeStockDetailRouter() -> StockDetailRouter
     func makeTableView() -> TableView<StockDetailTableViewContainer>
-    func makePinNavigationItem() -> BarButtonItem
 }
 
 class StockDetailContainer: DependencyContainer
 {
-    // MARK: - Defined types
-    
-    typealias Table = TableView<StockDetailTableViewContainer>
-    
     // MARK: - Variables
     
     var stock: Stock
+    var context: Context
     var stream: Stream
-    var router: StockDetailRouter
-    var tableView: Table
     
     // MARK: - Initialization
     
-    init(stock: Stock, stream: Stream, router: StockDetailRouter? = nil, tableView: Table? = nil)
+    init(stock: Stock, context: Context, stream: Stream)
     {
         self.stock = stock
+        self.context = context
         self.stream = stream
-        self.router = router ?? makeStockDetailRouter()
-        self.tableView = tableView ?? makeTableView()
     }
 }
 
 extension StockDetailContainer: StockDetailFactory
 {
-    func makeStockDetailRouter() -> StockDetailRouter
+    func makeController() -> StockDetailController
     {
-        let container = StockDetailRouterContainer(
-            stock: stock,
-            stream: stream)
-        return StockDetailRouter(container: container)
-    }
-    
-    func makeTableView() -> Table
-    {
-        let container = StockDetailTableViewContainer(
-            stock: stock,
-            stream: stream,
-            style: .grouped)
-        return Table(container: container)
+        .init(container: self)
     }
     
     func makePinNavigationItem() -> BarButtonItem
     {
         let icon: Icon = stock.isPinned ? .pinFill : .pin
         
-        let actionClosure = ActionClosure { sender in
-            stock.isPinned.toggle()
+        let actionClosure = ActionClosure { [unowned self] sender in
+            self.stock.isPinned.toggle()
             let message = EntityPinnedMessage(
-                isPinned: stock.isPinned,
-                entity: stock)
-            AppDelegate.shared.mainStream.send(message: message)
+                isPinned: self.stock.isPinned,
+                entity: self.stock)
+            self.stream.send(message: message)
         }
         
         return BarButtonItem(
             image: icon.getImage(),
             style: .plain,
             actionClosure: actionClosure)
+    }
+    
+    func makeStockDetailRouter() -> StockDetailRouter
+    {
+        let container = StockDetailRouterContainer(
+            stock: stock,
+            context: context,
+            stream: stream)
+        return StockDetailRouter(container: container)
+    }
+    
+    func makeTableView() -> TableView<StockDetailTableViewContainer>
+    {
+        let container = StockDetailTableViewContainer(
+            stock: stock,
+            stream: stream,
+            style: .grouped)
+        return .init(container: container)
     }
 }
 
@@ -82,16 +83,21 @@ class StockDetailController: ViewController<StockDetailContainer>, RouterDelegat
     // MARK: - Variables
     
     var id = UUID()
+    
+    var router: StockDetailRouter
+    var tableView: TableView<StockDetailTableViewContainer>
     var pinBarButtonItem: UIBarButtonItem
     
     // MARK: - Initialization
     
     required init(container: StockDetailContainer)
     {
-        self.pinBarButtonItem = container.makePinNavigationItem()
+        router = container.makeStockDetailRouter()
+        tableView = container.makeTableView()
+        pinBarButtonItem = container.makePinNavigationItem()
         
         super.init(container: container)
-        container.router.delegate = self
+        router.delegate = self
         subscribe(to: container.stream)
     }
     
@@ -106,7 +112,7 @@ class StockDetailController: ViewController<StockDetailContainer>, RouterDelegat
     {
         super.viewDidLoad()
         title = container.stock.title
-        view.embed(container.tableView)
+        view.embed(tableView)
         navigationItem.setRightBarButtonItems([pinBarButtonItem], animated: false)
     }
 }
@@ -140,11 +146,11 @@ extension StockDetailController: Subscriber
         case .ideal:
             guard let content = Double(message.title) else { fatalError() }
             container.stock.idealValue = content
-            container.tableView.shouldReload = true
+            tableView.shouldReload = true
         case .current:
             guard let content = Double(message.title) else { fatalError() }
             container.stock.amountValue = content
-            container.tableView.shouldReload = true
+            tableView.shouldReload = true
         case .title:
             title = message.title
             container.stock.title = message.title
@@ -173,11 +179,11 @@ extension StockDetailController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .ideal:
-            container.router.route(to: .ideal, completion: nil)
+            router.routeToIdeal()
         case .current:
-            container.router.route(to: .current, completion: nil)
+            router.routeToCurrent()
         case .valueType, .transitionType:
-            container.tableView.shouldReload = true
+            tableView.shouldReload = true
         default:
             break
         }

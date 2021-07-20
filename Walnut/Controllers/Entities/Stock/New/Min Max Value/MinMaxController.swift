@@ -8,47 +8,90 @@
 import Foundation
 import UIKit
 
-class MinMaxController: UIViewController
+protocol MinMaxFactory: Factory
+{
+    func makeController() -> MinMaxController
+    func makeTableView() -> TableView<MinMaxTableViewContainer>
+    func makeRightItem(target: MinMaxController) -> UIBarButtonItem
+}
+
+class MinMaxContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var model: NewStockModel
+    var context: Context
+    var stream: Stream
+    
+    // MARK: - Initialization
+    
+    init(model: NewStockModel, context: Context, stream: Stream)
+    {
+        self.model = model
+        self.context = context
+        self.stream = stream
+    }
+}
+
+extension MinMaxContainer: MinMaxFactory
+{
+    func makeController() -> MinMaxController
+    {
+        .init(container: self)
+    }
+    
+    func makeTableView() -> TableView<MinMaxTableViewContainer>
+    {
+        let container = MinMaxTableViewContainer(
+            newStockModel: model,
+            stream: stream,
+            style: .grouped)
+        return .init(container: container)
+    }
+    
+    // TODO: Use a responder protocol
+    func makeRightItem(target: MinMaxController) -> UIBarButtonItem
+    {
+        let item = UIBarButtonItem(
+            title: "Next".localized,
+            style: .plain,
+            target: target,
+            action: #selector(target.nextButtonDidTouchUpInside(_:)))
+        item.isEnabled = model.validForMinMax
+        return item
+    }
+}
+
+class MinMaxController: ViewController<MinMaxContainer>
 {
     // MARK: - Variables
     
     var id = UUID()
-    
-    var newStockModel: NewStockModel
-    var tableView: MinMaxTableView
-    weak var context: Context?
+    var tableView: TableView<MinMaxTableViewContainer>
     
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel, context: Context?)
+    required init(container: MinMaxContainer)
     {
-        self.newStockModel = newStockModel
-        self.context = context
-        
-        tableView = MinMaxTableView(newStockModel: newStockModel)
-        super.init(nibName: nil, bundle: nil)
-        subscribe(to: AppDelegate.shared.mainStream)
-        
-        view.embed(tableView)
-        
-        let rightItem = UIBarButtonItem(
-            title: "Next".localized,
-            style: .plain,
-            target: self,
-            action: #selector(nextButtonDidTouchUpInside(_:)))
-        rightItem.isEnabled = newStockModel.validForMinMax
-        
-        navigationItem.rightBarButtonItem = rightItem
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
+        tableView = container.makeTableView()
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
     
     deinit
     {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItem = container.makeRightItem(target: self)
+        
+        view.embed(tableView)
     }
     
     // MARK: - Functions
@@ -56,8 +99,12 @@ class MinMaxController: UIViewController
     @objc func nextButtonDidTouchUpInside(_ sender: UIBarButtonItem)
     {
         transferCellContentToModels()
-        let currentIdeal = CurrentIdealController(newStockModel: newStockModel, context: context)
-        navigationController?.pushViewController(currentIdeal, animated: true)
+        let container = CurrentIdealControllerDependencyContainer(
+            model: container.model,
+            context: container.context,
+            stream: container.stream)
+        let controller = container.makeController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     // FIXME: Also a hack
@@ -71,15 +118,15 @@ class MinMaxController: UIViewController
         var min: String
         var max: String
         
-        if newStockModel.minimum == Double.infinity
+        if container.model.minimum == Double.infinity
         {
             min = "∞"
         }
-        else if newStockModel.minimum == -Double.infinity
+        else if container.model.minimum == -Double.infinity
         {
             min = "-∞"
         }
-        else if let minimum = newStockModel.minimum
+        else if let minimum = container.model.minimum
         {
             min = String(format: "%i", Int(minimum))
         }
@@ -88,15 +135,15 @@ class MinMaxController: UIViewController
             min = ""
         }
         
-        if newStockModel.maximum == Double.infinity
+        if container.model.maximum == Double.infinity
         {
             max = "∞"
         }
-        else if newStockModel.maximum == -Double.infinity
+        else if container.model.maximum == -Double.infinity
         {
             max = "-∞"
         }
-        else if let maximum = newStockModel.maximum
+        else if let maximum = container.model.maximum
         {
             max = String(format: "%i", Int(maximum))
         }
@@ -117,41 +164,41 @@ class MinMaxController: UIViewController
         let second = IndexPath(row: 1, section: 0)
         let secondCell = tableView.cellForRow(at: second) as! RightEditCell
         
-        newStockModel.minimum = Double(firstCell.rightField.text ?? "0")
-        newStockModel.maximum = Double(secondCell.rightField.text ?? "0")
+        container.model.minimum = Double(firstCell.rightField.text ?? "0")
+        container.model.maximum = Double(secondCell.rightField.text ?? "0")
         
         // Constraints for the to-be ideal and current
         
-        if let current = newStockModel.currentDouble
+        if let current = container.model.currentDouble
         {
-            if current >= newStockModel.maximum!
+            if current >= container.model.maximum!
             {
-                newStockModel.currentDouble = newStockModel.maximum
+                container.model.currentDouble = container.model.maximum
             }
-            else if current <= newStockModel.minimum!
+            else if current <= container.model.minimum!
             {
-                newStockModel.currentDouble = newStockModel.minimum
+                container.model.currentDouble = container.model.minimum
             }
         }
         else
         {
-            newStockModel.currentDouble = newStockModel.minimum!
+            container.model.currentDouble = container.model.minimum!
         }
         
-        if let ideal = newStockModel.idealDouble
+        if let ideal = container.model.idealDouble
         {
-            if ideal >= newStockModel.maximum!
+            if ideal >= container.model.maximum!
             {
-                newStockModel.idealDouble = newStockModel.maximum
+                container.model.idealDouble = container.model.maximum
             }
-            else if ideal <= newStockModel.minimum!
+            else if ideal <= container.model.minimum!
             {
-                newStockModel.idealDouble = newStockModel.minimum
+                container.model.idealDouble = container.model.minimum
             }
         }
         else
         {
-            newStockModel.idealDouble = newStockModel.minimum!
+            container.model.idealDouble = container.model.minimum!
         }
     }
 }
@@ -190,20 +237,20 @@ extension MinMaxController: Subscriber
         switch message.selectionIdentifier
         {
         case .minimum:
-            if let max = newStockModel.maximum, value >= max
+            if let max = container.model.maximum, value >= max
             {
                 value = max
             }
             
-            newStockModel.minimum = value
+            container.model.minimum = value
             // TODO: set the text on the text field...
         case .maximum:
-            if let min = newStockModel.minimum, value <= min
+            if let min = container.model.minimum, value <= min
             {
                 value = min
             }
             
-            newStockModel.maximum = value
+            container.model.maximum = value
             // TODO: Set the text on the text field...
         default:
             break
@@ -215,7 +262,7 @@ extension MinMaxController: Subscriber
             navigationItem.rightBarButtonItem?.isEnabled = false
         case .dismiss:
             transferModelContentToCells()
-            navigationItem.rightBarButtonItem?.isEnabled = newStockModel.validForMinMax
+            navigationItem.rightBarButtonItem?.isEnabled = container.model.validForMinMax
         default:
             break
         }

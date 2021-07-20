@@ -116,16 +116,28 @@ extension Entity
 
 extension Entity
 {
-    func detailController() -> UIViewController
+    func detailController(context: Context, stream: Stream) -> UIViewController
     {
         switch self
         {
         case let s as System:
-            return SystemDetailController(system: s)
+            let container = SystemDetailContainer(
+                system: s,
+                context: context,
+                stream: stream)
+            return container.makeController()
         case let s as Stock:
-            return StockDetailController(stock: s)
+            let factory = StockDetailContainer(
+                stock: s,
+                context: context,
+                stream: stream)
+            return factory.makeController()
         case let f as TransferFlow:
-            return TransferFlowDetailController(flow: f, context: managedObjectContext)
+            let container = TransferFlowDetailDependencyContainer(
+                flow: f,
+                context: context,
+                stream: stream)
+            return container.makeController()
         case let e as Event:
             print("Need detail controller for: \(e)")
             return UIViewController()
@@ -133,7 +145,8 @@ extension Entity
             print("Need detail controller for: \(n)")
             return UIViewController()
         case let s as Symbol:
-            return SymbolController(symbol: s)
+            let container = SymbolControllerContainer(symbol: s, stream: stream)
+            return container.makeController()
         default:
             assertionFailure("Unhandled entity: \(self)")
             return UIViewController()

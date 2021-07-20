@@ -34,6 +34,8 @@ class AnyTableView: TableView<AnyTableViewContainer>
 
 protocol CurrentIdealControllerFactory: Factory
 {
+    func makeController() -> CurrentIdealController
+    
     func makeBooleanTableView() -> AnyTableView
     func makeNumericTableView() -> AnyTableView
     func makeStateTableView() -> AnyTableView
@@ -49,21 +51,24 @@ class CurrentIdealControllerDependencyContainer: DependencyContainer
     var model: NewStockModel
     var context: Context
     var stream: Stream
-    var tableView: AnyTableView
     
     // MARK: - Initialization
     
-    init(model: NewStockModel, context: Context, stream: Stream, tableView: AnyTableView? = nil)
+    init(model: NewStockModel, context: Context, stream: Stream)
     {
         self.model = model
         self.context = context
         self.stream = stream
-        self.tableView = tableView ?? makeTableView()
     }
 }
 
 extension CurrentIdealControllerDependencyContainer: CurrentIdealControllerFactory
 {
+    func makeController() -> CurrentIdealController
+    {
+        .init(container: self)
+    }
+    
     func makeBooleanTableView() -> AnyTableView
     {
         let booleanContainer = CurrentIdealBooleanTableViewContainer(
@@ -98,7 +103,7 @@ extension CurrentIdealControllerDependencyContainer: CurrentIdealControllerFacto
     {
         if model.stockType == .boolean
         {
-            makeBooleanTableView()
+            return makeBooleanTableView()
         }
         else if model.isStateMachine
         {
@@ -125,11 +130,13 @@ class CurrentIdealController: ViewController<CurrentIdealControllerDependencyCon
     // MARK: - Variables
     
     var id = UUID()
+    var tableView: AnyTableView
     
     // MARK: - Initialization
     
     required init(container: CurrentIdealControllerDependencyContainer)
     {
+        tableView = container.makeTableView()
         super.init(container: container)
         subscribe(to: container.stream)
     }
@@ -145,7 +152,7 @@ class CurrentIdealController: ViewController<CurrentIdealControllerDependencyCon
     {
         super.viewDidLoad()
         
-        view.embed(container.tableView)
+        view.embed(tableView)
         
         let rightItem = container.makeRightBarButtonItem(target: self)
         navigationItem.rightBarButtonItem = rightItem
@@ -224,12 +231,12 @@ extension CurrentIdealController: Subscriber
         {
         case .currentBool(let state):
             container.model.currentBool = state
-            container.tableView.reload(shouldReloadTableView: false)
-            container.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            tableView.reload(shouldReloadTableView: false)
+            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         case .idealBool(let state):
             container.model.idealBool = state
-            container.tableView.reload(shouldReloadTableView: false)
-            container.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            tableView.reload(shouldReloadTableView: false)
+            tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         case .currentState:
             // Open up the state picker view
             let container = StatePickerDependencyContainer(model: container.model, stateType: .current, stream: container.stream)
@@ -241,7 +248,7 @@ extension CurrentIdealController: Subscriber
             let detail = StatePickerController(container: container)
             navigationController?.pushViewController(detail, animated: true)
         case .statePicker:
-            container.tableView.shouldReload = true
+            tableView.shouldReload = true
             navigationItem.rightBarButtonItem?.isEnabled = container.model.validForCurrentIdeal
         default:
             break

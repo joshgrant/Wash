@@ -6,37 +6,61 @@
 //
 
 import Foundation
+import UIKit
 
-class SystemDetailTableView: TableView
+protocol SystemDetailTableViewFactory: Factory
+{
+    func makeTableView() -> SystemDetailTableView
+    func makeModel() -> TableViewModel
+    func makeInfoSection() -> TableViewSection
+    func makeStockSection() -> TableViewSection
+    func makeFlowSection() -> TableViewSection
+    func makeEventSection() -> TableViewSection
+    func makeNoteSection() -> TableViewSection
+}
+
+class SystemDetailTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
     var system: System
+    var stream: Stream
+    var style: UITableView.Style
+    
+    lazy var tableView: SystemDetailTableView = makeTableView() // Should the table view container or the controller hold this?
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(system: System)
+    init(system: System, stream: Stream, style: UITableView.Style)
     {
         self.system = system
-        super.init()
+        self.stream = stream
+        self.style = style
+    }
+}
+
+extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
+{
+    func makeTableView() -> SystemDetailTableView
+    {
+        .init(container: self)
     }
     
-    // MARK: - Functions
-    
-    override func makeModel() -> TableViewModel
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeInfoSection(system: system),
-            makeStockSection(system: system),
-            makeFlowSection(system: system),
-            makeEventSection(system: system),
-            makeNoteSection(system: system)
+            makeInfoSection(),
+            makeStockSection(),
+            makeFlowSection(),
+            makeEventSection(),
+            makeNoteSection()
         ])
     }
     
     // MARK: Info
     
-    func makeInfoSection(system: System) -> TableViewSection
+    func makeInfoSection() -> TableViewSection
     {
         var models: [TableViewCellModel] = []
         
@@ -44,7 +68,8 @@ class SystemDetailTableView: TableView
                         selectionIdentifier: .title,
                         text: system.title,
                         placeholder: "Name".localized,
-                        entity: system))
+                        entity: system,
+                        stream: stream))
         
         models.append(InfoCellModel(
                         selectionIdentifier: .systemIdeal,
@@ -66,7 +91,7 @@ class SystemDetailTableView: TableView
     
     // MARK: Stocks
     
-    func makeStockSection(system: System) -> TableViewSection
+    func makeStockSection() -> TableViewSection
     {
         let models = system.unwrappedStocks.map { stock in
             DetailCellModel(
@@ -76,14 +101,17 @@ class SystemDetailTableView: TableView
                 disclosure: true)
         }
         
+        let headerContainer = StocksHeaderViewModelDependencyContainer(system: system, stream: stream)
+        let header = headerContainer.makeHeaderViewModel()
+        
         return TableViewSection(
-            header: StocksHeaderViewModel(system: system),
+            header: header,
             models: models)
     }
     
     // MARK: Flows
     
-    func makeFlowSection(system: System) -> TableViewSection
+    func makeFlowSection() -> TableViewSection
     {
         let models = system.unwrappedFlows.map { flow in
             DetailCellModel(
@@ -100,7 +128,7 @@ class SystemDetailTableView: TableView
     
     // MARK: Events
     
-    func makeEventSection(system: System) -> TableViewSection
+    func makeEventSection() -> TableViewSection
     {
         let models = system.unwrappedEvents.map { event in
             DetailCellModel(
@@ -117,7 +145,7 @@ class SystemDetailTableView: TableView
     
     // MARK: Notes
     
-    func makeNoteSection(system: System) -> TableViewSection
+    func makeNoteSection() -> TableViewSection
     {
         let models = system.unwrappedNotes.map { note in
             DetailCellModel(
@@ -131,10 +159,12 @@ class SystemDetailTableView: TableView
             header: NotesHeaderViewModel(),
             models: models)
     }
-    
-    // MARK: - Utility
-    
-    private func titleCell() -> TextEditCell
+}
+
+class SystemDetailTableView: TableView<SystemDetailTableViewContainer>
+{
+    // FIXME: This is a hack
+    func titleCell() -> TextEditCell
     {
         let indexPath = IndexPath(row: 0, section: 0)
         let cell = cellForRow(at: indexPath)

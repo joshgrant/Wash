@@ -18,6 +18,7 @@ class RightEditCellModel: NSObject, TableViewCellModel
     var detailPostfix: String?
     var keyboardType: UIKeyboardType?
     var newStockModel: NewStockModel?
+    var stream: Stream
     
     // MARK: - Initialization
     
@@ -27,7 +28,8 @@ class RightEditCellModel: NSObject, TableViewCellModel
         detail: String?,
         detailPostfix: String?,
         keyboardType: UIKeyboardType?,
-        newStockModel: NewStockModel?)
+        newStockModel: NewStockModel?,
+        stream: Stream)
     {
         self.selectionIdentifier = selectionIdentifier
         self.title = title
@@ -35,6 +37,7 @@ class RightEditCellModel: NSObject, TableViewCellModel
         self.detailPostfix = detailPostfix
         self.keyboardType = keyboardType
         self.newStockModel = newStockModel
+        self.stream = stream
     }
     
     static var cellClass: AnyClass { RightEditCell.self }
@@ -131,7 +134,7 @@ extension RightEditCell: UITextFieldDelegate
             content: textField.text ?? "",
             editType: .beginEdit)
         
-        AppDelegate.shared.mainStream.send(message: message)
+        model?.stream.send(message: message)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField)
@@ -144,7 +147,7 @@ extension RightEditCell: UITextFieldDelegate
             content: text,
             editType: .dismiss)
         
-        AppDelegate.shared.mainStream.send(message: message)
+        model.stream.send(message: message)
     }
     
 //    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
@@ -222,6 +225,6 @@ extension RightEditCell: NumericKeyboardDelegate
         
         // TODO: Maybe streams should be tagged - like a "text stream" or something like that
         // so we avoid sending huge updates to everybody
-        AppDelegate.shared.mainStream.send(message: message)
+        model.stream.send(message: message)
     }
 }

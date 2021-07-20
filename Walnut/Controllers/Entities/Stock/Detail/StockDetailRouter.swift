@@ -13,13 +13,15 @@ class StockDetailRouterContainer: DependencyContainer
     // MARK: - Variables
     
     var stock: Stock
+    var context: Context
     var stream: Stream
     
     // MARK: - Initialization
     
-    init(stock: Stock, stream: Stream)
+    init(stock: Stock, context: Context, stream: Stream)
     {
         self.stock = stock
+        self.context = context
         self.stream = stream
     }
 }
@@ -47,31 +49,34 @@ class StockDetailRouter: Router<StockDetailRouterContainer>
     
     func routeToValueType()
     {
-        let controller = StockValueTypeController(stock: container.stock)
+        let container = StockValueTypeContainer(stock: container.stock, stream: container.stream)
+        let controller = container.makeController()
         delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
     func routeToIdeal()
     {
-        let idealController = IdealDetailController(stock: container.stock)
-        delegate?.navigationController?.pushViewController(idealController, animated: true)
+        let container = IdealDetailContainer(stock: container.stock, stream: container.stream)
+        let controller = container.makeController()
+        delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
     func routeToCurrent()
     {
-        let currentController = CurrentDetailController(stock: container.stock)
-        delegate?.navigationController?.pushViewController(currentController, animated: true)
+        let container = CurrentDetailContainer(stock: container.stock, stream: container.stream)
+        let controller = container.makeController()
+        delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
     func routeToInflow(flow: TransferFlow)
     {
-        let controller = flow.detailController()
+        let controller = flow.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
     func routeToOutFlow(flow: TransferFlow)
     {
-        let controller = flow.detailController()
+        let controller = flow.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -91,7 +96,7 @@ extension StockDetailRouter: Subscriber
     
     private func handle(_ message: TableViewSelectionMessage)
     {
-        guard let _ = message.tableView as? StockDetailTableView else { return }
+        guard let _ = message.tableView as? TableView<StockDetailTableViewContainer> else { return }
         
         switch message.cellModel.selectionIdentifier
         {

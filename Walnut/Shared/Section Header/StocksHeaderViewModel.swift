@@ -10,6 +10,7 @@ import UIKit
 
 protocol StocksHeaderViewModelFactory: Factory
 {
+    func makeHeaderViewModel() -> StocksHeaderViewModel
     func makeDisclosureTriangleActionClosure() -> ActionClosure
     func makeSearchButtonActionClosure() -> ActionClosure
     func makeAddButtonActionClosure() -> ActionClosure
@@ -33,6 +34,11 @@ class StocksHeaderViewModelDependencyContainer: DependencyContainer
 
 extension StocksHeaderViewModelDependencyContainer: StocksHeaderViewModelFactory
 {
+    func makeHeaderViewModel() -> StocksHeaderViewModel
+    {
+        .init(container: self)
+    }
+    
     func makeDisclosureTriangleActionClosure() -> ActionClosure
     {
         ActionClosure { _ in

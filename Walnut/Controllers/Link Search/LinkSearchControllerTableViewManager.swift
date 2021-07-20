@@ -9,6 +9,33 @@ import Foundation
 import UIKit
 import CoreData
 
+protocol LinkSearchControllerTableViewManagerFactory: Factory
+{
+    func makeSearchCriteria() -> LinkSearchCriteria
+}
+
+class LinkSearchControllerTableViewManagerContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var entityType: NamedEntity.Type
+    var origin: LinkSearchController.Origin
+    var context: Context
+    var stream: Stream
+    
+    // MARK: - Initialization
+    
+    init
+}
+
+extension LinkSearchControllerTableViewManagerContainer: LinkSearchControllerTableViewManagerFactory
+{
+    func makeSearchCriteria() -> LinkSearchCriteria
+    {
+        .init(searchString: "", entityType: entityType, context: context)
+    }
+}
+
 class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate
 {
     // MARK: - Variables
@@ -22,10 +49,6 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate
     var tableViewDataSourceReference: UITableViewDiffableDataSourceReference!
     var searchCriteria: LinkSearchCriteria
     var fetchResultsController: NSFetchedResultsController<NSFetchRequestResult>!
-    
-    var origin: LinkSearchController.Origin
-    
-    weak var context: Context?
     
     var shouldAnimate: Bool = false
     

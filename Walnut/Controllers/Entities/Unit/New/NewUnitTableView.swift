@@ -10,6 +10,7 @@ import UIKit
 
 protocol NewUnitTableViewFactory: Factory
 {
+    func makeTableView() -> NewUnitTableView
     func makeModel() -> TableViewModel
     func makeInfoSection() -> TableViewSection
 }
@@ -18,16 +19,16 @@ class NewUnitTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
-    var model: TableViewModel
     var stream: Stream
     var style: UITableView.Style
     var newUnitModel: NewUnitModel
     
+    lazy var model: TableViewModel = makeModel()
+    
     // MARK: - Initialization
     
-    init(model: TableViewModel, stream: Stream, style: UITableView.Style, newUnitModel: NewUnitModel)
+    init(stream: Stream, style: UITableView.Style, newUnitModel: NewUnitModel)
     {
-        self.model = model
         self.stream = stream
         self.style = style
         self.newUnitModel = newUnitModel
@@ -36,10 +37,15 @@ class NewUnitTableViewContainer: TableViewDependencyContainer
 
 extension NewUnitTableViewContainer: NewUnitTableViewFactory
 {
+    func makeTableView() -> NewUnitTableView
+    {
+        .init(container: self)
+    }
+    
     func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeInfoSection(model: newUnitModel)
+            makeInfoSection()
         ])
     }
     
@@ -53,29 +59,31 @@ extension NewUnitTableViewContainer: NewUnitTableViewFactory
             RightEditCellModel(
                 selectionIdentifier: .newUnitName,
                 title: "Name".localized,
-                detail: model.title,
+                detail: newUnitModel.title,
                 detailPostfix: nil,
                 keyboardType: .default,
-                newStockModel: nil),
+                newStockModel: nil,
+                stream: stream),
             RightEditCellModel(
                 selectionIdentifier: .newUnitSymbol,
                 title: "Symbol".localized,
-                detail: model.symbol,
+                detail: newUnitModel.symbol,
                 detailPostfix: nil,
                 keyboardType: .default,
-                newStockModel: nil),
+                newStockModel: nil,
+                stream: stream),
             ToggleCellModel(
-                selectionIdentifier: .baseUnit(isOn: model.isBaseUnit),
+                selectionIdentifier: .baseUnit(isOn: newUnitModel.isBaseUnit),
                 title: "Base unit",
-                toggleState: model.isBaseUnit)
+                toggleState: newUnitModel.isBaseUnit)
         ]
         
-        if !model.isBaseUnit
+        if !newUnitModel.isBaseUnit
         {
             models.append(DetailCellModel(
                             selectionIdentifier: .relativeTo,
                             title: "Relative to".localized,
-                            detail: model.relativeTo?.title ?? "None".localized,
+                            detail: newUnitModel.relativeTo?.title ?? "None".localized,
                             disclosure: true))
         }
         

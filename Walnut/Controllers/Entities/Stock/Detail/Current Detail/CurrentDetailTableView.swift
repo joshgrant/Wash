@@ -6,36 +6,57 @@
 //
 
 import Foundation
+import UIKit
 
-class CurrentDetailTableView: TableView
+protocol CurrentDetailTableViewFactory: Factory
+{
+    func makeTableView() -> TableView<CurrentDetailTableViewContainer>
+    func makeModel() -> TableViewModel
+    func makeCurrentSection() -> TableViewSection
+    func makeChartSection() -> TableViewSection
+    func makeHistorySection() -> TableViewSection
+}
+
+class CurrentDetailTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
+    var stream: Stream
+    var style: UITableView.Style
     var stock: Stock
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(stock: Stock)
+    init(stream: Stream, style: UITableView.Style, stock: Stock)
     {
+        self.stream = stream
+        self.style = style
         self.stock = stock
-        super.init()
+    }
+}
+
+extension CurrentDetailTableViewContainer: CurrentDetailTableViewFactory
+{
+    func makeTableView() -> TableView<CurrentDetailTableViewContainer>
+    {
+        .init(container: self)
     }
     
-    // MARK: - Models
-    
-    override func makeModel() -> TableViewModel
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeCurrentSection(stock: stock),
-            makeChartSection(stock: stock),
-            makeHistorySection(stock: stock)
+            makeCurrentSection(),
+            makeChartSection(),
+            makeHistorySection()
         ])
     }
     
     // TODO: Configure Ideal and Current table views so that
     // we don't have to make this weird model stuff
     
-    func makeCurrentSection(stock: Stock) -> TableViewSection
+    func makeCurrentSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = [
             // Current value
@@ -45,7 +66,8 @@ class CurrentDetailTableView: TableView
                 text: stock.currentDescription,
                 placeholder: "Current value".localized,
                 entity: stock,
-                keyboardType: .numberPad)
+                keyboardType: .numberPad,
+                stream: stream)
         ]
         
         return TableViewSection(
@@ -53,12 +75,12 @@ class CurrentDetailTableView: TableView
             models: models)
     }
     
-    func makeChartSection(stock: Stock) -> TableViewSection
+    func makeChartSection() -> TableViewSection
     {
         TableViewSection(models: [])
     }
     
-    func makeHistorySection(stock: Stock) -> TableViewSection
+    func makeHistorySection() -> TableViewSection
     {
         let history: [History] = stock.unwrapped(\Stock.history)
         

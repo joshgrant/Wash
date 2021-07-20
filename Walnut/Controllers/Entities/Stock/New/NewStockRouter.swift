@@ -96,19 +96,23 @@ class NewStockRouter: Router<NewStockRouterContainer>
     
     func routeToMinMax()
     {
-        let minMaxController = MinMaxController(
-            newStockModel: container.model,
-            context: container.context)
-        delegate?.navigationController?.pushViewController(minMaxController, animated: true)
+        let container = MinMaxContainer(
+            model: container.model,
+            context: container.context,
+            stream: container.stream)
+        let controller = container.makeController()
+        delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
     func routeToUnitSearch()
     {
-        let linkController = LinkSearchController(
-            origin: .newStock,
-            entityType: Unit.self,
+        let linkContainer = LinkSearchControllerContainer(
             context: container.context,
-            hasAddButton: true)
-        delegate?.navigationController?.pushViewController(linkController, animated: true)
+            stream: container.stream,
+            origin: .newStock,
+            hasAddButton: true,
+            entityType: Unit.self)
+        let controller = linkContainer.makeController()
+        delegate?.navigationController?.pushViewController(controller, animated: true)
     }
 }

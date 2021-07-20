@@ -18,6 +18,7 @@ class TextEditCellModel: NSObject, TableViewCellModel
     var placeholder: String
     var entity: Entity?
     var keyboardType: UIKeyboardType
+    var stream: Stream
     
     var notifyOnDismissal: Bool = true
     
@@ -28,13 +29,15 @@ class TextEditCellModel: NSObject, TableViewCellModel
         text: String?,
         placeholder: String,
         entity: Entity?,
-        keyboardType: UIKeyboardType = .default)
+        keyboardType: UIKeyboardType = .default,
+        stream: Stream)
     {
         self.selectionIdentifier = selectionIdentifier
         self.text = text
         self.placeholder = placeholder
         self.entity = entity
         self.keyboardType = keyboardType
+        self.stream = stream
     }
     
     static var cellClass: AnyClass { TextEditCell.self }
@@ -43,6 +46,8 @@ class TextEditCellModel: NSObject, TableViewCellModel
 class TextEditCell: TableViewCell<TextEditCellModel>
 {
     // MARK: - Variables
+    
+    weak var model: TextEditCellModel?
     
     var selectionIdentifier: SelectionIdentifier?
     var notifyOnDismissal: Bool = true
@@ -82,6 +87,8 @@ class TextEditCell: TableViewCell<TextEditCellModel>
     
     override func configure(with model: TextEditCellModel)
     {
+        self.model = model
+        
         self.notifyOnDismissal = model.notifyOnDismissal
         self.selectionIdentifier = model.selectionIdentifier
         
@@ -111,6 +118,6 @@ extension TextEditCell: UITextFieldDelegate
             selectionIdentifier: identifier,
             title: title)
         
-        AppDelegate.shared.mainStream.send(message: message)
+        model?.stream.send(message: message)
     }
 }

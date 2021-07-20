@@ -10,10 +10,11 @@ import UIKit
 
 protocol NewStockControllerFactory: Factory
 {
+    func makeController() -> NewStockController // TODO: Have every factory produce the associated type...
     func makeTableView() -> NewStockTableView
     func makeRouter() -> NewStockRouter
-    func makeLeftItem() -> UIBarButtonItem
-    func makeRightItem() -> UIBarButtonItem
+    func makeLeftItem(target: NewStockController) -> UIBarButtonItem
+    func makeRightItem(target: NewStockController) -> UIBarButtonItem
 }
 
 class NewStockControllerContainer: DependencyContainer
@@ -28,7 +29,7 @@ class NewStockControllerContainer: DependencyContainer
     
     // MARK: - Initialization
     
-    init(router: NewStockRouter, tableView: NewStockTableView, context: Context, stream: Stream)
+    init(context: Context, stream: Stream, router: NewStockRouter? = nil, tableView: NewStockTableView? = nil)
     {
         self.model = NewStockModel()
         self.router = makeRouter()
@@ -40,6 +41,11 @@ class NewStockControllerContainer: DependencyContainer
 
 extension NewStockControllerContainer: NewStockControllerFactory
 {
+    func makeController() -> NewStockController
+    {
+        return NewStockController(container: self)
+    }
+    
     func makeTableView() -> NewStockTableView
     {
         return NewStockTableView(newStockModel: model)

@@ -25,16 +25,16 @@ class StockTypeTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
-    var model: TableViewModel
     var stream: Stream
     var style: UITableView.Style
     var stock: Stock
     
+    lazy var model = makeModel()
+    
     // MARK: - Initialization
     
-    init(model: TableViewModel, stream: Stream, style: UITableView.Style, stock: Stock)
+    init(stream: Stream, style: UITableView.Style, stock: Stock)
     {
-        self.model = model
         self.stream = stream
         self.style = style
         self.stock = stock
@@ -127,114 +127,114 @@ extension StockTypeTableViewContainer: StockTypeTableViewFactory
 //    var model: TableViewModel
 //}
 
-class CollectionViewModel
-{
-    var
-}
-
-struct NewCheckmarkSectionModel: Hashable
-{
-    var id: UUID
-    var title: String?
-}
-
-struct NewCheckmarkCellModel: Hashable
-{
-    var title: String
-    var checked: Bool
-}
-
-class NewCheckmarkCell: UICollectionViewListCell
-{
-}
-
-class StockTypeListViewFactory
-{
-    // MARK: - Defined types
-    
-    typealias CheckmarkCellRegistration = UICollectionView.CellRegistration<NewCheckmarkCell, NewCheckmarkCellModel>
-    typealias DataSource = UICollectionViewDiffableDataSource<NewCheckmarkSectionModel, NewCheckmarkCellModel>
-    typealias CellProvider = DataSource.CellProvider
-    
-    // MARK: - Variables
-    
-    lazy var collectionView = UICollectionView()
-    lazy var cellProvider = makeCellProvider()
-    lazy var checkmarkCellRegistration = makeCheckmarkCellRegistration()
-    
-    // MARK: - Functions
-    
-    func makeCheckmarkCellRegistration() -> CheckmarkCellRegistration
-    {
-        CheckmarkCellRegistration { cell, indexPath, item in
-            var configuration = cell.defaultContentConfiguration()
-            configuration.text = item.title
-            
-            cell.contentConfiguration = configuration
-            cell.accessories = item.checked ? [.checkmark()] : []
-            return cell
-        }
-    }
-    
-    func makeCellProvider() -> CellProvider
-    {
-        { [unowned self] collectionView, indexPath, item in
-            let model = model.models[indexPath.section][indexPath.item]
-            return collectionView.dequeueConfiguredReusableCell(
-                using: self.checkmarkCellRegistration,
-                for: indexPath,
-                item: item)
-        }
-    }
-    
-    func makeDataSource() -> DataSource
-    {
-        UICollectionViewDiffableDataSource(
-            collectionView: collectionView,
-            cellProvider: cellProvider)
-    }
-}
-
-class StockTypeListView: UICollectionView
-{
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, NewCheckmarkCellModel>
-    
-    enum Section: Hashable
-    {
-        case valueType
-        case transitionType
-    }
+//class CollectionViewModel
+//{
+//    var
+//}
 //
-//    enum Item: Hashable
+//struct NewCheckmarkSectionModel: Hashable
+//{
+//    var id: UUID
+//    var title: String?
+//}
+//
+//struct NewCheckmarkCellModel: Hashable
+//{
+//    var title: String
+//    var checked: Bool
+//}
+//
+//class NewCheckmarkCell: UICollectionViewListCell
+//{
+//}
+//
+//class StockTypeListViewFactory
+//{
+//    // MARK: - Defined types
+//
+//    typealias CheckmarkCellRegistration = UICollectionView.CellRegistration<NewCheckmarkCell, NewCheckmarkCellModel>
+//    typealias DataSource = UICollectionViewDiffableDataSource<NewCheckmarkSectionModel, NewCheckmarkCellModel>
+//    typealias CellProvider = DataSource.CellProvider
+//
+//    // MARK: - Variables
+//
+//    lazy var collectionView = UICollectionView()
+//    lazy var cellProvider = makeCellProvider()
+//    lazy var checkmarkCellRegistration = makeCheckmarkCellRegistration()
+//
+//    // MARK: - Functions
+//
+//    func makeCheckmarkCellRegistration() -> CheckmarkCellRegistration
 //    {
-//        // Value Type
-//        case boolean
-//        case number(floatingPoints: Int)
-//        case percent
+//        CheckmarkCellRegistration { cell, indexPath, item in
+//            var configuration = cell.defaultContentConfiguration()
+//            configuration.text = item.title
 //
-//        // Transition Type
-//        case continuous
-//        case stateMachine
+//            cell.contentConfiguration = configuration
+//            cell.accessories = item.checked ? [.checkmark()] : []
+//            return cell
+//        }
 //    }
-    
-    init(model: TableViewModel)
-    {
-        let configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
-        let layout = UICollectionViewCompositionalLayout.list(using: configuration)
-        self.collectionViewLayout = layout
-        
-        self.dataSource = UICollectionViewDiffableDataSource(collectionView: self, cellProvider: cellProvider)
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension StockTypeListView: UICollectionViewDelegate
-{
-}
+//
+//    func makeCellProvider() -> CellProvider
+//    {
+//        { [unowned self] collectionView, indexPath, item in
+//            let model = model.models[indexPath.section][indexPath.item]
+//            return collectionView.dequeueConfiguredReusableCell(
+//                using: self.checkmarkCellRegistration,
+//                for: indexPath,
+//                item: item)
+//        }
+//    }
+//
+//    func makeDataSource() -> DataSource
+//    {
+//        UICollectionViewDiffableDataSource(
+//            collectionView: collectionView,
+//            cellProvider: cellProvider)
+//    }
+//}
+//
+//class StockTypeListView: UICollectionView
+//{
+//    typealias DataSource = UICollectionViewDiffableDataSource<Section, NewCheckmarkCellModel>
+//
+//    enum Section: Hashable
+//    {
+//        case valueType
+//        case transitionType
+//    }
+////
+////    enum Item: Hashable
+////    {
+////        // Value Type
+////        case boolean
+////        case number(floatingPoints: Int)
+////        case percent
+////
+////        // Transition Type
+////        case continuous
+////        case stateMachine
+////    }
+//
+//    init(model: TableViewModel)
+//    {
+//        let configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
+//        let layout = UICollectionViewCompositionalLayout.list(using: configuration)
+//        self.collectionViewLayout = layout
+//
+//        self.dataSource = UICollectionViewDiffableDataSource(collectionView: self, cellProvider: cellProvider)
+//    }
+//
+//    required init?(coder: NSCoder)
+//    {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//}
+//
+//extension StockTypeListView: UICollectionViewDelegate
+//{
+//}
 
 class StockTypeTableView: TableView<StockTypeTableViewContainer>
 {
@@ -269,10 +269,12 @@ class StockTypeTableView: TableView<StockTypeTableViewContainer>
         // Reload the table view?
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let newItems = Self.makeValueTypeItems(stock: stock)
+
+        /*
+        let newItems = Self.makeValueTypeItems(stock: container.stock)
         tableView.animateRowChanges(oldData: valueItems, newData: newItems)
         valueItems = newItems
+         */
         
 //        let oldAmountPath = path(for: stock.valueType)
 //        let oldTransitionPath = path(for: stock.stateMachine)
@@ -315,10 +317,10 @@ class StockTypeTableView: TableView<StockTypeTableViewContainer>
 //        tableView.reloadRows(at: pathsToReload, with: .automatic)
         
         // FIXME: Not sure if this should be before or after updating the cell models
-        let model = model.models[indexPath.section][indexPath.row]
-        let message = TableViewSelectionMessage(tableView: tableView, cellModel: model)
-        
-        AppDelegate.shared.mainStream.send(message: message)
+//        let model = model.models[indexPath.section][indexPath.row]
+//        let message = TableViewSelectionMessage(tableView: tableView, cellModel: model)
+//        
+//        AppDelegate.shared.mainStream.send(message: message)
     }
     
     static func makeValueTypeItems(stock: Stock) -> [CheckItem]

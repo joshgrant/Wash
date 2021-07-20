@@ -8,9 +8,15 @@
 import Foundation
 import UIKit
 
-class TransferFlowFactory: Factory
+protocol TransferFlowFactory: Factory
 {
+    func makeController() -> TransferFlowDetailController
+    func makeRouter() -> TransferFlowDetailRouter
+    func makeResponder() -> TransferFlowDetailResponder
+    func makeTableView() -> TableView<TransferFlowDetailTableViewContainer>
     
+    func makePinButton() -> UIBarButtonItem
+    func makeRunButton(responder: TransferFlowDetailResponder) -> UIBarButtonItem
 }
 
 class TransferFlowDetailDependencyContainer: DependencyContainer
@@ -20,92 +26,59 @@ class TransferFlowDetailDependencyContainer: DependencyContainer
     var flow: TransferFlow
     var context: Context
     var stream: Stream
-    var router: TransferFlowDetailRouter // TransferFlowDetailRouter(flow: flow,context: context)
-    var responder: TransferFlowDetailResponder // TransferFlowDetailResponder(flow: container.flow)
     
     // MARK: - Initialization
     
     init(
         flow: TransferFlow,
         context: Context,
-        stream: Stream,
-        router: TransferFlowDetailRouter? = nil,
-        responder: TransferFlowDetailResponder? = nil)
+        stream: Stream)
     {
         self.flow = flow
         self.context = context
         self.stream = stream
-        self.router = router ?? TransferFlowDetailRouter(container: self)
-        self.responder = responder ?? TransferFlowDetailResponder(flow: flow)
     }
 }
 
-class TransferFlowDetailController: UIViewController, RouterDelegate
+extension TransferFlowDetailDependencyContainer: TransferFlowFactory
 {
-    // MARK: - Variables
-    
-    var id = UUID()
-    
-    var container: TransferFlowDetailDependencyContainer
-    
-    var tableView: TransferFlowDetailTableView
-    
-    var pinButton: UIBarButtonItem
-    var runButton: UIBarButtonItem
-    
-    // MARK: - Initialization
-    
-    init(container: TransferFlowDetailDependencyContainer)
+    func makeController() -> TransferFlowDetailController
     {
-        self.container = container
-        self.tableView = TransferFlowDetailTableView(flow: container.flow)
-        
-        self.pinButton = Self.makePinButton(
-            flow: container.flow,
-            responder: container.responder)
-        
-        self.runButton = Self.makeRunButton(
-            responder: container.responder)
-        
-        super.init(nibName: nil, bundle: nil)
-        
-        container.router.delegate = self
-        subscribe(to: container.stream)
-        
-        configureForDisplay()
+        .init(container: self)
     }
     
-    required init?(coder: NSCoder)
+    func makeRouter() -> TransferFlowDetailRouter
     {
-        fatalError("init(coder:) has not been implemented")
+        let container = TransferFlowDetailRouterContainer(
+            stream: stream,
+            context: context)
+        return .init(container: container)
     }
     
-    deinit
+    func makeResponder() -> TransferFlowDetailResponder
     {
-        unsubscribe(from: container.stream)
+        return .init(flow: flow, stream: stream)
     }
     
-    // MARK: - Functions
-    
-    private func configureForDisplay()
+    func makeTableView() -> TableView<TransferFlowDetailTableViewContainer>
     {
-        title = container.flow.title
-        view.embed(tableView)
-        navigationItem.setRightBarButtonItems([pinButton, runButton], animated: false)
+        let container = TransferFlowDetailTableViewContainer(
+            stream: stream,
+            style: .grouped,
+            flow: flow)
+        return .init(container: container)
     }
     
-    // MARK: - Factory
-    
-    static func makePinButton(flow: TransferFlow, responder: TransferFlowDetailResponder) -> UIBarButtonItem
+    func makePinButton() -> UIBarButtonItem
     {
         let icon: Icon = flow.isPinned ? .pinFill : .pin
         
-        let actionClosure = ActionClosure { sender in
-            flow.isPinned.toggle()
+        let actionClosure = ActionClosure { [unowned self] sender in
+            self.flow.isPinned.toggle()
             let message = EntityPinnedMessage(
-                isPinned: flow.isPinned,
-                entity: flow)
-            AppDelegate.shared.mainStream.send(message: message)
+                isPinned: self.flow.isPinned,
+                entity: self.flow)
+            self.stream.send(message: message)
         }
         
         return BarButtonItem(
@@ -114,13 +87,61 @@ class TransferFlowDetailController: UIViewController, RouterDelegate
             actionClosure: actionClosure)
     }
     
-    static func makeRunButton(responder: TransferFlowDetailResponder) -> UIBarButtonItem
+    func makeRunButton(responder: TransferFlowDetailResponder) -> UIBarButtonItem
     {
         UIBarButtonItem(
             image: Icon.activateFlow.getImage(),
             style: .plain,
             target: responder,
             action: #selector(responder.runButtonDidTouchUpInside(_:)))
+    }
+}
+
+class TransferFlowDetailController: ViewController<TransferFlowDetailDependencyContainer>, RouterDelegate
+{
+    // MARK: - Variables
+    
+    var id = UUID()
+    
+    var router: TransferFlowDetailRouter
+    var responder: TransferFlowDetailResponder
+    
+    var tableView: TableView<TransferFlowDetailTableViewContainer>
+    
+    var pinButton: UIBarButtonItem
+    var runButton: UIBarButtonItem
+    
+    // MARK: - Initialization
+    
+    required init(container: TransferFlowDetailDependencyContainer)
+    {
+        let responder = container.makeResponder()
+     
+        self.responder = responder
+        
+        router = container.makeRouter()
+        tableView = container.makeTableView()
+        pinButton = container.makePinButton()
+        runButton = container.makeRunButton(responder: responder)
+        
+        super.init(container: container)
+        router.delegate = self
+        subscribe(to: container.stream)
+    }
+    
+    deinit
+    {
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        title = container.flow.title
+        view.embed(tableView)
+        navigationItem.setRightBarButtonItems([pinButton, runButton], animated: false)
     }
 }
 
@@ -145,31 +166,33 @@ extension TransferFlowDetailController: Subscriber
     
     private func handle(_ message: TextEditCellMessage)
     {
-        if case .flow(let f) = message.selectionIdentifier, f == flow
+        if case .flow(let f) = message.selectionIdentifier, f == container.flow
         {
             title = message.title
-            flow.title = message.title
-            flow.managedObjectContext?.quickSave()
+            container.flow.title = message.title
+            container.flow.managedObjectContext?.quickSave()
         }
     }
     
     private func handle(_ message: LinkSelectionMessage)
     {
-        guard let stock = message.link as? Stock else { return }
+//        guard let stock = message.link as? Stock else { return }
         
-        switch router.presentedDestination
-        {
-        case .stockFrom:
-            flow.from = stock
-            stock.addToOutflows(flow)
-        case .stockTo:
-            flow.to = stock
-            stock.addToInflows(flow)
-        default:
-            break
-        }
+        fatalError("We need to know where to add the stock")
         
-        flow.managedObjectContext?.quickSave()
+//        switch router.container
+//        {
+//        case .stockFrom:
+//            container.flow.from = stock
+//            stock.addToOutflows(flow)
+//        case .stockTo:
+//            container.flow.to = stock
+//            stock.addToInflows(flow)
+//        default:
+//            break
+//        }
+        
+        container.flow.managedObjectContext?.quickSave()
         
         tableView.shouldReload = true
     }
@@ -179,7 +202,7 @@ extension TransferFlowDetailController: Subscriber
         switch message.selectionIdentifier
         {
         case .requiresUserCompletion(let state):
-            flow.requiresUserCompletion = state
+            container.flow.requiresUserCompletion = state
         default:
             break
         }
@@ -187,13 +210,13 @@ extension TransferFlowDetailController: Subscriber
     
     private func handle(_ message: EntityPinnedMessage)
     {
-        guard message.entity == flow else { return }
+        guard message.entity == container.flow else { return }
         
         let pinned = message.isPinned
         let icon: Icon = pinned ? .pinFill : .pin
         
         pinButton.image = icon.getImage()
-        flow.isPinned = pinned
-        flow.managedObjectContext?.quickSave()
+        container.flow.isPinned = pinned
+        container.flow.managedObjectContext?.quickSave()
     }
 }

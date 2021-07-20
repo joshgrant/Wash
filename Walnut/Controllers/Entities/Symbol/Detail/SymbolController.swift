@@ -8,24 +8,64 @@
 import Foundation
 import UIKit
 
-class SymbolController: UIViewController
+protocol SymbolControllerFactory: Factory
+{
+    func makeController() -> SymbolController
+    func makeTableView() -> TableView<SymbolTableViewContainer>
+}
+
+class SymbolControllerContainer: DependencyContainer
 {
     // MARK: - Variables
     
     var symbol: Symbol
-    var tableView: SymbolTableView
+    var stream: Stream
     
     // MARK: - Initialization
     
-    init(symbol: Symbol)
+    init(symbol: Symbol, stream: Stream)
     {
         self.symbol = symbol
-        self.tableView = SymbolTableView(symbol: symbol)
-        super.init(nibName: nil, bundle: nil)
-        view.embed(tableView)
+        self.stream = stream
+    }
+}
+
+extension SymbolControllerContainer: SymbolControllerFactory
+{
+    func makeController() -> SymbolController
+    {
+        .init(container: self)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func makeTableView() -> TableView<SymbolTableViewContainer>
+    {
+        let container = SymbolTableViewContainer(
+            symbol: symbol,
+            stream: stream,
+            style: .grouped)
+        return .init(container: container)
+    }
+}
+
+class SymbolController: ViewController<SymbolControllerContainer>
+{
+    // MARK: - Variables
+    
+    var tableView: TableView<SymbolTableViewContainer>
+    
+    // MARK: - Initialization
+    
+    required init(container: SymbolControllerContainer)
+    {
+        self.tableView = container.makeTableView()
+        super.init(container: container)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        view.embed(tableView)
     }
 }

@@ -8,42 +8,80 @@
 import Foundation
 import UIKit
 
-class NewUnitController: UIViewController
+protocol NewUnitFactory: Factory
+{
+    func makeController() -> NewUnitController
+    func makeTableView() -> NewUnitTableView
+    func makeLeftItem(target: NewUnitController) -> UIBarButtonItem
+    func makeRightItem(target: NewUnitController) -> UIBarButtonItem
+}
+
+class NewUnitContainer: DependencyContainer
+{
+    var model: NewUnitModel
+    var context: Context
+    var stream: Stream
+    
+    // MARK: - Initialization
+    
+    init(context: Context, stream: Stream)
+    {
+        self.model = NewUnitModel()
+        self.context = context
+        self.stream = stream
+    }
+}
+
+extension NewUnitContainer: NewUnitFactory
+{
+    func makeController() -> NewUnitController
+    {
+        .init(container: self)
+    }
+    
+    func makeTableView() -> NewUnitTableView
+    {
+        let container = NewUnitTableViewContainer(
+            stream: stream,
+            style: .grouped,
+            newUnitModel: model)
+        return container.makeTableView()
+    }
+    
+    // TODO: Target should be a responder protocol
+    
+    func makeLeftItem(target: NewUnitController) -> UIBarButtonItem
+    {
+        let leftItem = UIBarButtonItem(systemItem: .cancel)
+        leftItem.target = target
+        leftItem.action = #selector(target.cancelDidTouchUpInside(_:))
+        return leftItem
+    }
+    
+    func makeRightItem(target: NewUnitController) -> UIBarButtonItem
+    {
+        let rightItem = UIBarButtonItem(systemItem: .save)
+        rightItem.target = target
+        rightItem.action = #selector(target.saveDidTouchUpInside(_:))
+        rightItem.isEnabled = false
+        return rightItem
+    }
+}
+
+class NewUnitController: ViewController<NewUnitContainer>
 {
     // MARK: - Variables
     
     var id = UUID()
-    
-    var newUnitModel: NewUnitModel
     var tableView: NewUnitTableView
-    
-    weak var context: Context?
     
     // MARK: - Initialization
     
-    init(context: Context?)
+    required init(container: NewUnitContainer)
     {
-        self.context = context
-        
-        let newUnitModel = NewUnitModel()
-        self.newUnitModel = newUnitModel
-        
-        tableView = NewUnitTableView(newUnitModel: newUnitModel)
-        super.init(nibName: nil, bundle: nil)
-        subscribe(to: AppDelegate.shared.mainStream)
-        
-        view.embed(tableView)
-        
-        let leftItem = UIBarButtonItem(systemItem: .cancel)
-        leftItem.target = self
-        leftItem.action = #selector(cancelDidTouchUpInside(_:))
-        navigationItem.leftBarButtonItem = leftItem
-        
-        let rightItem = UIBarButtonItem(systemItem: .save)
-        rightItem.target = self
-        rightItem.action = #selector(saveDidTouchUpInside(_:))
-        rightItem.isEnabled = false
-        navigationItem.rightBarButtonItem = rightItem
+        tableView = container.makeTableView()
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
     
     required init?(coder: NSCoder)
@@ -53,7 +91,19 @@ class NewUnitController: UIViewController
     
     deinit
     {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        navigationItem.leftBarButtonItem = container.makeLeftItem(target: self)
+        navigationItem.rightBarButtonItem = container.makeRightItem(target: self)
+        
+        view.embed(tableView)
     }
     
     override func viewWillDisappear(_ animated: Bool)
@@ -71,19 +121,17 @@ class NewUnitController: UIViewController
     
     @objc func saveDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        guard let context = context else { fatalError() }
+        let unit = Unit(context: container.context)
         
-        let unit = Unit(context: context)
-        
-        let symbol = Symbol(context: context)
-        symbol.name = newUnitModel.title
+        let symbol = Symbol(context: container.context)
+        symbol.name = container.model.title
         unit.symbolName = symbol
         
-        unit.abbreviation = newUnitModel.symbol
-        unit.isBase = newUnitModel.isBaseUnit
-        unit.relativeTo = newUnitModel.relativeTo
+        unit.abbreviation = container.model.symbol
+        unit.isBase = container.model.isBaseUnit
+        unit.relativeTo = container.model.relativeTo
         
-        context.quickSave()
+        container.context.quickSave()
         
         navigationController?.popViewController(animated: true)
     }
@@ -110,8 +158,8 @@ extension NewUnitController: Subscriber
     
     private func handle(_ message: ToggleCellMessage)
     {
-        newUnitModel.isBaseUnit = message.state
-        navigationItem.rightBarButtonItem?.isEnabled = newUnitModel.valid
+        container.model.isBaseUnit = message.state
+        navigationItem.rightBarButtonItem?.isEnabled = container.model.valid
         tableView.reloadForToggle(message: message)
     }
     
@@ -120,24 +168,25 @@ extension NewUnitController: Subscriber
         switch message.selectionIdentifier
         {
         case .newUnitName:
-            newUnitModel.title = message.content
+            container.model.title = message.content
         case .newUnitSymbol:
-            newUnitModel.symbol = message.content
+            container.model.symbol = message.content
         default:
             break
         }
-        navigationItem.rightBarButtonItem?.isEnabled = newUnitModel.valid
+        navigationItem.rightBarButtonItem?.isEnabled = container.model.valid
     }
     
     private func handle(_ message: TableViewSelectionMessage)
     {
-        let linkController = LinkSearchController(
+        let container = LinkSearchControllerContainer(
+            context: container.context,
+            stream: container.stream,
             origin: .newUnit(id: id),
-            entityType: Unit.self,
-            context: context,
-            hasAddButton: true)
-        
-        navigationController?.pushViewController(linkController, animated: true)
+            hasAddButton: true,
+            entityType: Unit.self)
+        let controller = container.makeController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     private func handle(_ message: LinkSelectionMessage)
@@ -147,9 +196,9 @@ extension NewUnitController: Subscriber
         case .newUnit(let id):
             guard id == self.id else { return }
             guard let unit = message.link as? Unit else { fatalError() }
-            newUnitModel.relativeTo = unit
+            container.model.relativeTo = unit
             tableView.shouldReload = true
-            navigationItem.rightBarButtonItem?.isEnabled = newUnitModel.valid
+            navigationItem.rightBarButtonItem?.isEnabled = container.model.valid
             navigationController?.popViewController(animated: true)
         default:
             break

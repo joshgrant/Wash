@@ -8,9 +8,82 @@
 import Foundation
 import UIKit
 
+protocol LinkSearchControllerFactory: Factory
+{
+    func makeController() -> LinkSearchController
+    func makeTableViewManager() -> LinkSearchControllerTableViewManager
+    func makeSearchController(delegate: UISearchControllerDelegate,
+                              manager: LinkSearchControllerTableViewManager) -> UISearchController
+    func makeAddButton(target: LinkSearchController) -> UIBarButtonItem
+}
+
+class LinkSearchControllerContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var context: Context
+    var stream: Stream
+    var origin: LinkSearchController.Origin
+    var hasAddButton: Bool
+    var entityType: NamedEntity.Type
+    
+    // MARK: - Initialization
+    
+    init(
+        context: Context,
+        stream: Stream,
+        origin: LinkSearchController.Origin,
+        hasAddButton: Bool,
+        entityType: NamedEntity.Type)
+    {
+        self.context = context
+        self.stream = stream
+        self.origin = origin
+        self.hasAddButton = hasAddButton
+        self.entityType = entityType
+    }
+}
+
+extension LinkSearchControllerContainer: LinkSearchControllerFactory
+{
+    func makeController() -> LinkSearchController
+    {
+        .init(container: self)
+    }
+    
+    func makeTableViewManager() -> LinkSearchControllerTableViewManager
+    {
+        LinkSearchControllerTableViewManager(
+            origin: origin,
+            entityLinkType: entityType,
+            context: context)
+    }
+    
+    func makeSearchController(
+        delegate: UISearchControllerDelegate,
+        manager: LinkSearchControllerTableViewManager) -> UISearchController
+    {
+        let controller = UISearchController(searchResultsController: nil)
+        controller.delegate = delegate
+        controller.searchResultsUpdater = manager
+        controller.hidesNavigationBarDuringPresentation = false
+        controller.obscuresBackgroundDuringPresentation = false
+        return controller
+    }
+    
+    // TODO: Use responder protocol instead
+    func makeAddButton(target: LinkSearchController) -> UIBarButtonItem
+    {
+        let button = UIBarButtonItem(systemItem: .add)
+        button.target = target
+        button.action = #selector(target.addButtonDidTouchUpInside(_:))
+        return button
+    }
+}
+
 // The wrapping view controller
 // TODO: Need to dismiss this from the presenting controller
-class LinkSearchController: UIViewController
+class LinkSearchController: ViewController<LinkSearchControllerContainer>
 {
     // MARK: - Defined types
     
@@ -26,65 +99,36 @@ class LinkSearchController: UIViewController
     
     // MARK: - Variables
     
-    var id = UUID()
-    
     var tableViewManager: LinkSearchControllerTableViewManager
-    weak var context: Context?
-    
-    var origin: Origin
-    var hasAddButton: Bool
-    var entityType: NamedEntity.Type
-    
+
     // MARK: - Initialization
     
-    init(
-        origin: Origin,
-        entityType: NamedEntity.Type,
-        context: Context?,
-        hasAddButton: Bool = false)
+    required init(container: LinkSearchControllerContainer)
     {
-        self.origin = origin
-        self.entityType = entityType
-        self.context = context
-        self.hasAddButton = hasAddButton
-        
-        tableViewManager = LinkSearchControllerTableViewManager(
-            origin: origin,
-            entityLinkType: entityType,
-            context: context)
-        
-        super.init(nibName: nil, bundle: nil)
-        
-        view.embed(tableViewManager.tableView)
-        
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.delegate = self
-        searchController.searchResultsUpdater = tableViewManager
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
-
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false // It's not scrolled to top...
-        
-        if hasAddButton
-        {
-            let barButtonItem = UIBarButtonItem(systemItem: .add)
-            barButtonItem.target = self
-            barButtonItem.action = #selector(addButtonDidTouchUpInside(_:))
-            navigationItem.rightBarButtonItem = barButtonItem
-        }
-
-        title = entityType.readableName
-        
-        tableViewManager.configureFetchResultsController()
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
+        tableViewManager = container.makeTableViewManager()
+        super.init(container: container)
     }
     
     // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        view.embed(tableViewManager.tableView)
+
+        navigationItem.searchController = container.makeSearchController(delegate: self, manager: tableViewManager)
+        navigationItem.hidesSearchBarWhenScrolling = false // It's not scrolled to top...
+        
+        if container.hasAddButton
+        {
+            navigationItem.rightBarButtonItem = container.makeAddButton(target: self)
+        }
+        
+        title = container.entityType.readableName
+        
+        tableViewManager.configureFetchResultsController()
+    }
     
     // TODO: These view lifecycle methods are scaryy....
     // the problem is that the table view doesn't know how
@@ -107,7 +151,12 @@ class LinkSearchController: UIViewController
     @objc func addButtonDidTouchUpInside(_ sender: UIBarButtonItem)
     {
         // Route to the entity "new" screen
-        guard let detail = EntityType.type(from: entityType)?.newController(context: context) else
+        guard let detail = EntityType
+                .type(
+                    from: container.entityType)?
+                .newController(
+                    context: container.context,
+                    stream: container.stream) else
         {
             assertionFailure("Failed to get the detail controller")
             return 
@@ -121,22 +170,3 @@ extension LinkSearchController: UISearchControllerDelegate
 {
     
 }
-
-//extension LinkSearchController: Subscriber
-//{
-//    func receive(message: Message)
-//    {
-//        switch message
-//        {
-//        case let m as LinkSelectionMessage:
-//            handle(m)
-//        default:
-//            break
-//        }
-//    }
-//
-//    private func handle(_ message: LinkSelectionMessage)
-//    {
-////        dismiss(animated: true, completion: nil)
-//    }
-//}

@@ -8,50 +8,132 @@
 import Foundation
 import UIKit
 
-class SystemDetailController: UIViewController, RouterDelegate
+protocol SystemDetailFactory: Factory
+{
+    func makeController() -> SystemDetailController
+    
+    func makeResponder() -> SystemDetailResponder
+    func makeRouter() -> SystemDetailRouter
+    func makeTableView() -> SystemDetailTableView
+    
+    func makeDuplicateNavigationItem(responder: SystemDetailResponder) -> UIBarButtonItem
+    func makePinNavigationItem(responder: SystemDetailResponder) -> UIBarButtonItem
+}
+
+class SystemDetailContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var system: System
+    var context: Context
+    var stream: Stream
+    
+    // MARK: - Initialization
+    
+    init(system: System, context: Context, stream: Stream)
+    {
+        self.system = system
+        self.context = context
+        self.stream = stream
+    }
+}
+
+extension SystemDetailContainer: SystemDetailFactory
+{
+    func makeController() -> SystemDetailController
+    {
+        .init(container: self)
+    }
+    
+    func makeResponder() -> SystemDetailResponder
+    {
+        let container = SystemDetailResponderContainer(system: system, stream: stream)
+        return container.makeResponder()
+    }
+    
+    func makeRouter() -> SystemDetailRouter
+    {
+        let container = SystemDetailRouterContainer(
+            system: system,
+            context: context,
+            stream: stream)
+        return container.makeRouter()
+    }
+    
+    func makeTableView() -> SystemDetailTableView
+    {
+        let container = SystemDetailTableViewContainer(
+            system: system,
+            stream: stream,
+            style: .grouped)
+        return container.makeTableView()
+    }
+    
+    // TODO: Responder should be a protocol...
+    
+    func makeDuplicateNavigationItem(responder: SystemDetailResponder) -> UIBarButtonItem
+    {
+        UIBarButtonItem(
+            image: Icon.copy.getImage(),
+            style: .plain,
+            target: responder,
+            action: #selector(responder.userTouchedUpInsideDuplicate(sender:)))
+    }
+    
+    func makePinNavigationItem(responder: SystemDetailResponder) -> UIBarButtonItem
+    {
+        UIBarButtonItem(
+            image: system.isPinned
+                ? Icon.pinFill.getImage()
+                : Icon.pin.getImage(),
+            style: .plain,
+            target: responder,
+            action: #selector(responder.userTouchedUpInsidePin(sender:)))
+    }
+}
+
+class SystemDetailController: ViewController<SystemDetailContainer>, RouterDelegate
 {
     // MARK: - Variables
     
     var id = UUID()
     
-    var system: System
-    var responder: SystemDetailResponder
     var router: SystemDetailRouter
+    var responder: SystemDetailResponder
     var tableView: SystemDetailTableView
-    
     var duplicateBarButtonItem: UIBarButtonItem
     var pinBarButtonItem: UIBarButtonItem
     
     // MARK: - Initialization
     
-    init(
-        system: System)
+    required init(container: SystemDetailContainer)
     {
-        let responder = SystemDetailResponder(system: system)
+        let router = container.makeRouter()
+        let responder = container.makeResponder()
         
-        self.system = system
+        self.router = router
         self.responder = responder
-        self.tableView = SystemDetailTableView(system: system)
-        self.router = SystemDetailRouter(system: system)
+        self.tableView = container.makeTableView()
+        self.duplicateBarButtonItem = container.makeDuplicateNavigationItem(responder: responder)
+        self.pinBarButtonItem = container.makePinNavigationItem(responder: responder)
         
-        self.duplicateBarButtonItem = Self.makeDuplicateNavigationItem(responder: responder)
-        self.pinBarButtonItem = Self.makePinNavigationItem(system: system, responder: responder)
-        
-        super.init(nibName: nil, bundle: nil)
-        router.delegate = self
-        subscribe(to: AppDelegate.shared.mainStream)
-        view.embed(tableView)
-        configureNavigationItem(cellContent: system.title)
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
     
     deinit
     {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        view.embed(tableView)
+        configureNavigationItem(cellContent: container.system.title)
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -62,11 +144,11 @@ class SystemDetailController: UIViewController, RouterDelegate
     
     func configureNavigationItem(cellContent: String)
     {
-        if system.title.isEmpty
+        if container.system.title.isEmpty
         {
             let actionClosure = ActionClosure { [unowned self] sender in
-                let message = CancelCreationMessage(entity: self.system)
-                AppDelegate.shared.mainStream.send(message: message)
+                let message = CancelCreationMessage(entity: self.container.system)
+                self.container.stream.send(message: message)
             }
             
             // TODO: When to cancel, and when to delete?
@@ -78,8 +160,8 @@ class SystemDetailController: UIViewController, RouterDelegate
         else if cellContent.isEmpty
         {
             let actionClosure = ActionClosure { [unowned self] sender in
-                let message = CancelCreationMessage(entity: self.system)
-                AppDelegate.shared.mainStream.send(message: message)
+                let message = CancelCreationMessage(entity: self.container.system)
+                self.container.stream.send(message: message)
             }
             
             // TODO: When to cancel, and when to delete?
@@ -90,33 +172,11 @@ class SystemDetailController: UIViewController, RouterDelegate
         }
         else
         {
-            title = system.title
+            title = container.system.title
             
             navigationItem.setLeftBarButton(nil, animated: true)
             navigationItem.setRightBarButtonItems([duplicateBarButtonItem, pinBarButtonItem], animated: true)
         }
-    }
-    
-    // MARK: - Factory
-    
-    static func makeDuplicateNavigationItem(responder: SystemDetailResponder) -> UIBarButtonItem
-    {
-        UIBarButtonItem(
-            image: Icon.copy.getImage(),
-            style: .plain,
-            target: responder,
-            action: #selector(responder.userTouchedUpInsideDuplicate(sender:)))
-    }
-    
-    static func makePinNavigationItem(system: System, responder: SystemDetailResponder) -> UIBarButtonItem
-    {
-        UIBarButtonItem(
-            image: system.isPinned
-                ? Icon.pinFill.getImage()
-                : Icon.pin.getImage(),
-            style: .plain,
-            target: responder,
-            action: #selector(responder.userTouchedUpInsidePin(sender:)))
     }
 }
 
@@ -155,10 +215,10 @@ extension SystemDetailController: Subscriber
         // Interesting business rule... don't handle changes if it's empty?
         if message.title.isEmpty { return }
         
-        if case .system(let s) = message.selectionIdentifier, s == system
+        if case .system(let s) = message.selectionIdentifier, s == container.system
         {
-            system.title = message.title
-            system.managedObjectContext?.quickSave()
+            container.system.title = message.title
+            container.system.managedObjectContext?.quickSave()
         }
         else
         {
@@ -168,7 +228,7 @@ extension SystemDetailController: Subscriber
     
     func handle(_ message: EntityPinnedMessage)
     {
-        guard message.entity == system else { return }
+        guard message.entity == container.system else { return }
         
         let pinned = message.isPinned
         
@@ -176,31 +236,30 @@ extension SystemDetailController: Subscriber
             ? Icon.pinFill.getImage()
             : Icon.pin.getImage()
         
-        system.isPinned = pinned
-        system.managedObjectContext?.quickSave()
+        container.system.isPinned = pinned
+        container.system.managedObjectContext?.quickSave()
     }
     
     private func handle(_ message: SectionHeaderAddMessage)
     {
-        guard message.entityToAddTo == system else { return }
-        guard let context = system.managedObjectContext else { return }
+        guard message.entityToAddTo == container.system else { return }
         
-        let entity = message.entityType.init(context: context)
+        let entity = message.entityType.init(context: container.context)
         
         switch entity
         {
         case let s as Stock:
-            system.addToStocks(s)
-            router.route(to: .stockDetail(stock: s), completion: nil)
+            container.system.addToStocks(s)
+            router.routeTostockDetail(stock: s)
         case let f as TransferFlow:
-            system.addToFlows(f)
-            router.route(to: .transferFlowDetail(flow: f), completion: nil)
+            container.system.addToFlows(f)
+            router.routeToTransferFlowDetail(flow: f)
         case let e as Event:
-            system.addToEvents(e)
-            router.route(to: .eventDetail(event: e), completion: nil)
+            container.system.addToEvents(e)
+            router.routeToEventDetail(event: e)
         case let n as Note:
-            system.addToNotes(n)
-            router.route(to: .noteDetail(note: n), completion: nil)
+            container.system.addToNotes(n)
+            router.routeToNoteDetail(note: n)
         default:
             break
         }
@@ -208,13 +267,14 @@ extension SystemDetailController: Subscriber
     
     private func handle(_ message: SectionHeaderSearchMessage)
     {
-        let linkController = LinkSearchController(
+        let container = LinkSearchControllerContainer(
+            context: container.context,
+            stream: container.stream,
             origin: .systemStockSearch,
-            entityType: message.typeToSearch,
-            context: message.entityToSearchFrom.managedObjectContext)
-        
-        let navigationController = UINavigationController(rootViewController: linkController)
-        
+            hasAddButton: false,
+            entityType: message.typeToSearch)
+        let controller = container.makeController()
+        let navigationController = UINavigationController(rootViewController: controller)
         present(navigationController, animated: true, completion: nil)
     }
     
@@ -232,8 +292,8 @@ extension SystemDetailController: Subscriber
         if case .systemStockSearch = message.origin
         {
             let link = message.link as! Stock
-            system.addToStocks(link)
-            system.managedObjectContext?.quickSave()
+            container.system.addToStocks(link)
+            container.system.managedObjectContext?.quickSave()
             tableView.shouldReload = true
         }
     }
@@ -245,7 +305,7 @@ extension SystemDetailController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .stock(let stock):
-            router.route(to: .stockDetail(stock: stock), completion: nil)
+            router.routeTostockDetail(stock: stock)
         default:
             break
         }

@@ -50,14 +50,15 @@ class EntityListRouter: Router<EntityListRouterContainer>
         switch entityType
         {
         case is Stock.Type:
-            let detail = NewStockController(context: container.context)
-            let detailNavigation = UINavigationController(rootViewController: detail)
+            let container = NewStockControllerContainer(context: container.context, stream: container.stream)
+            let controller = container.makeController()
+            let detailNavigation = UINavigationController(rootViewController: controller)
             detailNavigation.isModalInPresentation = true
             delegate?.navigationController?.present(detailNavigation, animated: true, completion: nil)
         default:
             let entity = entityType.init(context: container.context)
             entity.createdDate = Date()
-            let detail = entity.detailController()
+            let detail = entity.detailController(context: container.context, stream: container.stream)
             delegate?.navigationController?.pushViewController(detail, animated: true)
             container.context.quickSave()
         }
@@ -65,7 +66,7 @@ class EntityListRouter: Router<EntityListRouterContainer>
     
     func routeToDetail(entity: Entity)
     {
-        let detail = entity.detailController()
+        let detail = entity.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(detail, animated: true)
     }
 }

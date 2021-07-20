@@ -10,6 +10,7 @@ import UIKit
 
 protocol IdealDetailTableViewFactory: Factory
 {
+    func makeTableView() -> TableView<IdealDetailTableViewContainer>
     func makeModel() -> TableViewModel
     func makeInfoSection() -> TableViewSection
     func makeHistorySection() -> TableViewSection
@@ -19,16 +20,16 @@ class IdealDetailTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
-    var model: TableViewModel
     var stream: Stream
     var style: UITableView.Style
     var stock: Stock
     
+    lazy var model = makeModel()
+    
     // MARK: - Initialization
     
-    init(model: TableViewModel, stream: Stream, style: UITableView.Style, stock: Stock)
+    init(stream: Stream, style: UITableView.Style, stock: Stock)
     {
-        self.model = model
         self.stream = stream
         self.style = style
         self.stock = stock
@@ -37,6 +38,11 @@ class IdealDetailTableViewContainer: TableViewDependencyContainer
 
 extension IdealDetailTableViewContainer: IdealDetailTableViewFactory
 {
+    func makeTableView() -> TableView<IdealDetailTableViewContainer>
+    {
+        .init(container: self)
+    }
+    
     func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
@@ -64,7 +70,8 @@ extension IdealDetailTableViewContainer: IdealDetailTableViewFactory
                     text: stock.idealDescription,
                     placeholder: "Ideal value".localized,
                     entity: stock,
-                    keyboardType: keyboardType)
+                    keyboardType: keyboardType,
+                    stream: stream)
             ]
         }
         else
@@ -87,9 +94,4 @@ extension IdealDetailTableViewContainer: IdealDetailTableViewFactory
     {
         TableViewSection(models: [])
     }
-}
-
-class IdealDetailTableView: TableView<IdealDetailTableViewContainer>
-{
-    
 }

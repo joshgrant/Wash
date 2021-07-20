@@ -20,16 +20,16 @@ class TransferFlowDetailTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
-    var model: TableViewModel
     var stream: Stream
     var style: UITableView.Style
     var flow: TransferFlow
     
+    lazy var model = makeModel()
+    
     // MARK: - Initialization
     
-    init(model: TableViewModel, stream: Stream, style: UITableView.Style, flow: TransferFlow)
+    init(stream: Stream, style: UITableView.Style, flow: TransferFlow)
     {
-        self.model = model
         self.stream = stream
         self.style = style
         self.flow = flow
@@ -63,7 +63,8 @@ extension TransferFlowDetailTableViewContainer: TransferFlowDetailTableViewFacto
             selectionIdentifier: .title,
             text: flow.title,
             placeholder: "Title".localized,
-            entity: flow)
+            entity: flow,
+            stream: stream)
         
         let from = DetailCellModel(
             selectionIdentifier: .fromStock(stock: flow.from),

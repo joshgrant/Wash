@@ -8,25 +8,64 @@
 import Foundation
 import UIKit
 
-class CurrentDetailController: UIViewController
+protocol CurrentDetailFactory: Factory
+{
+    func makeController() -> CurrentDetailController
+    func makeTableView() -> TableView<CurrentDetailTableViewContainer>
+}
+
+class CurrentDetailContainer: DependencyContainer
 {
     // MARK: - Variables
     
     var stock: Stock
-    var tableView: CurrentDetailTableView
+    var stream: Stream
     
     // MARK: - Initialization
     
-    init(stock: Stock)
+    init(stock: Stock, stream: Stream)
     {
         self.stock = stock
-        self.tableView = CurrentDetailTableView(stock: stock)
-        super.init(nibName: nil, bundle: nil)
-        view.embed(tableView)
+        self.stream = stream
+    }
+}
+
+extension CurrentDetailContainer: CurrentDetailFactory
+{
+    func makeController() -> CurrentDetailController
+    {
+        .init(container: self)
     }
     
-    required init?(coder: NSCoder)
+    func makeTableView() -> TableView<CurrentDetailTableViewContainer>
     {
-        fatalError("init(coder:) has not been implemented")
+        let container = CurrentDetailTableViewContainer(
+            stream: stream,
+            style: .grouped,
+            stock: stock)
+        return container.makeTableView()
+    }
+}
+
+class CurrentDetailController: ViewController<CurrentDetailContainer>
+{
+    // MARK: - Variables
+    
+    var tableView: TableView<CurrentDetailTableViewContainer>
+    
+    // MARK: - Initialization
+    
+    required init(container: CurrentDetailContainer)
+    {
+        tableView = container.makeTableView()
+        super.init(container: container)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        view.embed(tableView)
     }
 }

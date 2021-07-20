@@ -10,8 +10,8 @@ import UIKit
 
 protocol StockValueTypeFactory: Factory
 {
+    func makeController() -> StockValueTypeController
     func makeTableView() -> StockTypeTableView
-    func makeModel() -> TableViewModel
 }
 
 class StockValueTypeContainer: DependencyContainer
@@ -20,8 +20,6 @@ class StockValueTypeContainer: DependencyContainer
     
     var stock: Stock
     var stream: Stream
-    
-    lazy var tableView: StockTypeTableView = makeTableView()
     
     // MARK: - Initialization
     
@@ -34,20 +32,18 @@ class StockValueTypeContainer: DependencyContainer
 
 extension StockValueTypeContainer: StockValueTypeFactory
 {
+    func makeController() -> StockValueTypeController
+    {
+        .init(container: self)
+    }
+    
     func makeTableView() -> StockTypeTableView
     {
-        let model = makeModel()
         let container = StockTypeTableViewContainer(
-            model: model,
             stream: stream,
             style: .grouped,
             stock: stock)
         return StockTypeTableView(container: container)
-    }
-    
-    func makeModel() -> TableViewModel
-    {
-        
     }
 }
 
@@ -55,30 +51,21 @@ class StockValueTypeController: ViewController<StockValueTypeContainer>
 {
     // MARK: - Variables
     
-//    var stock: Stock
-//    var tableView: StockTypeTableView
+    var tableView: StockTypeTableView
     
     // MARK: - Initialization
     
     required init(container: StockValueTypeContainer)
     {
+        tableView = container.makeTableView()
         super.init(container: container)
-        view.embed(container.tableView)
     }
     
-//    init(container: StockValueTypeContainer)
-//    {
-//        self.stock = stock
-//        let container = StockTypeTableViewContainer(model: <#T##TableViewModel#>, stream: <#T##Stream#>, style: <#T##UITableView.Style#>, stock: stock)
-//        tableView = StockTypeTableView(container: <#T##StockTypeTableViewContainer#>)
-//
-//        super.init(nibName: nil, bundle: nil)
-//
-//        view.embed(tableView)
-//    }
+    // MARK: - View lifecycle
     
-//    required init?(coder: NSCoder)
-//    {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        view.embed(tableView)
+    }
 }

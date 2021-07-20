@@ -10,23 +10,43 @@ import UIKit
 
 // TODO: Keyboard avoiding (on all table views!)
 
-class NewStockStateTableView: TableView
+protocol NewStockStateTableViewFactory: Factory
+{
+    func makeTableView() -> NewStockStateTableView
+    func makeModel() -> TableViewModel
+    func makeHeaderSection() -> TableViewSection
+    func makeStatesSection(state: NewStateModel) -> TableViewSection
+    func makeAddSection() -> TableViewSection
+}
+
+class NewStockStateTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
     var newStockModel: NewStockModel
+    var stream: Stream
+    var style: UITableView.Style
+ 
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel)
+    init(newStockModel: NewStockModel, stream: Stream, style: UITableView.Style)
     {
         self.newStockModel = newStockModel
-        super.init()
+        self.stream = stream
+        self.style = style
+    }
+}
+
+extension NewStockStateTableViewContainer: NewStockStateTableViewFactory
+{
+    func makeTableView() -> NewStockStateTableView
+    {
+        .init(container: self)
     }
     
-    // MARK: - Functions
-    
-    override func makeModel() -> TableViewModel
+    func makeModel() -> TableViewModel
     {
         var sections = newStockModel.states.map { state in
             makeStatesSection(state: state)
@@ -36,14 +56,6 @@ class NewStockStateTableView: TableView
         sections.append(makeAddSection())
         
         return TableViewModel(sections: sections)
-    }
-    
-    func addState(newStateModel: NewStateModel)
-    {
-        let section = makeStatesSection(state: newStateModel)
-        model.sections.insert(section, at: model.sections.count - 1)
-        model.sectionsUpdated() // FIXME: HACK!
-        configure() // FIXME: HACK!
     }
     
     func makeHeaderSection() -> TableViewSection
@@ -80,21 +92,24 @@ class NewStockStateTableView: TableView
                 selectionIdentifier: .stateTitle(state: state),
                 text: state.title,
                 placeholder: "Title".localized,
-                entity: nil),
+                entity: nil,
+                stream: stream),
             RightEditCellModel(
                 selectionIdentifier: .stateFrom(state: state),
                 title: "From".localized,
                 detail: from,
                 detailPostfix: postfix,
                 keyboardType: nil,
-                newStockModel: nil),
+                newStockModel: nil,
+                stream: stream),
             RightEditCellModel(
                 selectionIdentifier: .stateTo(state: state),
                 title: "To".localized,
                 detail: to,
                 detailPostfix: postfix,
                 keyboardType: nil,
-                newStockModel: nil)
+                newStockModel: nil,
+                stream: stream)
         ]
         
         return TableViewSection(models: models)
@@ -107,6 +122,21 @@ class NewStockStateTableView: TableView
                 selectionIdentifier: .addState,
                 title: "Add State".localized)
         ])
+    }
+}
+
+class NewStockStateTableView: TableView<NewStockStateTableViewContainer>
+{
+    // MARK: - Functions
+    
+    // FIXME: Collection view diffing
+    
+    func addState(newStateModel: NewStateModel)
+    {
+        let section = container.makeStatesSection(state: newStateModel)
+        container.model.sections.insert(section, at: container.model.sections.count - 1)
+        container.model.sectionsUpdated() // FIXME
+        configure() // FIXME
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat

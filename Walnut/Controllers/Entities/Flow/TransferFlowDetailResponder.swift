@@ -13,12 +13,14 @@ class TransferFlowDetailResponder
     // MARK: - Variables
     
     var flow: TransferFlow
+    var stream: Stream
     
     // MARK: - Initialization
     
-    init(flow: TransferFlow)
+    init(flow: TransferFlow, stream: Stream)
     {
         self.flow = flow
+        self.stream = stream
     }
     
     @objc func pinButtonDidTouchUpInside(_ sender: UIBarButtonItem)
@@ -28,7 +30,7 @@ class TransferFlowDetailResponder
         let message = EntityPinnedMessage(
             isPinned: flow.isPinned,
             entity: flow)
-        AppDelegate.shared.mainStream.send(message: message)
+        stream.send(message: message)
     }
     
     @objc func runButtonDidTouchUpInside(_ sender: UIBarButtonItem)

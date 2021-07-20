@@ -15,10 +15,6 @@ protocol LibraryControllerFactory: ViewControllerTabBarDelegate, Factory
 
 class LibraryControllerContainer: DependencyContainer
 {
-    // MARK: - Defined types
-    
-    typealias Table = TableView<LibraryTableViewContainer>
-    
     // MARK: - Variables
     
     var tabBarItemTitle: String { "Library".localized }
@@ -27,17 +23,13 @@ class LibraryControllerContainer: DependencyContainer
     
     var context: Context
     var stream: Stream
-    var router: LibraryTableViewRouter
-    var tableView: Table
     
     // MARK: - Initialization
     
-    init(context: Context, stream: Stream, router: LibraryTableViewRouter? = nil, tableView: Table? = nil)
+    init(context: Context, stream: Stream)
     {
         self.context = context
         self.stream = stream
-        self.router = router ?? makeRouter()
-        self.tableView = tableView ?? makeTableView()
     }
 }
 
@@ -51,13 +43,13 @@ extension LibraryControllerContainer: LibraryControllerFactory
         return LibraryTableViewRouter(container: container)
     }
     
-    func makeTableView() -> Table
+    func makeTableView() -> TableView<LibraryTableViewContainer>
     {
         let container = LibraryTableViewContainer(
             context: context,
             stream: stream,
             style: .grouped)
-        return Table(container: container)
+        return container.makeTableView()
     }
     
     func makeTabBarItem() -> UITabBarItem
@@ -74,13 +66,17 @@ class LibraryController: ViewController<LibraryControllerContainer>, RouterDeleg
     // MARK: - Variables
     
     var id = UUID()
+    var tableView: TableView<LibraryTableViewContainer>
+    var router: LibraryTableViewRouter
     
     // MARK: - Initialization
     
     required init(container: LibraryControllerContainer)
     {
+        self.tableView = container.makeTableView()
+        self.router = container.makeRouter()
         super.init(container: container)
-        container.router.delegate = self
+        router.delegate = self
         subscribe(to: container.stream)
     }
 
@@ -98,7 +94,7 @@ class LibraryController: ViewController<LibraryControllerContainer>, RouterDeleg
         tabBarItem = container.makeTabBarItem()
         title = container.tabBarItemTitle
         
-        view.embed(container.tableView)
+        view.embed(tableView)
     }
 }
 

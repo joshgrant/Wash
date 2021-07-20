@@ -9,74 +9,65 @@ import Foundation
 import CoreData
 import UIKit
 
-class DashboardTableView: TableView
+protocol DashboardTableViewFactory: Factory
+{
+    func makeTableView() -> DashboardTableView
+    func makeModel() -> TableViewModel
+    func makePinnedSection() -> TableViewSection
+    func makeFlowsSection() -> TableViewSection
+    func makeForecastSection() -> TableViewSection
+    func makePrioritySection() -> TableViewSection
+    func makeDashboardSuggestedFlowsPredicate() -> NSPredicate
+    func makeDashboardSuggestedFlowsFetchRequest() -> NSFetchRequest<Flow>
+}
+
+class DashboardTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
-    weak var context: Context?
+    var stream: Stream
+    var context: Context
+    var style: UITableView.Style
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(context: Context)
+    init(stream: Stream, context: Context, style: UITableView.Style)
     {
+        self.stream = stream
         self.context = context
-        super.init()
+        self.style = style
     }
-    
-    // MARK: - Table View Delegate
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+}
+
+extension DashboardTableViewContainer: DashboardTableViewFactory
+{
+    func makeTableView() -> DashboardTableView
     {
-        var entity: Entity
-        let cellModel = model.models[indexPath.section][indexPath.row]
-        
-        switch cellModel.selectionIdentifier
-        {
-        case .pinned(let e):
-            entity = e
-        case .entity(let e):
-            entity = e
-        case .system(let e):
-            entity = e
-        case .flow(let e):
-            entity = e
-        default:
-            fatalError("Unhandled selection identifier")
-        }
-        
-        let message = TableViewEntitySelectionMessage(entity: entity, tableView: tableView, cellModel: cellModel)
-        stream.send(message: message)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
+        DashboardTableView(container: self)
     }
-    
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
+
+    func makeModel() -> TableViewModel
     {
-        guard let context = context else
-        {
-            fatalError("The context is nil")
-        }
-        
-        return TableViewModel(sections: [
-            makePinnedSection(context: context),
-            makePrioritySection(context: context),
-            makeForecastSection(context: context),
-            makeFlowsSection(context: context),
+        TableViewModel(sections: [
+            makePinnedSection(),
+            makePrioritySection(),
+            makeForecastSection(),
+            makeFlowsSection(),
         ])
     }
     
     // MARK: Pinned
     
-    func makePinnedSection(context: Context) -> TableViewSection
+    func makePinnedSection() -> TableViewSection
     {
         TableViewSection(
             header: .pinned,
-            models: makePinnedModels(context: context))
+            models: makePinnedModels())
     }
     
-    func makePinnedModels(context: Context) -> [TableViewCellModel]
+    private func makePinnedModels() -> [TableViewCellModel]
     {
         let request = Entity.makePinnedObjectsFetchRequest(context: context)
         
@@ -103,14 +94,14 @@ class DashboardTableView: TableView
     
     // MARK: Flows
     
-    func makeFlowsSection(context: Context) -> TableViewSection
+    func makeFlowsSection() -> TableViewSection
     {
         TableViewSection(
             header: .flows,
-            models: makeFlowModels(context: context))
+            models: makeFlowModels())
     }
     
-    func makeFlowModels(context: Context) -> [TableViewCellModel]
+    private func makeFlowModels() -> [TableViewCellModel]
     {
         let request = makeDashboardSuggestedFlowsFetchRequest()
         do
@@ -132,14 +123,14 @@ class DashboardTableView: TableView
     
     // MARK: Forecast
     
-    func makeForecastSection(context: Context) -> TableViewSection
+    func makeForecastSection() -> TableViewSection
     {
         TableViewSection(
             header: .forecast,
-            models: makeForecastModels(context: context))
+            models: makeForecastModels())
     }
     
-    func makeForecastModels(context: Context) -> [TableViewCellModel]
+    private func makeForecastModels() -> [TableViewCellModel]
     {
         let request = makeDateSourcesFetchRequest()
         do
@@ -163,14 +154,14 @@ class DashboardTableView: TableView
     
     // MARK: Priority
     
-    func makePrioritySection(context: Context) -> TableViewSection
+    func makePrioritySection() -> TableViewSection
     {
         TableViewSection(
             header: .priority,
-            models: makePriorityModels(context: context))
+            models: makePriorityModels())
     }
-        
-    func makePriorityModels(context: Context) -> [TableViewCellModel]
+    
+    private func makePriorityModels() -> [TableViewCellModel]
     {
         // TODO: Fetch unideal values
         // TODO: Sort on the ideal value, ascending
@@ -196,7 +187,7 @@ class DashboardTableView: TableView
             return []
         }
     }
-
+    
     // MARK: - Utility
     
     func makeDashboardSuggestedFlowsPredicate() -> NSPredicate
@@ -210,5 +201,35 @@ class DashboardTableView: TableView
         fetchRequest.predicate = makeDashboardSuggestedFlowsPredicate()
         fetchRequest.shouldRefreshRefetchedObjects = true
         return fetchRequest
+    }
+}
+
+class DashboardTableView: TableView<DashboardTableViewContainer>
+{
+    // MARK: - Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        var entity: Entity
+        let cellModel = container.model.models[indexPath.section][indexPath.row]
+        
+        switch cellModel.selectionIdentifier
+        {
+        case .pinned(let e):
+            entity = e
+        case .entity(let e):
+            entity = e
+        case .system(let e):
+            entity = e
+        case .flow(let e):
+            entity = e
+        default:
+            fatalError("Unhandled selection identifier")
+        }
+        
+        let message = TableViewEntitySelectionMessage(entity: entity, tableView: tableView, cellModel: cellModel)
+        container.stream.send(message: message)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

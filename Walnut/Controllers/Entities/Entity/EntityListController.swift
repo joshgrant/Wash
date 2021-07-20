@@ -24,18 +24,18 @@ class EntityListDependencyContainer: DependencyContainer
     var entityType: Entity.Type
     var context: Context
     var stream: Stream
-    var router: EntityListRouter
+    
+    lazy var router: EntityListRouter = makeRouter()
     
     lazy var tableView: EntityListTableView = makeTableView()
     
     // MARK: - Initialization
     
-    init(entityType: Entity.Type, context: Context, stream: Stream, router: EntityListRouter? = nil)
+    init(entityType: Entity.Type, context: Context, stream: Stream)
     {
         self.entityType = entityType
         self.context = context
         self.stream = stream
-        self.router = router ?? makeRouter()
     }
 }
 

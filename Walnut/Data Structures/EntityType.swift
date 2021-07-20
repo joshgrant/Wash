@@ -147,14 +147,16 @@ public enum EntityType
         }
     }
     
-    func newController(context: Context?) -> UIViewController
+    func newController(context: Context, stream: Stream) -> UIViewController
     {
         switch self
         {
         case .unit:
-            return NewUnitController(context: context)
+            let container = NewUnitContainer(context: context, stream: stream)
+            return container.makeController()
         case .stock:
-            return NewStockController(context: context)
+            let container = NewStockControllerContainer(context: context, stream: stream)
+            return container.makeController()
         default:
             fatalError("No controller")
         }

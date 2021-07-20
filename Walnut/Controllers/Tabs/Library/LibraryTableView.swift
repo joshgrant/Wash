@@ -10,6 +10,7 @@ import UIKit
 
 protocol LibraryTableViewFactory: Factory
 {
+    func makeTableView() -> TableView<LibraryTableViewContainer>
     func makeModel() -> TableViewModel
 }
 
@@ -35,6 +36,11 @@ class LibraryTableViewContainer: TableViewDependencyContainer
 
 extension LibraryTableViewContainer: LibraryTableViewFactory
 {
+    func makeTableView() -> TableView<LibraryTableViewContainer>
+    {
+        .init(container: self)
+    }
+    
     func makeModel() -> TableViewModel
     {        
         let models = EntityType.libraryVisible.map { entityType in

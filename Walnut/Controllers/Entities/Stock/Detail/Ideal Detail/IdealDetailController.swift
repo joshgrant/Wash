@@ -8,25 +8,54 @@
 import Foundation
 import UIKit
 
-class IdealDetailController: UIViewController
+protocol IdealDetailFactory: Factory
+{
+    func makeController() -> IdealDetailController
+    func makeTableView() -> TableView<IdealDetailTableViewContainer>
+}
+
+class IdealDetailContainer: DependencyContainer
 {
     // MARK: - Variables
     
     var stock: Stock
-    var tableView: IdealDetailTableView
+    var stream: Stream
+    
+    lazy var tableView = makeTableView()
     
     // MARK: - Initialization
     
-    init(stock: Stock)
+    init(stock: Stock, stream: Stream)
     {
         self.stock = stock
-        self.tableView = IdealDetailTableView(stock: stock)
-        super.init(nibName: nil, bundle: nil)
-        view.embed(tableView)
+        self.stream = stream
+    }
+}
+
+extension IdealDetailContainer: IdealDetailFactory
+{
+    func makeController() -> IdealDetailController
+    {
+        .init(container: self)
     }
     
-    required init?(coder: NSCoder)
+    func makeTableView() -> TableView<IdealDetailTableViewContainer>
     {
-        fatalError("init(coder:) has not been implemented")
+        let container = IdealDetailTableViewContainer(
+            stream: stream,
+            style: .grouped,
+            stock: stock)
+        return .init(container: container)
+    }
+}
+
+class IdealDetailController: ViewController<IdealDetailContainer>
+{
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        view.embed(container.makeTableView())
     }
 }

@@ -7,21 +7,38 @@
 
 import UIKit
 
+protocol DashboardFactory: Factory
+{
+    func makeTableView() -> DashboardTableView
+}
+
 class DashboardDependencyContainer: DependencyContainer
 {
     // MARK: - Variables
     
     var context: Context
     var stream: Stream
-    var tableView: TableView
+    
+    lazy var tableView: DashboardTableView = makeTableView()
     
     // MARK: - Initialization
     
-    init(context: Context, stream: Stream, tableView: TableView? = nil)
+    init(context: Context, stream: Stream)
     {
         self.context = context
         self.stream = stream
-        self.tableView = tableView ?? DashboardTableView(context: context)
+    }
+}
+
+extension DashboardDependencyContainer: DashboardFactory
+{
+    func makeTableView() -> DashboardTableView
+    {
+        let container = DashboardTableViewContainer(
+            stream: stream,
+            context: context,
+            style: .grouped)
+        return container.makeTableView()
     }
 }
 
@@ -33,11 +50,10 @@ class DashboardController: ViewController<DashboardDependencyContainer>
     
     // MARK: - Initialization
     
-    override init(container: DashboardDependencyContainer)
+    required init(container: DashboardDependencyContainer)
     {
         super.init(container: container)
         subscribe(to: container.stream)
-        configureForDisplay()
     }
     
     deinit
@@ -45,10 +61,12 @@ class DashboardController: ViewController<DashboardDependencyContainer>
         unsubscribe(from: container.stream)
     }
     
-    // MARK: - Functions
+    // MARK: - View lifecycle
     
-    private func configureForDisplay()
+    override func viewDidLoad()
     {
+        super.viewDidLoad()
+        
         title = tabBarItemTitle
         tabBarItem = makeTabBarItem()
         
@@ -95,7 +113,7 @@ extension DashboardController: Subscriber
         
         let detailController = message
             .entity
-            .detailController()
+            .detailController(context: container.context, stream: container.stream)
         
         navigationController?.pushViewController(detailController, animated: true)
     }

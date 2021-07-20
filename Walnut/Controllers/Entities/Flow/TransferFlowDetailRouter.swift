@@ -47,35 +47,39 @@ class TransferFlowDetailRouter: Router<TransferFlowDetailRouterContainer>
 
     func routeToStockFrom()
     {
-        let searchController = LinkSearchController(
+        let container = LinkSearchControllerContainer(
+            context: container.context,
+            stream: container.stream,
             origin: .stockFrom,
-            entityType: Stock.self,
-            context: container.context)
-        let navigationController = UINavigationController(rootViewController: searchController)
-//        presentedDestination = .stockFrom // TODO: What is this for?
+            hasAddButton: false,
+            entityType: Stock.self)
+        let controller = container.makeController()
+        let navigationController = UINavigationController(rootViewController: controller)
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
     }
     
     func routeToStockTo()
     {
-        let searchController = LinkSearchController(
+        let container = LinkSearchControllerContainer(
+            context: container.context,
+            stream: container.stream,
             origin: .stockTo,
-            entityType: Stock.self,
-            context: container.context)
-        let navigationController = UINavigationController(rootViewController: searchController)
-//        presentedDestination = .stockTo
+            hasAddButton: false,
+            entityType: Stock.self)
+        let controller = container.makeController()
+        let navigationController = UINavigationController(rootViewController: controller)
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
     }
     
     func routeToEventDetail(_ event: Event)
     {
-        let detail = event.detailController()
+        let detail = event.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
     func routeToHistoryDetail(_ history: History)
     {
-        let detail = history.detailController()
+        let detail = history.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(detail, animated: true)
     }
 }

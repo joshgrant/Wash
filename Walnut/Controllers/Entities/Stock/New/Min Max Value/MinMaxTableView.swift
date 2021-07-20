@@ -19,16 +19,16 @@ class MinMaxTableViewContainer: TableViewDependencyContainer
     // MARK: - Variables
     
     var newStockModel: NewStockModel
-    var model: TableViewModel
     var stream: Stream
     var style: UITableView.Style
     
+    lazy var model: TableViewModel = makeModel()
+    
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel, model: TableViewModel, stream: Stream, style: UITableView.Style)
+    init(newStockModel: NewStockModel, stream: Stream, style: UITableView.Style)
     {
         self.newStockModel = newStockModel
-        self.model = model
         self.stream = stream
         self.style = style
     }
@@ -75,14 +75,16 @@ extension MinMaxTableViewContainer: MinMaxTableViewFactory
                 detail: minDetail,
                 detailPostfix: postfix,
                 keyboardType: nil,
-                newStockModel: newStockModel),
+                newStockModel: newStockModel,
+                stream: stream),
             RightEditCellModel(
                 selectionIdentifier: .maximum,
                 title: "Maximum".localized,
                 detail: maxDetail,
                 detailPostfix: postfix,
                 keyboardType: nil,
-                newStockModel: newStockModel)
+                newStockModel: newStockModel,
+                stream: stream)
         ]
         
         return TableViewSection(header: .constraints, models: models)

@@ -96,10 +96,12 @@ class NewStockStateController: ViewController<NewStockStateContainer>
     
     @objc func rightBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        let currentIdealController = CurrentIdealController(
-            newStockModel: container.model,
-            context: container.context)
-        navigationController?.pushViewController(currentIdealController, animated: true)
+        let container = CurrentIdealControllerDependencyContainer(
+            model: container.model,
+            context: container.context,
+            stream: container.stream)
+        let controller = container.makeController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func keyboardWillChangeFrame(_ notification: Notification)
@@ -158,7 +160,7 @@ extension NewStockStateController: Subscriber
             //            tableView.reload(shouldReloadTableView: false)
             
             container.tableView.beginUpdates()
-            container.tableView.insertSections(IndexSet(integer: newStockModel.states.count), with: .automatic)
+            container.tableView.insertSections(IndexSet(integer: container.model.states.count), with: .automatic)
             container.tableView.endUpdates()
             
             navigationItem.rightBarButtonItem?.isEnabled = container.model.validForStates

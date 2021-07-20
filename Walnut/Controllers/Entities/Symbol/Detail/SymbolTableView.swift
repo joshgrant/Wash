@@ -6,42 +6,62 @@
 //
 
 import Foundation
+import UIKit
 
-class SymbolTableView: TableView
+protocol SymbolTableViewFactory: Factory
+{
+    // TODO: Every table view factory should make the table view...
+    func makeTableView() -> TableView<SymbolTableViewContainer>
+    func makeModel() -> TableViewModel
+    func makeInfoSection() -> TableViewSection
+    func makeReferencesSection() -> TableViewSection
+    func makeLinkSection() -> TableViewSection
+}
+
+class SymbolTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
     var symbol: Symbol
+    var stream: Stream
+    var style: UITableView.Style
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(symbol: Symbol)
+    init(symbol: Symbol, stream: Stream, style: UITableView.Style)
     {
         self.symbol = symbol
-        super.init()
+        self.stream = stream
+        self.style = style
+    }
+}
+
+extension SymbolTableViewContainer: SymbolTableViewFactory
+{
+    func makeTableView() -> TableView<SymbolTableViewContainer>
+    {
+        .init(container: self)
     }
     
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeInfoSection(symbol: symbol),
-            makeReferencesSection(symbol: symbol),
-            makeLinksSection(symbol: symbol)
+            makeInfoSection(),
+            makeReferencesSection(),
+            makeLinkSection()
         ])
     }
     
-    // MARK: Info
-    
-    func makeInfoSection(symbol: Symbol) -> TableViewSection
+    func makeInfoSection() -> TableViewSection
     {
         let models = [
             TextEditCellModel(
                 selectionIdentifier: .title,
                 text: symbol.name,
                 placeholder: "Name",
-                entity: symbol)
+                entity: symbol,
+                stream: stream)
         ]
         
         return TableViewSection(
@@ -49,9 +69,7 @@ class SymbolTableView: TableView
             models: models)
     }
     
-    // MARK: References
-    
-    func makeReferencesSection(symbol: Symbol) -> TableViewSection
+    func makeReferencesSection() -> TableViewSection
     {
         let entities = [
             symbol.nameOfColor,
@@ -80,9 +98,7 @@ class SymbolTableView: TableView
             models: models)
     }
     
-    // MARK: Links
-    
-    func makeLinksSection(symbol: Symbol) -> TableViewSection
+    func makeLinkSection() -> TableViewSection
     {
         let entities: [Entity] = symbol.unwrapped(\Symbol.links)
         
