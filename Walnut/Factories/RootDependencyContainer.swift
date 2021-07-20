@@ -57,13 +57,9 @@ extension RootDependencyContainer: RootFactory
     
     private func makeDashboardNavigationController() -> UINavigationController
     {
-        let navigationController = UINavigationController()
-        let dashboardContainer = DashboardDependencyContainer(
-            context: context,
-            stream: stream)
-        let dashboardController = DashboardController(container: dashboardContainer)
-        navigationController.setViewControllers([dashboardController], animated: false)
-        return navigationController
+        let builder = DashboardListControllerBuilder(context: context, stream: stream)
+        let controller = DashboardListController(builder: builder)
+        return UINavigationController(rootViewController: controller)
     }
     
     private func makeLibraryNavigationController() -> UINavigationController

@@ -174,6 +174,10 @@
 		03C4C48A26A5F7E40066E6ED /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48926A5F7E40066E6ED /* Notification+Extensions.swift */; };
 		03C4C48C26A6004A0066E6ED /* EntityInsertionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4C48B26A6004A0066E6ED /* EntityInsertionMessage.swift */; };
 		03C4C48F26A60B590066E6ED /* Differ in Frameworks */ = {isa = PBXBuildFile; productRef = 03C4C48E26A60B590066E6ED /* Differ */; };
+		03CA1FB926A7776A00A7B10E /* DashboardListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FB826A7776A00A7B10E /* DashboardListController.swift */; };
+		03CA1FBB26A7868900A7B10E /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FBA26A7868900A7B10E /* ListSection.swift */; };
+		03CA1FBD26A7869E00A7B10E /* DashboardPinnedListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FBC26A7869E00A7B10E /* DashboardPinnedListItem.swift */; };
+		03CA1FBF26A7875900A7B10E /* DashboardListControllerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FBE26A7875900A7B10E /* DashboardListControllerBuilder.swift */; };
 		03D1FBF026A62F8A003AE881 /* RootFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D1FBEF26A62F8A003AE881 /* RootFactoryTests.swift */; };
 		03D1FBF226A63071003AE881 /* RootDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D1FBF126A63071003AE881 /* RootDependencyContainer.swift */; };
 		03D1FBF426A63796003AE881 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D1FBF326A63796003AE881 /* DependencyContainer.swift */; };
@@ -403,6 +407,10 @@
 		03C4C48726A5F7510066E6ED /* Publishers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Extensions.swift"; sourceTree = "<group>"; };
 		03C4C48926A5F7E40066E6ED /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
 		03C4C48B26A6004A0066E6ED /* EntityInsertionMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityInsertionMessage.swift; sourceTree = "<group>"; };
+		03CA1FB826A7776A00A7B10E /* DashboardListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardListController.swift; sourceTree = "<group>"; };
+		03CA1FBA26A7868900A7B10E /* ListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
+		03CA1FBC26A7869E00A7B10E /* DashboardPinnedListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPinnedListItem.swift; sourceTree = "<group>"; };
+		03CA1FBE26A7875900A7B10E /* DashboardListControllerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardListControllerBuilder.swift; sourceTree = "<group>"; };
 		03D1FBEF26A62F8A003AE881 /* RootFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFactoryTests.swift; sourceTree = "<group>"; };
 		03D1FBF126A63071003AE881 /* RootDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootDependencyContainer.swift; sourceTree = "<group>"; };
 		03D1FBF326A63796003AE881 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
@@ -808,6 +816,10 @@
 			children = (
 				038CF5AD26754D5A00931595 /* DashboardController.swift */,
 				038CF6452676727500931595 /* DashboardTableView.swift */,
+				03CA1FB826A7776A00A7B10E /* DashboardListController.swift */,
+				03CA1FBE26A7875900A7B10E /* DashboardListControllerBuilder.swift */,
+				03CA1FBA26A7868900A7B10E /* ListSection.swift */,
+				03CA1FBC26A7869E00A7B10E /* DashboardPinnedListItem.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -1406,11 +1418,13 @@
 				03FAACD0269B36E900CB7AB6 /* TableViewSelectionMessage.swift in Sources */,
 				03555B472686A487006E9EA1 /* Observer.swift in Sources */,
 				03FAACB42698CEF500CB7AB6 /* UIViewController+Extensions.swift in Sources */,
+				03CA1FBF26A7875900A7B10E /* DashboardListControllerBuilder.swift in Sources */,
 				03FAACE6269B935A00CB7AB6 /* SectionHeaderSearchMessage.swift in Sources */,
 				03555B692686A487006E9EA1 /* TabBarControllerDelegate.swift in Sources */,
 				03555B4D2686A487006E9EA1 /* Coordinator.swift in Sources */,
 				03BF0BEA269F6C4100A866E5 /* MinMaxController.swift in Sources */,
 				03555B4F2686A487006E9EA1 /* ObserverForSceneUpdatesEventResponder.swift in Sources */,
+				03CA1FBD26A7869E00A7B10E /* DashboardPinnedListItem.swift in Sources */,
 				03E700752683916400B8B527 /* Notification.Name+Extensions.swift in Sources */,
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
 				03BF0BDB269F54BA00A866E5 /* ValueType.swift in Sources */,
@@ -1455,6 +1469,7 @@
 				03555B4A2686A487006E9EA1 /* DatabaseError.swift in Sources */,
 				038CF6C1267682C700931595 /* SourceType.swift in Sources */,
 				03BF0BBC269D269B00A866E5 /* ContextPopulator.swift in Sources */,
+				03CA1FB926A7776A00A7B10E /* DashboardListController.swift in Sources */,
 				03555B0726869E7E006E9EA1 /* Identifier.swift in Sources */,
 				03FAACD6269B575C00CB7AB6 /* EntityListTableView.swift in Sources */,
 				03555B7D2687D160006E9EA1 /* EntityListCellMessage.swift in Sources */,
@@ -1462,6 +1477,7 @@
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				03FAACCC2699ED1500CB7AB6 /* TableViewModel.swift in Sources */,
 				03FAACBF2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift in Sources */,
+				03CA1FBB26A7868900A7B10E /* ListSection.swift in Sources */,
 				03555B712686A487006E9EA1 /* ControllerModel.swift in Sources */,
 				03555B6A2686A487006E9EA1 /* ViewControllerTabBarDelegate.swift in Sources */,
 				0370FEE2268A1F4A001E099B /* ToggleCellMessage.swift in Sources */,
