@@ -59,8 +59,8 @@ extension RootDependencyContainer: RootFactory
     {
         let navigationController = UINavigationController()
         let dashboardContainer = DashboardDependencyContainer(
-            context: container.context,
-            stream: container.stream)
+            context: context,
+            stream: stream)
         let dashboardController = DashboardController(container: dashboardContainer)
         navigationController.setViewControllers([dashboardController], animated: false)
         return navigationController
@@ -69,8 +69,9 @@ extension RootDependencyContainer: RootFactory
     private func makeLibraryNavigationController() -> UINavigationController
     {
         let navigationController = UINavigationController()
-        let libraryController = LibraryController(context: context, navigationController: navigationController)
-        navigationController.setViewControllers([libraryController], animated: false)
+        let container = LibraryControllerContainer(context: context, stream: stream)
+        let controller = LibraryController(container: container)
+        navigationController.setViewControllers([controller], animated: false)
         return navigationController
     }
     

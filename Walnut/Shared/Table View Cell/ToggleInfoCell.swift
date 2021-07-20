@@ -15,17 +15,20 @@ class ToggleCellModel: TableViewCellModel
     var selectionIdentifier: SelectionIdentifier
     var title: String
     var toggleState: Bool
+    var stream: Stream
     
     // MARK: - Initialization
     
     init(
         selectionIdentifier: SelectionIdentifier,
         title: String,
-        toggleState: Bool)
+        toggleState: Bool,
+        stream: Stream)
     {
         self.selectionIdentifier = selectionIdentifier
         self.title = title
         self.toggleState = toggleState
+        self.stream = stream
     }
     
     static var cellClass: AnyClass { ToggleCell.self }
@@ -33,10 +36,12 @@ class ToggleCellModel: TableViewCellModel
 
 class ToggleCell: TableViewCell<ToggleCellModel>
 {
+    weak var model: ToggleCellModel?
     var selectionIdentifier: SelectionIdentifier?
     
     override func configure(with model: ToggleCellModel)
     {
+        self.model = model
         self.textLabel?.text = model.title
         self.selectionIdentifier = model.selectionIdentifier
         
@@ -58,6 +63,6 @@ class ToggleCell: TableViewCell<ToggleCellModel>
         let message = ToggleCellMessage(
             state: sender.isOn,
             selectionIdentifier: identifier)
-        AppDelegate.shared.mainStream.send(message: message)
+        model?.stream.send(message: message)
     }
 }

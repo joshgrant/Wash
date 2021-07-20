@@ -22,16 +22,13 @@ class NewStockStateContainer: DependencyContainer
     var context: Context
     var stream: Stream
     
-    var tableView: NewStockStateTableView
-    
     // MARK: - Initialization
     
-    init(model: NewStockModel, context: Context, stream: Stream, tableView: NewStockStateTableView? = nil)
+    init(model: NewStockModel, context: Context, stream: Stream)
     {
         self.model = model
         self.context = context
         self.stream = stream
-        self.tableView = tableView ?? makeTableView()
     }
 }
 
@@ -39,7 +36,11 @@ extension NewStockStateContainer: NewStockStateFactory
 {
     func makeTableView() -> NewStockStateTableView
     {
-        
+        let container = NewStockStateTableViewContainer(
+            newStockModel: model,
+            stream: stream,
+            style: .grouped)
+        return .init(container: container)
     }
     
     func makeRightBarButtonItem(target: NewStockStateController) -> UIBarButtonItem
@@ -50,6 +51,7 @@ extension NewStockStateContainer: NewStockStateFactory
             target: target,
             action: #selector(target.rightBarButtonItemDidTouchUpInside(_:)))
         rightItem.isEnabled = model.validForStates
+        return rightItem
     }
 }
 
@@ -58,11 +60,13 @@ class NewStockStateController: ViewController<NewStockStateContainer>
     // MARK: - Variables
     
     var id = UUID()
+    var tableView: NewStockStateTableView
     
     // MARK: - Initialization
     
     required init(container: NewStockStateContainer)
     {
+        self.tableView = container.makeTableView()
         super.init(container: container)
         subscribe(to: container.stream)
         
@@ -84,7 +88,7 @@ class NewStockStateController: ViewController<NewStockStateContainer>
         title = "States".localized
         
         navigationItem.rightBarButtonItem = container.makeRightBarButtonItem(target: self)
-        view.embed(container.tableView)
+        view.embed(tableView)
     }
     
     deinit
@@ -146,7 +150,7 @@ extension NewStockStateController: Subscriber
             // Add a state
             let newState = NewStateModel()
             container.model.states.append(newState)
-            container.tableView.addState(newStateModel: newState)
+            tableView.addState(newStateModel: newState)
             // TODO: Flawless table view updates / reloading with
             // cell models that match cells as well as text fields in the cells...
             
@@ -159,9 +163,9 @@ extension NewStockStateController: Subscriber
             // table view model....
             //            tableView.reload(shouldReloadTableView: false)
             
-            container.tableView.beginUpdates()
-            container.tableView.insertSections(IndexSet(integer: container.model.states.count), with: .automatic)
-            container.tableView.endUpdates()
+            tableView.beginUpdates()
+            tableView.insertSections(IndexSet(integer: container.model.states.count), with: .automatic)
+            tableView.endUpdates()
             
             navigationItem.rightBarButtonItem?.isEnabled = container.model.validForStates
         default:

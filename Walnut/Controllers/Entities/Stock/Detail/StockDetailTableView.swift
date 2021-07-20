@@ -14,7 +14,7 @@ protocol StockDetailTableViewFactory: Factory
     func makeInfoSection() -> TableViewSection
     func makeStatesSection() -> TableViewSection?
     func makeInflowSection() -> TableViewSection?
-    func makeOutflowSection() -> TableViewSection
+    func makeOutflowSection() -> TableViewSection?
     func makeNotesSection() -> TableViewSection
 }
 
@@ -95,7 +95,8 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
                 selectionIdentifier: .title,
                 text: stock.title,
                 placeholder: "Title".localized,
-                entity: stock),
+                entity: stock,
+                stream: stream),
             DetailCellModel(
                 selectionIdentifier: .type,
                 title: "Type".localized,
@@ -223,7 +224,7 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
     {
         TableViewSection(
             header: NotesHeaderViewModel(),
-            models: makeNoteSectionModels(stock: stock))
+            models: makeNoteSectionModels())
     }
     
     func makeNoteSectionModels() -> [TableViewCellModel]

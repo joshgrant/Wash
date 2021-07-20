@@ -8,45 +8,60 @@
 import Foundation
 import UIKit
 
-class NewStockTableView: TableView
+protocol NewStockTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeInfoSection() -> TableViewSection
+    func makeValueTypeSection() -> TableViewSection
+    func makeStateMachineSection() -> TableViewSection
+}
+
+class NewStockTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
     var newStockModel: NewStockModel
+    var stream: Stream
+    var style: UITableView.Style
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel)
+    init(newStockModel: NewStockModel, stream: Stream, style: UITableView.Style)
     {
         self.newStockModel = newStockModel
-        super.init()
+        self.stream = stream
+        self.style = style
     }
-    
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension NewStockTableViewContainer: NewStockTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         let sections: [TableViewSection] = [
-            makeInfoSection(model: newStockModel),
-            makeStateMachineSection(model: newStockModel),
-            makeValueTypeSection(model: newStockModel),
+            makeInfoSection(),
+            makeStateMachineSection(),
+            makeValueTypeSection(),
         ]
         
         return TableViewModel(sections: sections)
     }
     
-    func makeInfoSection(model: NewStockModel) -> TableViewSection
+    func makeInfoSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = [
             TextEditCellModel(
                 selectionIdentifier: .newStockName,
-                text: model.title,
+                text: newStockModel.title,
                 placeholder: "Title".localized,
-                entity: nil),
+                entity: nil,
+                stream: stream),
             DetailCellModel(
                 selectionIdentifier: .newStockUnit,
                 title: "Unit".localized,
-                detail: model.unit?.title ?? "None".localized,
+                detail: newStockModel.unit?.title ?? "None".localized,
                 disclosure: true)
             
         ]
@@ -56,15 +71,15 @@ class NewStockTableView: TableView
             models: models)
     }
     
-    func makeValueTypeSection(model: NewStockModel) -> TableViewSection
+    func makeValueTypeSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = ValueType.allCases.compactMap { type in
-
+            
             return CheckmarkCellModel(
                 selectionIdentifier: .valueType(type: type),
                 title: type.description,
-                checked: type == model.stockType,
-                enabled: !(type == .boolean && model.isStateMachine))
+                checked: type == newStockModel.stockType,
+                enabled: !(type == .boolean && newStockModel.isStateMachine))
         }
         
         return TableViewSection(
@@ -72,20 +87,24 @@ class NewStockTableView: TableView
             models: models)
     }
     
-    func makeStateMachineSection(model: NewStockModel) -> TableViewSection
+    func makeStateMachineSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = [
             ToggleCellModel(
                 selectionIdentifier: .stateMachine,
                 title: "State Machine".localized,
-                toggleState: model.isStateMachine)
+                toggleState: newStockModel.isStateMachine,
+                stream: stream)
         ]
         
         return TableViewSection(
             header: .stateMachine,
             models: models)
     }
-    
+}
+
+class NewStockTableView: TableView<NewStockTableViewContainer>
+{
     func tableView(
         _ tableView: UITableView,
         willDisplay cell: UITableViewCell,

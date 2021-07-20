@@ -81,7 +81,8 @@ extension IdealDetailTableViewContainer: IdealDetailTableViewFactory
                 ToggleCellModel(
                     selectionIdentifier: .ideal(type: .boolean),
                     title: "Ideal value".localized,
-                    toggleState: stock.idealValue < 1)
+                    toggleState: stock.idealValue < 1,
+                    stream: stream)
             ]
         }
         

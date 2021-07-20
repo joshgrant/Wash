@@ -75,7 +75,8 @@ extension NewUnitTableViewContainer: NewUnitTableViewFactory
             ToggleCellModel(
                 selectionIdentifier: .baseUnit(isOn: newUnitModel.isBaseUnit),
                 title: "Base unit",
-                toggleState: newUnitModel.isBaseUnit)
+                toggleState: newUnitModel.isBaseUnit,
+                stream: stream)
         ]
         
         if !newUnitModel.isBaseUnit

@@ -192,9 +192,9 @@ extension TransferFlowDetailController: Subscriber
 //            break
 //        }
         
-        container.flow.managedObjectContext?.quickSave()
-        
-        tableView.shouldReload = true
+//        container.flow.managedObjectContext?.quickSave()
+//        
+//        tableView.shouldReload = true
     }
     
     private func handle(_ message: ToggleCellMessage)

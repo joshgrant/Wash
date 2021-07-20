@@ -12,6 +12,7 @@ import CoreData
 protocol LinkSearchControllerTableViewManagerFactory: Factory
 {
     func makeSearchCriteria() -> LinkSearchCriteria
+    func makeTableView() -> UITableView
 }
 
 class LinkSearchControllerTableViewManagerContainer: DependencyContainer
@@ -25,7 +26,13 @@ class LinkSearchControllerTableViewManagerContainer: DependencyContainer
     
     // MARK: - Initialization
     
-    init
+    init(entityType: NamedEntity.Type, origin: LinkSearchController.Origin, context: Context, stream: Stream)
+    {
+        self.entityType = entityType
+        self.origin = origin
+        self.context = context
+        self.stream = stream
+    }
 }
 
 extension LinkSearchControllerTableViewManagerContainer: LinkSearchControllerTableViewManagerFactory
@@ -33,6 +40,11 @@ extension LinkSearchControllerTableViewManagerContainer: LinkSearchControllerTab
     func makeSearchCriteria() -> LinkSearchCriteria
     {
         .init(searchString: "", entityType: entityType, context: context)
+    }
+    
+    func makeTableView() -> UITableView
+    {
+        .init(frame: .zero, style: .plain)
     }
 }
 
@@ -45,6 +57,8 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate
     // TODO: MAYBE we can make a tableViewModel that uses
     // a fetched results controller as a base
     
+    var container: LinkSearchControllerTableViewManagerContainer
+    
     var tableView: UITableView
     var tableViewDataSourceReference: UITableViewDiffableDataSourceReference!
     var searchCriteria: LinkSearchCriteria
@@ -54,21 +68,11 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate
     
     // MARK: - Initialization
     
-    init(
-        origin: LinkSearchController.Origin,
-        entityLinkType: NamedEntity.Type,
-        context: Context?)
+    init(container: LinkSearchControllerTableViewManagerContainer)
     {
-        self.origin = origin
-        self.tableView = UITableView(frame: .zero, style: .plain)
-        self.context = context
-        
-        let searchCriteria = LinkSearchCriteria(
-            searchString: "",
-            entityType: entityLinkType,
-            context: context)
-        
-        self.searchCriteria = searchCriteria
+        self.container = container
+        self.tableView = container.makeTableView()
+        self.searchCriteria = container.makeSearchCriteria()
         
         super.init()
         
@@ -109,39 +113,11 @@ class LinkSearchControllerTableViewManager: NSObject, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let link = fetchResultsController.item(at: indexPath) as! Entity
-        let message = LinkSelectionMessage(link: link, origin: origin)
-        AppDelegate.shared.mainStream.send(message: message)
+        let message = LinkSelectionMessage(link: link, origin: container.origin)
+        container.stream.send(message: message)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    // MARK: - Data Source
-//    
-//    func numberOfSections(in tableView: UITableView) -> Int
-//    {
-//        1
-//    }
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-//    {
-//        fetchResultsController.fetchedObjects?.count ?? 0
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-//    {
-//        let result = fetchResultsController.fetchedObjects?[indexPath.row]
-//        
-//        guard let result = result as? Named else {
-//            fatalError("What the crap")
-//        }
-//        
-//        let model = RightImageCellModel(
-//            selectionIdentifier: .link(link: result),
-//            title: result.title,
-//            detail: .link,
-//            disclosure: false)
-//        return model.makeCell(in: tableView, at: indexPath)
-//    }
 }
 
 extension LinkSearchControllerTableViewManager: UISearchResultsUpdating

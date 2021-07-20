@@ -22,8 +22,6 @@ class NewStockControllerContainer: DependencyContainer
     // MARK: - Variables
     
     var model: NewStockModel
-    var router: NewStockRouter
-    var tableView: NewStockTableView
     var context: Context
     var stream: Stream
     
@@ -32,8 +30,6 @@ class NewStockControllerContainer: DependencyContainer
     init(context: Context, stream: Stream, router: NewStockRouter? = nil, tableView: NewStockTableView? = nil)
     {
         self.model = NewStockModel()
-        self.router = makeRouter()
-        self.tableView = makeTableView()
         self.context = context
         self.stream = stream
     }
@@ -48,7 +44,11 @@ extension NewStockControllerContainer: NewStockControllerFactory
     
     func makeTableView() -> NewStockTableView
     {
-        return NewStockTableView(newStockModel: model)
+        let container = NewStockTableViewContainer(
+            newStockModel: model,
+            stream: stream,
+            style: .grouped)
+        return .init(container: container)
     }
     
     func makeRouter() -> NewStockRouter
@@ -88,13 +88,17 @@ class NewStockController: ViewController<NewStockControllerContainer>, RouterDel
     // MARK: - Variables
     
     var id = UUID()
+    var router: NewStockRouter
+    var tableView: NewStockTableView
     
     // MARK: - Initialization
     
     required init(container: NewStockControllerContainer)
     {
+        self.router = container.makeRouter()
+        self.tableView = container.makeTableView()
         super.init(container: container)
-        container.router.delegate = self
+        router.delegate = self
         subscribe(to: container.stream)
     }
     
@@ -107,7 +111,7 @@ class NewStockController: ViewController<NewStockControllerContainer>, RouterDel
         navigationItem.leftBarButtonItem = container.makeLeftItem(target: self)
         navigationItem.rightBarButtonItem = container.makeRightItem(target: self)
         
-        view.embed(container.tableView)
+        view.embed(tableView)
     }
     
     deinit
@@ -127,12 +131,12 @@ class NewStockController: ViewController<NewStockControllerContainer>, RouterDel
     
     @objc func leftBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        container.router.routeDismiss()
+        router.routeDismiss()
     }
     
     @objc func rightBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        container.router.routeToNext()
+        router.routeToNext()
     }
 }
 
@@ -160,13 +164,13 @@ extension NewStockController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .newStockUnit:
-            container.router.routeToUnitSearch()
+            router.routeToUnitSearch()
         case .valueType(let type):
             container.model.stockType = type
-            container.tableView.reload(shouldReloadTableView: false)
-            container.tableView.beginUpdates()
-            container.tableView.reloadSections(IndexSet(integer: 2), with: .none)
-            container.tableView.endUpdates()
+            tableView.reload(shouldReloadTableView: false)
+            tableView.beginUpdates()
+            tableView.reloadSections(IndexSet(integer: 2), with: .none)
+            tableView.endUpdates()
         default:
             break
         }
@@ -176,9 +180,9 @@ extension NewStockController: Subscriber
     {
         guard case .newStock = message.origin else { return }
         guard let unit = message.link as? Unit else { fatalError() }
-        container.newStockModel.unit = unit
-        container.tableView.shouldReload = true
-        container.router.routeBack()
+        container.model.unit = unit
+        tableView.shouldReload = true
+        router.routeBack()
     }
     
     private func handle(_ message: TextEditCellMessage)
@@ -204,6 +208,6 @@ extension NewStockController: Subscriber
             container.model.stockType = .boolean
         }
         
-        container.tableView.shouldReload = true
+        tableView.shouldReload = true
     }
 }

@@ -53,10 +53,12 @@ extension LinkSearchControllerContainer: LinkSearchControllerFactory
     
     func makeTableViewManager() -> LinkSearchControllerTableViewManager
     {
-        LinkSearchControllerTableViewManager(
+        let container = LinkSearchControllerTableViewManagerContainer(
+            entityType: entityType,
             origin: origin,
-            entityLinkType: entityType,
-            context: context)
+            context: context,
+            stream: stream)
+        return .init(container: container)
     }
     
     func makeSearchController(

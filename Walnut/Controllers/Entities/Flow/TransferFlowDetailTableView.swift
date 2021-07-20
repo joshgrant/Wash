@@ -99,7 +99,8 @@ extension TransferFlowDetailTableViewContainer: TransferFlowDetailTableViewFacto
         let requiresUserCompletion = ToggleCellModel(
             selectionIdentifier: .requiresUserCompletion(state: flow.requiresUserCompletion),
             title: "Requires user completion".localized,
-            toggleState: flow.requiresUserCompletion)
+            toggleState: flow.requiresUserCompletion,
+            stream: stream)
         
         return [
             titleEdit,
