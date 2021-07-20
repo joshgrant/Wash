@@ -7,25 +7,19 @@
 
 import UIKit
 
-class InboxController: ViewController
+protocol InboxControllerFactory: Factory, ViewControllerTabBarDelegate
 {
-    // MARK: - Variables
     
+}
+
+class InboxControllerContainer: DependencyContainer
+{
     var tabBarItemTitle: String { "Inbox".localized }
     var tabBarImage: UIImage? { Icon.inbox.getImage() }
     var tabBarTag: Int { 2 }
-    
-    // MARK: - Initialization
-    
-    override init()
-    {
-        super.init()
-        tabBarItem = makeTabBarItem()
-        title = tabBarItemTitle
-    }
 }
 
-extension InboxController: ViewControllerTabBarDelegate
+extension InboxControllerContainer: InboxControllerFactory
 {
     func makeTabBarItem() -> UITabBarItem
     {
@@ -33,5 +27,17 @@ extension InboxController: ViewControllerTabBarDelegate
             title: tabBarItemTitle,
             image: tabBarImage,
             tag: tabBarTag)
+    }
+}
+
+class InboxController: ViewController<InboxControllerContainer>
+{
+    // MARK: - Initialization
+    
+    required init(container: InboxControllerContainer)
+    {
+        super.init(container: container)
+        tabBarItem = container.makeTabBarItem()
+        title = container.tabBarItemTitle
     }
 }

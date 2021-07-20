@@ -8,64 +8,66 @@
 import Foundation
 import UIKit
 
-class SystemDetailRouter: Router
+class SystemDetailRouterContainer: DependencyContainer
 {
-    // MARK: - Defined types
+    // MARK: - Variables
     
-    enum Destination
+    var system: System
+    var stream: Stream
+    
+    // MARK: - Initialization
+    
+    init(system: System, stream: Stream)
     {
-        case idealInfo
-        case stockDetail(stock: Stock)
-        case transferFlowDetail(flow: TransferFlow)
-        case processFlowDetail(flow: ProcessFlow)
-        case eventDetail(event: Event)
-        case subsystemDetail(system: System)
-        case noteDetail(note: Note)
-        
-        case search(entityType: Entity.Type)
+        self.system = system
+        self.stream = stream
     }
-    
+}
+
+class SystemDetailRouter: Router<SystemDetailRouterContainer>
+{
     // MARK: - Variables
     
     var id = UUID()
     
-    var system: System
-    weak var delegate: RouterDelegate?
-    
     // MARK: - Initialization
     
-    init(system: System)
+    required init(container: SystemDetailRouterContainer)
     {
-        self.system = system
-        subscribe(to: AppDelegate.shared.mainStream)
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
     
-    deinit {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+    deinit
+    {
+        unsubscribe(from: container.stream)
     }
     
     // MARK: - Functions
     
-    func route(
-        to destination: Destination,
-        completion: (() -> Void)?)
+    func routeTostockDetail(stock: Stock)
     {
-        switch destination
-        {
-        case .stockDetail(let stock):
-            delegate?.navigationController?.pushViewController(stock.detailController(), animated: true, completion: completion)
-        case .transferFlowDetail(let flow):
-            delegate?.navigationController?.pushViewController(flow.detailController(), animated: true, completion: completion)
-        case .processFlowDetail(let flow):
-            delegate?.navigationController?.pushViewController(flow.detailController(), animated: true, completion: completion)
-        case .eventDetail(let event):
-            delegate?.navigationController?.pushViewController(event.detailController(), animated: true, completion: completion)
-        case .noteDetail(let note):
-            delegate?.navigationController?.pushViewController(note.detailController(), animated: true, completion: completion)
-        default:
-            assertionFailure()
-            break
-        }
+        delegate?.navigationController?.pushViewController(stock.detailController(), animated: true)
+    }
+    
+    func routeToTransferFlowDetail(flow: TransferFlow)
+    {
+        delegate?.navigationController?.pushViewController(flow.detailController(), animated: true)
+    }
+    
+    func routeToProcessFlowDetail(flow: ProcessFlow)
+    {
+        delegate?.navigationController?.pushViewController(flow.detailController(), animated: true)
+    }
+    
+    func routeToEventDetail(event: Event)
+    {
+        delegate?.navigationController?.pushViewController(event.detailController(), animated: true)
+    }
+    
+    func routeToNoteDetail(note: Note)
+    {
+        delegate?.navigationController?.pushViewController(note.detailController(), animated: true)
     }
 }
 
@@ -82,6 +84,7 @@ extension SystemDetailRouter: Subscriber
         }
     }
     
+    // TODO: Not great with the section indexes
     func handle(_ message: SystemDetailTableViewSelectedMessage)
     {
         let indexPath = message.indexPath
@@ -89,29 +92,29 @@ extension SystemDetailRouter: Subscriber
         switch indexPath.section
         {
         case 1: // Stocks
-            let stock = system.unwrappedStocks[indexPath.row]
-            return route(to: .stockDetail(stock: stock), completion: nil)
+            let stock = container.system.unwrappedStocks[indexPath.row]
+            routeTostockDetail(stock: stock)
         case 2: // Flows
-            let flow = system.unwrappedFlows[indexPath.row]
+            let flow = container.system.unwrappedFlows[indexPath.row]
             
             if let flow = flow as? TransferFlow
             {
-                return route(to: .transferFlowDetail(flow: flow), completion: nil)
+                routeToTransferFlowDetail(flow: flow)
             }
             else if let flow = flow as? ProcessFlow
             {
-                return route(to: .processFlowDetail(flow: flow), completion: nil)
+                routeToProcessFlowDetail(flow: flow)
             }
             else
             {
                 fatalError("Cannot use an abstract Flow")
             }
         case 3: // Events
-            let event = system.unwrappedEvents[indexPath.row]
-            return route(to: .eventDetail(event: event), completion: nil)
+            let event = container.system.unwrappedEvents[indexPath.row]
+            routeToEventDetail(event: event)
         case 4: // Notes
-            let note = system.unwrappedNotes[indexPath.row]
-            return route(to: .noteDetail(note: note), completion: nil)
+            let note = container.system.unwrappedNotes[indexPath.row]
+            routeToNoteDetail(note: note)
         default:
             assertionFailure("Section doesn't exist")
             break

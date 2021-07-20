@@ -8,83 +8,68 @@
 import Foundation
 import UIKit
 
-class StockDetailRouter: Router
+class StockDetailRouterContainer: DependencyContainer
 {
-    // MARK: - Defined types
-    
-    enum Destination
-    {
-        case valueType
-        case current
-        case ideal
-        case inflow(flow: TransferFlow)
-        case outflow(flow: TransferFlow)
-    }
-    
     // MARK: - Variables
     
-    var id = UUID()
     var stock: Stock
-    weak var delegate: RouterDelegate?
+    var stream: Stream
     
     // MARK: - Initialization
     
-    init(stock: Stock)
+    init(stock: Stock, stream: Stream)
     {
         self.stock = stock
-        subscribe(to: AppDelegate.shared.mainStream)
+        self.stream = stream
+    }
+}
+
+class StockDetailRouter: Router<StockDetailRouterContainer>
+{
+    // MARK: - Variables
+    
+    var id = UUID()
+    
+    // MARK: - Initialization
+    
+    required init(container: StockDetailRouterContainer)
+    {
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
     
-    deinit {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+    deinit
+    {
+        unsubscribe(from: container.stream)
     }
     
     // MARK: - Functions
     
-    func route(
-        to destination: Destination,
-        completion: (() -> Void)?)
+    func routeToValueType()
     {
-        switch destination
-        {
-        case .valueType:
-            routeToValueType()
-        case .current:
-            routeToCurrent()
-        case .ideal:
-            routeToIdeal()
-        case .inflow(let flow):
-            routeToInflow(flow: flow)
-        case .outflow(let flow):
-            routeToOutFlow(flow: flow)
-        }
-    }
-    
-    private func routeToValueType()
-    {
-        let controller = StockValueTypeController(stock: stock)
+        let controller = StockValueTypeController(stock: container.stock)
         delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
-    private func routeToIdeal()
+    func routeToIdeal()
     {
-        let idealController = IdealDetailController(stock: stock)
+        let idealController = IdealDetailController(stock: container.stock)
         delegate?.navigationController?.pushViewController(idealController, animated: true)
     }
     
-    private func routeToCurrent()
+    func routeToCurrent()
     {
-        let currentController = CurrentDetailController(stock: stock)
+        let currentController = CurrentDetailController(stock: container.stock)
         delegate?.navigationController?.pushViewController(currentController, animated: true)
     }
     
-    private func routeToInflow(flow: TransferFlow)
+    func routeToInflow(flow: TransferFlow)
     {
         let controller = flow.detailController()
         delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
-    private func routeToOutFlow(flow: TransferFlow)
+    func routeToOutFlow(flow: TransferFlow)
     {
         let controller = flow.detailController()
         delegate?.navigationController?.pushViewController(controller, animated: true)
@@ -111,11 +96,11 @@ extension StockDetailRouter: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .type:
-            route(to: .valueType, completion: nil)
+            routeToValueType()
         case .inflow(let flow):
-            route(to: .inflow(flow: flow), completion: nil)
+            routeToInflow(flow: flow)
         case .outflow(let flow):
-            route(to: .outflow(flow: flow), completion: nil)
+            routeToOutFlow(flow: flow)
         default:
             return
         }

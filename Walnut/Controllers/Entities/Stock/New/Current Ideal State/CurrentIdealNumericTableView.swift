@@ -8,30 +8,42 @@
 import Foundation
 import UIKit
 
-class CurrentIdealNumericTableView: TableView
+protocol CurrentIdealNumericTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeGoalSection() -> TableViewSection
+}
+
+class CurrentIdealNumericTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
     var newStockModel: NewStockModel
+    var stream: Stream
+    var style: UITableView.Style
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel)
+    init(newStockModel: NewStockModel, stream: Stream, style: UITableView.Style)
     {
         self.newStockModel = newStockModel
-        super.init()
+        self.stream = stream
+        self.style = style
     }
-    
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension CurrentIdealNumericTableViewContainer: CurrentIdealNumericTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeGoalSection(newStockModel: newStockModel)
+            makeGoalSection()
         ])
     }
     
-    private func makeGoalSection(newStockModel: NewStockModel) -> TableViewSection
+    func makeGoalSection() -> TableViewSection
     {
         var postfix: String?
         var min: Float = 0
@@ -70,7 +82,10 @@ class CurrentIdealNumericTableView: TableView
         
         return TableViewSection(header: .goal, models: models)
     }
-    
+}
+
+class CurrentIdealNumericTableView: TableView<CurrentIdealNumericTableViewContainer>
+{
     // MARK: - Table View
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat

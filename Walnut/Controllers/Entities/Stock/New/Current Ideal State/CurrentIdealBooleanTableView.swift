@@ -6,42 +6,56 @@
 //
 
 import Foundation
+import UIKit
 
-class CurrentIdealBooleanTableView: TableView
+protocol CurrentIdealBooleanTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeCurrentSection() -> TableViewSection
+    func makeIdealSection() -> TableViewSection
+}
+
+class CurrentIdealBooleanTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
+    var stream: Stream
+    var style: UITableView.Style
     var newStockModel: NewStockModel
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel)
+    init(stream: Stream, style: UITableView.Style, newStockModel: NewStockModel)
     {
+        self.stream = stream
+        self.style = style
         self.newStockModel = newStockModel
-        super.init()
     }
-    
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension CurrentIdealBooleanTableViewContainer: CurrentIdealBooleanTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeCurrentSection(model: newStockModel),
-            makeIdealSection(model: newStockModel)
+            makeCurrentSection(),
+            makeIdealSection()
         ])
     }
     
-    private func makeCurrentSection(model: NewStockModel) -> TableViewSection
+    func makeCurrentSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = [
             CheckmarkCellModel(
                 selectionIdentifier: .currentBool(state: true),
                 title: "True".localized,
-                checked: model.currentBool ?? true),
+                checked: newStockModel.currentBool ?? true),
             CheckmarkCellModel(
                 selectionIdentifier: .currentBool(state: false),
                 title: "False".localized,
-                checked: !(model.currentBool ?? true))
+                checked: !(newStockModel.currentBool ?? true))
         ]
         
         return TableViewSection(
@@ -49,17 +63,17 @@ class CurrentIdealBooleanTableView: TableView
             models: models)
     }
     
-    private func makeIdealSection(model: NewStockModel) -> TableViewSection
+    func makeIdealSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = [
             CheckmarkCellModel(
                 selectionIdentifier: .idealBool(state: true),
                 title: "True".localized,
-                checked: model.idealBool ?? true),
+                checked: newStockModel.idealBool ?? true),
             CheckmarkCellModel(
                 selectionIdentifier: .idealBool(state: false),
                 title: "False".localized,
-                checked: !(model.idealBool ?? true))
+                checked: !(newStockModel.idealBool ?? true))
         ]
         
         return TableViewSection(

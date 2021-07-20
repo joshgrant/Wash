@@ -6,29 +6,37 @@
 //
 
 import Foundation
+import UIKit
 
-class LibraryTableView: TableView
+protocol LibraryTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+}
+
+class LibraryTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
-    weak var context: Context?
+    var context: Context
+    var stream: Stream
+    var style: UITableView.Style
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(context: Context?)
+    init(context: Context, stream: Stream, style: UITableView.Style)
     {
         self.context = context
-        super.init()
+        self.stream = stream
+        self.style = style
     }
-    
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
-    {
-        guard let context = context else {
-            fatalError()
-        }
-        
+}
+
+extension LibraryTableViewContainer: LibraryTableViewFactory
+{
+    func makeModel() -> TableViewModel
+    {        
         let models = EntityType.libraryVisible.map { entityType in
             LibraryCellModel(selectionIdentifier: .entityType(type: entityType),
                              entityType: entityType,

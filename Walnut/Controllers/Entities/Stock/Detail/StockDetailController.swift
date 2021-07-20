@@ -8,53 +8,57 @@
 import Foundation
 import UIKit
 
-class StockDetailController: UIViewController, RouterDelegate
+protocol StockDetailFactory: Factory
 {
+    func makeStockDetailRouter() -> StockDetailRouter
+    func makeTableView() -> TableView<StockDetailTableViewContainer>
+    func makePinNavigationItem() -> BarButtonItem
+}
+
+class StockDetailContainer: DependencyContainer
+{
+    // MARK: - Defined types
+    
+    typealias Table = TableView<StockDetailTableViewContainer>
+    
     // MARK: - Variables
     
-    var id = UUID()
-    
     var stock: Stock
+    var stream: Stream
     var router: StockDetailRouter
-    
-    var tableView: StockDetailTableView
-    
-    var pinBarButtonItem: UIBarButtonItem
+    var tableView: Table
     
     // MARK: - Initialization
     
-    init(stock: Stock)
+    init(stock: Stock, stream: Stream, router: StockDetailRouter? = nil, tableView: Table? = nil)
     {
         self.stock = stock
-        self.router = StockDetailRouter(stock: stock)
-        self.tableView = StockDetailTableView(stock: stock)
-        
-        self.pinBarButtonItem = Self.makePinNavigationItem(stock: stock)
-        
-        super.init(nibName: nil, bundle: nil)
-        router.delegate = self
-        subscribe(to: AppDelegate.shared.mainStream)
-        
-        title = stock.title
-        
-        view.embed(tableView)
-        
-        navigationItem.setRightBarButtonItems([pinBarButtonItem], animated: false)
+        self.stream = stream
+        self.router = router ?? makeStockDetailRouter()
+        self.tableView = tableView ?? makeTableView()
     }
-    
-    required init?(coder: NSCoder)
+}
+
+extension StockDetailContainer: StockDetailFactory
+{
+    func makeStockDetailRouter() -> StockDetailRouter
     {
-        fatalError("init(coder:) has not been implemented")
+        let container = StockDetailRouterContainer(
+            stock: stock,
+            stream: stream)
+        return StockDetailRouter(container: container)
     }
     
-    deinit
+    func makeTableView() -> Table
     {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        let container = StockDetailTableViewContainer(
+            stock: stock,
+            stream: stream,
+            style: .grouped)
+        return Table(container: container)
     }
     
-    // MARK: - Functions
-    
-    static func makePinNavigationItem(stock: Stock) -> BarButtonItem
+    func makePinNavigationItem() -> BarButtonItem
     {
         let icon: Icon = stock.isPinned ? .pinFill : .pin
         
@@ -70,6 +74,40 @@ class StockDetailController: UIViewController, RouterDelegate
             image: icon.getImage(),
             style: .plain,
             actionClosure: actionClosure)
+    }
+}
+
+class StockDetailController: ViewController<StockDetailContainer>, RouterDelegate
+{
+    // MARK: - Variables
+    
+    var id = UUID()
+    var pinBarButtonItem: UIBarButtonItem
+    
+    // MARK: - Initialization
+    
+    required init(container: StockDetailContainer)
+    {
+        self.pinBarButtonItem = container.makePinNavigationItem()
+        
+        super.init(container: container)
+        container.router.delegate = self
+        subscribe(to: container.stream)
+    }
+    
+    deinit
+    {
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        title = container.stock.title
+        view.embed(container.tableView)
+        navigationItem.setRightBarButtonItems([pinBarButtonItem], animated: false)
     }
 }
 
@@ -93,7 +131,7 @@ extension StockDetailController: Subscriber
     private func handle(_ message: TextEditCellMessage)
     {
         // TODO: Make sure the message is stock and not stockFrom/stockTo
-        guard case .stock(let s) = message.selectionIdentifier, s == stock else { return }
+        guard case .stock(let s) = message.selectionIdentifier, s == container.stock else { return }
         
         switch message.selectionIdentifier
         {
@@ -101,33 +139,33 @@ extension StockDetailController: Subscriber
         // it to do Double/Bool/Int
         case .ideal:
             guard let content = Double(message.title) else { fatalError() }
-            stock.idealValue = content
-            tableView.shouldReload = true
+            container.stock.idealValue = content
+            container.tableView.shouldReload = true
         case .current:
             guard let content = Double(message.title) else { fatalError() }
-            stock.amountValue = content
-            tableView.shouldReload = true
+            container.stock.amountValue = content
+            container.tableView.shouldReload = true
         case .title:
             title = message.title
-            stock.title = message.title
+            container.stock.title = message.title
         default:
             break
         }
         
-        stock.managedObjectContext?.quickSave()
+        container.stock.managedObjectContext?.quickSave()
     }
     
     // TODO: The same as the system detail
     private func handle(_ message: EntityPinnedMessage)
     {
-        guard message.entity == stock else { return }
+        guard message.entity == container.stock else { return }
         
         let pinned = message.isPinned
         let icon: Icon = pinned ? .pinFill : .pin
         
         pinBarButtonItem.image = icon.getImage()
-        stock.isPinned = pinned
-        stock.managedObjectContext?.quickSave()
+        container.stock.isPinned = pinned
+        container.stock.managedObjectContext?.quickSave()
     }
     
     private func handle(_ message: TableViewSelectionMessage)
@@ -135,11 +173,11 @@ extension StockDetailController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .ideal:
-            router.route(to: .ideal, completion: nil)
+            container.router.route(to: .ideal, completion: nil)
         case .current:
-            router.route(to: .current, completion: nil)
+            container.router.route(to: .current, completion: nil)
         case .valueType, .transitionType:
-            tableView.shouldReload = true
+            container.tableView.shouldReload = true
         default:
             break
         }

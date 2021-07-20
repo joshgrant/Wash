@@ -8,30 +8,46 @@
 import Foundation
 import UIKit
 
-class StatePickerController: UIViewController
+enum StateType
+{
+    case current
+    case ideal
+}
+
+class StatePickerDependencyContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var model: NewStockModel
+    var stateType: StateType
+    var stream: Stream
+    var tableView: StatePickerTableView
+    
+    // MARK: - Initialization
+    
+    init(model: NewStockModel, stateType: StateType, stream: Stream, tableView: StatePickerTableView? = nil)
+    {
+        self.model = model
+        self.stateType = stateType
+        self.stream = stream
+        self.tableView = tableView ?? StatePickerTableView(newStockModel: model, stateType: stateType)
+    }
+}
+
+class StatePickerController: ViewController<StatePickerDependencyContainer>
 {
     // MARK: - Variables
     
     var id = UUID()
-    var newStockModel: NewStockModel
-    var tableView: StatePickerTableView
-    var isCurrent: Bool
-    
+
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel, isCurrent: Bool)
+    override init(container: StatePickerDependencyContainer)
     {
-        self.newStockModel = newStockModel
-        self.isCurrent = isCurrent
-        tableView = StatePickerTableView(
-            newStockModel: newStockModel,
-            isCurrent: isCurrent)
-        super.init(nibName: nil, bundle: nil)
-        subscribe(to: AppDelegate.shared.mainStream)
-        
-        view.embed(tableView)
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
-    
+
     required init?(coder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
@@ -39,7 +55,15 @@ class StatePickerController: UIViewController
     
     deinit
     {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - Functions
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        view.embed(container.tableView)
     }
 }
 
@@ -61,13 +85,13 @@ extension StatePickerController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .statePicker(let state):
-            if isCurrent
+            if container.isCurrent
             {
-                newStockModel.currentState = state
+                container.model.currentState = state
             }
             else
             {
-                newStockModel.idealState = state
+                container.model.idealState = state
             }
         default:
             break
@@ -82,15 +106,14 @@ class StatePickerTableView: TableView
     // MARK: - Variables
     
     var newStockModel: NewStockModel
-    // TODO: Not great
-    var isCurrent: Bool // If not, then it's ideal
+    var stateType: StateType
     
     // MARK: - Initialization
 
-    init(newStockModel: NewStockModel, isCurrent: Bool)
+    init(newStockModel: NewStockModel, stateType: StateType)
     {
         self.newStockModel = newStockModel
-        self.isCurrent = isCurrent
+        self.stateType = stateType
         super.init()
     }
     
@@ -106,12 +129,20 @@ class StatePickerTableView: TableView
     private func makeStatesSection(newStockModel: NewStockModel) -> TableViewSection
     {
         let models: [TableViewCellModel] = newStockModel.states.map { state in
-            CheckmarkCellModel(
+            let checked: Bool
+            
+            switch stateType
+            {
+            case .current:
+                checked = state == newStockModel.currentState
+            case .ideal:
+                checked = state == newStockModel.idealState
+            }
+            
+            return CheckmarkCellModel(
                 selectionIdentifier: .statePicker(state: state),
                 title: state.title!,
-                checked: isCurrent
-                    ? state == newStockModel.currentState
-                    : state == newStockModel.idealState)
+                checked: checked)
         }
         
         return TableViewSection(

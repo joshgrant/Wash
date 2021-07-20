@@ -8,31 +8,44 @@
 import Foundation
 import UIKit
 
-class IdealDetailTableView: TableView
+protocol IdealDetailTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeInfoSection() -> TableViewSection
+    func makeHistorySection() -> TableViewSection
+}
+
+class IdealDetailTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
+    var model: TableViewModel
+    var stream: Stream
+    var style: UITableView.Style
     var stock: Stock
     
     // MARK: - Initialization
     
-    init(stock: Stock)
+    init(model: TableViewModel, stream: Stream, style: UITableView.Style, stock: Stock)
     {
+        self.model = model
+        self.stream = stream
+        self.style = style
         self.stock = stock
-        super.init()
     }
-    
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension IdealDetailTableViewContainer: IdealDetailTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeInfoSection(stock: stock),
-            makeHistorySection(stock: stock)
+            makeInfoSection(),
+            makeHistorySection()
         ])
     }
     
-    func makeInfoSection(stock: Stock) -> TableViewSection
+    func makeInfoSection() -> TableViewSection
     {
         var models: [TableViewCellModel] = []
         var keyboardType: UIKeyboardType = .decimalPad
@@ -64,14 +77,19 @@ class IdealDetailTableView: TableView
                     toggleState: stock.idealValue < 1)
             ]
         }
-
+        
         return TableViewSection(
             header: .ideal,
             models: models)
     }
     
-    func makeHistorySection(stock: Stock) -> TableViewSection
+    func makeHistorySection() -> TableViewSection
     {
         TableViewSection(models: [])
     }
+}
+
+class IdealDetailTableView: TableView<IdealDetailTableViewContainer>
+{
+    
 }

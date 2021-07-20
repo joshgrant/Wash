@@ -12,8 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
     // MARK: - Variables
     
     var window: UIWindow?
-    
-    var context: Context { AppDelegate.shared.database.context }
+    var container = RootDependencyContainer()
 
     // MARK: - Functions
     
@@ -30,13 +29,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         
         window = UIWindow(windowScene: scene)
         
-        let viewControllers = makeTabBarViewControllers(context: context)
-        let root = RootController(viewControllers: viewControllers)
+        let rootController = container.makeTabBarController()
         
-//        let controller = NewStockController(context: context)
-//        let root = UINavigationController(rootViewController: controller)
-        
-        window?.rootViewController = root
+        window?.rootViewController = rootController
         window?.makeKeyAndVisible()
     }
 

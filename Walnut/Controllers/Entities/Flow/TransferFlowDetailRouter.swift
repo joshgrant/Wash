@@ -8,93 +8,72 @@
 import Foundation
 import UIKit
 
-class TransferFlowDetailRouter: Router
+class TransferFlowDetailRouterContainer: DependencyContainer
 {
-    // MARK: - Defined types
+    // MARK: - Variables
     
-    enum Destination
+    var stream: Stream
+    var context: Context
+    
+    // MARK: - Initialization
+    
+    init(stream: Stream, context: Context)
     {
-        case stockFrom
-        case stockTo
-        case eventDetail(event: Event)
-        case historyDetail(history: History)
+        self.stream = stream
+        self.context = context
     }
-    
+}
+
+class TransferFlowDetailRouter: Router<TransferFlowDetailRouterContainer>
+{
     // MARK: - Variables
     
     var id = UUID()
     
-    var flow: TransferFlow
-    
-    weak var delegate: RouterDelegate?
-    weak var context: Context?
-    
-    weak var _stream: Stream?
-    var stream: Stream { return _stream ?? AppDelegate.shared.mainStream }
-    
-    var presentedDestination: Destination?
-    
     // MARK: - Initialization
     
-    init(flow: TransferFlow, context: Context?, _stream: Stream? = nil)
+    required init(container: TransferFlowDetailRouterContainer)
     {
-        self.flow = flow
-        
-        self._stream = _stream
-        self.context = context
-        subscribe(to: stream)
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
     
-    deinit {
-        unsubscribe(from: stream)
+    deinit
+    {
+        unsubscribe(from: container.stream)
     }
     
     // MARK: - Functions
-    
-    func route(to destination: Destination, completion: (() -> Void)?)
-    {
-        switch destination
-        {
-        case .stockTo:
-            routeToStockTo()
-        case .stockFrom:
-            routeToStockFrom()
-        case .eventDetail(let event):
-            routeToEventDetail(event)
-        case .historyDetail(let history):
-            routeToHistoryDetail(history)
-        }
-    }
-    
-    private func routeToStockFrom()
+
+    func routeToStockFrom()
     {
         let searchController = LinkSearchController(
             origin: .stockFrom,
             entityType: Stock.self,
-            context: context)
+            context: container.context)
         let navigationController = UINavigationController(rootViewController: searchController)
-        presentedDestination = .stockFrom
+//        presentedDestination = .stockFrom // TODO: What is this for?
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
     }
     
-    private func routeToStockTo()
+    func routeToStockTo()
     {
         let searchController = LinkSearchController(
             origin: .stockTo,
             entityType: Stock.self,
-            context: context)
+            context: container.context)
         let navigationController = UINavigationController(rootViewController: searchController)
-        presentedDestination = .stockTo
+//        presentedDestination = .stockTo
         delegate?.navigationController?.present(navigationController, animated: true, completion: nil)
     }
     
-    private func routeToEventDetail(_ event: Event)
+    func routeToEventDetail(_ event: Event)
     {
         let detail = event.detailController()
         delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
-    private func routeToHistoryDetail(_ history: History)
+    func routeToHistoryDetail(_ history: History)
     {
         let detail = history.detailController()
         delegate?.navigationController?.pushViewController(detail, animated: true)
@@ -116,7 +95,7 @@ extension TransferFlowDetailRouter: Subscriber
     
     private func handleTableViewSelectionMessage(_ message: TableViewSelectionMessage)
     {
-        guard let _ = message.tableView as? TransferFlowDetailTableView else { return }
+        guard let _ = message.tableView as? TableView<TransferFlowDetailTableViewContainer> else { return }
         
         // TODO: `fromStock` and `toStock` shouldn't Necessarily open up the link
         // screen. Rather, we should have a link button for each of the cells
@@ -124,17 +103,17 @@ extension TransferFlowDetailRouter: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .fromStock:
-            route(to: .stockFrom, completion: nil)
+            routeToStockFrom()
         case .toStock:
-            route(to: .stockTo, completion: nil)
+            routeToStockTo()
         case .flowAmount:
             break
         case .flowDuration:
             break
         case .event(let event):
-            route(to: .eventDetail(event: event), completion: nil)
+            routeToEventDetail(event)
         case .history(let history):
-            route(to: .historyDetail(history: history), completion: nil)
+            routeToHistoryDetail(history)
         default:
             break
         }

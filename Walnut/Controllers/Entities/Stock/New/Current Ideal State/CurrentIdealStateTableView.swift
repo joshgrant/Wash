@@ -6,31 +6,44 @@
 //
 
 import Foundation
+import UIKit
 
-class CurrentIdealStateTableView: TableView
+protocol CurrentIdealStateTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeGoalSection() -> TableViewSection
+}
+
+class CurrentIdealStateTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
+    var stream: Stream
+    var style: UITableView.Style
     var newStockModel: NewStockModel
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel)
+    init(stream: Stream, style: UITableView.Style, newStockModel: NewStockModel)
     {
+        self.stream = stream
+        self.style = style
         self.newStockModel = newStockModel
-        super.init()
     }
-    
-    // MARK: - Functions
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension CurrentIdealStateTableViewContainer: CurrentIdealStateTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeGoalSection(newStockModel: newStockModel)
+            makeGoalSection()
         ])
     }
     
-    private func makeGoalSection(newStockModel: NewStockModel) -> TableViewSection
+    func makeGoalSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = [
             DetailCellModel(
@@ -48,3 +61,7 @@ class CurrentIdealStateTableView: TableView
         return TableViewSection(header: .goal, models: models)
     }
 }
+
+//class CurrentIdealStateTableView: TableView<CurrentIdealStateTableViewContainer>
+//{
+//}

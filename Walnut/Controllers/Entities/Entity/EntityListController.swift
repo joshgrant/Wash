@@ -9,56 +9,115 @@ import Foundation
 import CoreData
 import UIKit
 
-class EntityListController: UIViewController, RouterDelegate
+protocol EntityListFactory: Factory
+{
+    func makeTableView() -> EntityListTableView
+    func makeModel() -> TableViewModel
+    func makeMainSection() -> TableViewSection
+    func makeRouter() -> EntityListRouter
+}
+
+class EntityListDependencyContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var entityType: Entity.Type
+    var context: Context
+    var stream: Stream
+    var router: EntityListRouter
+    
+    lazy var tableView: EntityListTableView = makeTableView()
+    
+    // MARK: - Initialization
+    
+    init(entityType: Entity.Type, context: Context, stream: Stream, router: EntityListRouter? = nil)
+    {
+        self.entityType = entityType
+        self.context = context
+        self.stream = stream
+        self.router = router ?? makeRouter()
+    }
+}
+
+extension EntityListDependencyContainer: EntityListFactory
+{
+    func makeTableView() -> EntityListTableView
+    {
+        let model = makeModel()
+        
+        let container = EntityListTableViewDependencyContainer(
+            model: model,
+            stream: stream,
+            style: .grouped,
+            entityType: entityType,
+            context: context)
+        return EntityListTableView(container: container)
+    }
+    
+    func makeModel() -> TableViewModel
+    {
+        TableViewModel(sections: [makeMainSection()])
+    }
+    
+    func makeMainSection() -> TableViewSection
+    {
+        let models: [TableViewCellModel] = entityType
+            .all(context: context)
+            .compactMap { entity in
+                guard let entity = entity as? Named else { return nil }
+                return TextCellModel(
+                    selectionIdentifier: .entity(entity: entity),
+                    title: entity.title,
+                    disclosureIndicator: true)
+            }
+        
+        return TableViewSection(models: models)
+    }
+    
+    func makeRouter() -> EntityListRouter
+    {
+        let container = EntityListRouterContainer(
+            context: context,
+            stream: stream)
+        return EntityListRouter(container: container)
+    }
+}
+
+class EntityListController: ViewController<EntityListDependencyContainer>, RouterDelegate
 {
     // MARK: - Variables
     
     var id = UUID()
-    
-    var type: Entity.Type
-    
-    weak var context: Context?
-    
-    var router: EntityListRouter
-    
-    // Move these out of here?
-    
-    var tableView: EntityListTableView
-    
+
     var addButtonImage: UIImage? { Icon.add.getImage() }
     var addButtonStyle: UIBarButtonItem.Style { .plain }
     
     // MARK: - Initialization
     
-    init(
-        type: Entity.Type,
-        context: Context?)
+    required init(container: EntityListDependencyContainer)
     {
-        self.type = type
-        self.context = context
-        self.tableView = EntityListTableView(entityType: type, context: context)
-        self.router = .init(context: context)
-        
-        super.init(nibName: nil, bundle: nil)
-        router.delegate = self
-        subscribe(to: AppDelegate.shared.mainStream)
-        
-        self.title = type.readableName.pluralize()
+        super.init(container: container)
+        container.router.delegate = self
+        subscribe(to: container.stream)
+        configureForDisplay()
+    }
+
+    deinit
+    {
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - Functions
+    
+    private func configureForDisplay()
+    {
+        self.title = container.entityType.readableName.pluralize()
         
         navigationItem.rightBarButtonItem = makeBarButtonItem()
         navigationItem.searchController = makeSearchController(searchControllerDelegate: self)
         navigationItem.hidesSearchBarWhenScrolling = true
         
-        view.embed(tableView)
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        view.embed(container.tableView)
     }
     
     // MARK: - Factory
@@ -66,8 +125,8 @@ class EntityListController: UIViewController, RouterDelegate
     func makeBarButtonItem() -> BarButtonItem
     {
         let actionClosure = ActionClosure { [unowned self] sender in
-            let message = EntityListAddButtonMessage.init(sender: sender, entityType: self.type)
-            AppDelegate.shared.mainStream.send(message: message)
+            let message = EntityListAddButtonMessage.init(sender: sender, entityType: self.container.entityType)
+            self.container.stream.send(message: message)
         }
         
         return BarButtonItem(
@@ -98,47 +157,31 @@ extension EntityListController: Subscriber
     {
         switch message
         {
-        case is EntityListAddButtonMessage:
-            fallthrough
-        case is TextEditCellMessage:
-            tableView.shouldReload = true
-        case let m as EntityListPinMessage:
-            handle(m)
+        case is EntityListAddButtonMessage,
+             is TextEditCellMessage,
+             is CancelCreationMessage,
+             is EntityInsertionMessage:
+            container.tableView.shouldReload = true
         case let m as EntityListDeleteMessage:
             handle(m)
-        case is CancelCreationMessage:
-            tableView.shouldReload = true
-        case is EntityInsertionMessage:
-            tableView.shouldReload = true
         default:
             break
         }
     }
     
-    private func handle(_ message: EntityListPinMessage)
-    {
-        // Do nothing
-    }
-    
     private func handle(_ message: EntityListDeleteMessage)
     {
-        guard let context = context else { return }
-        
-        context.perform { [weak self] in
+        container.context.perform { [unowned self] in
             let object = message.entity
-            context.delete(object)
-            context.quickSave()
-            
-            guard let self = self else { return }
-            
-            self.tableView.model = self.tableView.makeModel()
+            self.container.context.delete(object)
+            self.container.context.quickSave()
             
             DispatchQueue.main.async
             {
-                // TODO: This is happening when the table view isn't in the window...
-                self.tableView.beginUpdates()
-                self.tableView.deleteRows(at: [message.indexPath], with: .automatic)
-                self.tableView.endUpdates()
+                self.container.tableView.reload(shouldReloadTableView: false)
+                self.container.tableView.beginUpdates()
+                self.container.tableView.deleteRows(at: [message.indexPath], with: .automatic)
+                self.container.tableView.endUpdates()
             }
         }
     }

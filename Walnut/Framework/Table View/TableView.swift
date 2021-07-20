@@ -7,9 +7,18 @@
 
 import UIKit
 
-class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
+protocol TableViewDependencyContainer: DependencyContainer
+{
+    var model: TableViewModel { get set }
+    var stream: Stream { get set }
+    var style: UITableView.Style { get }
+}
+
+class TableView<Container: TableViewDependencyContainer>: UITableView, UITableViewDelegate, UITableViewDataSource
 {
     // MARK: - Variables
+    
+    var container: Container
     
     var shouldReload: Bool = false
     {
@@ -23,16 +32,13 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
-    var model: TableViewModel!
-    var stream: Stream
-    
     // MARK: - Initialization
     
-    init(stream: Stream? = nil, style: UITableView.Style = .grouped)
+    required init(container: Container)
     {
-        self.stream = stream ?? AppDelegate.shared.mainStream
-        super.init(frame: .zero, style: style)
-        model = makeModel()
+        self.container = container
+        super.init(frame: .zero, style: container.style)
+        container.model = makeModel()
         configure()
     }
     
@@ -71,7 +77,7 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
     func reload(shouldReloadTableView: Bool = true)
     {
-        model = makeModel() // TODO: Maybe do a diff?
+        container.model = makeModel() // TODO: Maybe do a diff?
         configure()
         
         if shouldReloadTableView
@@ -91,7 +97,7 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
     func configure()
     {
-        for type in model.cellModelTypes
+        for type in container.model.cellModelTypes
         {
             register(type.cellClass, forCellReuseIdentifier: type.cellReuseIdentifier)
         }
@@ -104,9 +110,9 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let cellModel = model.models[indexPath.section][indexPath.row]
+        let cellModel = container.model.models[indexPath.section][indexPath.row]
         let message = TableViewSelectionMessage(tableView: tableView, cellModel: cellModel)
-        stream.send(message: message)
+        container.stream.send(message: message)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -114,25 +120,25 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int
     {
-        model.sections.count
+        container.model.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        model.models[section].count
+        container.model.models[section].count
     }
     
     // MARK: Cell
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let model = model.models[indexPath.section][indexPath.row]
+        let model = container.model.models[indexPath.section][indexPath.row]
         return model.makeCell(in: tableView, at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        let model = model.models[indexPath.section][indexPath.row]
+        let model = container.model.models[indexPath.section][indexPath.row]
         
         // TODO: Table view should not know about special cells
         // Cells should suggest sizing here
@@ -156,19 +162,19 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        guard let headerModel = model.headers[section] else { return nil }
+        guard let headerModel = container.model.headers[section] else { return nil }
         return TableHeaderView(model: headerModel)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
     {
-        guard let _ = model.headers[section] else { return 1 }
+        guard let _ = container.model.headers[section] else { return 1 }
         return 44
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-        guard let _ = model.headers[section] else { return 0 }
+        guard let _ = container.model.headers[section] else { return 0 }
         return 44
     }
     
@@ -176,18 +182,18 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String?
     {
-        return model.footers[section]
+        return container.model.footers[section]
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat
     {
-        guard let _ = model.footers[section] else { return 1 }
+        guard let _ = container.model.footers[section] else { return 1 }
         return 38
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
     {
-        guard let _ = model.footers[section] else { return 0 }
+        guard let _ = container.model.footers[section] else { return 0 }
         return 38
     }
     

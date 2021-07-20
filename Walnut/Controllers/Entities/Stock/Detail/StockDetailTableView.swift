@@ -6,59 +6,74 @@
 //
 
 import Foundation
+import UIKit
 
-class StockDetailTableView: TableView
+protocol StockDetailTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeInfoSection() -> TableViewSection
+    func makeStatesSection() -> TableViewSection?
+    func makeInflowSection() -> TableViewSection?
+    func makeOutflowSection() -> TableViewSection
+    func makeNotesSection() -> TableViewSection
+}
+
+class StockDetailTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
     var stock: Stock
+    var stream: Stream
+    var style: UITableView.Style
+    
+    lazy var model: TableViewModel = makeModel()
     
     // MARK: - Initialization
     
-    init(stock: Stock)
+    init(stock: Stock, stream: Stream, style: UITableView.Style)
     {
         self.stock = stock
-        super.init()
+        self.stream = stream
+        self.style = style
     }
-    
-    // MARK: - Configuration
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension StockDetailTableViewContainer: StockDetailTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         let sections: [TableViewSection?] = [
-            makeInfoSection(stock: stock),
-            makeStatesSection(stock: stock),
-            makeInflowSection(stock: stock),
-            makeOutflowSection(stock: stock),
-            makeNotesSection(stock: stock)
+            makeInfoSection(),
+            makeStatesSection(),
+            makeInflowSection(),
+            makeOutflowSection(),
+            makeNotesSection()
         ]
         
         return TableViewModel(
             sections: sections.compactMap { $0 })
     }
     
-    // MARK: Info
-    
-    func makeInfoSection(stock: Stock) -> TableViewSection
+    func makeInfoSection() -> TableViewSection
     {
         TableViewSection(
             header: .info,
-            models: makeInfoSectionModels(stock: stock))
+            models: makeInfoSectionModels())
     }
     
-    func makeInfoSectionModels(stock: Stock) -> [TableViewCellModel]
+    func makeInfoSectionModels() -> [TableViewCellModel]
     {
         if stock.uniqueID == ContextPopulator.sinkId || stock.uniqueID == ContextPopulator.sourceId
         {
-            return makeSinkSourceInfoSectionModels(stock: stock)
+            return makeSinkSourceInfoSectionModels()
         }
         else
         {
-            return makeDefaultInfoSectionModels(stock: stock)
+            return makeDefaultInfoSectionModels()
         }
     }
     
-    private func makeSinkSourceInfoSectionModels(stock: Stock) -> [TableViewCellModel]
+    private func makeSinkSourceInfoSectionModels() -> [TableViewCellModel]
     {
         [
             TextCellModel(
@@ -73,7 +88,7 @@ class StockDetailTableView: TableView
         ]
     }
     
-    private func makeDefaultInfoSectionModels(stock: Stock) -> [TableViewCellModel]
+    private func makeDefaultInfoSectionModels() -> [TableViewCellModel]
     {
         [
             TextEditCellModel(
@@ -84,28 +99,28 @@ class StockDetailTableView: TableView
             DetailCellModel(
                 selectionIdentifier: .type,
                 title: "Type".localized,
-                detail: stockTypeDetail(stock: stock),
+                detail: stockTypeDetail(),
                 disclosure: true),
-            DetailCellModel(
-                selectionIdentifier: .minimum,
-                title: "Minimum".localized,
-                detail: stock.minimumDescription,
-                disclosure: true),
-            DetailCellModel(
-                selectionIdentifier: .maximum,
-                title: "Maximum".localized,
-                detail: stock.maximumDescription,
-                disclosure: true),
+            //            DetailCellModel(
+            //                selectionIdentifier: .minimum,
+            //                title: "Minimum".localized,
+            //                detail: stock.minimumDescription,
+            //                disclosure: true),
+            //            DetailCellModel(
+            //                selectionIdentifier: .maximum,
+            //                title: "Maximum".localized,
+            //                detail: stock.maximumDescription,
+            //                disclosure: true),
             DetailCellModel(
                 selectionIdentifier: .current(type: stock.valueType),
                 title: "Current".localized,
                 detail: stock.currentDescription,
                 disclosure: true), // TODO: Subtitle
-            DetailCellModel(
-                selectionIdentifier: .ideal(type: stock.valueType),
-                title: "Ideal".localized,
-                detail: stock.idealDescription,
-                disclosure: true),
+            //            DetailCellModel(
+            //                selectionIdentifier: .ideal(type: stock.valueType),
+            //                title: "Ideal".localized,
+            //                detail: stock.idealDescription,
+            //                disclosure: true),
             InfoCellModel(
                 selectionIdentifier: .net,
                 title: "Net".localized,
@@ -113,7 +128,7 @@ class StockDetailTableView: TableView
         ]
     }
     
-    func stockTypeDetail(stock: Stock) -> String
+    func stockTypeDetail() -> String
     {
         var amountType: String = stock.valueType.description
         
@@ -132,7 +147,7 @@ class StockDetailTableView: TableView
     
     // MARK: States
     
-    func makeStatesSection(stock: Stock) -> TableViewSection?
+    func makeStatesSection() -> TableViewSection?
     {
         // FIXME: Shouldn't always be nil
         return nil
@@ -140,9 +155,9 @@ class StockDetailTableView: TableView
     
     // MARK: Inflows
     
-    func makeInflowSection(stock: Stock) -> TableViewSection?
+    func makeInflowSection() -> TableViewSection?
     {
-        let models = makeInflowSectionModels(stock: stock)
+        let models = makeInflowSectionModels()
         
         if models.count == 0 { return nil }
         
@@ -151,7 +166,7 @@ class StockDetailTableView: TableView
             models: models)
     }
     
-    func makeInflowSectionModels(stock: Stock) -> [TableViewCellModel]
+    func makeInflowSectionModels() -> [TableViewCellModel]
     {
         let inflows = stock.unwrappedInflows
         return inflows.map { flow in
@@ -172,9 +187,9 @@ class StockDetailTableView: TableView
     
     // MARK: Outflows
     
-    func makeOutflowSection(stock: Stock) -> TableViewSection?
+    func makeOutflowSection() -> TableViewSection?
     {
-        let models = makeOutflowSectionModels(stock: stock)
+        let models = makeOutflowSectionModels()
         
         if models.count == 0 { return nil }
         
@@ -183,7 +198,7 @@ class StockDetailTableView: TableView
             models: models)
     }
     
-    func makeOutflowSectionModels(stock: Stock) -> [TableViewCellModel]
+    func makeOutflowSectionModels() -> [TableViewCellModel]
     {
         let outflows = stock.unwrappedOutflows
         return outflows.map { flow in
@@ -204,14 +219,14 @@ class StockDetailTableView: TableView
     
     // MARK: Notes
     
-    func makeNotesSection(stock: Stock) -> TableViewSection
+    func makeNotesSection() -> TableViewSection
     {
         TableViewSection(
             header: NotesHeaderViewModel(),
             models: makeNoteSectionModels(stock: stock))
     }
     
-    func makeNoteSectionModels(stock: Stock) -> [TableViewCellModel]
+    func makeNoteSectionModels() -> [TableViewCellModel]
     {
         let notes: [Note] = stock.unwrapped(\Stock.notes)
         return notes.map {

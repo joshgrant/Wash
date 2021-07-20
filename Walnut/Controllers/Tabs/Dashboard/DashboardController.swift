@@ -7,40 +7,61 @@
 
 import UIKit
 
-class DashboardController: ViewController
+class DashboardDependencyContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var context: Context
+    var stream: Stream
+    var tableView: TableView
+    
+    // MARK: - Initialization
+    
+    init(context: Context, stream: Stream, tableView: TableView? = nil)
+    {
+        self.context = context
+        self.stream = stream
+        self.tableView = tableView ?? DashboardTableView(context: context)
+    }
+}
+
+class DashboardController: ViewController<DashboardDependencyContainer>
 {
     // MARK: - Variables
     
     var id = UUID()
     
-    var tabBarItemTitle: String { "Dashboard".localized }
-    var tabBarImage: UIImage? { Icon.dashboard.getImage() }
-    var tabBarTag: Int { 0 }
-    
-    var tableView: DashboardTableView
-    
     // MARK: - Initialization
     
-    init(context: Context, navigationController: UINavigationController)
+    override init(container: DashboardDependencyContainer)
     {
-        self.tableView = DashboardTableView(context: context)
-        
-        super.init()
-        subscribe(to: AppDelegate.shared.mainStream)
-        
+        super.init(container: container)
+        subscribe(to: container.stream)
+        configureForDisplay()
+    }
+    
+    deinit
+    {
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - Functions
+    
+    private func configureForDisplay()
+    {
         title = tabBarItemTitle
         tabBarItem = makeTabBarItem()
         
-        view.embed(tableView)
-    }
-    
-    deinit {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        view.embed(container.tableView)
     }
 }
 
 extension DashboardController: ViewControllerTabBarDelegate
 {
+    var tabBarItemTitle: String { "Dashboard".localized }
+    var tabBarImage: UIImage? { Icon.dashboard.getImage() }
+    var tabBarTag: Int { 0 }
+    
     func makeTabBarItem() -> UITabBarItem
     {
         UITabBarItem(
@@ -56,17 +77,13 @@ extension DashboardController: Subscriber
     {
         switch message
         {
-        case is EntityPinnedMessage:
-            fallthrough
-        case is EntityListDeleteMessage:
-            fallthrough
-        case is CancelCreationMessage:
-            tableView.shouldReload = true
+        case is EntityPinnedMessage,
+             is EntityListDeleteMessage,
+             is CancelCreationMessage,
+             is TextEditCellMessage:
+            container.tableView.shouldReload = true
         case let m as TableViewEntitySelectionMessage:
             handle(m)
-        case is TextEditCellMessage:
-            // Not in all cases, but the ones that we have?
-            tableView.shouldReload = true
         default:
             break
         }

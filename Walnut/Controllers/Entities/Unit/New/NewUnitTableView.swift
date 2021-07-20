@@ -8,39 +8,42 @@
 import Foundation
 import UIKit
 
-class NewUnitTableView: TableView
+protocol NewUnitTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeInfoSection() -> TableViewSection
+}
+
+class NewUnitTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
-    var id = UUID()
+    var model: TableViewModel
+    var stream: Stream
+    var style: UITableView.Style
     var newUnitModel: NewUnitModel
     
     // MARK: - Initialization
     
-    init(newUnitModel: NewUnitModel)
+    init(model: TableViewModel, stream: Stream, style: UITableView.Style, newUnitModel: NewUnitModel)
     {
+        self.model = model
+        self.stream = stream
+        self.style = style
         self.newUnitModel = newUnitModel
-        super.init()
-        subscribe(to: AppDelegate.shared.mainStream)
     }
-    
-    deinit
-    {
-        unsubscribe(from: AppDelegate.shared.mainStream)
-    }
-    
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension NewUnitTableViewContainer: NewUnitTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
             makeInfoSection(model: newUnitModel)
         ])
     }
     
-    // TODO: Reload when toggling the cell...
-    
-    func makeInfoSection(model: NewUnitModel) -> TableViewSection
+    func makeInfoSection() -> TableViewSection
     {
         var models: [TableViewCellModel] = [
             // Name
@@ -80,6 +83,28 @@ class NewUnitTableView: TableView
             header: .info,
             models: models)
     }
+}
+
+class NewUnitTableView: TableView<NewUnitTableViewContainer>
+{
+    // MARK: - Variables
+    
+    var id = UUID()
+    
+    // MARK: - Initialization
+    
+    required init(container: NewUnitTableViewContainer)
+    {
+        super.init(container: container)
+        subscribe(to: container.stream)
+    }
+    
+    deinit
+    {
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - Model
     
     func reloadForToggle(message: ToggleCellMessage)
     {

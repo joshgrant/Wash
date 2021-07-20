@@ -6,38 +6,51 @@
 //
 
 import Foundation
+import UIKit
 
-class MinMaxTableView: TableView
+protocol MinMaxTableViewFactory: Factory
+{
+    func makeModel() -> TableViewModel
+    func makeConstraintsSection() -> TableViewSection
+}
+
+class MinMaxTableViewContainer: TableViewDependencyContainer
 {
     // MARK: - Variables
     
     var newStockModel: NewStockModel
+    var model: TableViewModel
+    var stream: Stream
+    var style: UITableView.Style
     
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel)
+    init(newStockModel: NewStockModel, model: TableViewModel, stream: Stream, style: UITableView.Style)
     {
         self.newStockModel = newStockModel
-        super.init()
+        self.model = model
+        self.stream = stream
+        self.style = style
     }
-    
-    // MARK: - Model
-    
-    override func makeModel() -> TableViewModel
+}
+
+extension MinMaxTableViewContainer: MinMaxTableViewFactory
+{
+    func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
-            makeConstraintsSection(model: newStockModel)
+            makeConstraintsSection()
         ])
     }
     
-    private func makeConstraintsSection(model: NewStockModel) -> TableViewSection
+    func makeConstraintsSection() -> TableViewSection
     {
-        let postfix: String? = model.unit?.abbreviation
+        let postfix: String? = newStockModel.unit?.abbreviation
         
         let minDetail: String
         let maxDetail: String
         
-        if let min = model.minimum
+        if let min = newStockModel.minimum
         {
             minDetail = String(format: "%i", Int(min))
         }
@@ -46,7 +59,7 @@ class MinMaxTableView: TableView
             minDetail = ""
         }
         
-        if let max = model.maximum
+        if let max = newStockModel.maximum
         {
             maxDetail = String(format: "%i", Int(max))
         }
@@ -62,14 +75,14 @@ class MinMaxTableView: TableView
                 detail: minDetail,
                 detailPostfix: postfix,
                 keyboardType: nil,
-                newStockModel: model),
+                newStockModel: newStockModel),
             RightEditCellModel(
                 selectionIdentifier: .maximum,
                 title: "Maximum".localized,
                 detail: maxDetail,
                 detailPostfix: postfix,
                 keyboardType: nil,
-                newStockModel: model)
+                newStockModel: newStockModel)
         ]
         
         return TableViewSection(header: .constraints, models: models)

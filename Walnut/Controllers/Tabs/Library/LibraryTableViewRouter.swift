@@ -8,51 +8,49 @@
 import Foundation
 import UIKit
 
-class LibraryTableViewRouter: Router
+class LibraryTableViewRouterContainer: DependencyContainer
 {
-    // MARK: - Defined types
-    
-    enum Destination
-    {
-        case detail(entityType: Entity.Type)
-    }
-    
     // MARK: - Variables
     
-    var id = UUID()
-    weak var delegate: RouterDelegate?
-    weak var context: Context?
+    var context: Context
+    var stream: Stream
     
     // MARK: - Initialization
     
-    init(context: Context?)
+    init(context: Context, stream: Stream)
     {
         self.context = context
-        subscribe(to: AppDelegate.shared.mainStream)
+        self.stream = stream
+    }
+}
+
+class LibraryTableViewRouter: Router<LibraryTableViewRouterContainer>
+{
+    // MARK: - Variables
+    
+    var id = UUID()
+    
+    // MARK: - Initialization
+    
+    required init(container: LibraryTableViewRouterContainer)
+    {
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
     
     deinit {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        unsubscribe(from: container.stream)
     }
     
     // MARK: - Functions
     
-    func route(
-        to destination: Destination,
-        completion: (() -> Void)?)
+    func routeToDetail(entityType: Entity.Type)
     {
-        switch destination
-        {
-        case .detail(let entityType):
-            routeToDetail(entityType: entityType)
-        }
-    }
-    
-    private func routeToDetail(entityType: Entity.Type)
-    {
-        let listController = EntityListController(
-            type: entityType,
-            context: context)
+        let container = EntityListDependencyContainer(
+            entityType: entityType,
+            context: container.context,
+            stream: container.stream)
+        let listController = EntityListController(container: container)
         delegate?.navigationController?.pushViewController(listController, animated: true)
     }
 }
@@ -72,13 +70,13 @@ extension LibraryTableViewRouter: Subscriber
     
     private func handle(_ message: TableViewSelectionMessage)
     {
-        guard let _ = message.tableView as? LibraryTableView else { return }
+        guard let _ = message.tableView as? TableView<LibraryTableViewContainer> else { return }
         
         switch message.cellModel.selectionIdentifier
         {
         case .entityType(let type):
             let managedType = type.managedObjectType
-            route(to: .detail(entityType: managedType), completion: nil)
+            routeToDetail(entityType: managedType)
         default:
             break
         }

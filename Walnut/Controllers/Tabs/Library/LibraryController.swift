@@ -7,51 +7,98 @@
 
 import UIKit
 
-class LibraryController: ViewController, RouterDelegate
+protocol LibraryControllerFactory: ViewControllerTabBarDelegate, Factory
 {
-    // MARK: - Variables
+    func makeRouter() -> LibraryTableViewRouter
+    func makeTableView() -> TableView<LibraryTableViewContainer>
+}
+
+class LibraryControllerContainer: DependencyContainer
+{
+    // MARK: - Defined types
     
-    var id = UUID()
+    typealias Table = TableView<LibraryTableViewContainer>
+    
+    // MARK: - Variables
     
     var tabBarItemTitle: String { "Library".localized }
     var tabBarImage: UIImage? { Icon.library.getImage() }
     var tabBarTag: Int { 1 }
-
+    
+    var context: Context
+    var stream: Stream
     var router: LibraryTableViewRouter
-    var tableView: LibraryTableView
+    var tableView: Table
     
     // MARK: - Initialization
-
-    init(
-        context: Context,
-        navigationController: UINavigationController)
-    {
-        self.router = LibraryTableViewRouter(context: context)
-        self.tableView = LibraryTableView(context: context)
-        
-        super.init()
-        router.delegate = self
-        subscribe(to: AppDelegate.shared.mainStream)
-        
-        tabBarItem = makeTabBarItem()
-        title = tabBarItemTitle
-        
-        view.embed(tableView)
-    }
     
-    deinit {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+    init(context: Context, stream: Stream, router: LibraryTableViewRouter? = nil, tableView: Table? = nil)
+    {
+        self.context = context
+        self.stream = stream
+        self.router = router ?? makeRouter()
+        self.tableView = tableView ?? makeTableView()
     }
 }
 
-extension LibraryController: ViewControllerTabBarDelegate
+extension LibraryControllerContainer: LibraryControllerFactory
 {
+    func makeRouter() -> LibraryTableViewRouter
+    {
+        let container = LibraryTableViewRouterContainer(
+            context: context,
+            stream: stream)
+        return LibraryTableViewRouter(container: container)
+    }
+    
+    func makeTableView() -> Table
+    {
+        let container = LibraryTableViewContainer(
+            context: context,
+            stream: stream,
+            style: .grouped)
+        return Table(container: container)
+    }
+    
     func makeTabBarItem() -> UITabBarItem
     {
         UITabBarItem(
             title: tabBarItemTitle,
             image: tabBarImage,
             tag: tabBarTag)
+    }
+}
+
+class LibraryController: ViewController<LibraryControllerContainer>, RouterDelegate
+{
+    // MARK: - Variables
+    
+    var id = UUID()
+    
+    // MARK: - Initialization
+    
+    required init(container: LibraryControllerContainer)
+    {
+        super.init(container: container)
+        container.router.delegate = self
+        subscribe(to: container.stream)
+    }
+
+    deinit
+    {
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        tabBarItem = container.makeTabBarItem()
+        title = container.tabBarItemTitle
+        
+        view.embed(container.tableView)
     }
 }
 

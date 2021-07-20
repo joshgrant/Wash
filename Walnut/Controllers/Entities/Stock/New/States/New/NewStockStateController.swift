@@ -8,40 +8,63 @@
 import Foundation
 import UIKit
 
-class NewStockStateController: UIViewController
+protocol NewStockStateFactory: Factory
+{
+    func makeTableView() -> NewStockStateTableView
+    func makeRightBarButtonItem(target: NewStockStateController) -> UIBarButtonItem
+}
+
+class NewStockStateContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var model: NewStockModel
+    var context: Context
+    var stream: Stream
+    
+    var tableView: NewStockStateTableView
+    
+    // MARK: - Initialization
+    
+    init(model: NewStockModel, context: Context, stream: Stream, tableView: NewStockStateTableView? = nil)
+    {
+        self.model = model
+        self.context = context
+        self.stream = stream
+        self.tableView = tableView ?? makeTableView()
+    }
+}
+
+extension NewStockStateContainer: NewStockStateFactory
+{
+    func makeTableView() -> NewStockStateTableView
+    {
+        
+    }
+    
+    func makeRightBarButtonItem(target: NewStockStateController) -> UIBarButtonItem
+    {
+        let rightItem = UIBarButtonItem(
+            title: "Next".localized,
+            style: .plain,
+            target: target,
+            action: #selector(target.rightBarButtonItemDidTouchUpInside(_:)))
+        rightItem.isEnabled = model.validForStates
+    }
+}
+
+class NewStockStateController: ViewController<NewStockStateContainer>
 {
     // MARK: - Variables
     
     var id = UUID()
     
-    var newStockModel: NewStockModel
-    var tableView: NewStockStateTableView
-    
-    weak var context: Context?
-    
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel, context: Context?)
+    required init(container: NewStockStateContainer)
     {
-        self.newStockModel = newStockModel
-        self.context = context
-        
-        tableView = NewStockStateTableView(newStockModel: newStockModel)
-        super.init(nibName: nil, bundle: nil)
-        subscribe(to: AppDelegate.shared.mainStream)
-        
-        title = "States".localized
-        
-        view.embed(tableView)
-        
-        let rightItem = UIBarButtonItem(
-            title: "Next".localized,
-            style: .plain,
-            target: self,
-            action: #selector(rightBarButtonItemDidTouchUpInside(_:)))
-        rightItem.isEnabled = newStockModel.validForStates
-        
-        navigationItem.rightBarButtonItem = rightItem
+        super.init(container: container)
+        subscribe(to: container.stream)
         
         NotificationCenter
             .default
@@ -52,14 +75,21 @@ class NewStockStateController: UIViewController
                 object: nil)
     }
     
-    required init?(coder: NSCoder)
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
     {
-        fatalError("init(coder:) has not been implemented")
+        super.viewDidLoad()
+        
+        title = "States".localized
+        
+        navigationItem.rightBarButtonItem = container.makeRightBarButtonItem(target: self)
+        view.embed(container.tableView)
     }
     
     deinit
     {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        unsubscribe(from: container.stream)
     }
     
     // MARK: Interface outlets
@@ -67,8 +97,8 @@ class NewStockStateController: UIViewController
     @objc func rightBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
         let currentIdealController = CurrentIdealController(
-            newStockModel: newStockModel,
-            context: context)
+            newStockModel: container.model,
+            context: container.context)
         navigationController?.pushViewController(currentIdealController, animated: true)
     }
     
@@ -113,8 +143,8 @@ extension NewStockStateController: Subscriber
         case .addState:
             // Add a state
             let newState = NewStateModel()
-            newStockModel.states.append(newState)
-            tableView.addState(newStateModel: newState)
+            container.model.states.append(newState)
+            container.tableView.addState(newStateModel: newState)
             // TODO: Flawless table view updates / reloading with
             // cell models that match cells as well as text fields in the cells...
             
@@ -127,11 +157,11 @@ extension NewStockStateController: Subscriber
             // table view model....
             //            tableView.reload(shouldReloadTableView: false)
             
-            tableView.beginUpdates()
-            tableView.insertSections(IndexSet(integer: newStockModel.states.count), with: .automatic)
-            tableView.endUpdates()
+            container.tableView.beginUpdates()
+            container.tableView.insertSections(IndexSet(integer: newStockModel.states.count), with: .automatic)
+            container.tableView.endUpdates()
             
-            navigationItem.rightBarButtonItem?.isEnabled = newStockModel.validForStates
+            navigationItem.rightBarButtonItem?.isEnabled = container.model.validForStates
         default:
             break
         }
@@ -173,7 +203,7 @@ extension NewStockStateController: Subscriber
             return
         }
         
-        navigationItem.rightBarButtonItem?.isEnabled = newStockModel.validForStates
+        navigationItem.rightBarButtonItem?.isEnabled = container.model.validForStates
     }
     
     private func handle(_ message: TextEditCellMessage)
@@ -188,6 +218,6 @@ extension NewStockStateController: Subscriber
             break
         }
         
-        navigationItem.rightBarButtonItem?.isEnabled = newStockModel.validForStates
+        navigationItem.rightBarButtonItem?.isEnabled = container.model.validForStates
     }
 }

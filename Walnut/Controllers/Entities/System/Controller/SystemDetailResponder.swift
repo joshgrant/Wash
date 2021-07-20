@@ -8,17 +8,33 @@
 import Foundation
 import UIKit
 
-class SystemDetailResponder
+class SystemDetailResponderContainer: DependencyContainer
 {
     // MARK: - Variables
     
     var system: System
+    var stream: Stream
     
     // MARK: - Initialization
     
-    init(system: System)
+    init(system: System, stream: Stream)
     {
         self.system = system
+        self.stream = stream
+    }
+}
+
+class SystemDetailResponder
+{
+    // MARK: - Variables
+    
+    var container: SystemDetailResponderContainer
+    
+    // MARK: - Initialization
+    
+    init(container: SystemDetailResponderContainer)
+    {
+        self.container = container
     }
     
     // MARK: - Functions
@@ -26,7 +42,7 @@ class SystemDetailResponder
     @objc func userTouchedUpInsideDuplicate(sender: UIBarButtonItem)
     {
         let message = SystemDetailDuplicatedMessage(system: system)
-        AppDelegate.shared.mainStream.send(message: message)
+        container.stream.send(message: message)
     }
     
     @objc func userTouchedUpInsidePin(sender: UIBarButtonItem)
@@ -35,6 +51,6 @@ class SystemDetailResponder
         let message = EntityPinnedMessage(
             isPinned: system.isPinned,
             entity: system)
-        AppDelegate.shared.mainStream.send(message: message)
+        container.stream.send(message: message)
     }
 }

@@ -8,18 +8,45 @@
 import Foundation
 import UIKit
 
+class TransferFlowFactory: Factory
+{
+    
+}
+
+class TransferFlowDetailDependencyContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var flow: TransferFlow
+    var context: Context
+    var stream: Stream
+    var router: TransferFlowDetailRouter // TransferFlowDetailRouter(flow: flow,context: context)
+    var responder: TransferFlowDetailResponder // TransferFlowDetailResponder(flow: container.flow)
+    
+    // MARK: - Initialization
+    
+    init(
+        flow: TransferFlow,
+        context: Context,
+        stream: Stream,
+        router: TransferFlowDetailRouter? = nil,
+        responder: TransferFlowDetailResponder? = nil)
+    {
+        self.flow = flow
+        self.context = context
+        self.stream = stream
+        self.router = router ?? TransferFlowDetailRouter(container: self)
+        self.responder = responder ?? TransferFlowDetailResponder(flow: flow)
+    }
+}
+
 class TransferFlowDetailController: UIViewController, RouterDelegate
 {
     // MARK: - Variables
     
     var id = UUID()
     
-    var flow: TransferFlow
-    
-    var router: TransferFlowDetailRouter
-    var responder: TransferFlowDetailResponder
-    
-    weak var context: Context?
+    var container: TransferFlowDetailDependencyContainer
     
     var tableView: TransferFlowDetailTableView
     
@@ -28,38 +55,43 @@ class TransferFlowDetailController: UIViewController, RouterDelegate
     
     // MARK: - Initialization
     
-    init(flow: TransferFlow, context: Context?)
+    init(container: TransferFlowDetailDependencyContainer)
     {
-        let responder = TransferFlowDetailResponder(flow: flow)
+        self.container = container
+        self.tableView = TransferFlowDetailTableView(flow: container.flow)
         
-        self.flow = flow
+        self.pinButton = Self.makePinButton(
+            flow: container.flow,
+            responder: container.responder)
         
-        self.router = TransferFlowDetailRouter(flow: flow,context: context)
-        self.responder = responder
-        self.tableView = TransferFlowDetailTableView(flow: flow)
-        
-        self.pinButton = Self.makePinButton(flow: flow, responder: responder)
-        self.runButton = Self.makeRunButton(responder: responder)
-        
-        self.context = context
+        self.runButton = Self.makeRunButton(
+            responder: container.responder)
         
         super.init(nibName: nil, bundle: nil)
-        router.delegate = self
-        subscribe(to: AppDelegate.shared.mainStream)
         
-        title = flow.title
+        container.router.delegate = self
+        subscribe(to: container.stream)
         
-        view.embed(tableView)
-        
-        navigationItem.setRightBarButtonItems([pinButton, runButton], animated: false)
+        configureForDisplay()
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+    deinit
+    {
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - Functions
+    
+    private func configureForDisplay()
+    {
+        title = container.flow.title
+        view.embed(tableView)
+        navigationItem.setRightBarButtonItems([pinButton, runButton], animated: false)
     }
     
     // MARK: - Factory

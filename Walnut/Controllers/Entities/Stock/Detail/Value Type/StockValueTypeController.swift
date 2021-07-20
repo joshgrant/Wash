@@ -8,27 +8,77 @@
 import Foundation
 import UIKit
 
-class StockValueTypeController: UIViewController
+protocol StockValueTypeFactory: Factory
+{
+    func makeTableView() -> StockTypeTableView
+    func makeModel() -> TableViewModel
+}
+
+class StockValueTypeContainer: DependencyContainer
 {
     // MARK: - Variables
     
     var stock: Stock
-    var tableView: StockTypeTableView
+    var stream: Stream
+    
+    lazy var tableView: StockTypeTableView = makeTableView()
     
     // MARK: - Initialization
     
-    init(stock: Stock)
+    init(stock: Stock, stream: Stream)
     {
         self.stock = stock
-        tableView = StockTypeTableView(stock: stock)
-        
-        super.init(nibName: nil, bundle: nil)
-        
-        view.embed(tableView)
+        self.stream = stream
+    }
+}
+
+extension StockValueTypeContainer: StockValueTypeFactory
+{
+    func makeTableView() -> StockTypeTableView
+    {
+        let model = makeModel()
+        let container = StockTypeTableViewContainer(
+            model: model,
+            stream: stream,
+            style: .grouped,
+            stock: stock)
+        return StockTypeTableView(container: container)
     }
     
-    required init?(coder: NSCoder)
+    func makeModel() -> TableViewModel
     {
-        fatalError("init(coder:) has not been implemented")
+        
     }
+}
+
+class StockValueTypeController: ViewController<StockValueTypeContainer>
+{
+    // MARK: - Variables
+    
+//    var stock: Stock
+//    var tableView: StockTypeTableView
+    
+    // MARK: - Initialization
+    
+    required init(container: StockValueTypeContainer)
+    {
+        super.init(container: container)
+        view.embed(container.tableView)
+    }
+    
+//    init(container: StockValueTypeContainer)
+//    {
+//        self.stock = stock
+//        let container = StockTypeTableViewContainer(model: <#T##TableViewModel#>, stream: <#T##Stream#>, style: <#T##UITableView.Style#>, stock: stock)
+//        tableView = StockTypeTableView(container: <#T##StockTypeTableViewContainer#>)
+//
+//        super.init(nibName: nil, bundle: nil)
+//
+//        view.embed(tableView)
+//    }
+    
+//    required init?(coder: NSCoder)
+//    {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 }

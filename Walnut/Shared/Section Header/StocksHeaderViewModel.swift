@@ -8,30 +8,65 @@
 import Foundation
 import UIKit
 
+protocol StocksHeaderViewModelFactory: Factory
+{
+    func makeDisclosureTriangleActionClosure() -> ActionClosure
+    func makeSearchButtonActionClosure() -> ActionClosure
+    func makeAddButtonActionClosure() -> ActionClosure
+}
+
+class StocksHeaderViewModelDependencyContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var system: System
+    var stream: Stream
+    
+    // MARK: - Initialization
+    
+    init(system: System, stream: Stream)
+    {
+        self.system = system
+        self.stream = stream
+    }
+}
+
+extension StocksHeaderViewModelDependencyContainer: StocksHeaderViewModelFactory
+{
+    func makeDisclosureTriangleActionClosure() -> ActionClosure
+    {
+        ActionClosure { _ in
+            print("DISCLOSE")
+        }
+    }
+    
+    func makeSearchButtonActionClosure() -> ActionClosure
+    {
+        ActionClosure { [unowned self] _ in
+            let message = SectionHeaderSearchMessage(entityToSearchFrom: self.system, typeToSearch: Stock.self)
+            self.stream.send(message: message)
+        }
+    }
+    
+    func makeAddButtonActionClosure() -> ActionClosure
+    {
+        ActionClosure { [unowned self] _ in
+            let message = SectionHeaderAddMessage(entityToAddTo: self.system, entityType: Stock.self)
+            self.stream.send(message: message)
+        }
+    }
+}
+
 class StocksHeaderViewModel: TableHeaderViewModel
 {
     // MARK: - Initialization
     
-    convenience init(system: System)
+    convenience init(container: StocksHeaderViewModelDependencyContainer)
     {
-        self.init(
-            title: "Stocks".localized,
-            icon: .stock)
+        self.init(title: "Stocks".localized, icon: .stock)
         
-        disclosureTriangleActionClosure = ActionClosure { sender in
-            print("DISCLOSE")
-        }
-        
-        searchButtonActionClosure = ActionClosure { sender in
-            let message = SectionHeaderSearchMessage(entityToSearchFrom: system, typeToSearch: Stock.self)
-            AppDelegate.shared.mainStream.send(message: message)
-        }
-        
-        addButtonActionClosure = ActionClosure { sender in
-            let message = SectionHeaderAddMessage(
-                entityToAddTo: system,
-                entityType: Stock.self)
-            AppDelegate.shared.mainStream.send(message: message)
-        }
+        disclosureTriangleActionClosure = container.makeDisclosureTriangleActionClosure()
+        searchButtonActionClosure = container.makeSearchButtonActionClosure()
+        addButtonActionClosure = container.makeAddButtonActionClosure()
     }
 }

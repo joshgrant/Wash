@@ -7,12 +7,17 @@
 
 import UIKit
 
-open class ViewController: UIViewController
+open class ViewController<Container: DependencyContainer>: UIViewController
 {
+    // MARK: - Variables
+    
+    var container: Container
+    
     // MARK: - Initialization
     
-    init()
+    public required init(container: Container)
     {
+        self.container = container
         super.init(nibName: nil, bundle: nil)
     }
     

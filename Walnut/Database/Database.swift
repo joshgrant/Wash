@@ -5,6 +5,7 @@
 //  Created by Joshua Grant on 6/6/21.
 //
 
+import UIKit
 import CoreData
 
 open class Database
@@ -58,6 +59,23 @@ open class Database
 public extension Database
 {
     func populate(context: Context)
+    {
+        context.quickSave()
+    }
+}
+
+extension Database
+{
+    func handleNotifications()
+    {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleApplicationWillTerminateNotification(_:)),
+            name: UIApplication.willTerminateNotification,
+            object: nil)
+    }
+    
+    @objc func handleApplicationWillTerminateNotification(_ notification: Notification)
     {
         context.quickSave()
     }

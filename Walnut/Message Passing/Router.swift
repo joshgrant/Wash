@@ -13,11 +13,17 @@ public protocol RouterDelegate: AnyObject
     var navigationController: UINavigationController? { get }
 }
 
-public protocol Router
+public class Router<Container: DependencyContainer>
 {
-    associatedtype Destination
+    // MARK: - Variables
     
-    var delegate: RouterDelegate? { get set }
+    var container: Container
+    weak var delegate: RouterDelegate?
     
-    func route(to destination: Destination, completion: (() -> Void)?)
+    // MARK: - Initialization
+    
+    required init(container: Container)
+    {
+        self.container = container
+    }
 }

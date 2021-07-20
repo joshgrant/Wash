@@ -8,61 +8,105 @@
 import Foundation
 import UIKit
 
-class NewStockController: UIViewController, RouterDelegate
+protocol NewStockControllerFactory: Factory
+{
+    func makeTableView() -> NewStockTableView
+    func makeRouter() -> NewStockRouter
+    func makeLeftItem() -> UIBarButtonItem
+    func makeRightItem() -> UIBarButtonItem
+}
+
+class NewStockControllerContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var model: NewStockModel
+    var router: NewStockRouter
+    var tableView: NewStockTableView
+    var context: Context
+    var stream: Stream
+    
+    // MARK: - Initialization
+    
+    init(router: NewStockRouter, tableView: NewStockTableView, context: Context, stream: Stream)
+    {
+        self.model = NewStockModel()
+        self.router = makeRouter()
+        self.tableView = makeTableView()
+        self.context = context
+        self.stream = stream
+    }
+}
+
+extension NewStockControllerContainer: NewStockControllerFactory
+{
+    func makeTableView() -> NewStockTableView
+    {
+        return NewStockTableView(newStockModel: model)
+    }
+    
+    func makeRouter() -> NewStockRouter
+    {
+        let container = NewStockRouterContainer(
+            model: model,
+            context: context,
+            stream: stream)
+        return NewStockRouter(container: container)
+    }
+    
+    // TODO: For all of these buttons, use a responder instead
+    // of passing the controller... The router should conform
+    // to a protocol that handles the methods...
+     
+    func makeLeftItem(target: NewStockController) -> UIBarButtonItem
+    {
+        let leftItem = UIBarButtonItem(systemItem: .cancel)
+        leftItem.target = target
+        leftItem.action = #selector(target.leftBarButtonItemDidTouchUpInside(_:))
+        return leftItem
+    }
+    
+    func makeRightItem(target: NewStockController) -> UIBarButtonItem
+    {
+        let rightItem = UIBarButtonItem(
+            title: "Next".localized,
+            style: .plain,
+            target: target,
+            action: #selector(target.rightBarButtonItemDidTouchUpInside(_:)))
+        return rightItem
+    }
+}
+
+class NewStockController: ViewController<NewStockControllerContainer>, RouterDelegate
 {
     // MARK: - Variables
     
     var id = UUID()
     
-    var router: NewStockRouter
-    var newStockModel: NewStockModel
-    var tableView: NewStockTableView
-    
-    weak var context: Context?
-    
     // MARK: - Initialization
     
-    init(context: Context?)
+    required init(container: NewStockControllerContainer)
     {
-        self.context = context
-        
-        let newStockModel = NewStockModel()
-        self.newStockModel = newStockModel
-        
-        router = NewStockRouter(newStockModel: newStockModel, context: context)
-        
-        tableView = NewStockTableView(newStockModel: newStockModel)
-        super.init(nibName: nil, bundle: nil)
-        router.delegate = self
-        
-        subscribe(to: AppDelegate.shared.mainStream)
+        super.init(container: container)
+        container.router.delegate = self
+        subscribe(to: container.stream)
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
         
         title = "New Stock".localized
         
-        view.embed(tableView)
+        navigationItem.leftBarButtonItem = container.makeLeftItem(target: self)
+        navigationItem.rightBarButtonItem = container.makeRightItem(target: self)
         
-        let leftItem = UIBarButtonItem(systemItem: .cancel)
-        leftItem.target = self
-        leftItem.action = #selector(leftBarButtonItemDidTouchUpInside(_:))
-        navigationItem.leftBarButtonItem = leftItem
-        
-        let rightItem = UIBarButtonItem(
-            title: "Next".localized,
-            style: .plain,
-            target: self,
-            action: #selector(rightBarButtonItemDidTouchUpInside(_:)))
-        navigationItem.rightBarButtonItem = rightItem
-        // TODO: Validate the right item...
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
+        view.embed(container.tableView)
     }
     
     deinit
     {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        unsubscribe(from: container.stream)
     }
     
     // MARK: - View lifecycle
@@ -77,12 +121,12 @@ class NewStockController: UIViewController, RouterDelegate
     
     @objc func leftBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        router.route(to: .dismiss, completion: nil)
+        container.router.routeDismiss()
     }
     
     @objc func rightBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        router.route(to: .next, completion: nil)
+        container.router.routeToNext()
     }
 }
 
@@ -110,13 +154,13 @@ extension NewStockController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .newStockUnit:
-            router.route(to: .unitSearch, completion: nil)
+            container.router.routeToUnitSearch()
         case .valueType(let type):
-            newStockModel.stockType = type
-            tableView.reload(shouldReloadTableView: false)
-            tableView.beginUpdates()
-            tableView.reloadSections(IndexSet(integer: 2), with: .none)
-            tableView.endUpdates()
+            container.model.stockType = type
+            container.tableView.reload(shouldReloadTableView: false)
+            container.tableView.beginUpdates()
+            container.tableView.reloadSections(IndexSet(integer: 2), with: .none)
+            container.tableView.endUpdates()
         default:
             break
         }
@@ -126,34 +170,34 @@ extension NewStockController: Subscriber
     {
         guard case .newStock = message.origin else { return }
         guard let unit = message.link as? Unit else { fatalError() }
-        newStockModel.unit = unit
-        tableView.shouldReload = true
-        router.route(to: .back, completion: nil)
+        container.newStockModel.unit = unit
+        container.tableView.shouldReload = true
+        container.router.routeBack()
     }
     
     private func handle(_ message: TextEditCellMessage)
     {
         guard case .newStockName = message.selectionIdentifier else { return }
-        newStockModel.title = message.title
+        container.model.title = message.title
     }
     
     private func handle(_ message: ToggleCellMessage)
     {
         guard case .stateMachine = message.selectionIdentifier else { return }
-        newStockModel.isStateMachine = message.state
+        container.model.isStateMachine = message.state
         
-        if newStockModel.isStateMachine
+        if container.model.isStateMachine
         {
-            if newStockModel.stockType == .boolean
+            if container.model.stockType == .boolean
             {
-                newStockModel.stockType = .decimal
+                container.model.stockType = .decimal
             }
         }
-        else if newStockModel.previouslyBoolean
+        else if container.model.previouslyBoolean
         {
-            newStockModel.stockType = .boolean
+            container.model.stockType = .boolean
         }
         
-        tableView.shouldReload = true
+        container.tableView.shouldReload = true
     }
 }

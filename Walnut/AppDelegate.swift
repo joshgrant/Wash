@@ -13,11 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 {
     // MARK: - Variables
     
-    static var shared: AppDelegate { UIApplication.shared.delegate as! AppDelegate }
-    
-    var database = Database()
-    var mainStream = Stream(identifier: .main)
-    
     // MARK: - Functions
     
     func application(
@@ -34,10 +29,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         UISceneConfiguration(
             name: "Default Configuration",
             sessionRole: connectingSceneSession.role)
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication)
-    {
-        database.context.quickSave()
     }
 }

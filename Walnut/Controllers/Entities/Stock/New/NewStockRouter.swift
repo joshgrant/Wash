@@ -8,107 +8,106 @@
 import Foundation
 import UIKit
 
-class NewStockRouter: Router
+class NewStockRouterContainer: DependencyContainer
 {
-    // MARK: - Defined types
-    
-    enum Destination
-    {
-        case dismiss
-        case next
-        case back
-        case currentIdealState
-        case states
-        case minMax
-        case unitSearch
-    }
-    
     // MARK: - Variables
     
-    var newStockModel: NewStockModel
+    var model: NewStockModel
+    var context: Context
+    var stream: Stream
+ 
+    // MARK: - Initialization
     
-    weak var context: Context?
-    weak var delegate: RouterDelegate?
+    init(model: NewStockModel, context: Context, stream: Stream)
+    {
+        self.model = model
+        self.context = context
+        self.stream = stream
+    }
+}
+
+class NewStockRouter: Router<NewStockRouterContainer>
+{
+    // MARK: - Variables
+    
+//    var newStockModel: NewStockModel
+    
+//    weak var context: Context?
     
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel, context: Context?)
-    {
-        self.newStockModel = newStockModel
-        self.context = context
-    }
+//    init(newStockModel: NewStockModel, context: Context?)
+//    {
+//        self.newStockModel = newStockModel
+//        self.context = context
+//    }
     
     // MARK: - Functions
     
-    func route(to destination: Destination, completion: (() -> Void)?)
+    func routeDismiss()
     {
-        switch destination
-        {
-        case .dismiss:
-            delegate?.navigationController?.dismiss(animated: true, completion: nil)
-        case .next:
-            routeToNext()
-        case .back:
-            delegate?.navigationController?.popViewController(animated: true)
-        case .currentIdealState:
-            routeToCurrentIdealState()
-        case .states:
-            routeToStates()
-        case .minMax:
-            routeToMinMax()
-        case .unitSearch:
-            routeToUnitSearch()
-        }
+        delegate?.navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    private func routeToNext()
+    func routeBack()
     {
-        if newStockModel.stockType == .boolean
+        delegate?.navigationController?.popViewController(animated: true)
+    }
+    
+    func routeToNext()
+    {
+        if container.model.stockType == .boolean
         {
-            // route to current/ideal state
-            route(to: .currentIdealState, completion: nil)
+            routeToCurrentIdealState()
         }
-        else if newStockModel.isStateMachine
+        else if container.model.isStateMachine
         {
-            route(to: .states, completion: nil)
+            routeToStates()
         }
-        else if newStockModel.stockType == .percent
+        else if container.model.stockType == .percent
         {
-            route(to: .currentIdealState, completion: nil)
+            routeToCurrentIdealState()
         }
         else
         {
-            // Route to min/max controller
-            route( to: .minMax, completion: nil)
+            routeToMinMax()
         }
     }
     
-    private func routeToCurrentIdealState()
+    func routeToCurrentIdealState()
     {
-        let currentIdealController = CurrentIdealController(
-            newStockModel: newStockModel,
-            context: context)
+        let container = CurrentIdealControllerDependencyContainer(
+            model: container.model,
+            context: container.context,
+            stream: container.stream)
+        let currentIdealController = CurrentIdealController(container: container)
         delegate?.navigationController?.pushViewController(currentIdealController, animated: true)
     }
     
-    private func routeToStates()
+    func routeToStates()
     {
-        let stateController = NewStockStateController(newStockModel: newStockModel, context: context)
+        let container = NewStockStateContainer(
+            model: container.model,
+            context: container.context,
+            stream: container.stream)
+        let stateController = NewStockStateController(container: container)
         delegate?.navigationController?.pushViewController(stateController, animated: true)
     }
     
-    private func routeToMinMax()
+    func routeToMinMax()
     {
-        let minMaxController = MinMaxController(newStockModel: newStockModel, context: context)
+        let minMaxController = MinMaxController(
+            newStockModel: container.model,
+            context: container.context)
         delegate?.navigationController?.pushViewController(minMaxController, animated: true)
     }
     
-    private func routeToUnitSearch()
+    func routeToUnitSearch()
     {
         let linkController = LinkSearchController(
             origin: .newStock,
             entityType: Unit.self,
-            context: context,
+            context: container.context,
             hasAddButton: true)
         delegate?.navigationController?.pushViewController(linkController, animated: true)
     }

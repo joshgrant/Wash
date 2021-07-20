@@ -8,73 +8,62 @@
 import Foundation
 import UIKit
 
-class EntityListRouter: Router
+class EntityListRouterContainer: DependencyContainer
 {
-    // MARK: - Defined types
-    
-    enum Destination
-    {
-        case add(entityType: Entity.Type)
-        case detail(entity: Entity)
-    }
-    
     // MARK: - Variables
     
-    var id = UUID()
-    weak var context: Context?
-    weak var delegate: RouterDelegate?
+    var context: Context
+    var stream: Stream
     
     // MARK: - Initialization
     
-    init(context: Context?)
+    init(context: Context, stream: Stream)
     {
         self.context = context
-        subscribe(to: AppDelegate.shared.mainStream)
+        self.stream = stream
     }
+}
+
+class EntityListRouter: Router<EntityListRouterContainer>
+{
+    // MARK: - Variables
     
-    deinit {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+    var id = UUID()
+    
+    // MARK: - Initialization
+    
+    required init(container: EntityListRouterContainer)
+    {
+        super.init(container: container)
+        subscribe(to: container.stream)
+    }
+
+    deinit
+    {
+        unsubscribe(from: container.stream)
     }
     
     // MARK: - Functions
     
-    func route(to destination: Destination, completion: (() -> Void)?)
+    func routeToAdd(entityType: Entity.Type)
     {
-        switch destination
-        {
-        case .add(let entityType):
-            routeToAdd(entityType: entityType)
-        case .detail(let entity):
-            routeToDetail(entity: entity)
-        }
-    }
-    
-    private func routeToAdd(entityType: Entity.Type)
-    {
-        guard let context = context else
-        {
-            return
-        }
-        
         switch entityType
         {
         case is Stock.Type:
-            let detail = NewStockController(context: context)
+            let detail = NewStockController(context: container.context)
             let detailNavigation = UINavigationController(rootViewController: detail)
-//            detailNavigation.modalPresentationStyle = .fullScreen
             detailNavigation.isModalInPresentation = true
             delegate?.navigationController?.present(detailNavigation, animated: true, completion: nil)
         default:
-            let entity = entityType.init(context: context)
+            let entity = entityType.init(context: container.context)
             entity.createdDate = Date()
-
             let detail = entity.detailController()
             delegate?.navigationController?.pushViewController(detail, animated: true)
-            context.quickSave()
+            container.context.quickSave()
         }
     }
     
-    private func routeToDetail(entity: Entity)
+    func routeToDetail(entity: Entity)
     {
         let detail = entity.detailController()
         delegate?.navigationController?.pushViewController(detail, animated: true)
@@ -85,8 +74,6 @@ extension EntityListRouter: Subscriber
 {
     func receive(message: Message)
     {
-        print(message)
-        
         switch message
         {
         case let m as EntityListAddButtonMessage:
@@ -100,7 +87,7 @@ extension EntityListRouter: Subscriber
     
     private func handle(_ message: EntityListAddButtonMessage)
     {
-        route(to: .add(entityType: message.entityType), completion: nil)
+        routeToAdd(entityType: message.entityType)
     }
     
     private func handle(_ message: TableViewSelectionMessage)

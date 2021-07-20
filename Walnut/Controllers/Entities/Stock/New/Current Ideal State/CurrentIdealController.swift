@@ -10,124 +10,194 @@ import UIKit
 
 // TODO: Automatic "next" button updates when the data model changes...
 
-class CurrentIdealController: UIViewController
+class AnyTableViewContainer: TableViewDependencyContainer
 {
-    // If a state machine, each cell should be a
-    // detail cell that opens up the link selector (for just the states)
+    // MARK: - Variables
     
-    // If boolean, two sections, first is "Current", second
-    // is "ideal" and each has two cells, with checkmarks
-    // that lets us select true/false
+    var model: TableViewModel
+    var stream: Stream
+    var style: UITableView.Style
     
-    // If numeric, one section, two cells, each has a right
-    // edit cell that uses the symbol of the unit
-    // on the right (or percent) with numeric entry
-    // If integer, don't allow decimal places
+    // MARK: - Initialization
     
-    // Also, text field has an ∞ sign
+    init(container: TableViewDependencyContainer)
+    {
+        self.model = container.model
+        self.stream = container.stream
+        self.style = container.style
+    }
+}
+
+class AnyTableView: TableView<AnyTableViewContainer>
+{
+}
+
+protocol CurrentIdealControllerFactory: Factory
+{
+    func makeBooleanTableView() -> AnyTableView
+    func makeNumericTableView() -> AnyTableView
+    func makeStateTableView() -> AnyTableView
+    func makeTableView() -> AnyTableView
     
+    func makeRightBarButtonItem(target: CurrentIdealController) -> UIBarButtonItem
+}
+
+class CurrentIdealControllerDependencyContainer: DependencyContainer
+{
+    // MARK: - Variables
+    
+    var model: NewStockModel
+    var context: Context
+    var stream: Stream
+    var tableView: AnyTableView
+    
+    // MARK: - Initialization
+    
+    init(model: NewStockModel, context: Context, stream: Stream, tableView: AnyTableView? = nil)
+    {
+        self.model = model
+        self.context = context
+        self.stream = stream
+        self.tableView = tableView ?? makeTableView()
+    }
+}
+
+extension CurrentIdealControllerDependencyContainer: CurrentIdealControllerFactory
+{
+    func makeBooleanTableView() -> AnyTableView
+    {
+        let booleanContainer = CurrentIdealBooleanTableViewContainer(
+            stream: stream,
+            style: .grouped,
+            newStockModel: model)
+        let erasedContainer = AnyTableViewContainer(container: booleanContainer)
+        return .init(container: erasedContainer)
+    }
+    
+    func makeNumericTableView() -> AnyTableView
+    {
+        let container = CurrentIdealNumericTableViewContainer(
+            newStockModel: model,
+            stream: stream,
+            style: .grouped)
+        let erasedContainer = AnyTableViewContainer(container: container)
+        return .init(container: erasedContainer)
+    }
+    
+    func makeStateTableView() -> AnyTableView
+    {
+        let container = CurrentIdealStateTableViewContainer(
+            stream: stream,
+            style: .grouped,
+            newStockModel: model)
+        let erasedContainer = AnyTableViewContainer(container: container)
+        return .init(container: erasedContainer)
+    }
+    
+    func makeTableView() -> AnyTableView
+    {
+        if model.stockType == .boolean
+        {
+            makeBooleanTableView()
+        }
+        else if model.isStateMachine
+        {
+            return makeStateTableView()
+        }
+        else
+        {
+            return makeNumericTableView()
+        }
+    }
+    
+    func makeRightBarButtonItem(target: CurrentIdealController) -> UIBarButtonItem
+    {
+        let rightItem = UIBarButtonItem(systemItem: .done)
+        rightItem.target = target
+        rightItem.action = #selector(target.rightBarButtonItemDidTouchUpInside(_:))
+        rightItem.isEnabled = model.validForCurrentIdeal
+        return rightItem
+    }
+}
+
+class CurrentIdealController: ViewController<CurrentIdealControllerDependencyContainer>
+{
     // MARK: - Variables
     
     var id = UUID()
     
-    var newStockModel: NewStockModel
-    var tableView: TableView
-    
-    weak var context: Context?
-    
     // MARK: - Initialization
     
-    init(newStockModel: NewStockModel, context: Context?)
+    required init(container: CurrentIdealControllerDependencyContainer)
     {
-        self.newStockModel = newStockModel
-        self.context = context
-        
-        if newStockModel.stockType == .boolean
-        {
-            tableView = CurrentIdealBooleanTableView(newStockModel: newStockModel)
-        }
-        else if newStockModel.isStateMachine
-        {
-            tableView = CurrentIdealStateTableView(newStockModel: newStockModel)
-        }
-        else
-        {
-            tableView = CurrentIdealNumericTableView(newStockModel: newStockModel)
-        }
-        
-        super.init(nibName: nil, bundle: nil)
-        subscribe(to: AppDelegate.shared.mainStream)
-        
-        view.embed(tableView)
-        
-        let rightItem = UIBarButtonItem(systemItem: .done)
-        rightItem.target = self
-        rightItem.action = #selector(rightBarButtonItemDidTouchUpInside(_:))
-        rightItem.isEnabled = newStockModel.validForCurrentIdeal
-        
-        navigationItem.rightBarButtonItem = rightItem
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
+        super.init(container: container)
+        subscribe(to: container.stream)
     }
     
     deinit
     {
-        unsubscribe(from: AppDelegate.shared.mainStream)
+        unsubscribe(from: container.stream)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        view.embed(container.tableView)
+        
+        let rightItem = container.makeRightBarButtonItem(target: self)
+        navigationItem.rightBarButtonItem = rightItem
     }
     
     // MARK: - Functions
     
     @objc func rightBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        // Save!
-        guard let context = context else { fatalError() }
+        let stock = Stock(context: container.context)
         
-        let stock = Stock(context: context)
-        
-        let title = Symbol(context: context)
-        title.name = newStockModel.title
+        let title = Symbol(context: container.context)
+        title.name = container.model.title
         stock.symbolName = title
         
-        stock.unit = newStockModel.unit
-        stock.valueType = newStockModel.stockType
-        stock.stateMachine = newStockModel.isStateMachine
+        stock.unit = container.model.unit
+        stock.valueType = container.model.stockType
+        stock.stateMachine = container.model.isStateMachine
         
-        let minimumSource = ValueSource(context: context)
-        minimumSource.value = newStockModel.minimum ?? 0
+        let minimumSource = ValueSource(context: container.context)
+        minimumSource.value = container.model.minimum ?? 0
         stock.minimum = minimumSource
         
-        let maximumSource = ValueSource(context: context)
-        maximumSource.value = newStockModel.maximum ?? 100
+        let maximumSource = ValueSource(context: container.context)
+        maximumSource.value = container.model.maximum ?? 100
         stock.maximum = maximumSource
         
-        if newStockModel.stockType == .boolean
+        if container.model.stockType == .boolean
         {
-            let amountSource = BooleanSource(context: context)
-            amountSource.value = newStockModel.currentBool ?? true
+            let amountSource = BooleanSource(context: container.context)
+            amountSource.value = container.model.currentBool ?? true
             stock.amount = amountSource
             
-            let idealSource = BooleanSource(context: context)
-            idealSource.value = newStockModel.idealBool ?? true
+            let idealSource = BooleanSource(context: container.context)
+            idealSource.value = container.model.idealBool ?? true
             stock.ideal = idealSource
         }
-        else if newStockModel.stockType == .percent
+        else if container.model.stockType == .percent
         {
-            let amountSource = ValueSource(context: context)
-            amountSource.value = newStockModel.currentDouble ?? 0
+            let amountSource = ValueSource(context: container.context)
+            amountSource.value = container.model.currentDouble ?? 0
             stock.amount = amountSource
             
-            let idealSource = ValueSource(context: context)
-            idealSource.value = newStockModel.idealDouble ?? 100
+            let idealSource = ValueSource(context: container.context)
+            idealSource.value = container.model.idealDouble ?? 100
             stock.ideal = idealSource
         }
         
-        context.quickSave()
+        container.context.quickSave()
         
         let message = EntityInsertionMessage(entity: stock)
-        AppDelegate.shared.mainStream.send(message: message)
+        container.stream.send(message: message)
         
         navigationItem.rightBarButtonItem?.isEnabled = false
         
@@ -153,24 +223,26 @@ extension CurrentIdealController: Subscriber
         switch message.cellModel.selectionIdentifier
         {
         case .currentBool(let state):
-            newStockModel.currentBool = state
-            tableView.reload(shouldReloadTableView: false)
-            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            container.model.currentBool = state
+            container.tableView.reload(shouldReloadTableView: false)
+            container.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         case .idealBool(let state):
-            newStockModel.idealBool = state
-            tableView.reload(shouldReloadTableView: false)
-            tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            container.model.idealBool = state
+            container.tableView.reload(shouldReloadTableView: false)
+            container.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         case .currentState:
             // Open up the state picker view
-            let detail = StatePickerController(newStockModel: newStockModel, isCurrent: true)
+            let container = StatePickerDependencyContainer(model: container.model, stateType: .current, stream: container.stream)
+            let detail = StatePickerController(container: container)
             navigationController?.pushViewController(detail, animated: true)
         case .idealState:
             // Open up the state picker view
-            let detail = StatePickerController(newStockModel: newStockModel, isCurrent: false)
+            let container = StatePickerDependencyContainer(model: container.model, stateType: .ideal, stream: container.stream)
+            let detail = StatePickerController(container: container)
             navigationController?.pushViewController(detail, animated: true)
         case .statePicker:
-            tableView.shouldReload = true
-            navigationItem.rightBarButtonItem?.isEnabled = newStockModel.validForCurrentIdeal
+            container.tableView.shouldReload = true
+            navigationItem.rightBarButtonItem?.isEnabled = container.model.validForCurrentIdeal
         default:
             break
         }
