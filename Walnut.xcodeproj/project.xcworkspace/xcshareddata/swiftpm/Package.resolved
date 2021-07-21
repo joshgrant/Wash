@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Differ",
+        "repositoryURL": "https://github.com/tonyarnold/Differ",
+        "state": {
+          "branch": "main",
+          "revision": "d8d056e78d84f781d69eeec9b4ebeec154649d74",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

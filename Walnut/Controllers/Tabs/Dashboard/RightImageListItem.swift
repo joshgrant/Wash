@@ -8,13 +8,14 @@
 import Foundation
 import UIKit
 
-struct DashboardPinnedListItem: Hashable
+struct RightImageListItem: ListItem
 {
+    var entity: Entity
     var text: String
     var icon: Icon
     var disclosure: Bool
     
-    var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, DashboardPinnedListItem>
+    var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, RightImageListItem>
     {
         .init { cell, indexPath, item in
             var configuration = cell.defaultContentConfiguration()
@@ -43,7 +44,7 @@ struct DashboardPinnedListItem: Hashable
     
     private func makeAccessories(item: Self) -> [UICellAccessory]
     {
-        return [
+        [
             makeRightIconAccessory(item: item),
             .disclosureIndicator()
         ]

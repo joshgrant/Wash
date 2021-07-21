@@ -37,7 +37,7 @@ public enum Icon: String
     case question = "questionmark"
     case filter = "line.horizontal.3.decrease.circle"
     case checkBoxEmpty = "circle"
-    case checkBoxFilled = "checkmark.circle"
+    case checkBoxFilled = "checkmark.circle" // or try .fill
     case priority = "exclamationmark.triangle.fill" // or remove the fill
     case state = "square.on.circle"
     case min = "dial.min"
@@ -48,7 +48,6 @@ public enum Icon: String
     case infinity = "infinity"
     case delete = "delete.left"
     case enter = "return"
-    
     
     case arrowDown = "arrowtriangle.down.fill"
     case arrowRight = "arrowtriangle.right.fill"
