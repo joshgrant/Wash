@@ -30,6 +30,9 @@ class DashboardListController: UIViewController
         self.dataSource = builder.makeDataSource(collectionView: collectionView)
         super.init(nibName: nil, bundle: nil)
         subscribe(to: builder.stream)
+        
+        title = builder.tabBarItemTitle
+        tabBarItem = builder.makeTabBarItem()
     }
     
     @available(*, unavailable)
@@ -49,17 +52,14 @@ class DashboardListController: UIViewController
     {
         super.viewDidLoad()
         
-        title = builder.tabBarItemTitle
-        tabBarItem = builder.makeTabBarItem()
-        
         collectionView.delegate = self
         collectionView.dataSource = dataSource
         
         view.embed(collectionView)
         
         dataSource.apply(builder.makeInitialSnapshot())
-        dataSource.apply(builder.pinnedSectionSnapshot(), to: .pinned, animatingDifferences: false)
-        dataSource.apply(builder.flowSectionSnapshot(), to: .suggested, animatingDifferences: false)
+//        dataSource.apply(builder.pinnedSectionSnapshot(), to: .pinned, animatingDifferences: false)
+//        dataSource.apply(builder.flowSectionSnapshot(), to: .suggested, animatingDifferences: false)
     }
 }
 

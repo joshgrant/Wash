@@ -176,11 +176,13 @@
 		03CA1FBD26A7869E00A7B10E /* RightImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FBC26A7869E00A7B10E /* RightImageListItem.swift */; };
 		03CA1FBF26A7875900A7B10E /* DashboardListControllerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FBE26A7875900A7B10E /* DashboardListControllerBuilder.swift */; };
 		03CA1FC126A791DB00A7B10E /* SubtitleCheckboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FC026A791DB00A7B10E /* SubtitleCheckboxItem.swift */; };
-		03CA1FC326A7994E00A7B10E /* DashboardListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FC226A7994E00A7B10E /* DashboardListItem.swift */; };
+		03CA1FC326A7994E00A7B10E /* DashboardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FC226A7994E00A7B10E /* DashboardItem.swift */; };
 		03CA1FC526A7B23E00A7B10E /* ListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FC426A7B23E00A7B10E /* ListSectionHeaderView.swift */; };
 		03CA1FC726A7B4D900A7B10E /* SectionHeaderListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FC626A7B4D900A7B10E /* SectionHeaderListItem.swift */; };
 		03CA1FC926A7BDB500A7B10E /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FC826A7BDB500A7B10E /* ListItem.swift */; };
 		03CA1FCB26A7BDBE00A7B10E /* DashboardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FCA26A7BDBE00A7B10E /* DashboardSection.swift */; };
+		03CA1FCD26A87F8100A7B10E /* ListSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FCC26A87F8100A7B10E /* ListSectionHeader.swift */; };
+		03CA1FCF26A8888A00A7B10E /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CA1FCE26A8888A00A7B10E /* UIStackView+Extensions.swift */; };
 		03D1FBF026A62F8A003AE881 /* RootFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D1FBEF26A62F8A003AE881 /* RootFactoryTests.swift */; };
 		03D1FBF226A63071003AE881 /* RootDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D1FBF126A63071003AE881 /* RootDependencyContainer.swift */; };
 		03D1FBF426A63796003AE881 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D1FBF326A63796003AE881 /* DependencyContainer.swift */; };
@@ -412,11 +414,13 @@
 		03CA1FBC26A7869E00A7B10E /* RightImageListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightImageListItem.swift; sourceTree = "<group>"; };
 		03CA1FBE26A7875900A7B10E /* DashboardListControllerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardListControllerBuilder.swift; sourceTree = "<group>"; };
 		03CA1FC026A791DB00A7B10E /* SubtitleCheckboxItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCheckboxItem.swift; sourceTree = "<group>"; };
-		03CA1FC226A7994E00A7B10E /* DashboardListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardListItem.swift; sourceTree = "<group>"; };
+		03CA1FC226A7994E00A7B10E /* DashboardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardItem.swift; sourceTree = "<group>"; };
 		03CA1FC426A7B23E00A7B10E /* ListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionHeaderView.swift; sourceTree = "<group>"; };
 		03CA1FC626A7B4D900A7B10E /* SectionHeaderListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderListItem.swift; sourceTree = "<group>"; };
 		03CA1FC826A7BDB500A7B10E /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		03CA1FCA26A7BDBE00A7B10E /* DashboardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSection.swift; sourceTree = "<group>"; };
+		03CA1FCC26A87F8100A7B10E /* ListSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionHeader.swift; sourceTree = "<group>"; };
+		03CA1FCE26A8888A00A7B10E /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
 		03D1FBEF26A62F8A003AE881 /* RootFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFactoryTests.swift; sourceTree = "<group>"; };
 		03D1FBF126A63071003AE881 /* RootDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootDependencyContainer.swift; sourceTree = "<group>"; };
 		03D1FBF326A63796003AE881 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
@@ -699,6 +703,7 @@
 				03555B2D2686A487006E9EA1 /* UIImage+Extensions.swift */,
 				03FAACB32698CEF500CB7AB6 /* UIViewController+Extensions.swift */,
 				0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */,
+				03CA1FCE26A8888A00A7B10E /* UIStackView+Extensions.swift */,
 			);
 			path = UIKIt;
 			sourceTree = "<group>";
@@ -821,14 +826,15 @@
 			isa = PBXGroup;
 			children = (
 				03CA1FC826A7BDB500A7B10E /* ListItem.swift */,
+				03CA1FC226A7994E00A7B10E /* DashboardItem.swift */,
+				03CA1FCA26A7BDBE00A7B10E /* DashboardSection.swift */,
 				03CA1FB826A7776A00A7B10E /* DashboardListController.swift */,
 				03CA1FBE26A7875900A7B10E /* DashboardListControllerBuilder.swift */,
 				03CA1FBC26A7869E00A7B10E /* RightImageListItem.swift */,
-				03CA1FC226A7994E00A7B10E /* DashboardListItem.swift */,
 				03CA1FC026A791DB00A7B10E /* SubtitleCheckboxItem.swift */,
 				03CA1FC626A7B4D900A7B10E /* SectionHeaderListItem.swift */,
 				03CA1FC426A7B23E00A7B10E /* ListSectionHeaderView.swift */,
-				03CA1FCA26A7BDBE00A7B10E /* DashboardSection.swift */,
+				03CA1FCC26A87F8100A7B10E /* ListSectionHeader.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -1359,6 +1365,7 @@
 				03FAACD8269B610E00CB7AB6 /* BarButtonItem.swift in Sources */,
 				030B2188267FB6C80038C095 /* SuggestedFlowCell.swift in Sources */,
 				03555B0426869E78006E9EA1 /* Subscriber.swift in Sources */,
+				03CA1FCD26A87F8100A7B10E /* ListSectionHeader.swift in Sources */,
 				03FAACB62698D22800CB7AB6 /* LinkSearchControllerTableViewManager.swift in Sources */,
 				0370FEE0268A1E1C001E099B /* ToggleInfoCell.swift in Sources */,
 				0370FEC626892F2B001E099B /* SystemDetailTableViewSelectedMessage.swift in Sources */,
@@ -1417,7 +1424,7 @@
 				038CF6C6267682C700931595 /* ConditionType.swift in Sources */,
 				03FAACBA2698D95600CB7AB6 /* LinkSearchCriteria.swift in Sources */,
 				03C4C48326A4990E0066E6ED /* NumericKeyboard.swift in Sources */,
-				03CA1FC326A7994E00A7B10E /* DashboardListItem.swift in Sources */,
+				03CA1FC326A7994E00A7B10E /* DashboardItem.swift in Sources */,
 				03FAACB82698D52100CB7AB6 /* LinkCell.swift in Sources */,
 				03FC2C0F269C9E9000B8CB36 /* CurrentDetailController.swift in Sources */,
 				03555B452686A487006E9EA1 /* CollectionView.swift in Sources */,
@@ -1478,6 +1485,7 @@
 				03555B602686A487006E9EA1 /* UIImage+Extensions.swift in Sources */,
 				03C4C48C26A6004A0066E6ED /* EntityInsertionMessage.swift in Sources */,
 				038CF6D2267682C700931595 /* EntityType.swift in Sources */,
+				03CA1FCF26A8888A00A7B10E /* UIStackView+Extensions.swift in Sources */,
 				03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */,
 				03555B4A2686A487006E9EA1 /* DatabaseError.swift in Sources */,
 				038CF6C1267682C700931595 /* SourceType.swift in Sources */,

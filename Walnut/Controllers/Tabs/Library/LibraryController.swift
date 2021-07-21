@@ -75,9 +75,13 @@ class LibraryController: ViewController<LibraryControllerContainer>, RouterDeleg
     {
         self.tableView = container.makeTableView()
         self.router = container.makeRouter()
+        
         super.init(container: container)
         router.delegate = self
         subscribe(to: container.stream)
+        
+        tabBarItem = container.makeTabBarItem()
+        title = container.tabBarItemTitle
     }
 
     deinit
@@ -90,10 +94,6 @@ class LibraryController: ViewController<LibraryControllerContainer>, RouterDeleg
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        tabBarItem = container.makeTabBarItem()
-        title = container.tabBarItemTitle
-        
         view.embed(tableView)
     }
 }

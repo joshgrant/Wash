@@ -10,7 +10,6 @@ import UIKit
 
 enum DashboardItem: Hashable
 {
-    case header(_ item: SectionHeaderListItem)
     case pinned(_ item: RightImageListItem)
     case suggestedFlow(_ item: SubtitleCheckboxListItem)
 }

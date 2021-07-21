@@ -37,6 +37,7 @@ class InboxController: ViewController<InboxControllerContainer>
     required init(container: InboxControllerContainer)
     {
         super.init(container: container)
+        
         tabBarItem = container.makeTabBarItem()
         title = container.tabBarItemTitle
     }

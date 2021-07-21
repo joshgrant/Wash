@@ -11,7 +11,6 @@ import CoreData
 
 protocol DashboardListControllerFactory: Factory & ViewControllerTabBarDelegate
 {
-    func makeCollectionLayoutListConfiguration() -> UICollectionLayoutListConfiguration
     func makeCollectionViewLayout() -> UICollectionViewLayout
     func makeCollectionView() -> UICollectionView
     
@@ -47,18 +46,20 @@ class DashboardListControllerBuilder: DashboardListControllerFactory & Dashboard
     
     // MARK: - Factory
     
-    func makeCollectionLayoutListConfiguration() -> UICollectionLayoutListConfiguration
-    {
-        var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
-        configuration.headerMode = .firstItemInSection
-//        configuration.headerMode = .supplementary // TODO: Maybe?
-        return configuration
-    }
-    
     func makeCollectionViewLayout() -> UICollectionViewLayout
     {
-        let configuration = makeCollectionLayoutListConfiguration()
-        let layout = UICollectionViewCompositionalLayout.list(using: configuration)
+        let layout = UICollectionViewCompositionalLayout() { sectionIndex, layoutEnvironment in
+            
+            var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
+            configuration.headerMode = .supplementary
+            configuration.footerMode = .none
+            
+            let section = NSCollectionLayoutSection.list(using: configuration,
+                                                         layoutEnvironment: layoutEnvironment)
+            
+            return section
+        }
+        
         return layout
     }
     
@@ -83,9 +84,6 @@ class DashboardListControllerBuilder: DashboardListControllerFactory & Dashboard
         return { collectionView, indexPath, item in
             switch item
             {
-            case .header(let item):
-                let registration = item.cellRegistration
-                return collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
             case .pinned(let item):
                 let registration = item.cellRegistration
                 return collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
@@ -96,10 +94,49 @@ class DashboardListControllerBuilder: DashboardListControllerFactory & Dashboard
         }
     }
     
+    func makeSupplementaryRegistration() -> UICollectionView.SupplementaryRegistration<ListSectionHeader>
+    {
+        return .init(elementKind: UICollectionView.elementKindSectionHeader) { header, kind, indexPath in
+            switch kind
+            {
+            case UICollectionView.elementKindSectionHeader:
+                switch indexPath.section
+                {
+                case 0:
+                    let model = ListSectionHeaderModel(text: .pinned, icon: .pinFill)
+                    header.configure(with: model)
+                case 1:
+                    let model = ListSectionHeaderModel(text: .flows, icon: .flow)
+                    header.configure(with: model)
+                case 2:
+                    let model = ListSectionHeaderModel(text: .forecast, icon: .forecast)
+                    header.configure(with: model)
+                case 3:
+                    let model = ListSectionHeaderModel(text: .priority, icon: .priority)
+                    header.configure(with: model)
+                default:
+                    fatalError()
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    func makeSupplementaryProvider() -> UICollectionViewDiffableDataSource<DashboardSection, DashboardItem>.SupplementaryViewProvider
+    {
+        return { [unowned self] collectionView, kind, indexPath in
+            let registration = self.makeSupplementaryRegistration()
+            return collectionView.dequeueConfiguredReusableSupplementary(using: registration, for: indexPath)
+        }
+    }
+    
     func makeDataSource(collectionView: UICollectionView) -> UICollectionViewDiffableDataSource<DashboardSection, DashboardItem>
     {
         let cellProvider = makeCellProvider()
-        return .init(collectionView: collectionView, cellProvider: cellProvider)
+        let dataSource = UICollectionViewDiffableDataSource<DashboardSection, DashboardItem>(collectionView: collectionView, cellProvider: cellProvider)
+        dataSource.supplementaryViewProvider = makeSupplementaryProvider()
+        return dataSource
     }
     
     // MARK: - Functions
@@ -113,32 +150,33 @@ class DashboardListControllerBuilder: DashboardListControllerFactory & Dashboard
                                  .suggested,
                                  .forecast])
         
+        snapshot.appendItems(makePinnedItems(), toSection: .pinned)
         snapshot.appendItems(makeSuggestedFlowItems(), toSection: .suggested)
         
         return snapshot
     }
     
-    func pinnedSectionSnapshot() -> NSDiffableDataSourceSectionSnapshot<DashboardItem>
-    {
-        var snapshot = NSDiffableDataSourceSectionSnapshot<DashboardItem>()
-        let header = DashboardItem.header(.pinned)
-        let items = makePinnedItems()
-        snapshot.append([header])
-        snapshot.append(items, to: header)
-        snapshot.expand([header])
-        return snapshot
-    }
-    
-    func flowSectionSnapshot() -> NSDiffableDataSourceSectionSnapshot<DashboardItem>
-    {
-        var snapshot = NSDiffableDataSourceSectionSnapshot<DashboardItem>()
-        let header = DashboardItem.header(.flows)
-        let items = makeSuggestedFlowItems()
-        snapshot.append([header])
-        snapshot.append(items, to: header)
-        snapshot.expand([header])
-        return snapshot
-    }
+//    func pinnedSectionSnapshot() -> NSDiffableDataSourceSectionSnapshot<DashboardItem>
+//    {
+//        var snapshot = NSDiffableDataSourceSectionSnapshot<DashboardItem>()
+//        let header = DashboardItem.header(.pinned)
+//        let items = makePinnedItems()
+//        snapshot.append([header])
+//        snapshot.append(items, to: header)
+//        snapshot.expand([header])
+//        return snapshot
+//    }
+//
+//    func flowSectionSnapshot() -> NSDiffableDataSourceSectionSnapshot<DashboardItem>
+//    {
+//        var snapshot = NSDiffableDataSourceSectionSnapshot<DashboardItem>()
+//        let header = DashboardItem.header(.flows)
+//        let items = makeSuggestedFlowItems()
+//        snapshot.append([header])
+//        snapshot.append(items, to: header)
+//        snapshot.expand([header])
+//        return snapshot
+//    }
     
     private func makePinnedItems() -> [DashboardItem]
     {
