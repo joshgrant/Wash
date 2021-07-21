@@ -48,7 +48,8 @@ extension StocksHeaderViewModelDependencyContainer: StocksHeaderViewModelFactory
     
     func makeSearchButtonActionClosure() -> ActionClosure
     {
-        ActionClosure { [unowned self] _ in
+        ActionClosure { [weak self] _ in
+            guard let self = self else { return }
             let message = SectionHeaderSearchMessage(entityToSearchFrom: self.system, typeToSearch: Stock.self)
             self.stream.send(message: message)
         }
@@ -56,7 +57,8 @@ extension StocksHeaderViewModelDependencyContainer: StocksHeaderViewModelFactory
     
     func makeAddButtonActionClosure() -> ActionClosure
     {
-        ActionClosure { [unowned self] _ in
+        ActionClosure { [weak self] _ in
+            guard let self = self else { return }
             let message = SectionHeaderAddMessage(entityToAddTo: self.system, entityType: Stock.self)
             self.stream.send(message: message)
         }

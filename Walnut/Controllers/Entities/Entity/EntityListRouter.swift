@@ -55,6 +55,12 @@ class EntityListRouter: Router<EntityListRouterContainer>
             let detailNavigation = UINavigationController(rootViewController: controller)
             detailNavigation.isModalInPresentation = true
             delegate?.navigationController?.present(detailNavigation, animated: true, completion: nil)
+        case is System.Type:
+            let builder = NewSystemControllerBuilder(context: container.context, stream: container.stream)
+            let controller = builder.makeController()
+            let navigation = UINavigationController(rootViewController: controller)
+            navigation.isModalInPresentation = true
+            delegate?.navigationController?.present(navigation, animated: true, completion: nil)
         default:
             let entity = entityType.init(context: container.context)
             entity.createdDate = Date()

@@ -27,7 +27,7 @@ class NewStockControllerContainer: DependencyContainer
     
     // MARK: - Initialization
     
-    init(context: Context, stream: Stream, router: NewStockRouter? = nil, tableView: NewStockTableView? = nil)
+    init(context: Context, stream: Stream)
     {
         self.model = NewStockModel()
         self.context = context
