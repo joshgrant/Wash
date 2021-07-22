@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class ViewController<Container: DependencyContainer>: UIViewController
+open class ViewController<Container>: UIViewController
 {
     // MARK: - Variables
     

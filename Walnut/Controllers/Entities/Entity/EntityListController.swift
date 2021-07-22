@@ -17,7 +17,7 @@ protocol EntityListFactory: Factory
     func makeRouter() -> EntityListRouter
 }
 
-class EntityListDependencyContainer: DependencyContainer
+class EntityListContainer: Container
 {
     // MARK: - Variables
     
@@ -39,13 +39,13 @@ class EntityListDependencyContainer: DependencyContainer
     }
 }
 
-extension EntityListDependencyContainer: EntityListFactory
+extension EntityListContainer: EntityListFactory
 {
     func makeTableView() -> EntityListTableView
     {
         let model = makeModel()
         
-        let container = EntityListTableViewDependencyContainer(
+        let container = EntityListTableViewContainer(
             model: model,
             stream: stream,
             style: .grouped,
@@ -83,7 +83,7 @@ extension EntityListDependencyContainer: EntityListFactory
     }
 }
 
-class EntityListController: ViewController<EntityListDependencyContainer>, RouterDelegate
+class EntityListController: ViewController<EntityListContainer>, RouterDelegate
 {
     // MARK: - Variables
     
@@ -94,7 +94,7 @@ class EntityListController: ViewController<EntityListDependencyContainer>, Route
     
     // MARK: - Initialization
     
-    required init(container: EntityListDependencyContainer)
+    required init(container: EntityListContainer)
     {
         super.init(container: container)
         container.router.delegate = self

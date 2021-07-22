@@ -17,7 +17,7 @@ protocol NewStockControllerFactory: Factory
     func makeRightItem(target: NewStockController) -> UIBarButtonItem
 }
 
-class NewStockControllerContainer: DependencyContainer
+class NewStockControllerContainer: Container
 {
     // MARK: - Variables
     

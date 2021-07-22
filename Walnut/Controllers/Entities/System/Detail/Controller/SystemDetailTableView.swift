@@ -19,7 +19,7 @@ protocol SystemDetailTableViewFactory: Factory
     func makeNoteSection() -> TableViewSection
 }
 
-class SystemDetailTableViewContainer: TableViewDependencyContainer
+class SystemDetailTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     
@@ -101,7 +101,7 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
                 disclosure: true)
         }
         
-        let headerContainer = StocksHeaderViewModelDependencyContainer(system: system, stream: stream)
+        let headerContainer = StocksHeaderViewModelContainer(system: system, stream: stream)
         let header = headerContainer.makeHeaderViewModel()
         
         return TableViewSection(
@@ -122,7 +122,7 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
         }
         
         return TableViewSection(
-            header: SystemDetailFlowsHeaderViewModel(),
+            header: .systemDetailFlows,
             models: models)
     }
     
@@ -139,7 +139,7 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
         }
         
         return TableViewSection(
-            header: EventsHeaderViewModel(),
+            header: .events,
             models: models)
     }
     
@@ -156,7 +156,7 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
         }
         
         return TableViewSection(
-            header: NotesHeaderViewModel(),
+            header: .notes,
             models: models)
     }
 }

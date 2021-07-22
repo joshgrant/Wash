@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class EntityListTableViewDependencyContainer: TableViewDependencyContainer
+class EntityListTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     
@@ -30,11 +30,11 @@ class EntityListTableViewDependencyContainer: TableViewDependencyContainer
     }
 }
 
-class EntityListTableView: TableView<EntityListTableViewDependencyContainer>
+class EntityListTableView: TableView<EntityListTableViewContainer>
 {
     // MARK: - Initialization
 
-    required init(container: EntityListTableViewDependencyContainer)
+    required init(container: EntityListTableViewContainer)
     {
         super.init(container: container)
         configure()

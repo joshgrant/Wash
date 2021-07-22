@@ -17,7 +17,7 @@ protocol LinkSearchControllerFactory: Factory
     func makeAddButton(target: LinkSearchController) -> UIBarButtonItem
 }
 
-class LinkSearchControllerContainer: DependencyContainer
+class LinkSearchControllerContainer: Container
 {
     // MARK: - Variables
     

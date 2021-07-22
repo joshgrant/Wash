@@ -15,7 +15,7 @@ protocol MinMaxFactory: Factory
     func makeRightItem(target: MinMaxController) -> UIBarButtonItem
 }
 
-class MinMaxContainer: DependencyContainer
+class MinMaxContainer: Container
 {
     // MARK: - Variables
     
@@ -99,7 +99,7 @@ class MinMaxController: ViewController<MinMaxContainer>
     @objc func nextButtonDidTouchUpInside(_ sender: UIBarButtonItem)
     {
         transferCellContentToModels()
-        let container = CurrentIdealControllerDependencyContainer(
+        let container = CurrentIdealControllerContainer(
             model: container.model,
             context: container.context,
             stream: container.stream)

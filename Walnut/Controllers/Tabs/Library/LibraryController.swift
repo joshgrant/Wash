@@ -13,7 +13,7 @@ protocol LibraryControllerFactory: ViewControllerTabBarDelegate, Factory
     func makeTableView() -> TableView<LibraryTableViewContainer>
 }
 
-class LibraryControllerContainer: DependencyContainer
+class LibraryControllerContainer: Container
 {
     // MARK: - Variables
     

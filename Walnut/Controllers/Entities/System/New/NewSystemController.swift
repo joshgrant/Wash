@@ -11,12 +11,12 @@ protocol NewSystemControllerFactory: Factory
 {
     func makeController() -> NewSystemController
     func makeRouter() -> NewSystemControllerRouter
-    func makeTableView() -> TableView<NewSystemTableViewBuilder>
+    func makeTableView() -> NewSystemTableView
     func makeCancelButton(responder: NewSystemControllerResponder) -> UIBarButtonItem
     func makeDoneButton(responder: NewSystemControllerResponder) -> UIBarButtonItem
 }
 
-protocol NewSystemControllerContainer: DependencyContainer
+protocol NewSystemControllerContainer: Container
 {
     var model: NewSystemModel { get set }
     var context: Context { get set }
@@ -53,7 +53,7 @@ class NewSystemControllerBuilder: NewSystemControllerFactory & NewSystemControll
         .init(container: self)
     }
     
-    func makeTableView() -> TableView<NewSystemTableViewBuilder>
+    func makeTableView() -> NewSystemTableView
     {
         let builder = NewSystemTableViewBuilder(
             newSystemModel: model,
@@ -89,7 +89,7 @@ class NewSystemController: ViewController<NewSystemControllerBuilder>, RouterDel
     // MARK: - Variables
     
     var router: NewSystemControllerRouter
-    var tableView: TableView<NewSystemTableViewBuilder>
+    var tableView: NewSystemTableView
     
     // MARK: - Initialization
     
@@ -126,9 +126,7 @@ class NewSystemController: ViewController<NewSystemControllerBuilder>, RouterDel
     {
         // Get the title of the cell...
         
-        // FIXME: Not great to access by index path
-        let titleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextEditCell
-        let title = titleCell.textField.text
+        let title = tableView.titleCell.textField.text
         
         let system = System(context: container.context)
         
@@ -144,5 +142,4 @@ class NewSystemController: ViewController<NewSystemControllerBuilder>, RouterDel
         router.routeDone()
     }
 }
-
 

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct RightImageListItem: ListItem
+struct RightImageListItem:      ListItem
 {
     var entity: Entity
     var text: String

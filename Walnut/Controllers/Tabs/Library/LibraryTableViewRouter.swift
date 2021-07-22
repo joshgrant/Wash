@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class LibraryTableViewRouterContainer: DependencyContainer
+class LibraryTableViewRouterContainer: Container
 {
     // MARK: - Variables
     
@@ -46,7 +46,7 @@ class LibraryTableViewRouter: Router<LibraryTableViewRouterContainer>
     
     func routeToDetail(entityType: Entity.Type)
     {
-        let container = EntityListDependencyContainer(
+        let container = EntityListContainer(
             entityType: entityType,
             context: container.context,
             stream: container.stream)

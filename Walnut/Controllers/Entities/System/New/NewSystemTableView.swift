@@ -9,11 +9,11 @@ import UIKit
 
 protocol NewSystemTableviewFactory: Factory
 {
-    func makeTableView() -> TableView<NewSystemTableViewBuilder>
+    func makeTableView() -> NewSystemTableView
     func makeModel() -> TableViewModel
 }
 
-protocol NewSystemTableViewContainer: TableViewDependencyContainer
+protocol NewSystemTableViewContainer: TableViewContainer
 {
     var model: TableViewModel { get set }
     var stream: Stream { get set }
@@ -41,7 +41,7 @@ class NewSystemTableViewBuilder: NewSystemTableviewFactory & NewSystemTableViewC
     
     // MARK: - Functions
     
-    func makeTableView() -> TableView<NewSystemTableViewBuilder>
+    func makeTableView() -> NewSystemTableView
     {
         .init(container: self)
     }
@@ -63,5 +63,14 @@ class NewSystemTableViewBuilder: NewSystemTableviewFactory & NewSystemTableViewC
                 entity: nil,
                 stream: stream)
         ])
+    }
+}
+
+class NewSystemTableView: TableView<NewSystemTableViewBuilder>
+{
+    var titleCell: TextEditCell
+    {
+        let indexPath = IndexPath(row: 0, section: 0)
+        return cellForRow(at: indexPath) as! TextEditCell
     }
 }

@@ -16,7 +16,7 @@ protocol SettingsControllerFactory: Factory, ViewControllerTabBarDelegate
 // what fields are necessary. Then, we can have a builder that
 // implements both the factory and the container protocols
 
-class SettingsControllerContainer: DependencyContainer
+class SettingsControllerContainer: Container
 {
     public var tabBarItemTitle: String { "Settings".localized }
     public var tabBarImage: UIImage? { Icon.settings.getImage() }

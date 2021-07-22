@@ -13,7 +13,7 @@ open class Database
     // MARK: - Variables
     
     public var modelName: String
-    public var container: Container
+    public var container: CloudKitContainer
     
     public var context: Context { container.context }
     
@@ -25,7 +25,7 @@ open class Database
         
         do
         {
-            container = try Container(modelName: modelName)
+            container = try CloudKitContainer(modelName: modelName)
             try container.loadPersistentStores()
         }
         catch

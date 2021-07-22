@@ -19,7 +19,7 @@ protocol DashboardListControllerFactory: Factory & ViewControllerTabBarDelegate
     func makeDataSource(collectionView: UICollectionView) -> UICollectionViewDiffableDataSource<DashboardSection, DashboardItem>
 }
 
-protocol DashboardListControllerContainer: DependencyContainer
+protocol DashboardListControllerContainer: Container
 {
     var context: Context { get set }
     var stream: Stream { get set }

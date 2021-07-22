@@ -14,7 +14,7 @@ protocol SymbolControllerFactory: Factory
     func makeTableView() -> TableView<SymbolTableViewContainer>
 }
 
-class SymbolControllerContainer: DependencyContainer
+class SymbolControllerContainer: Container
 {
     // MARK: - Variables
     

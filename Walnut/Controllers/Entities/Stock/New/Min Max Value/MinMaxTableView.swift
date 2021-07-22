@@ -14,7 +14,7 @@ protocol MinMaxTableViewFactory: Factory
     func makeConstraintsSection() -> TableViewSection
 }
 
-class MinMaxTableViewContainer: TableViewDependencyContainer
+class MinMaxTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

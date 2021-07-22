@@ -15,7 +15,7 @@ protocol NewUnitTableViewFactory: Factory
     func makeInfoSection() -> TableViewSection
 }
 
-class NewUnitTableViewContainer: TableViewDependencyContainer
+class NewUnitTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

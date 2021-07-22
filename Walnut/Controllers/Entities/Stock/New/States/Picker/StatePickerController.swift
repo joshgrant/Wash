@@ -19,7 +19,7 @@ protocol StatePickerFactory: Factory
     func makeTableView() -> TableView<StatePickerTableViewContainer>
 }
 
-class StatePickerDependencyContainer: DependencyContainer
+class StatePickerContainer: Container
 {
     // MARK: - Variables
     
@@ -37,7 +37,7 @@ class StatePickerDependencyContainer: DependencyContainer
     }
 }
 
-extension StatePickerDependencyContainer: StatePickerFactory
+extension StatePickerContainer: StatePickerFactory
 {
     func makeTableView() -> TableView<StatePickerTableViewContainer>
     {
@@ -50,7 +50,7 @@ extension StatePickerDependencyContainer: StatePickerFactory
     }
 }
 
-class StatePickerController: ViewController<StatePickerDependencyContainer>
+class StatePickerController: ViewController<StatePickerContainer>
 {
     // MARK: - Variables
     
@@ -59,7 +59,7 @@ class StatePickerController: ViewController<StatePickerDependencyContainer>
 
     // MARK: - Initialization
     
-    required init(container: StatePickerDependencyContainer)
+    required init(container: StatePickerContainer)
     {
         tableView = container.makeTableView()
         super.init(container: container)
@@ -124,7 +124,7 @@ protocol StatePickerTableViewFactory: Factory
     func makeStatesSection() -> TableViewSection
 }
 
-class StatePickerTableViewContainer: TableViewDependencyContainer
+class StatePickerTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

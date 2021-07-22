@@ -14,7 +14,6 @@ struct ListSectionHeaderModel
     var icon: Icon?
     
     var disclose: ActionClosure?
-    var search: ActionClosure?
     var link: ActionClosure?
     var add: ActionClosure?
     var edit: ActionClosure?
@@ -59,7 +58,6 @@ class ListSectionHeader: UICollectionReusableView
             makeImageView(with: model),
             makeTitleLabel(with: model),
             SpacerView(),
-            makeSearchButton(with: model),
             makeLinkButton(with: model),
             makeAddButton(with: model),
             makeEditButton(with: model),
@@ -107,22 +105,6 @@ class ListSectionHeader: UICollectionReusableView
         label.text = model.text.localizedUppercase
         
         return label
-    }
-    
-    public func makeSearchButton(with model: ListSectionHeaderModel) -> UIButton?
-    {
-        guard let search = model.search else { return nil }
-        
-        let button = UIButton()
-        
-        button.setImage(Icon.search.getImage(), for: .normal)
-        button.tintColor = .tableViewHeaderIcon
-        button.set(width: 44, height: 44)
-        button.addTarget(search,
-                         action: #selector(search.perform(sender:)),
-                         for: .touchUpInside)
-        
-        return button
     }
     
     public func makeLinkButton(with model: ListSectionHeaderModel) -> UIButton?

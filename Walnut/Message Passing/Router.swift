@@ -13,7 +13,7 @@ public protocol RouterDelegate: AnyObject
     var navigationController: UINavigationController? { get }
 }
 
-public class Router<Container: DependencyContainer>
+public class Router<Container>
 {
     // MARK: - Variables
     

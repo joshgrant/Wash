@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class StockDetailRouterContainer: DependencyContainer
+class StockDetailRouterContainer: Container
 {
     // MARK: - Variables
     

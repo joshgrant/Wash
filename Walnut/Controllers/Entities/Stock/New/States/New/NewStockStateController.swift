@@ -14,7 +14,7 @@ protocol NewStockStateFactory: Factory
     func makeRightBarButtonItem(target: NewStockStateController) -> UIBarButtonItem
 }
 
-class NewStockStateContainer: DependencyContainer
+class NewStockStateContainer: Container
 {
     // MARK: - Variables
     
@@ -100,7 +100,7 @@ class NewStockStateController: ViewController<NewStockStateContainer>
     
     @objc func rightBarButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        let container = CurrentIdealControllerDependencyContainer(
+        let container = CurrentIdealControllerContainer(
             model: container.model,
             context: container.context,
             stream: container.stream)

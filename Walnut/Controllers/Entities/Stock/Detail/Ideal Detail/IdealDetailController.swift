@@ -14,7 +14,7 @@ protocol IdealDetailFactory: Factory
     func makeTableView() -> TableView<IdealDetailTableViewContainer>
 }
 
-class IdealDetailContainer: DependencyContainer
+class IdealDetailContainer: Container
 {
     // MARK: - Variables
     

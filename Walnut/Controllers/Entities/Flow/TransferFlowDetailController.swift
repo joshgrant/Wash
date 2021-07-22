@@ -19,7 +19,7 @@ protocol TransferFlowFactory: Factory
     func makeRunButton(responder: TransferFlowDetailResponder) -> UIBarButtonItem
 }
 
-class TransferFlowDetailDependencyContainer: DependencyContainer
+class TransferFlowDetailContainer: Container
 {
     // MARK: - Variables
     
@@ -40,7 +40,7 @@ class TransferFlowDetailDependencyContainer: DependencyContainer
     }
 }
 
-extension TransferFlowDetailDependencyContainer: TransferFlowFactory
+extension TransferFlowDetailContainer: TransferFlowFactory
 {
     func makeController() -> TransferFlowDetailController
     {
@@ -97,7 +97,7 @@ extension TransferFlowDetailDependencyContainer: TransferFlowFactory
     }
 }
 
-class TransferFlowDetailController: ViewController<TransferFlowDetailDependencyContainer>, RouterDelegate
+class TransferFlowDetailController: ViewController<TransferFlowDetailContainer>, RouterDelegate
 {
     // MARK: - Variables
     
@@ -113,7 +113,7 @@ class TransferFlowDetailController: ViewController<TransferFlowDetailDependencyC
     
     // MARK: - Initialization
     
-    required init(container: TransferFlowDetailDependencyContainer)
+    required init(container: TransferFlowDetailContainer)
     {
         let responder = container.makeResponder()
      

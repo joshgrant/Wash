@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol TableViewDependencyContainer: DependencyContainer
+protocol TableViewContainer: Container
 {
     var model: TableViewModel { get set }
     var stream: Stream { get set }
     var style: UITableView.Style { get }
 }
 
-class TableView<Container: TableViewDependencyContainer>: UITableView, UITableViewDelegate, UITableViewDataSource
+class TableView<Container: TableViewContainer>: UITableView, UITableViewDelegate, UITableViewDataSource
 {
     // MARK: - Variables
     

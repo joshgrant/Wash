@@ -14,7 +14,7 @@ protocol LibraryTableViewFactory: Factory
     func makeModel() -> TableViewModel
 }
 
-class LibraryTableViewContainer: TableViewDependencyContainer
+class LibraryTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

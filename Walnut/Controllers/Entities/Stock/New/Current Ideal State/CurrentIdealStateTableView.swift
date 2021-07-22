@@ -14,7 +14,7 @@ protocol CurrentIdealStateTableViewFactory: Factory
     func makeGoalSection() -> TableViewSection
 }
 
-class CurrentIdealStateTableViewContainer: TableViewDependencyContainer
+class CurrentIdealStateTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

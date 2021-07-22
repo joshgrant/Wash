@@ -10,7 +10,7 @@ import UIKit
 
 // TODO: Automatic "next" button updates when the data model changes...
 
-class AnyTableViewContainer: TableViewDependencyContainer
+class AnyTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     
@@ -20,7 +20,7 @@ class AnyTableViewContainer: TableViewDependencyContainer
     
     // MARK: - Initialization
     
-    init(container: TableViewDependencyContainer)
+    init(container: TableViewContainer)
     {
         self.model = container.model
         self.stream = container.stream
@@ -44,7 +44,7 @@ protocol CurrentIdealControllerFactory: Factory
     func makeRightBarButtonItem(target: CurrentIdealController) -> UIBarButtonItem
 }
 
-class CurrentIdealControllerDependencyContainer: DependencyContainer
+class CurrentIdealControllerContainer: Container
 {
     // MARK: - Variables
     
@@ -62,7 +62,7 @@ class CurrentIdealControllerDependencyContainer: DependencyContainer
     }
 }
 
-extension CurrentIdealControllerDependencyContainer: CurrentIdealControllerFactory
+extension CurrentIdealControllerContainer: CurrentIdealControllerFactory
 {
     func makeController() -> CurrentIdealController
     {
@@ -125,7 +125,7 @@ extension CurrentIdealControllerDependencyContainer: CurrentIdealControllerFacto
     }
 }
 
-class CurrentIdealController: ViewController<CurrentIdealControllerDependencyContainer>
+class CurrentIdealController: ViewController<CurrentIdealControllerContainer>
 {
     // MARK: - Variables
     
@@ -134,7 +134,7 @@ class CurrentIdealController: ViewController<CurrentIdealControllerDependencyCon
     
     // MARK: - Initialization
     
-    required init(container: CurrentIdealControllerDependencyContainer)
+    required init(container: CurrentIdealControllerContainer)
     {
         tableView = container.makeTableView()
         super.init(container: container)
@@ -239,12 +239,12 @@ extension CurrentIdealController: Subscriber
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         case .currentState:
             // Open up the state picker view
-            let container = StatePickerDependencyContainer(model: container.model, stateType: .current, stream: container.stream)
+            let container = StatePickerContainer(model: container.model, stateType: .current, stream: container.stream)
             let detail = StatePickerController(container: container)
             navigationController?.pushViewController(detail, animated: true)
         case .idealState:
             // Open up the state picker view
-            let container = StatePickerDependencyContainer(model: container.model, stateType: .ideal, stream: container.stream)
+            let container = StatePickerContainer(model: container.model, stateType: .ideal, stream: container.stream)
             let detail = StatePickerController(container: container)
             navigationController?.pushViewController(detail, animated: true)
         case .statePicker:

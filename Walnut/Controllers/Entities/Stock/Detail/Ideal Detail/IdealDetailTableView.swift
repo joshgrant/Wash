@@ -16,7 +16,7 @@ protocol IdealDetailTableViewFactory: Factory
     func makeHistorySection() -> TableViewSection
 }
 
-class IdealDetailTableViewContainer: TableViewDependencyContainer
+class IdealDetailTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

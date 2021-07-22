@@ -45,7 +45,6 @@ open class TableHeaderViewModel
 extension TableHeaderViewModel
 {
     static let info = TableHeaderViewModel(title: "Info".localized)
-    static let events = TableHeaderViewModel(title: "Events".localized)
     static let history = TableHeaderViewModel(title: "History".localized)
     static let pinned = TableHeaderViewModel(title: "Pinned".localized, icon: .pin)
     static let flows = TableHeaderViewModel(title: "Flows".localized, icon: .flow)
@@ -60,4 +59,46 @@ extension TableHeaderViewModel
     static let stateMachine = TableHeaderViewModel(title: "States".localized)
     static let constraints = TableHeaderViewModel(title: "Constraints".localized)
     static let goal = TableHeaderViewModel(title: "Goal".localized)
+    
+    static let outflows = TableHeaderViewModel(title: "Outflows".localized)
+    static let inflows = TableHeaderViewModel(title: "Inflows".localized)
+    
+    static let subsystems: TableHeaderViewModel = {
+        let model = TableHeaderViewModel(title: "Subsystems".localized, icon: .system)
+        model.disclosureTriangleActionClosure = ActionClosure(performClosure: { sender in print("DISCLOSE")})
+        model.searchButtonActionClosure = ActionClosure(performClosure: { sender in print("SEARCH") })
+        model.addButtonActionClosure = ActionClosure(performClosure: { sender in print("ADD") })
+        return model
+    }()
+    
+    static let systemDetailFlows: TableHeaderViewModel = {
+        let model = TableHeaderViewModel(title: "Flows".localized, icon: .flow)
+        model.disclosureTriangleActionClosure = ActionClosure(performClosure: { sender in print("DISCLOSE")})
+        model.searchButtonActionClosure = ActionClosure(performClosure: { sender in print("SEARCH") })
+        model.addButtonActionClosure = ActionClosure(performClosure: { sender in print("ADD") })
+        return model
+    }()
+    
+    static let states: TableHeaderViewModel = {
+        let model = TableHeaderViewModel(title: "States".localized, icon: .state)
+        model.disclosureTriangleActionClosure = ActionClosure(performClosure: { sender in print("DISCLOSE")})
+        model.editButtonActionClosure = ActionClosure(performClosure: { sender in print("EDIT") })
+        return model
+    }()
+    
+    static let notes: TableHeaderViewModel = {
+        let model = TableHeaderViewModel(title: "Notes".localized, icon: .note)
+        model.disclosureTriangleActionClosure = ActionClosure(performClosure: { sender in print("DISCLOSE")})
+        model.searchButtonActionClosure = ActionClosure(performClosure: { sender in print("SEARCH") })
+        model.addButtonActionClosure = ActionClosure(performClosure: { sender in print("ADD") })
+        return model
+    }()
+    
+    static let events: TableHeaderViewModel = {
+        let model = TableHeaderViewModel(title: "Events".localized, icon: .event)
+        model.disclosureTriangleActionClosure = ActionClosure(performClosure: { sender in print("DISCLOSE")})
+        model.searchButtonActionClosure = ActionClosure(performClosure: { sender in print("SEARCH") })
+        model.addButtonActionClosure = ActionClosure(performClosure: { sender in print("ADD") })
+        return model
+    }()
 }

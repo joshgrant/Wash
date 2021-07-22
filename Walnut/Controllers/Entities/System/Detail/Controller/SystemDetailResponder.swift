@@ -13,7 +13,7 @@ protocol SystemDetailResponderFactory: Factory
     func makeResponder() -> SystemDetailResponder
 }
 
-class SystemDetailResponderContainer: DependencyContainer
+class SystemDetailResponderContainer: Container
 {
     // MARK: - Variables
     

@@ -16,7 +16,7 @@ protocol StockDetailFactory: Factory
     func makeTableView() -> TableView<StockDetailTableViewContainer>
 }
 
-class StockDetailContainer: DependencyContainer
+class StockDetailContainer: Container
 {
     // MARK: - Variables
     

@@ -12,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
     // MARK: - Variables
     
     var window: UIWindow?
-    var container = RootDependencyContainer()
+    var container = RootContainer()
 
     // MARK: - Functions
     

@@ -14,7 +14,7 @@ protocol CurrentDetailFactory: Factory
     func makeTableView() -> TableView<CurrentDetailTableViewContainer>
 }
 
-class CurrentDetailContainer: DependencyContainer
+class CurrentDetailContainer: Container
 {
     // MARK: - Variables
     

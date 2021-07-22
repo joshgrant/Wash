@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class EntityListRouterContainer: DependencyContainer
+class EntityListRouterContainer: Container
 {
     // MARK: - Variables
     

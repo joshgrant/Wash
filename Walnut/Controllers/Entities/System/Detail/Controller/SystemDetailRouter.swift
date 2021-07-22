@@ -13,7 +13,7 @@ protocol SystemDetailRouterFactory: Factory
     func makeRouter() -> SystemDetailRouter
 }
 
-class SystemDetailRouterContainer: DependencyContainer
+class SystemDetailRouterContainer: Container
 {
     // MARK: - Variables
     

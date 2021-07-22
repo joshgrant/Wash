@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TransferFlowDetailRouterContainer: DependencyContainer
+class TransferFlowDetailRouterContainer: Container
 {
     // MARK: - Variables
     

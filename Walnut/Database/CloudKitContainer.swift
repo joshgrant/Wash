@@ -1,5 +1,5 @@
 //
-//  Container.swift
+//  CloudKitContainer.swift
 //  ProgrammaticUI
 //
 //  Created by Joshua Grant on 6/12/21.
@@ -7,9 +7,9 @@
 
 import CoreData
 
-public typealias Container = NSPersistentCloudKitContainer
+public typealias CloudKitContainer = NSPersistentCloudKitContainer
 
-public extension Container
+public extension CloudKitContainer
 {
     // MARK: - Variables
     

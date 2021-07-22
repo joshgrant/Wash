@@ -16,7 +16,7 @@ protocol NewStockTableViewFactory: Factory
     func makeStateMachineSection() -> TableViewSection
 }
 
-class NewStockTableViewContainer: TableViewDependencyContainer
+class NewStockTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

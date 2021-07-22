@@ -16,7 +16,7 @@ protocol StocksHeaderViewModelFactory: Factory
     func makeAddButtonActionClosure() -> ActionClosure
 }
 
-class StocksHeaderViewModelDependencyContainer: DependencyContainer
+class StocksHeaderViewModelContainer: Container
 {
     // MARK: - Variables
     
@@ -32,7 +32,7 @@ class StocksHeaderViewModelDependencyContainer: DependencyContainer
     }
 }
 
-extension StocksHeaderViewModelDependencyContainer: StocksHeaderViewModelFactory
+extension StocksHeaderViewModelContainer: StocksHeaderViewModelFactory
 {
     func makeHeaderViewModel() -> StocksHeaderViewModel
     {
@@ -69,7 +69,7 @@ class StocksHeaderViewModel: TableHeaderViewModel
 {
     // MARK: - Initialization
     
-    convenience init(container: StocksHeaderViewModelDependencyContainer)
+    convenience init(container: StocksHeaderViewModelContainer)
     {
         self.init(title: "Stocks".localized, icon: .stock)
         

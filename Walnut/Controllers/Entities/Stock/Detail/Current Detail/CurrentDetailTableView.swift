@@ -17,7 +17,7 @@ protocol CurrentDetailTableViewFactory: Factory
     func makeHistorySection() -> TableViewSection
 }
 
-class CurrentDetailTableViewContainer: TableViewDependencyContainer
+class CurrentDetailTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

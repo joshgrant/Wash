@@ -20,7 +20,7 @@ protocol SystemDetailFactory: Factory
     func makePinNavigationItem(responder: SystemDetailResponder) -> UIBarButtonItem
 }
 
-class SystemDetailContainer: DependencyContainer
+class SystemDetailContainer: Container
 {
     // MARK: - Variables
     

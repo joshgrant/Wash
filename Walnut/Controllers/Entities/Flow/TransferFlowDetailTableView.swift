@@ -16,7 +16,7 @@ protocol TransferFlowDetailTableViewFactory: Factory
     func makeHistorySection() -> TableViewSection
 }
 
-class TransferFlowDetailTableViewContainer: TableViewDependencyContainer
+class TransferFlowDetailTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

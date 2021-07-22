@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class NewStockRouterContainer: DependencyContainer
+class NewStockRouterContainer: Container
 {
     // MARK: - Variables
     
@@ -76,7 +76,7 @@ class NewStockRouter: Router<NewStockRouterContainer>
     
     func routeToCurrentIdealState()
     {
-        let container = CurrentIdealControllerDependencyContainer(
+        let container = CurrentIdealControllerContainer(
             model: container.model,
             context: container.context,
             stream: container.stream)

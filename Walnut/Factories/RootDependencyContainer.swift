@@ -1,5 +1,5 @@
 //
-//  RootDependencyContainer.swift
+//  RootContainer.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 7/19/21.
@@ -13,7 +13,7 @@ protocol RootFactory: Factory
     func makeTabBarController() -> UITabBarController
 }
 
-class RootDependencyContainer: DependencyContainer
+class RootContainer: Container
 {
     // MARK: - Variables
     
@@ -31,7 +31,7 @@ class RootDependencyContainer: DependencyContainer
     }
 }
 
-extension RootDependencyContainer: RootFactory
+extension RootContainer: RootFactory
 {
     // MARK: - Functions
     

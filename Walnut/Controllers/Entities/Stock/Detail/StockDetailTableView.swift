@@ -18,7 +18,7 @@ protocol StockDetailTableViewFactory: Factory
     func makeNotesSection() -> TableViewSection
 }
 
-class StockDetailTableViewContainer: TableViewDependencyContainer
+class StockDetailTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     
@@ -163,7 +163,7 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
         if models.count == 0 { return nil }
         
         return TableViewSection(
-            header: InflowsHeaderViewModel(),
+            header: .inflows,
             models: models)
     }
     
@@ -195,7 +195,7 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
         if models.count == 0 { return nil }
         
         return TableViewSection(
-            header: OutflowsHeaderViewModel(),
+            header: .outflows,
             models: models)
     }
     
@@ -223,7 +223,7 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
     func makeNotesSection() -> TableViewSection
     {
         TableViewSection(
-            header: NotesHeaderViewModel(),
+            header: .notes,
             models: makeNoteSectionModels())
     }
     

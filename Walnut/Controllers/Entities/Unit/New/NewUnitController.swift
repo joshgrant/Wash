@@ -16,7 +16,7 @@ protocol NewUnitFactory: Factory
     func makeRightItem(target: NewUnitController) -> UIBarButtonItem
 }
 
-class NewUnitContainer: DependencyContainer
+class NewUnitContainer: Container
 {
     var model: NewUnitModel
     var context: Context

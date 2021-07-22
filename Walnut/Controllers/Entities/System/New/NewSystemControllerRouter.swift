@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NewSystemControllerRouterContainer: DependencyContainer
+class NewSystemControllerRouterContainer: Container
 {
     
 }

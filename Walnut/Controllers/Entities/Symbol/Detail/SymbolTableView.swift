@@ -18,7 +18,7 @@ protocol SymbolTableViewFactory: Factory
     func makeLinkSection() -> TableViewSection
 }
 
-class SymbolTableViewContainer: TableViewDependencyContainer
+class SymbolTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     

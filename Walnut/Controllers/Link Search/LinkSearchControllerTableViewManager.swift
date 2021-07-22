@@ -15,7 +15,7 @@ protocol LinkSearchControllerTableViewManagerFactory: Factory
     func makeTableView() -> UITableView
 }
 
-class LinkSearchControllerTableViewManagerContainer: DependencyContainer
+class LinkSearchControllerTableViewManagerContainer: Container
 {
     // MARK: - Variables
     

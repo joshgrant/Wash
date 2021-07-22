@@ -21,7 +21,7 @@ protocol StockTypeTableViewFactory: Factory
     func makeTransitionTypeSection() -> TableViewSection
 }
 
-class StockTypeTableViewContainer: TableViewDependencyContainer
+class StockTypeTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     
@@ -94,7 +94,7 @@ extension StockTypeTableViewContainer: StockTypeTableViewFactory
     }
 }
 
-//class StockTypeListViewContainer: DependencyContainer
+//class StockTypeListViewContainer: Container
 //{
 //    enum Section: Hashable
 //    {
@@ -122,7 +122,7 @@ extension StockTypeTableViewContainer: StockTypeTableViewFactory
 //    }
 //}
 
-//class StockTypeListContainer: DependencyContainer
+//class StockTypeListContainer: Container
 //{
 //    var model: TableViewModel
 //}
