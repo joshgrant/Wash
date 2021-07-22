@@ -82,15 +82,16 @@ class DashboardListControllerBuilder: DashboardListControllerFactory & Dashboard
     func makeCellProvider() -> UICollectionViewDiffableDataSource<DashboardSection, DashboardItem>.CellProvider
     {
         return { collectionView, indexPath, item in
-            switch item
-            {
-            case .pinned(let item):
-                let registration = item.cellRegistration
-                return collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
-            case .suggestedFlow(let item):
-                let registration = item.cellRegistration
-                return collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
-            }
+//            switch item
+//            {
+//            case .pinned(let item):
+//                let registration = item.registration
+//                return collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
+//            case .suggested(let item):
+//                let registration = item.registration
+//                return collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
+//            }
+            fatalError()
         }
     }
     
@@ -180,45 +181,48 @@ class DashboardListControllerBuilder: DashboardListControllerFactory & Dashboard
     
     private func makePinnedItems() -> [DashboardItem]
     {
-        let request = Entity.makePinnedObjectsFetchRequest(context: context)
-        
-        do
-        {
-            let result = try context.fetch(request)
-            return result.compactMap { item in
-                guard let pin = item as? Pinnable else { return nil }
-                guard let type = EntityType.type(from: pin) else { return nil }
-                let item = RightImageListItem(entity: pin, text: pin.title, icon: type.icon, disclosure: true)
-                return .pinned(item)
-            }
-        }
-        catch
-        {
-            assertionFailure(error.localizedDescription)
-            return []
-        }
+        return []
+//        fatalError()
+//        let request = Entity.makePinnedObjectsFetchRequest(context: context)
+//
+//        do
+//        {
+//            let result = try context.fetch(request)
+//            return result.compactMap { item in
+//                guard let pin = item as? Pinnable else { return nil }
+//                guard let type = EntityType.type(from: pin) else { return nil }
+//                let item = RightImageListItem(entity: pin, text: pin.title, icon: type.icon, disclosure: true)
+//                return .pinned(item)
+//            }
+//        }
+//        catch
+//        {
+//            assertionFailure(error.localizedDescription)
+//            return []
+//        }
     }
     
     private func makeSuggestedFlowItems() -> [DashboardItem]
     {
-        let fakeContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        fakeContext.parent = context
-        
-        let first = SubtitleCheckboxListItem(
-            entity: TransferFlow(context: fakeContext),
-            text: "Hello",
-            secondaryText: "Sup",
-            isChecked: true,
-            disclosure: true)
-        
-        let second = SubtitleCheckboxListItem(
-            entity: TransferFlow(context: fakeContext),
-            text: "Good day, mate, how are you?",
-            secondaryText: "This is a long label so let's see how it goes",
-            isChecked: false,
-            disclosure: false)
-        
-        return [.suggestedFlow(first), .suggestedFlow(second)]
+//        let fakeContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+//        fakeContext.parent = context
+//
+//        let first = SubtitleCheckboxListItem(
+//            entity: TransferFlow(context: fakeContext),
+//            text: "Hello",
+//            secondaryText: "Sup",
+//            isChecked: true,
+//            disclosure: true)
+//
+//        let second = SubtitleCheckboxListItem(
+//            entity: TransferFlow(context: fakeContext),
+//            text: "Good day, mate, how are you?",
+//            secondaryText: "This is a long label so let's see how it goes",
+//            isChecked: false,
+//            disclosure: false)
+//
+//        return [.suggested(first), .suggested(second)]
+        return []
         
         //        let request = Flow.makeDashboardSuggestedFlowsFetchRequest()
         //

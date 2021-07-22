@@ -10,8 +10,9 @@ import Foundation
 class WrappedSubscriber: Unique
 {
     // MARK: - Variables
+    
+    var id = UUID()
 
-    var id: UUID
     let closure: (Message) -> Void
     
     init(id: UUID, closure: @escaping (Message) -> Void)
