@@ -90,7 +90,7 @@ class ListSectionHeader: UICollectionReusableView
     
     private func makeImageView(with model: ListSectionHeaderModel) -> UIImageView?
     {
-        guard let image = model.icon?.getImage() else { return nil }
+        guard let image = model.icon?.image else { return nil }
         let imageView = UIImageView(image: image)
         imageView.tintColor = .tableViewHeaderIcon
         return imageView
@@ -113,7 +113,7 @@ class ListSectionHeader: UICollectionReusableView
         
         let button = UIButton()
         
-        button.setImage(Icon.link.getImage(), for: .normal)
+        button.setImage(Icon.link.image, for: .normal)
         button.tintColor = .tableViewHeaderIcon
         button.set(width: 44, height: 44)
         button.addTarget(link,
@@ -129,7 +129,7 @@ class ListSectionHeader: UICollectionReusableView
         
         let button = UIButton()
         
-        button.setImage(Icon.add.getImage(), for: .normal)
+        button.setImage(Icon.add.image, for: .normal)
         button.tintColor = .tableViewHeaderIcon
         button.set(width: 44, height: 44)
         button.addTarget(add,

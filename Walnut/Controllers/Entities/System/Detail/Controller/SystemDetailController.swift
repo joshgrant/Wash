@@ -74,7 +74,7 @@ extension SystemDetailContainer: SystemDetailFactory
     func makeDuplicateNavigationItem(responder: SystemDetailResponder) -> UIBarButtonItem
     {
         UIBarButtonItem(
-            image: Icon.copy.getImage(),
+            image: Icon.copy.image,
             style: .plain,
             target: responder,
             action: #selector(responder.userTouchedUpInsideDuplicate(sender:)))
@@ -84,8 +84,8 @@ extension SystemDetailContainer: SystemDetailFactory
     {
         UIBarButtonItem(
             image: system.isPinned
-                ? Icon.pinFill.getImage()
-                : Icon.pin.getImage(),
+                ? Icon.pinFill.image
+                : Icon.pin.image,
             style: .plain,
             target: responder,
             action: #selector(responder.userTouchedUpInsidePin(sender:)))
@@ -233,8 +233,8 @@ extension SystemDetailController: Subscriber
         let pinned = message.isPinned
         
         pinBarButtonItem.image = pinned
-            ? Icon.pinFill.getImage()
-            : Icon.pin.getImage()
+            ? Icon.pinFill.image
+            : Icon.pin.image
         
         container.system.isPinned = pinned
         container.system.managedObjectContext?.quickSave()

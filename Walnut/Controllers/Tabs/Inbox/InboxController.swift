@@ -15,7 +15,7 @@ protocol InboxControllerFactory: Factory, ViewControllerTabBarDelegate
 class InboxControllerContainer: Container
 {
     var tabBarItemTitle: String { "Inbox".localized }
-    var tabBarImage: UIImage? { Icon.inbox.getImage() }
+    var tabBarImage: UIImage? { Icon.inbox.image }
     var tabBarTag: Int { 2 }
 }
 

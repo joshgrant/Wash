@@ -54,10 +54,7 @@ public enum Icon: String
     case arrowDown = "arrowtriangle.down.fill"
     case arrowRight = "arrowtriangle.right.fill"
     
-    public func getImage() -> UIImage?
-    {
-        return UIImage(systemName: self.rawValue)
-    }
+    var image: UIImage { UIImage(systemName: self.rawValue)! }
     
     public func textIcon() -> String
     {

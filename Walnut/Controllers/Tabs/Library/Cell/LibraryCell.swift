@@ -57,7 +57,7 @@ class LibraryCell: TableViewCell<LibraryCellModel>
     {
         self.accessoryType = .disclosureIndicator
         
-        self.imageView?.image = model.icon.getImage()
+        self.imageView?.image = model.icon.image
         self.imageView?.tintColor = .systemGray
         
         self.textLabel?.text = model.title

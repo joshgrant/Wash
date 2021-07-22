@@ -79,7 +79,7 @@ class RightImageCell: TableViewCell<RightImageCellModel>
     override func configure(with model: RightImageCellModel)
     {
         self.titleLabel.text = model.title
-        self.rightImageView.image = model.detail.getImage()
+        self.rightImageView.image = model.detail.image
         
         accessoryType = model.disclosure
             ? .disclosureIndicator

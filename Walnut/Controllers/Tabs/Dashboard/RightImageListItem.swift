@@ -27,7 +27,7 @@ struct RightImageListItem:      ListItem
     
     private func makeIconImageView(item: Self) -> UIImageView
     {
-        let image = item.icon.getImage()
+        let image = item.icon.image
         let imageView = UIImageView(image: image, highlightedImage: image)
         imageView.tintColor = .secondaryLabel
         return imageView

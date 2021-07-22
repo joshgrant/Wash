@@ -101,8 +101,8 @@ class SliderRangeCell: TableViewCell<SliderRangeCellModel>
         
         slider.minimumValue = model.min
         slider.maximumValue = model.max
-        slider.minimumValueImage = Icon.min.getImage()
-        slider.maximumValueImage = Icon.max.getImage()
+        slider.minimumValueImage = Icon.min.image
+        slider.maximumValueImage = Icon.max.image
         slider.value = model.value
         slider.isContinuous = true
         

@@ -57,7 +57,7 @@ extension RootContainer: RootFactory
     
     private func makeDashboardNavigationController() -> UINavigationController
     {
-        let builder = DashboardListBuilder()
+        let builder = DashboardListBuilder(context: context, stream: stream)
         let controller = DashboardListController(builder: builder)
         return UINavigationController(rootViewController: controller)
     }

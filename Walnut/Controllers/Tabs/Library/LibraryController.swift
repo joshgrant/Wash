@@ -18,7 +18,7 @@ class LibraryControllerContainer: Container
     // MARK: - Variables
     
     var tabBarItemTitle: String { "Library".localized }
-    var tabBarImage: UIImage? { Icon.library.getImage() }
+    var tabBarImage: UIImage? { Icon.library.image }
     var tabBarTag: Int { 1 }
     
     var context: Context

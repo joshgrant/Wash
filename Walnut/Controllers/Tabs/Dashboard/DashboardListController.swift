@@ -7,107 +7,203 @@
 
 import UIKit
 
-// TODO: Parent class that takes a generic factory and dependency container...
+class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardItem>
+{
+    // MARK: - Variables
+    
+    var context: Context
+    var stream: Stream
+    
+    weak var delegate: SuggestedItemDelegate?
+    
+    // MARK: - Initialization
+    
+    init(context: Context, stream: Stream)
+    {
+        self.context = context
+        self.stream = stream
+    }
+    
+    // MARK: - Functions
+    
+    override func makeCellProvider() -> CellProvider
+    {
+        { collectionView, indexPath, item in
+            switch item
+            {
+            case .header(let item):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: item.registration,
+                    for: indexPath,
+                    item: item)
+            case .pinned(let item):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: item.registration,
+                    for: indexPath,
+                    item: item)
+            case .suggested(let item):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: item.registration,
+                    for: indexPath,
+                    item: item)
+            case .forecast(let item):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: item.registration,
+                    for: indexPath,
+                    item: item)
+            case .priority(let item):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: item.registration,
+                    for: indexPath,
+                    item: item)
+            }
+        }
+    }
+    
+    override func makeInitialModel() -> ListModel
+    {
+        [
+            .pinned: makePinnedItems(),
+            .suggested: [
+                .header(.init(text: "Suggested Flows",
+                              image: .init(systemName: "wind"))),
+                .suggested(.init(text: "Wash dishes",
+                                 secondaryText: "Chores",
+                                 checked: false,
+                                 delegate: delegate)),
+                .suggested(.init(text: "Eat dinner",
+                                 secondaryText: "Nutrition",
+                                 checked: true,
+                                 delegate: delegate))
+            ],
+            .forecast: [
+                .header(.init(text: "Forecast",
+                              image: .init(systemName: "calendar"))),
+                .forecast(.init(text: "Charlie Horse 5k",
+                                secondaryText: "Mon, Apr 3"))
+            ],
+            .priority: [
+                .header(.init(text: "Priority",
+                              image: .init(systemName: "network"))),
+                .priority(.init(text: "Chores",
+                                secondaryText: "25%"))
+            ]
+        ]
+    }
+    
+    private func makePinnedItems() -> [DashboardItem]
+    {
+        var items: [DashboardItem] = []
+        
+        let request = Entity.makePinnedObjectsFetchRequest(context: context)
+        do
+        {
+            let result = try context.fetch(request)
+            items = result.compactMap { item in
+                guard let pin = item as? Pinnable else { return nil }
+                guard let type = EntityType.type(from: pin) else { return nil }
+                let pinnedItem = PinnedItem(text: pin.title, image: type.icon.image)
+                return DashboardItem.pinned(pinnedItem)
+            }
+        }
+        catch
+        {
+            assertionFailure(error.localizedDescription)
+            return []
+        }
+        
+        items.insert(.header(.init(text: .pinned, image: Icon.pinFill.image)), at: 0)
+        return items
+    }
+}
 
-//class DashboardListController: UIViewController
-//{
-//    // MARK: - Variables
-//    
-//    var id = UUID()
-//    
-//    var builder: DashboardListControllerBuilder
-//    var collectionView: UICollectionView
-//    var dataSource: UICollectionViewDiffableDataSource<DashboardSection, DashboardItem>
-//    
-//    // MARK: - Initialization
-//    
-//    required init(builder: DashboardListControllerBuilder)
-//    {
-//        let collectionView = builder.makeCollectionView()
-//        
-//        self.builder = builder
-//        self.collectionView = collectionView
-//        self.dataSource = builder.makeDataSource(collectionView: collectionView)
-//        super.init(nibName: nil, bundle: nil)
-//        subscribe(to: builder.stream)
-//        
-//        title = builder.tabBarItemTitle
-//        tabBarItem = builder.makeTabBarItem()
-//    }
-//    
-//    @available(*, unavailable)
-//    required init?(coder: NSCoder)
-//    {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    deinit
-//    {
-//        unsubscribe(from: builder.stream)
-//    }
-//    
-//    // MARK: - View lifecycle
-//    
-//    override func viewDidLoad()
-//    {
-//        super.viewDidLoad()
-//        
-//        collectionView.delegate = self
-//        collectionView.dataSource = dataSource
-//        
-//        view.embed(collectionView)
-//        
-//        dataSource.apply(builder.makeInitialSnapshot())
-////        dataSource.apply(builder.pinnedSectionSnapshot(), to: .pinned, animatingDifferences: false)
-////        dataSource.apply(builder.flowSectionSnapshot(), to: .suggested, animatingDifferences: false)
-//    }
-//}
-//
-//extension DashboardListController: UICollectionViewDelegate
-//{
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
-//    {
-//        // TODO: Send a message
-//        collectionView.deselectItem(at: indexPath, animated: true)
-//        
-//        /*
-//         var entity: Entity
-//         let cellModel = container.model.models[indexPath.section][indexPath.row]
-//         
-//         switch cellModel.selectionIdentifier
-//         {
-//         case .pinned(let e):
-//         entity = e
-//         case .entity(let e):
-//         entity = e
-//         case .system(let e):
-//         entity = e
-//         case .flow(let e):
-//         entity = e
-//         default:
-//         fatalError("Unhandled selection identifier")
-//         }
-//         
-//         let message = TableViewEntitySelectionMessage(entity: entity, tableView: tableView, cellModel: cellModel)
-//         container.stream.send(message: message)
-//         
-//         tableView.deselectRow(at: indexPath, animated: true)
-//         */
-//    }
-//}
-//
-//
-//extension DashboardListController: Subscriber
-//{
-//    func receive(message: Message)
-//    {
-//        // TODO:
-//        // When a pin message is received, reload
-//        // When a delete message is received, reload
-//        // When an entity is edited, reload
-//        // When an entity is selected (from this view) reload
-//    }
-//}
+extension DashboardListBuilder: ViewControllerTabBarDelegate
+{
+    var tabBarItemTitle: String { "Dashboard".localized }
+    var tabBarImage: UIImage? { Icon.dashboard.image }
+    var tabBarTag: Int { 0 }
+    
+    func makeTabBarItem() -> UITabBarItem
+    {
+        UITabBarItem(
+            title: tabBarItemTitle,
+            image: tabBarImage,
+            tag: tabBarTag)
+    }
+}
+
+class DashboardListController: ListController<DashboardSection, DashboardItem, DashboardListBuilder>
+{
+    // MARK: - Variables
+    
+    var id = UUID()
+    
+    // MARK: - Initialization
+    
+    override init(builder: DashboardListBuilder)
+    {
+        super.init(builder: builder)
+        subscribe(to: builder.stream)
+        self.builder.delegate = self
+        
+        title = builder.tabBarItemTitle
+        tabBarItem = builder.makeTabBarItem()
+    }
+    
+    deinit
+    {
+        unsubscribe(from: builder.stream)
+    }
+    
+    // MARK: - Functions
+    
+    @objc override func handleRefreshControl()
+    {
+        model = model.compactMapValues({ items in
+            return items.compactMap { item in
+                switch item
+                {
+                case .suggested(let item):
+                    return item.checked ? nil : .suggested(item)
+                default:
+                    return item
+                }
+            }
+        })
+        
+        applyModel(animated: true)
+        super.handleRefreshControl()
+    }
+    
+    // MARK: - Delegate
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        // Get the entity
+        // Send a message that the entity was selected
+        
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
+    }
+}
+
+extension DashboardListController: SuggestedItemDelegate
+{
+    func suggestedItemUpdated(to checked: Bool, item: SuggestedItem)
+    {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadItems([.suggested(item)])
+        dataSource.apply(snapshot)
+    }
+}
+
+extension DashboardListController: Subscriber
+{
+    func receive(message: Message)
+    {
+        print("Message: \(message)")
+    }
+}
+
 /*
  
  // MARK: Flows

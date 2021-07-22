@@ -171,7 +171,7 @@ class NumericKeyboard: UIView
         }
         else if let icon = icon(for: tag)
         {
-            button.setImage(icon.getImage(), for: .normal)
+            button.setImage(icon.image, for: .normal)
             button.tintColor = .darkGray
         }
         

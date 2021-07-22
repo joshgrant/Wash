@@ -19,7 +19,7 @@ protocol SettingsControllerFactory: Factory, ViewControllerTabBarDelegate
 class SettingsControllerContainer: Container
 {
     public var tabBarItemTitle: String { "Settings".localized }
-    public var tabBarImage: UIImage? { Icon.settings.getImage() }
+    public var tabBarImage: UIImage? { Icon.settings.image }
     public var tabBarTag: Int { 3 }
 }
 

@@ -54,7 +54,7 @@ extension StockDetailContainer: StockDetailFactory
         }
         
         return BarButtonItem(
-            image: icon.getImage(),
+            image: icon.image,
             style: .plain,
             actionClosure: actionClosure)
     }
@@ -169,7 +169,7 @@ extension StockDetailController: Subscriber
         let pinned = message.isPinned
         let icon: Icon = pinned ? .pinFill : .pin
         
-        pinBarButtonItem.image = icon.getImage()
+        pinBarButtonItem.image = icon.image
         container.stock.isPinned = pinned
         container.stock.managedObjectContext?.quickSave()
     }

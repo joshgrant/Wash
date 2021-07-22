@@ -82,7 +82,7 @@ extension TransferFlowDetailContainer: TransferFlowFactory
         }
         
         return BarButtonItem(
-            image: icon.getImage(),
+            image: icon.image,
             style: .plain,
             actionClosure: actionClosure)
     }
@@ -90,7 +90,7 @@ extension TransferFlowDetailContainer: TransferFlowFactory
     func makeRunButton(responder: TransferFlowDetailResponder) -> UIBarButtonItem
     {
         UIBarButtonItem(
-            image: Icon.activateFlow.getImage(),
+            image: Icon.activateFlow.image,
             style: .plain,
             target: responder,
             action: #selector(responder.runButtonDidTouchUpInside(_:)))
@@ -215,7 +215,7 @@ extension TransferFlowDetailController: Subscriber
         let pinned = message.isPinned
         let icon: Icon = pinned ? .pinFill : .pin
         
-        pinButton.image = icon.getImage()
+        pinButton.image = icon.image
         container.flow.isPinned = pinned
         container.flow.managedObjectContext?.quickSave()
     }

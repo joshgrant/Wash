@@ -32,7 +32,7 @@ struct SubtitleCheckboxListItem: ListItem
     {
         let icon: Icon = item.isChecked ? .checkBoxFilled : .checkBoxEmpty
         let button = UIButton(type: .custom)
-        button.setImage(icon.getImage(), for: .normal)
+        button.setImage(icon.image, for: .normal)
         return button
     }
     

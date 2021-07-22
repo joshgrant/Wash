@@ -89,7 +89,7 @@ class EntityListController: ViewController<EntityListContainer>, RouterDelegate
     
     var id = UUID()
 
-    var addButtonImage: UIImage? { Icon.add.getImage() }
+    var addButtonImage: UIImage? { Icon.add.image }
     var addButtonStyle: UIBarButtonItem.Style { .plain }
     
     // MARK: - Initialization
@@ -130,7 +130,7 @@ class EntityListController: ViewController<EntityListContainer>, RouterDelegate
         }
         
         return BarButtonItem(
-            image: Icon.add.getImage(),
+            image: Icon.add.image,
             style: .plain,
             actionClosure: actionClosure)
     }

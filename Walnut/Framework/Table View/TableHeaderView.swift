@@ -50,7 +50,7 @@ open class TableHeaderView: View<TableHeaderViewModel>
             mainStackView.addArrangedSubview(makeDisclosureButton())
         }
         
-        if let image = model.icon?.getImage()
+        if let image = model.icon?.image
         {
             mainStackView.addArrangedSubview(makeImageView(image: image))
         }
@@ -86,7 +86,7 @@ open class TableHeaderView: View<TableHeaderViewModel>
     public func makeDisclosureButton() -> UIButton
     {
         let button = UIButton()
-        button.setImage(Icon.arrowDown.getImage(), for: .normal)
+        button.setImage(Icon.arrowDown.image, for: .normal)
         button.tintColor = .tableViewHeaderIcon
         button.set(width: 44, height: 44)
         button.addTarget(
@@ -106,7 +106,7 @@ open class TableHeaderView: View<TableHeaderViewModel>
     public func makeSearchButton() -> UIButton
     {
         let button = UIButton()
-        button.setImage(Icon.search.getImage(), for: .normal)
+        button.setImage(Icon.search.image, for: .normal)
         button.tintColor = .tableViewHeaderIcon
         button.set(width: 44, height: 44)
         button.addTarget(model.searchButtonActionClosure,
@@ -118,7 +118,7 @@ open class TableHeaderView: View<TableHeaderViewModel>
     public func makeLinkButton() -> UIButton
     {
         let button = UIButton()
-        button.setImage(Icon.link.getImage(), for: .normal)
+        button.setImage(Icon.link.image, for: .normal)
         button.tintColor = .tableViewHeaderIcon
         button.set(width: 44, height: 44)
         button.addTarget(model.linkButtonActionClosure,
@@ -130,7 +130,7 @@ open class TableHeaderView: View<TableHeaderViewModel>
     public func makeAddButton() -> UIButton
     {
         let button = UIButton()
-        button.setImage(Icon.add.getImage(), for: .normal)
+        button.setImage(Icon.add.image, for: .normal)
         button.tintColor = .tableViewHeaderIcon
         button.set(width: 44, height: 44)
         button.addTarget(model.addButtonActionClosure,

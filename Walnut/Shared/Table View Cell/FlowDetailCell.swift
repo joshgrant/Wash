@@ -59,7 +59,7 @@ class FlowDetailCell: TableViewCell<FlowDetailCellModel>
     {
         titleLabel = UILabel()
         fromLabel = UILabel()
-        iconImageView = UIImageView(image: Icon.rightArrow.getImage())
+        iconImageView = UIImageView(image: Icon.rightArrow.image)
         toLabel = UILabel()
         detailLabel = UILabel()
         
