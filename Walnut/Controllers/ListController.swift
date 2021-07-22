@@ -17,8 +17,6 @@ protocol ListControllerFactory: Factory
     typealias FooterRegistration = UICollectionView.SupplementaryRegistration<UICollectionReusableView>
     typealias ListModel = [Section: [Item]]
     
-    func makeResponder() -> ListControllerResponder
-    
     func makeInitialModel() -> ListModel
     func makeCollectionViewLayout() -> UICollectionViewLayout
     func makeCollectionView() -> UICollectionView
@@ -39,16 +37,7 @@ class ListControllerBuilder<S: Hashable, I: Hashable>: ListControllerFactory & L
     typealias Section = S
     typealias Item = I
     
-    // MARK: - Variables
-    
-    //    weak var delegate: SuggestedItemDelegate?
-    
     // MARK: - Functions
-    
-    func makeResponder() -> ListControllerResponder
-    {
-        .init()
-    }
     
     func makeInitialModel() -> ListModel
     {
@@ -115,7 +104,6 @@ class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S,
     // MARK: - Variables
     
     var builder: Builder
-    var responder: ListControllerResponder
     var collectionView: UICollectionView
     var dataSource: Builder.DataSource
     lazy var model: Builder.ListModel = builder.makeInitialModel()
@@ -126,12 +114,8 @@ class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S,
     {
         self.builder = builder
         
-        let responder = builder.makeResponder()
         let collectionView = builder.makeCollectionView()
-        
-        self.responder = responder
         self.collectionView = collectionView
-        
         self.dataSource = builder.makeDataSource(collectionView: collectionView)
         
         super.init(nibName: nil, bundle: nil)
@@ -150,22 +134,19 @@ class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S,
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        collectionView.refreshControl = UIRefreshControl()
-        collectionView.refreshControl?.addTarget(
-            self,
-            action: #selector(handleRefreshControl),
-            for: .valueChanged)
-        
         applyModel(animated: false)
     }
     
     // MARK: - Functions
     
-    func applyModel(animated: Bool)
+    func applyModel(animated: Bool, completion: (() -> Void)? = nil)
     {
+        let dispatchGroup = DispatchGroup()
+        
         for (section, items) in model
         {
+            dispatchGroup.enter()
+            
             guard let first = items.first else { continue }
             let rest = Array(items.suffix(from: 1)) // Is this efficient?
             
@@ -177,13 +158,11 @@ class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S,
             dataSource.apply(
                 sectionSnapshot,
                 to: section,
-                animatingDifferences: animated)
+                animatingDifferences: animated,
+                completion: { dispatchGroup.leave() })
         }
-    }
-    
-    @objc func handleRefreshControl()
-    {
-        collectionView.refreshControl?.endRefreshing()
+        
+        dispatchGroup.notify(queue: .main, execute: completion ?? { })
     }
     
     // MARK: - Delegate

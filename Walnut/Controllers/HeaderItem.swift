@@ -45,18 +45,60 @@ extension HeaderItem: Registered
             cell.contentConfiguration = configuration
             cell.backgroundConfiguration = UIBackgroundConfiguration.listGroupedHeaderFooter()
             
-            cell.accessories = [
+            let accessories: [UICellAccessory?] = [
                 makeImageAccessory(),
+                makeLinkAccessory(),
+                makeAddAccessory(),
+                makeSpacerAccesory(),
                 makeOutlineAccessory()
             ]
+            
+            cell.accessories = accessories.compactMap { $0 }
         }
+    }
+    
+    private func makeSpacerAccesory() -> UICellAccessory
+    {
+        let view = UIView()
+        let configuration = UICellAccessory.CustomViewConfiguration(
+            customView: view,
+            placement: .trailing(displayed: .always, at: { _ in 0 }),
+            reservedLayoutWidth: .custom(10),
+            maintainsFixedSize: true)
+        return .customView(configuration: configuration)
+    }
+    
+    private func makeAddAccessory() -> UICellAccessory?
+    {
+        guard let _ = add else { return nil }
+        
+        let button = UIButton(type: .custom)
+        button.setImage(Icon.add.image, for: .normal)
+        button.tintColor = .tableViewHeaderIcon
+        let configuration = UICellAccessory.CustomViewConfiguration(
+            customView: button,
+            placement: .trailing(displayed: .always, at: { _ in 0 }))
+        return .customView(configuration: configuration)
+    }
+    
+    private func makeLinkAccessory() -> UICellAccessory?
+    {
+        guard let _ = link else { return nil }
+        
+        let button = UIButton(type: .custom)
+        button.setImage(Icon.link.image, for: .normal)
+        button.tintColor = .tableViewHeaderIcon
+        let configuration = UICellAccessory.CustomViewConfiguration(
+            customView: button,
+            placement: .trailing(displayed: .always, at: { _ in 0 }))
+        return .customView(configuration: configuration)
     }
     
     private func makeOutlineAccessory() -> UICellAccessory
     {
         let options = UICellAccessory.OutlineDisclosureOptions(
             style: .cell,
-            tintColor: .secondaryLabel)
+            tintColor: .tableViewHeaderIcon)
         let accessory = UICellAccessory.outlineDisclosure(options: options)
         return accessory
     }

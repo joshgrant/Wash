@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol DashboardListFactory: Factory
+{
+    func makeRefreshButton(target: DashboardListResponder) -> UIBarButtonItem
+    func makeSpinnerButton() -> UIBarButtonItem
+}
+
 class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardItem>
 {
     // MARK: - Variables
@@ -132,11 +138,38 @@ extension DashboardListBuilder: ViewControllerTabBarDelegate
     }
 }
 
+extension DashboardListBuilder: DashboardListFactory
+{
+    func makeRefreshButton(target: DashboardListResponder) -> UIBarButtonItem
+    {
+        UIBarButtonItem(
+            image: Icon.refresh.image,
+            style: .plain,
+            target: target,
+            action: #selector(target.handleRefresh(_:)))
+    }
+    
+    func makeSpinnerButton() -> UIBarButtonItem
+    {
+        let spinner = UIActivityIndicatorView()
+        spinner.startAnimating()
+        return UIBarButtonItem(customView: spinner)
+    }
+}
+
+@objc protocol DashboardListResponder
+{
+    func handleRefresh(_ sender: UIBarButtonItem)
+}
+
 class DashboardListController: ListController<DashboardSection, DashboardItem, DashboardListBuilder>
 {
     // MARK: - Variables
     
     var id = UUID()
+    
+    lazy var refreshButton = builder.makeRefreshButton(target: self)
+    lazy var spinnerButton = builder.makeSpinnerButton()
     
     // MARK: - Initialization
     
@@ -148,31 +181,13 @@ class DashboardListController: ListController<DashboardSection, DashboardItem, D
         
         title = builder.tabBarItemTitle
         tabBarItem = builder.makeTabBarItem()
+        
+        navigationItem.rightBarButtonItem = refreshButton
     }
     
     deinit
     {
         unsubscribe(from: builder.stream)
-    }
-    
-    // MARK: - Functions
-    
-    @objc override func handleRefreshControl()
-    {
-        model = model.compactMapValues({ items in
-            return items.compactMap { item in
-                switch item
-                {
-                case .suggested(let item):
-                    return item.checked ? nil : .suggested(item)
-                default:
-                    return item
-                }
-            }
-        })
-        
-        applyModel(animated: true)
-        super.handleRefreshControl()
     }
     
     // MARK: - Delegate
@@ -201,6 +216,30 @@ extension DashboardListController: Subscriber
     func receive(message: Message)
     {
         print("Message: \(message)")
+    }
+}
+
+extension DashboardListController: DashboardListResponder
+{
+    @objc func handleRefresh(_ sender: UIBarButtonItem)
+    {
+        navigationItem.rightBarButtonItem = spinnerButton
+        
+        model = model.compactMapValues({ items in
+            return items.compactMap { item in
+                switch item
+                {
+                case .suggested(let item):
+                    return item.checked ? nil : .suggested(item)
+                default:
+                    return item
+                }
+            }
+        })
+        
+        applyModel(animated: true) { [unowned self] in
+            self.navigationItem.rightBarButtonItem = refreshButton
+        }
     }
 }
 

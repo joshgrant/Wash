@@ -42,6 +42,7 @@ public enum Icon: String
     case state = "square.on.circle"
     case min = "dial.min"
     case max = "dial.max.fill"
+    case refresh = "arrow.clockwise"
     
     case rightChevron = "chevron.right"
     

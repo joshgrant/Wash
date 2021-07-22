@@ -70,6 +70,7 @@ extension SuggestedItem: Registered
     {
         let button = UIButton(type: .custom)
         
+        // TODO: Use icons
         if item.checked
         {
             button.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
