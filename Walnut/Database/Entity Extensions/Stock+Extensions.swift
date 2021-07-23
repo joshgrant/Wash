@@ -18,36 +18,33 @@ extension Stock
         
         guard let context = managedObjectContext else { fatalError() }
         
-        let value = ValueSource(context: context)
-        value.value = 0
-        amount = value
+        let source = Source(context: context)
+        source.value = 0
+        source.valueType = .number
+        self.source = source
         
-        let idealValue = ValueSource(context: context)
-        idealValue.value = 0
-        ideal = idealValue
+        let ideal = Source(context: context)
+        ideal.value = 0
+        ideal.valueType = .number
+        self.ideal = ideal
         
-        let minimumValue = ValueSource(context: context)
-        minimumValue.value = 0
-        minimum = minimumValue
+        let minimum = Source(context: context)
+        minimum.value = 0
+        minimum.valueType = .number
+        self.minimum = minimum
         
-        let maximumValue = ValueSource(context: context)
-        maximumValue.value = 0
-        maximum = maximumValue
+        let maximum = Source(context: context)
+        maximum.value = 0
+        maximum.valueType = .number
+        self.maximum = maximum
     }
 }
 
 extension Stock
 {
-    var valueType: ValueType
+    var valueType: SourceValueType
     {
-        get
-        {
-            ValueType(rawValue: amountTypeRaw) ?? .fallback
-        }
-        set
-        {
-            amountTypeRaw = newValue.rawValue
-        }
+        source!.valueType
     }
     
     var unwrappedValidStates: [State]
@@ -101,117 +98,21 @@ extension Stock
 
 extension Stock
 {
-    //    var currentValue: Any? { amount?.computedValue }
-    //    var idealValue: Any? { ideal?.computedValue }
-    
-    var amountValue: Double
-    {
-        get
-        {
-            switch amount
-            {
-            case let s as ValueSource:
-                return s.value
-            case is InfiniteSource:
-                return Double.infinity
-            default:
-                fatalError("Unhandled source")
-            }
-        }
-        set
-        {
-            guard let context = self.managedObjectContext else { return }
-            let valueSource = ValueSource(context: context)
-            valueSource.value = newValue
-            self.amount = valueSource
-        }
-    }
-    
-    var idealValue: Double
-    {
-        get
-        {
-            switch ideal
-            {
-            case let s as ValueSource:
-                return s.value
-            case is InfiniteSource:
-                return Double.infinity
-            default:
-                fatalError("Unhandled source")
-            }
-        }
-        set
-        {
-            guard let context = self.managedObjectContext else { return }
-            let valueSource = ValueSource(context: context)
-            valueSource.value = newValue
-            self.ideal = valueSource
-        }
-    }
-    
-    var minimumValue: Double
-    {
-        get
-        {
-            switch minimum
-            {
-            case let s as ValueSource:
-                return s.value
-            case is InfiniteSource:
-                return -Double.infinity
-            default:
-                fatalError("Unhandled source")
-            }
-        }
-        set
-        {
-            guard let context = self.managedObjectContext else { return }
-            let valueSource = ValueSource(context: context)
-            valueSource.value = newValue
-            self.minimum = valueSource
-        }
-    }
-    
-    var maximumValue: Double
-    {
-        get
-        {
-            switch maximum
-            {
-            case let s as ValueSource:
-                return s.value
-            case is InfiniteSource:
-                return Double.infinity
-            default:
-                fatalError("Unhandled source")
-            }
-        }
-        set
-        {
-            guard let context = self.managedObjectContext else { return }
-            let valueSource = ValueSource(context: context)
-            valueSource.value = newValue
-            self.maximum = valueSource
-        }
-    }
-}
-
-extension Stock
-{
     var typeDescription: String
     {
         return valueType.description
     }
     
+    // TODO: These descriptions are out of date!
+    
     var currentDescription: String
     {
-        return String(format: "%.2f", amountValue)
+        return String(format: "%.2f", source!.value)
     }
     
     var idealDescription: String
     {
-        return String(format: "%.2f", idealValue)
+        return String(format: "%.2f", ideal!.value)
     }
     
     var netDescription: String
@@ -223,11 +124,11 @@ extension Stock
     
     var minimumDescription: String
     {
-        return String(format: "%.2f", minimumValue)
+        return String(format: "%.2f", minimum!.value)
     }
     
     var maximumDescription: String
     {
-        return String(format: "%.2f", maximumValue)
+        return String(format: "%.2f", maximum!.value)
     }
 }

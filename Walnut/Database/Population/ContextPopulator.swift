@@ -10,21 +10,22 @@ import CoreData
 
 class ContextPopulator
 {
-    static var sinkId = UUID(uuidString: "5AB9D2AA-3A20-4771-B923-71BDD93E53E3")!
-    static var sourceId = UUID(uuidString: "8F710523-FD11-406C-AA97-C71B625C031B")!
-    
     static func populate(context: Context)
     {
-        fetchSourceStock(context: context)
-        fetchSinkStock(context: context)
+        fetchOrMakeSourceStock(context: context)
+        fetchOrMakeSinkStock(context: context)
         context.quickSave()
     }
     
-    @discardableResult private static func fetchSourceStock(context: Context) -> Stock
+    // MARK: - Source & Sink
+ 
+    static var sinkId = UUID(uuidString: "5AB9D2AA-3A20-4771-B923-71BDD93E53E3")!
+    static var sourceId = UUID(uuidString: "8F710523-FD11-406C-AA97-C71B625C031B")!
+    
+    @discardableResult private static func fetchOrMakeSourceStock(context: Context) -> Stock
     {
         let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Stock.uniqueID), sourceId as CVarArg)
-//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "symbolName.name", ascending: true)]
         
         do
         {
@@ -43,25 +44,28 @@ class ContextPopulator
     
     private static func makeSourceStock(context: Context) -> Stock
     {
-        let source = Stock(context: context)
-        source.uniqueID = sourceId
-        source.amount = InfiniteSource(context: context)
+        let stock = Stock(context: context)
+        stock.uniqueID = sourceId
+        
+        let source = Source(context: context)
+        source.valueType = .infinite
+        source.value = 1
+        
+        stock.source = source
         
         let symbol = Symbol(context: context)
         symbol.name = "Source".localized
         
-        source.symbolName = symbol
-        source.isPinned = true
+        stock.symbolName = symbol
+        stock.isPinned = true
         
-        return source
+        return stock
     }
     
-    @discardableResult private static func fetchSinkStock(context: Context) -> Stock
+    @discardableResult private static func fetchOrMakeSinkStock(context: Context) -> Stock
     {
         let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Stock.uniqueID), sinkId as CVarArg)
-//        fetchRequest.predicate = NSPredicate(
-//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "symbolName.name", ascending: true)]
         
         do
         {
@@ -78,11 +82,16 @@ class ContextPopulator
         }
     }
     
-    static private func makeSinkStock(context: Context) -> Stock
+    private static func makeSinkStock(context: Context) -> Stock
     {
         let sink = Stock(context: context)
         sink.uniqueID = sinkId
-        sink.amount = InfiniteSource(context: context)
+
+        let source = Source(context: context)
+        source.valueType = .infinite
+        source.value = -1
+        
+        sink.source = source
         
         let sinkSymbol = Symbol(context: context)
         sinkSymbol.name = "Sink".localized
@@ -91,5 +100,24 @@ class ContextPopulator
         sink.isPinned = true
         
         return sink
+    }
+    
+    // MARK: - Stocks
+    
+    private static func makeRandomStock(context: Context) -> Stock
+    {
+        let stock = Stock(context: context)
+        stock.stateMachine = Bool.random()
+        stock.source = makeRandomSource(context: context)
+        
+        return stock
+    }
+    
+    private static func makeRandomSource(context: Context) -> Source
+    {
+        let source = Source(context: context)
+        source.valueType = .random()
+        source.value = .random(in: -.greatestFiniteMagnitude ..< .greatestFiniteMagnitude)
+        return source
     }
 }

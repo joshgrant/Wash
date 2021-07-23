@@ -97,11 +97,12 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
                 placeholder: "Title".localized,
                 entity: stock,
                 stream: stream),
-            DetailCellModel(
-                selectionIdentifier: .type,
-                title: "Type".localized,
-                detail: stockTypeDetail(),
-                disclosure: true),
+            // Instead of stock type detail, just have a true/false (maybe toggle) for the "state machine"...
+//            DetailCellModel(
+//                selectionIdentifier: .type,
+//                title: "Type".localized,
+//                detail: stockTypeDetail(),
+//                disclosure: true),
             //            DetailCellModel(
             //                selectionIdentifier: .minimum,
             //                title: "Minimum".localized,
@@ -129,22 +130,22 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
         ]
     }
     
-    func stockTypeDetail() -> String
-    {
-        var amountType: String = stock.valueType.description
-        
-        amountType += ", "
-        
-        switch stock.stateMachine
-        {
-        case true:
-            amountType += "State Machine".localized
-        case false:
-            amountType += "Continuous".localized
-        }
-        
-        return amountType
-    }
+//    func stockTypeDetail() -> String
+//    {
+//        var amountType: String = stock.valueType.description
+//
+//        amountType += ", "
+//
+//        switch stock.stateMachine
+//        {
+//        case true:
+//            amountType += "State Machine".localized
+//        case false:
+//            amountType += "Continuous".localized
+//        }
+//
+//        return amountType
+//    }
     
     // MARK: States
     

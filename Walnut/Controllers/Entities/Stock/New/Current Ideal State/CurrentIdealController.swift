@@ -168,38 +168,40 @@ class CurrentIdealController: ViewController<CurrentIdealControllerContainer>
         title.name = container.model.title
         stock.symbolName = title
         
-        stock.unit = container.model.unit
-        stock.valueType = container.model.stockType
-        stock.stateMachine = container.model.isStateMachine
+        // TODO: Fix adding a stock
         
-        let minimumSource = ValueSource(context: container.context)
-        minimumSource.value = container.model.minimum ?? 0
-        stock.minimum = minimumSource
-        
-        let maximumSource = ValueSource(context: container.context)
-        maximumSource.value = container.model.maximum ?? 100
-        stock.maximum = maximumSource
-        
-        if container.model.stockType == .boolean
-        {
-            let amountSource = BooleanSource(context: container.context)
-            amountSource.value = container.model.currentBool ?? true
-            stock.amount = amountSource
-            
-            let idealSource = BooleanSource(context: container.context)
-            idealSource.value = container.model.idealBool ?? true
-            stock.ideal = idealSource
-        }
-        else if container.model.stockType == .percent
-        {
-            let amountSource = ValueSource(context: container.context)
-            amountSource.value = container.model.currentDouble ?? 0
-            stock.amount = amountSource
-            
-            let idealSource = ValueSource(context: container.context)
-            idealSource.value = container.model.idealDouble ?? 100
-            stock.ideal = idealSource
-        }
+//        stock.unit = container.model.unit
+//        stock.valueType = container.model.stockType
+//        stock.stateMachine = container.model.isStateMachine
+//
+//        let minimumSource = ValueSource(context: container.context)
+//        minimumSource.value = container.model.minimum ?? 0
+//        stock.minimum = minimumSource
+//
+//        let maximumSource = ValueSource(context: container.context)
+//        maximumSource.value = container.model.maximum ?? 100
+//        stock.maximum = maximumSource
+//
+//        if container.model.stockType == .boolean
+//        {
+//            let amountSource = BooleanSource(context: container.context)
+//            amountSource.value = container.model.currentBool ?? true
+//            stock.amount = amountSource
+//
+//            let idealSource = BooleanSource(context: container.context)
+//            idealSource.value = container.model.idealBool ?? true
+//            stock.ideal = idealSource
+//        }
+//        else if container.model.stockType == .percent
+//        {
+//            let amountSource = ValueSource(context: container.context)
+//            amountSource.value = container.model.currentDouble ?? 0
+//            stock.amount = amountSource
+//
+//            let idealSource = ValueSource(context: container.context)
+//            idealSource.value = container.model.idealDouble ?? 100
+//            stock.ideal = idealSource
+//        }
         
         container.context.quickSave()
         

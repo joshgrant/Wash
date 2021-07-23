@@ -14,7 +14,7 @@ class NewStockModel
     var title: String?
     var unit: Unit?
     var previouslyBoolean: Bool = true
-    var stockType = ValueType.boolean
+    var stockType = SourceValueType.boolean
     {
         willSet
         {

@@ -62,7 +62,7 @@ extension StockTypeTableViewContainer: StockTypeTableViewFactory
     
     func makeValueTypeModels() -> [TableViewCellModel]
     {
-        ValueType.allCases.map { type in
+        SourceValueType.allCases.map { type in
             CheckmarkCellModel(
                 selectionIdentifier: .valueType(type: type),
                 title: type.description,
@@ -325,12 +325,9 @@ class StockTypeTableView: TableView<StockTypeTableViewContainer>
     
     static func makeValueTypeItems(stock: Stock) -> [CheckItem]
     {
-        [
-            CheckItem(name: "Boolean".localized, checked: stock.valueType == .boolean),
-            CheckItem(name: "Integer".localized, checked: stock.valueType == .integer),
-            CheckItem(name: "Decimal".localized, checked: stock.valueType == .decimal),
-            CheckItem(name: "Percent".localized, checked: stock.valueType == .percent)
-        ]
+        SourceValueType.allCases.map { sourceValueType in
+            CheckItem(name: sourceValueType.description, checked: stock.valueType == sourceValueType)
+        }
     }
     
     static func makeStateMachineItems(stock: Stock) -> [CheckItem]
@@ -341,7 +338,7 @@ class StockTypeTableView: TableView<StockTypeTableViewContainer>
         ]
     }
     
-    func path(for amountType: ValueType) -> IndexPath
+    func path(for amountType: SourceValueType) -> IndexPath
     {
         return IndexPath(row: Int(amountType.rawValue), section: 0)
     }

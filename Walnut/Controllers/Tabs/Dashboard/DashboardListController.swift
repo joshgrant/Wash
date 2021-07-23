@@ -70,18 +70,7 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
     {
         [
             .pinned: makePinnedItems(),
-            .suggested: [
-                .header(.init(text: "Suggested Flows",
-                              image: .init(systemName: "wind"))),
-                .suggested(.init(text: "Wash dishes",
-                                 secondaryText: "Chores",
-                                 checked: false,
-                                 delegate: delegate)),
-                .suggested(.init(text: "Eat dinner",
-                                 secondaryText: "Nutrition",
-                                 checked: true,
-                                 delegate: delegate))
-            ],
+            .suggested: makeSuggestedItems(),
             .forecast: [
                 .header(.init(text: "Forecast",
                               image: .init(systemName: "calendar"))),
@@ -118,7 +107,39 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
             return []
         }
         
-        items.insert(.header(.init(text: .pinned, image: Icon.pinFill.image)), at: 0)
+        let headerItem = DashboardItem.header(.init(text: .pinned, image: Icon.pinFill.image))
+        items.insert(headerItem, at: 0)
+        
+        return items
+    }
+    
+    private func makeSuggestedItems() -> [DashboardItem]
+    {
+        var items: [DashboardItem] = []
+        
+        let request = Flow.makeDashboardSuggestedFlowsFetchRequest()
+        do
+        {
+            let result = try context.fetch(request)
+            items = result.compactMap { flow in
+                let suggestion: System = flow.unwrapped(\Flow.suggestedIn).first!
+                let suggestedItem = SuggestedItem(
+                    text: flow.title,
+                    secondaryText: suggestion.title,
+                    checked: false,
+                    delegate: delegate)
+                return DashboardItem.suggested(suggestedItem)
+            }
+        }
+        catch
+        {
+            assertionFailure(error.localizedDescription)
+            return []
+        }
+        
+        let headerItem = DashboardItem.header(.init(text: .suggested, image: Icon.flow.image))
+        items.insert(headerItem, at: 0)
+        
         return items
     }
 }

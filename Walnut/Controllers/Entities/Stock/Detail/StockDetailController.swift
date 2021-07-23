@@ -145,11 +145,11 @@ extension StockDetailController: Subscriber
         // it to do Double/Bool/Int
         case .ideal:
             guard let content = Double(message.title) else { fatalError() }
-            container.stock.idealValue = content
+            container.stock.ideal!.value = content
             tableView.shouldReload = true
         case .current:
             guard let content = Double(message.title) else { fatalError() }
-            container.stock.amountValue = content
+            container.stock.source!.value = content
             tableView.shouldReload = true
         case .title:
             title = message.title

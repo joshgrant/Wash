@@ -54,14 +54,9 @@ extension IdealDetailTableViewContainer: IdealDetailTableViewFactory
     func makeInfoSection() -> TableViewSection
     {
         var models: [TableViewCellModel] = []
-        var keyboardType: UIKeyboardType = .decimalPad
+        let keyboardType: UIKeyboardType = .decimalPad // TODO: Use custom keyboard
         
-        if stock.valueType == .integer || stock.valueType == .percent
-        {
-            keyboardType = .numberPad
-        }
-        
-        if stock.valueType == .decimal || stock.valueType == .integer
+        if stock.valueType == .number
         {
             models = [
                 // TODO: Should have the state machine here as well (to set ideal state machine value)
@@ -81,7 +76,7 @@ extension IdealDetailTableViewContainer: IdealDetailTableViewFactory
                 ToggleCellModel(
                     selectionIdentifier: .ideal(type: .boolean),
                     title: "Ideal value".localized,
-                    toggleState: stock.idealValue < 1,
+                    toggleState: stock.ideal!.value < 1,
                     stream: stream)
             ]
         }

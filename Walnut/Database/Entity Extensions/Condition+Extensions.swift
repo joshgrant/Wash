@@ -47,13 +47,15 @@ public extension Condition
 public extension Condition
 {
     var isSatisfied: Bool {
+        
+        // TODO: Comparing dates?
 
-        guard let left = leftHand?.computedValue else {
+        guard let left = leftHand?.value else {
             assertionFailure("The left hand value is nil for: \(self)")
             return false
         }
         
-        guard let right = rightHand?.computedValue else {
+        guard let right = rightHand?.value else {
             assertionFailure("The right hand value is nil for: \(self)")
             return false
         }

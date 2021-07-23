@@ -202,8 +202,8 @@ public enum SelectionIdentifier
 {
     case title
     case systemIdeal
-    case ideal(type: ValueType)
-    case current(type: ValueType)
+    case ideal(type: SourceValueType)
+    case current(type: SourceValueType)
     case infinity
     case type
     case dimension
@@ -256,7 +256,7 @@ public enum SelectionIdentifier
     
     case system(system: System)
     
-    case valueType(type: ValueType) // Also used in NewStock
+    case valueType(type: SourceValueType) // Also used in NewStock
     case transitionType(type: TransitionType)
     
     // Current Ideal Boolean

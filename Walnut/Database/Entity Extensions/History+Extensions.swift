@@ -20,6 +20,6 @@ extension History
     
     var valueDescription: String
     {
-        String(format: "%.2f", valueSource!.value)
+        source?.description ?? ""
     }
 }

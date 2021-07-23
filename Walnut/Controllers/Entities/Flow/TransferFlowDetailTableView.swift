@@ -153,7 +153,7 @@ extension TransferFlowDetailTableViewContainer: TransferFlowDetailTableViewFacto
             let dateString = history.date!.format(with: .historyCellFormatter)
             var detailString: String = ""
             
-            if let value = history.valueSource?.amountOfStock?.amountValue
+            if let value = history.source?.value
             {
                 detailString = String(format: "%.2f", value)
             }

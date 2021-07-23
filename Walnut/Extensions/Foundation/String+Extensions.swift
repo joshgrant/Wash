@@ -60,4 +60,6 @@ public extension String
     static let states = "States".localized
     static let constraints = "Constraints".localized
     static let goal = "Goal".localized
+    
+    static let suggested = "Suggested".localized
 }

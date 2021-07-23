@@ -73,7 +73,7 @@ extension NewStockTableViewContainer: NewStockTableViewFactory
     
     func makeValueTypeSection() -> TableViewSection
     {
-        let models: [TableViewCellModel] = ValueType.allCases.compactMap { type in
+        let models: [TableViewCellModel] = SourceValueType.allCases.compactMap { type in
             
             return CheckmarkCellModel(
                 selectionIdentifier: .valueType(type: type),

@@ -200,7 +200,7 @@ extension NewStockController: Subscriber
         {
             if container.model.stockType == .boolean
             {
-                container.model.stockType = .decimal
+                container.model.stockType = .number
             }
         }
         else if container.model.previouslyBoolean
