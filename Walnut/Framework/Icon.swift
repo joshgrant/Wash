@@ -25,7 +25,7 @@ public enum Icon: String
     case unit = "atom"
     case symbol = "asterisk.circle"
     case note = "note.text"
-    case process = "flowchart"
+    case task = "flowchart"
     case search = "magnifyingglass"
     case dashboard = "speedometer"
     case library = "books.vertical"

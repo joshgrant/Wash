@@ -72,7 +72,7 @@ class SystemDetailRouter: Router<SystemDetailRouterContainer>
         delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
-    func routeToProcessDetail(flow: Process)
+    func routeToProcessDetail(flow: Task)
     {
         let detail = flow.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(detail, animated: true)
@@ -121,7 +121,7 @@ extension SystemDetailRouter: Subscriber
             {
                 routeToFlowDetail(flow: flow)
             }
-            else if let flow = flow as? Process
+            else if let flow = flow as? Task
             {
                 routeToProcessDetail(flow: flow)
             }

@@ -93,7 +93,7 @@
 		038CF61226764DA500931595 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF61126764DA500931595 /* SettingsController.swift */; };
 		038CF6642676828E00931595 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 038CF65D26767D7900931595 /* Model.xcdatamodeld */; };
 		038CF6862676829F00931595 /* Named.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6672676829E00931595 /* Named.swift */; };
-		038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6732676829E00931595 /* ProcessFlow+Extensions.swift */; };
+		038CF6912676829F00931595 /* Task+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6732676829E00931595 /* Task+Extensions.swift */; };
 		038CF6942676829F00931595 /* State+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6762676829E00931595 /* State+Extensions.swift */; };
 		038CF6982676829F00931595 /* Source+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF67A2676829E00931595 /* Source+Extensions.swift */; };
 		038CF6992676829F00931595 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF67B2676829E00931595 /* History+Extensions.swift */; };
@@ -114,7 +114,6 @@
 		038CF6D8267683EE00931595 /* Stock+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6D6267683EE00931595 /* Stock+Extensions.swift */; };
 		038CF6D9267683EE00931595 /* Symbol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6D7267683EE00931595 /* Symbol+Extensions.swift */; };
 		038CF6DC267683FB00931595 /* Event+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6DA267683FB00931595 /* Event+Extensions.swift */; };
-		038CF6DD267683FB00931595 /* TransferFlow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6DB267683FB00931595 /* TransferFlow+Extensions.swift */; };
 		038CF6DF2676840300931595 /* Condition+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6DE2676840300931595 /* Condition+Extensions.swift */; };
 		038CF6E12676840E00931595 /* System+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E02676840E00931595 /* System+Extensions.swift */; };
 		038CF6E3267684E200931595 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E2267684E200931595 /* LibraryCell.swift */; };
@@ -306,7 +305,7 @@
 		038CF61126764DA500931595 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		038CF65E26767D7900931595 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		038CF6672676829E00931595 /* Named.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Named.swift; sourceTree = "<group>"; };
-		038CF6732676829E00931595 /* ProcessFlow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProcessFlow+Extensions.swift"; sourceTree = "<group>"; };
+		038CF6732676829E00931595 /* Task+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Task+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6762676829E00931595 /* State+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "State+Extensions.swift"; sourceTree = "<group>"; };
 		038CF67A2676829E00931595 /* Source+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Source+Extensions.swift"; sourceTree = "<group>"; };
 		038CF67B2676829E00931595 /* History+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
@@ -327,7 +326,6 @@
 		038CF6D6267683EE00931595 /* Stock+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Stock+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6D7267683EE00931595 /* Symbol+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Symbol+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6DA267683FB00931595 /* Event+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Extensions.swift"; sourceTree = "<group>"; };
-		038CF6DB267683FB00931595 /* TransferFlow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TransferFlow+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6DE2676840300931595 /* Condition+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Condition+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6E02676840E00931595 /* System+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "System+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6E2267684E200931595 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
@@ -842,13 +840,12 @@
 				038CF6DA267683FB00931595 /* Event+Extensions.swift */,
 				031681B6267DA56700F493DA /* Flow+Extensions.swift */,
 				038CF67B2676829E00931595 /* History+Extensions.swift */,
-				038CF6732676829E00931595 /* ProcessFlow+Extensions.swift */,
+				038CF6732676829E00931595 /* Task+Extensions.swift */,
 				038CF67A2676829E00931595 /* Source+Extensions.swift */,
 				038CF6762676829E00931595 /* State+Extensions.swift */,
 				038CF6D6267683EE00931595 /* Stock+Extensions.swift */,
 				038CF6D7267683EE00931595 /* Symbol+Extensions.swift */,
 				038CF6E02676840E00931595 /* System+Extensions.swift */,
-				038CF6DB267683FB00931595 /* TransferFlow+Extensions.swift */,
 				03BF0BC3269F2AA400A866E5 /* Unit+Extensions.swift */,
 			);
 			path = "Entity Extensions";
@@ -1276,7 +1273,7 @@
 				03CA1FCD26A87F8100A7B10E /* ListSectionHeader.swift in Sources */,
 				03FAACB62698D22800CB7AB6 /* LinkSearchControllerTableViewManager.swift in Sources */,
 				0370FEE0268A1E1C001E099B /* ToggleInfoCell.swift in Sources */,
-				038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */,
+				038CF6912676829F00931595 /* Task+Extensions.swift in Sources */,
 				038CF6DC267683FB00931595 /* Event+Extensions.swift in Sources */,
 				03555B492686A487006E9EA1 /* CloudKitContainer.swift in Sources */,
 				03FAACDC269B681800CB7AB6 /* LibraryTableView.swift in Sources */,
@@ -1394,7 +1391,6 @@
 				03555B6A2686A487006E9EA1 /* ViewControllerTabBarDelegate.swift in Sources */,
 				03555B702686A487006E9EA1 /* View.swift in Sources */,
 				038CF6C8267682C700931595 /* CompletionType.swift in Sources */,
-				038CF6DD267683FB00931595 /* TransferFlow+Extensions.swift in Sources */,
 				03555B622686A487006E9EA1 /* Array+Extensions.swift in Sources */,
 				03FAACD4269B533900CB7AB6 /* StockDetailTableView.swift in Sources */,
 				03BF0BC2269DF5EB00A866E5 /* NewStockTableView.swift in Sources */,
