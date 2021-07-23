@@ -15,7 +15,6 @@ protocol SystemDetailTableViewFactory: Factory
     func makeInfoSection() -> TableViewSection
     func makeStockSection() -> TableViewSection
     func makeFlowSection() -> TableViewSection
-    func makeEventSection() -> TableViewSection
     func makeNoteSection() -> TableViewSection
 }
 
@@ -53,7 +52,7 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
             makeInfoSection(),
             makeStockSection(),
             makeFlowSection(),
-            makeEventSection(),
+//            makeEventSection(),
             makeNoteSection()
         ])
     }
@@ -76,14 +75,16 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
                         title: "Ideal".localized,
                         detail: "\(system.percentIdeal)%"))
         
-        let suggestedFlows: [Flow] = system.unwrapped(\System.suggestedFlows)
-        if let flow = suggestedFlows.first
-        {
-            models.append(SuggestedFlowCellModel(
-                            selectionIdentifier: .flow(flow: flow),
-                            title: flow.title))
-        }
+        // TODO: Add in the suggested flow
         
+//        let suggestedFlows: [Flow] = system.unwrapped(\System.suggestedFlows)
+//        if let flow = suggestedFlows.first
+//        {
+//            models.append(SuggestedFlowCellModel(
+//                            selectionIdentifier: .flow(flow: flow),
+//                            title: flow.title))
+//        }
+//
         return TableViewSection(
             header: .info,
             models: models)
@@ -128,20 +129,20 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
     
     // MARK: Events
     
-    func makeEventSection() -> TableViewSection
-    {
-        let models = system.unwrappedEvents.map { event in
-            DetailCellModel(
-                selectionIdentifier: .event(event: event),
-                title: event.title,
-                detail: "None",
-                disclosure: true)
-        }
-        
-        return TableViewSection(
-            header: .events,
-            models: models)
-    }
+//    func makeEventSection() -> TableViewSection
+//    {
+//        let models = system.unwrappedEvents.map { event in
+//            DetailCellModel(
+//                selectionIdentifier: .event(event: event),
+//                title: event.title,
+//                detail: "None",
+//                disclosure: true)
+//        }
+//        
+//        return TableViewSection(
+//            header: .events,
+//            models: models)
+//    }
     
     // MARK: Notes
     

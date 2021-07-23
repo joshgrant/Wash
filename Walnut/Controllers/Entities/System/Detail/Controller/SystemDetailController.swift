@@ -254,9 +254,9 @@ extension SystemDetailController: Subscriber
         case let f as Flow:
             container.system.addToFlows(f)
             router.routeToFlowDetail(flow: f)
-        case let e as Event:
-            container.system.addToEvents(e)
-            router.routeToEventDetail(event: e)
+//        case let e as Event:
+//            container.system.addToEvents(e)
+//            router.routeToEventDetail(event: e)
         case let n as Note:
             container.system.addToNotes(n)
             router.routeToNoteDetail(note: n)

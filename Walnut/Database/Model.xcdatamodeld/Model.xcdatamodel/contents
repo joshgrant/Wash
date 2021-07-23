@@ -25,8 +25,11 @@
         <relationship name="tintColorOf" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Block" inverseName="tintColor" inverseEntity="Block"/>
     </entity>
     <entity name="Condition" representedClassName="Condition" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <attribute name="comparisonTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="booleanComparisonTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="dateComparisonTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="numberComparisonTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="priorityTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stringComparisonTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="conditions" inverseEntity="Event"/>
         <relationship name="leftHand" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="conditionLeftHand" inverseEntity="Source"/>
         <relationship name="rightHand" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="conditionRightHand" inverseEntity="Source"/>
@@ -63,7 +66,6 @@
         <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="historyOfEvent" inverseEntity="History"/>
         <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="events" inverseEntity="Stock"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfEvent" inverseEntity="Symbol"/>
-        <relationship name="systems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="System" inverseName="events" inverseEntity="System"/>
     </entity>
     <entity name="Flow" representedClassName="Flow" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -73,7 +75,6 @@
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="flows" inverseEntity="Event"/>
         <relationship name="from" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="inflows" inverseEntity="Stock"/>
         <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="historyOfFlow" inverseEntity="History"/>
-        <relationship name="suggestedIn" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="suggestedFlows" inverseEntity="System"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfFlow" inverseEntity="Symbol"/>
         <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="flows" inverseEntity="System"/>
         <relationship name="to" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="outflows" inverseEntity="Stock"/>
@@ -146,10 +147,8 @@
         <relationship name="nameOfUnit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="symbolName" inverseEntity="Unit"/>
     </entity>
     <entity name="System" representedClassName="System" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="systems" inverseEntity="Event"/>
         <relationship name="flows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="system" inverseEntity="Flow"/>
         <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="systems" inverseEntity="Stock"/>
-        <relationship name="suggestedFlows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="suggestedIn" inverseEntity="Flow"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfSystem" inverseEntity="Symbol"/>
     </entity>
     <entity name="Task" representedClassName="Task" parentEntity="Entity" syncable="YES" codeGenerationType="class">
@@ -176,10 +175,10 @@
     <elements>
         <element name="Block" positionX="-63" positionY="-18" width="128" height="209"/>
         <element name="Color" positionX="-54" positionY="-9" width="128" height="149"/>
-        <element name="Condition" positionX="-36" positionY="9" width="128" height="14"/>
+        <element name="Condition" positionX="-36" positionY="9" width="128" height="164"/>
         <element name="Conversion" positionX="0" positionY="45" width="128" height="119"/>
         <element name="Entity" positionX="9" positionY="54" width="128" height="14"/>
-        <element name="Event" positionX="36" positionY="81" width="128" height="14"/>
+        <element name="Event" positionX="36" positionY="81" width="128" height="134"/>
         <element name="History" positionX="9" positionY="54" width="128" height="14"/>
         <element name="Note" positionX="45" positionY="90" width="128" height="14"/>
         <element name="Task" positionX="0" positionY="45" width="128" height="164"/>
@@ -187,8 +186,8 @@
         <element name="State" positionX="0" positionY="135" width="128" height="89"/>
         <element name="Stock" positionX="18" positionY="63" width="128" height="14"/>
         <element name="Symbol" positionX="27" positionY="72" width="128" height="14"/>
-        <element name="System" positionX="36" positionY="81" width="128" height="14"/>
-        <element name="Flow" positionX="-9" positionY="36" width="128" height="194"/>
+        <element name="System" positionX="36" positionY="81" width="128" height="74"/>
+        <element name="Flow" positionX="-9" positionY="36" width="128" height="179"/>
         <element name="Unit" positionX="0" positionY="144" width="128" height="149"/>
     </elements>
 </model>

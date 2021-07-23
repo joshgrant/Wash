@@ -27,7 +27,32 @@ public extension Event
 {
     static func makeUpcomingEventsPredicate() -> NSPredicate
     {
-        NSPredicate(value: false)
+//        NSPredicate(value: false)
+        
+        // if conditionType is 'all', then we have to check each condition
+        // if conditionType is 'any', then we just one has to pass
+        
+        // comparison is equal, not equal, less than, greater, etc.
+        // priority is low, urgent, etc...
+        
+        // So upcoming events have a lefthandsource and a righthandsource that are both dates...
+        // We check leftHand.valueType == .timeNow and rightHand.valueType == .date,
+        // If the difference between leftHand and rightHand is less than threshold (let's say 1 week,
+        // so 60 * 60 * 24 * 7) then we include it in the upcoming events...
+        
+        // Woof. Can we do this with a fetch request or do we need to filter?
+        
+//        NSPredicate { <#Any?#>, <#[String : Any]?#> in
+//            <#code#>
+//        }
+        
+//        NSPredicate(format: "conditionTypeRaw == %i", ConditionType.any)
+//        let predicate = NSPredicate { item, bindings in
+//            <#code#>
+//        }
+  
+        // Can't use predicateWithBlock...
+        fatalError()
     }
     
     static func makeUpcomingEventsFetchRequest() -> NSFetchRequest<Event>
@@ -35,6 +60,38 @@ public extension Event
         let fetchRequest: NSFetchRequest<Event> = Event.fetchRequest()
         fetchRequest.predicate = makeUpcomingEventsPredicate()
         return fetchRequest
+    }
+    
+    static func upcomingEvents(context: Context) -> [Event]
+    {
+        var upcomingEvents: [Event] = []
+        
+        let allEvents = Event.all(context: context)
+        
+        for event in allEvents
+        {
+            var dateConditionSatisfied = false
+            
+            let conditions: [Condition] = event.unwrapped(\Event.conditions)
+            
+                
+//                if condition.leftHand!.valueType == .timeNow && condition.rightHand!.valueType == .date
+//                {
+//                    // This threshold represents a week. So dates less than 1 week apart are upcoming
+//                    let threshold: Double = 60 * 60 * 24 * 7
+//                    if condition.leftHand!.value - threshold <= condition.rightHand!.value
+//                    {
+//                        dateConditionSatisfied = true
+//                    }
+//                }
+//                else
+//                {
+//
+//                }
+            
+        }
+        
+        return upcomingEvents
     }
 }
 

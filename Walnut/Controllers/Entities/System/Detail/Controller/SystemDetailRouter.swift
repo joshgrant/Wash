@@ -105,6 +105,9 @@ extension SystemDetailRouter: Subscriber
     }
     
     // TODO: Not great with the section indexes
+    // TODO: Should systems have tasks? I.E this is my safety system, and it has tasks
+    // to follow? Not sure...
+    // TODO: Also, TASK should be PROCESS because it's clearer. CoreData throws an error though...
     func handle(_ message: SystemDetailTableViewSelectedMessage)
     {
         let indexPath = message.indexPath
@@ -116,23 +119,23 @@ extension SystemDetailRouter: Subscriber
             routeTostockDetail(stock: stock)
         case 2: // Flows
             let flow = container.system.unwrappedFlows[indexPath.row]
-            
-            if let flow = flow as? Flow
-            {
-                routeToFlowDetail(flow: flow)
-            }
-            else if let flow = flow as? Task
-            {
-                routeToProcessDetail(flow: flow)
-            }
-            else
-            {
-                fatalError("Cannot use an abstract Flow")
-            }
-        case 3: // Events
-            let event = container.system.unwrappedEvents[indexPath.row]
-            routeToEventDetail(event: event)
-        case 4: // Notes
+            routeToFlowDetail(flow: flow)
+//            if let flow = flow as? Flow
+//            {
+//                routeToFlowDetail(flow: flow)
+//            }
+//            else if let flow = flow as? Task
+//            {
+//                routeToProcessDetail(flow: flow)
+//            }
+//            else
+//            {
+//                fatalError("Cannot use an abstract Flow")
+//            }
+//        case 3: // Events
+//            let event = container.system.unwrappedEvents[indexPath.row]
+//            routeToEventDetail(event: event)
+        case 3: // Notes
             let note = container.system.unwrappedNotes[indexPath.row]
             routeToNoteDetail(note: note)
         default:

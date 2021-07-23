@@ -21,13 +21,51 @@ public extension Condition
         }
     }
     
-    var comparisonType: Comparison
+    var booleanComparisonType: BooleanComparisonType?
     {
-        get {
-            return Comparison(rawValue: comparisonTypeRaw) ?? .fallback
+        get
+        {
+            .init(rawValue: booleanComparisonTypeRaw)
         }
-        set {
-            comparisonTypeRaw = newValue.rawValue
+        set
+        {
+            booleanComparisonTypeRaw = newValue?.rawValue ?? -1
+        }
+    }
+    
+    var dateComparisonType: DateComparisonType?
+    {
+        get
+        {
+            .init(rawValue: dateComparisonTypeRaw)
+        }
+        set
+        {
+            dateComparisonTypeRaw = newValue?.rawValue ?? -1
+        }
+    }
+    
+    var numberComparisonType: NumberComparisonType?
+    {
+        get
+        {
+            .init(rawValue: numberComparisonTypeRaw)
+        }
+        set
+        {
+            numberComparisonTypeRaw = newValue?.rawValue ?? -1
+        }
+    }
+    
+    var stringComparisonType: StringComparisonType?
+    {
+        get
+        {
+            .init(rawValue: stringComparisonTypeRaw)
+        }
+        set
+        {
+            stringComparisonTypeRaw = newValue?.rawValue ?? -1
         }
     }
 }
@@ -48,83 +86,53 @@ public extension Condition
 {
     var isSatisfied: Bool {
         
-        // TODO: Comparing dates?
-
-        guard let left = leftHand?.value else {
-            assertionFailure("The left hand value is nil for: \(self)")
-            return false
-        }
+        let leftHand = leftHand!
+        let rightHand = rightHand!
         
-        guard let right = rightHand?.value else {
-            assertionFailure("The right hand value is nil for: \(self)")
-            return false
-        }
+        // We can't compare values without the same type
+        guard leftHand.valueType == rightHand.valueType else { return false }
         
-        let comparison = comparisonType
-        
-        let valueComparison = (try? satisfiesValueComparison(comparison, left: left, right: right)) ?? false
-        let rangeComparison = (try? satisfiesRangeComparison(comparison, left: left, right: right)) ?? false
-        
-        // let dateComparison
-        // after, before, inTheLast, notInTheLast
-        
-        // let stringComparison
-        // beginsWith
-        // endsWith
-        // contains
-        // doesNotContain
-        
-        // let enumComparison
-        // equal
-        // notEqual
-        
-        return valueComparison || rangeComparison
-    }
-    
-    private func satisfiesValueComparison(_ comparison: Comparison, left: Any, right: Any) throws -> Bool
-    {
-        guard let _left = left as? Double else {
-            throw ConditionError.invalidType(given: left, expected: Double.self)
-        }
-        
-        guard let _right = right as? Double else {
-            throw ConditionError.invalidType(given: right, expected: Double.self)
-        }
-        
-        switch comparison
+        if let type = booleanComparisonType
         {
-        case .equal:
-            return _left == _right
-        case .notEqual:
-            return _left != _right
-        case .greaterThan:
-            return _left > _right
-        case .lessThan:
-            return _left < _right
-        case .greaterThanOrEqual:
-            return _left >= _right
-        case .lessThanOrEqual:
-            return _left <= _right
-        default:
-            throw ConditionError.invalidComparison
+            switch type
+            {
+            case .equal:
+                return leftHand.booleanValue == rightHand.booleanValue
+            case .notEqual:
+                return leftHand.booleanValue != rightHand.booleanValue
+            }
         }
-    }
-    
-    private func satisfiesRangeComparison(_ comparison: Comparison, left: Any, right: Any) throws -> Bool
-    {
-        guard let _left = left as? Double else {
-            throw ConditionError.invalidType(given: left, expected: Double.self)
+        else if let type = dateComparisonType
+        {
+            switch type
+            {
+            case .after:
+                return leftHand.dateValue > rightHand.dateValue
+            case .before:
+                return leftHand.dateValue < rightHand.dateValue
+            }
         }
-        
-        guard let _right = right as? ClosedRange<Double> else {
-            throw ConditionError.invalidType(given: right, expected: ClosedRange<Double>.self)
+        else if let type = numberComparisonType
+        {
+            switch type
+            {
+            case .equal:
+                return leftHand.numberValue == rightHand.numberValue
+            case .greaterThan:
+                return leftHand.numberValue > rightHand.numberValue
+            case .greaterThanOrEqual:
+                return leftHand.numberValue >= rightHand.numberValue
+            case .lessThan:
+                return leftHand.numberValue < rightHand.numberValue
+            case .lessThanOrEqual:
+                return leftHand.numberValue <= rightHand.numberValue
+            case .notEqual:
+                return leftHand.numberValue != rightHand.numberValue
+            }
         }
-        
-        switch comparison {
-        case .inTheRange:
-            return _right.contains(_left)
-        default:
-            throw ConditionError.invalidComparison
+        else
+        {
+            fatalError("We don't handle other types, such as `string`.")
         }
     }
 }

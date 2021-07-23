@@ -88,6 +88,9 @@
 		0370FEDC268A184E001E099B /* TransferFlowDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEDB268A184E001E099B /* TransferFlowDetailRouter.swift */; };
 		0370FEDE268A1859001E099B /* TransferFlowDetailResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEDD268A1859001E099B /* TransferFlowDetailResponder.swift */; };
 		0370FEE0268A1E1C001E099B /* ToggleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEDF268A1E1C001E099B /* ToggleInfoCell.swift */; };
+		0378EA8326AB6FDA00ED197F /* ContextPopulatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0378EA8226AB6FDA00ED197F /* ContextPopulatorTests.swift */; };
+		0378EA8526AB7F6F00ED197F /* SourceValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0378EA8426AB7F6F00ED197F /* SourceValueType.swift */; };
+		0378EA8726AB821E00ED197F /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0378EA8626AB821E00ED197F /* Random.swift */; };
 		038CF60E26763E0A00931595 /* LibraryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60D26763E0A00931595 /* LibraryController.swift */; };
 		038CF61026763E1200931595 /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF60F26763E1200931595 /* InboxController.swift */; };
 		038CF61226764DA500931595 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF61126764DA500931595 /* SettingsController.swift */; };
@@ -103,7 +106,7 @@
 		038CF6C2267682C700931595 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6A9267682C700931595 /* Order.swift */; };
 		038CF6C3267682C700931595 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6AA267682C700931595 /* TextStyle.swift */; };
 		038CF6C4267682C700931595 /* HistoryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6AB267682C700931595 /* HistoryEvent.swift */; };
-		038CF6C5267682C700931595 /* Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6AC267682C700931595 /* Comparison.swift */; };
+		038CF6C5267682C700931595 /* ComparisonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6AC267682C700931595 /* ComparisonType.swift */; };
 		038CF6C6267682C700931595 /* ConditionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6AD267682C700931595 /* ConditionType.swift */; };
 		038CF6C7267682C700931595 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6AE267682C700931595 /* Priority.swift */; };
 		038CF6C8267682C700931595 /* CompletionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6AF267682C700931595 /* CompletionType.swift */; };
@@ -300,6 +303,9 @@
 		0370FEDB268A184E001E099B /* TransferFlowDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowDetailRouter.swift; sourceTree = "<group>"; };
 		0370FEDD268A1859001E099B /* TransferFlowDetailResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowDetailResponder.swift; sourceTree = "<group>"; };
 		0370FEDF268A1E1C001E099B /* ToggleInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleInfoCell.swift; sourceTree = "<group>"; };
+		0378EA8226AB6FDA00ED197F /* ContextPopulatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPopulatorTests.swift; sourceTree = "<group>"; };
+		0378EA8426AB7F6F00ED197F /* SourceValueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceValueType.swift; sourceTree = "<group>"; };
+		0378EA8626AB821E00ED197F /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		038CF60D26763E0A00931595 /* LibraryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryController.swift; sourceTree = "<group>"; };
 		038CF60F26763E1200931595 /* InboxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxController.swift; sourceTree = "<group>"; };
 		038CF61126764DA500931595 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -315,7 +321,7 @@
 		038CF6A9267682C700931595 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		038CF6AA267682C700931595 /* TextStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		038CF6AB267682C700931595 /* HistoryEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEvent.swift; sourceTree = "<group>"; };
-		038CF6AC267682C700931595 /* Comparison.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comparison.swift; sourceTree = "<group>"; };
+		038CF6AC267682C700931595 /* ComparisonType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComparisonType.swift; sourceTree = "<group>"; };
 		038CF6AD267682C700931595 /* ConditionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionType.swift; sourceTree = "<group>"; };
 		038CF6AE267682C700931595 /* Priority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		038CF6AF267682C700931595 /* CompletionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompletionType.swift; sourceTree = "<group>"; };
@@ -494,6 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				030B21D026815D930038C095 /* Notifiable.swift */,
+				0378EA8626AB821E00ED197F /* Random.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -550,6 +557,7 @@
 				033FE6AD266CE2AB00BCF5AA /* WalnutTests.swift */,
 				033FE6AF266CE2AB00BCF5AA /* Info.plist */,
 				03D1FBEF26A62F8A003AE881 /* RootFactoryTests.swift */,
+				0378EA8226AB6FDA00ED197F /* ContextPopulatorTests.swift */,
 			);
 			path = WalnutTests;
 			sourceTree = "<group>";
@@ -865,7 +873,7 @@
 		038CF6A5267682C700931595 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				038CF6AC267682C700931595 /* Comparison.swift */,
+				038CF6AC267682C700931595 /* ComparisonType.swift */,
 				038CF6AF267682C700931595 /* CompletionType.swift */,
 				038CF6AD267682C700931595 /* ConditionType.swift */,
 				038CF6AB267682C700931595 /* HistoryEvent.swift */,
@@ -875,6 +883,7 @@
 				038CF6A7267682C700931595 /* TextSize.swift */,
 				038CF6AA267682C700931595 /* TextStyle.swift */,
 				038CF6A6267682C700931595 /* TimePeriod.swift */,
+				0378EA8426AB7F6F00ED197F /* SourceValueType.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1252,7 +1261,7 @@
 				03FC2C04269C0A1A00B8CB36 /* SymbolTableView.swift in Sources */,
 				038CF6642676828E00931595 /* Model.xcdatamodeld in Sources */,
 				038CF6C4267682C700931595 /* HistoryEvent.swift in Sources */,
-				038CF6C5267682C700931595 /* Comparison.swift in Sources */,
+				038CF6C5267682C700931595 /* ComparisonType.swift in Sources */,
 				038CF6C2267682C700931595 /* Order.swift in Sources */,
 				03555AAC2683C51B006E9EA1 /* EntityListRouter.swift in Sources */,
 				030B21CE268121AA0038C095 /* SearchControllerDelegate.swift in Sources */,
@@ -1331,6 +1340,7 @@
 				030B2183267FB15B0038C095 /* TextEditCell.swift in Sources */,
 				03555B472686A487006E9EA1 /* Observer.swift in Sources */,
 				03FAACB42698CEF500CB7AB6 /* UIViewController+Extensions.swift in Sources */,
+				0378EA8526AB7F6F00ED197F /* SourceValueType.swift in Sources */,
 				03CA1FE726A9F34500A7B10E /* PriorityItem.swift in Sources */,
 				03CA1FE926A9F35700A7B10E /* HeaderItem.swift in Sources */,
 				03555B692686A487006E9EA1 /* TabBarControllerDelegate.swift in Sources */,
@@ -1353,6 +1363,7 @@
 				030B21D126815D930038C095 /* Notifiable.swift in Sources */,
 				03FC2C0C269C977700B8CB36 /* IdealDetailTableView.swift in Sources */,
 				0370FECA268A0940001E099B /* StockValueTypeController.swift in Sources */,
+				0378EA8726AB821E00ED197F /* Random.swift in Sources */,
 				03555B582686A487006E9EA1 /* TableViewCellModel.swift in Sources */,
 				03555B5D2686A487006E9EA1 /* UIView+Extensions.swift in Sources */,
 				0370FEDC268A184E001E099B /* TransferFlowDetailRouter.swift in Sources */,
@@ -1435,6 +1446,7 @@
 			files = (
 				03D1FBF026A62F8A003AE881 /* RootFactoryTests.swift in Sources */,
 				033FE6AE266CE2AB00BCF5AA /* WalnutTests.swift in Sources */,
+				0378EA8326AB6FDA00ED197F /* ContextPopulatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -115,30 +115,57 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
     
     private func makeSuggestedItems() -> [DashboardItem]
     {
+        // 1. Get the out of balance systems
+        // 2. For each system, return the flow that has the most positive net impact on the system
+        // 2a. Each flow must determine if the input stock and output stock can transfer the desired amount
+        
+        return []
+        
+//        var items: [DashboardItem] = []
+//
+//        let request = Flow.makeDashboardSuggestedFlowsFetchRequest()
+//        do
+//        {
+//            let result = try context.fetch(request)
+//            items = result.compactMap { flow in
+//                let suggestion: System = flow.unwrapped(\Flow.suggestedIn).first!
+//                let suggestedItem = SuggestedItem(
+//                    text: flow.title,
+//                    secondaryText: suggestion.title,
+//                    checked: false,
+//                    delegate: delegate)
+//                return DashboardItem.suggested(suggestedItem)
+//            }
+//        }
+//        catch
+//        {
+//            assertionFailure(error.localizedDescription)
+//            return []
+//        }
+//
+//        let headerItem = DashboardItem.header(.init(text: .suggested, image: Icon.flow.image))
+//        items.insert(headerItem, at: 0)
+//
+//        return items
+    }
+    
+    private func makeForecastItem() -> [DashboardItem]
+    {
         var items: [DashboardItem] = []
         
-        let request = Flow.makeDashboardSuggestedFlowsFetchRequest()
+        let request = Event.makeUpcomingEventsFetchRequest()
         do
         {
-            let result = try context.fetch(request)
-            items = result.compactMap { flow in
-                let suggestion: System = flow.unwrapped(\Flow.suggestedIn).first!
-                let suggestedItem = SuggestedItem(
-                    text: flow.title,
-                    secondaryText: suggestion.title,
-                    checked: false,
-                    delegate: delegate)
-                return DashboardItem.suggested(suggestedItem)
-            }
+//            let result = try context.fetch(request)
+//            items = result.compactMap { event in
+//                let forecastItem = ForecastItem(text: event.title, secondaryText: event.)
+//            }
         }
         catch
         {
             assertionFailure(error.localizedDescription)
             return []
         }
-        
-        let headerItem = DashboardItem.header(.init(text: .suggested, image: Icon.flow.image))
-        items.insert(headerItem, at: 0)
         
         return items
     }

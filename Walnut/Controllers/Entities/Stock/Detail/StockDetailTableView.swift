@@ -172,12 +172,6 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
     {
         let inflows = stock.unwrappedInflows
         return inflows.map { flow in
-            
-            guard let flow = flow as? Flow else
-            {
-                fatalError("Can stocks have process flows as well?")
-            }
-            
             return FlowDetailCellModel(
                 selectionIdentifier: .inflow(flow: flow),
                 title: flow.title,
@@ -204,12 +198,6 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
     {
         let outflows = stock.unwrappedOutflows
         return outflows.map { flow in
-            
-            guard let flow = flow as? Flow else
-            {
-                fatalError("Can stocks have process flows as well?")
-            }
-            
             return FlowDetailCellModel(
                 selectionIdentifier: .outflow(flow: flow),
                 title: flow.title,

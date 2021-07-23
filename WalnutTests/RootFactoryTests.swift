@@ -12,6 +12,6 @@ class RootFactoryTests: XCTestCase
 {
     func testInit()
     {
-        let factory = RootFactory()
+//        let factory = RootFactory()
     }
 }

@@ -24,7 +24,7 @@ extension System
     
     var unwrappedStocks: [Stock] { unwrapped(\System.stocks) }
     var unwrappedFlows: [Flow] { unwrapped(\System.flows) }
-    var unwrappedEvents: [Event] { unwrapped(\System.events) }
+//    var unwrappedEvents: [Event] { unwrapped(\System.events) }
     var unwrappedNotes: [Note] { unwrapped(\System.notes) }
     
     // TODO: Need to weight the stock.amountValues / idealValue evenly?

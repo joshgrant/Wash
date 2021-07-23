@@ -7,39 +7,6 @@
 
 import Foundation
 
-/// Maps to Source.valueTypeRaw
-public enum SourceValueType: Int16, CaseIterable
-{
-    case boolean
-    case date
-    case infinite
-    case percent
-    case number
-}
-
-extension SourceValueType: CustomStringConvertible
-{
-    public var description: String
-    {
-        switch self
-        {
-        case .boolean: return "Boolean".localized
-        case .date: return "Date".localized
-        case .infinite: return "Infinite".localized
-        case .percent: return "Percent".localized
-        case .number: return "Number".localized
-        }
-    }
-}
-
-extension SourceValueType
-{
-    static func random() -> SourceValueType
-    {
-        Self.allCases.randomElement()!
-    }
-}
-
 // TODO: Let's do testing next
 
 public extension Source
@@ -61,9 +28,17 @@ public extension Source
         Int(value) == 1
     }
     
+    // TODO: Prevent user from entering dates before the reference date...
     var dateValue: Date
     {
-        Date(timeIntervalSince1970: value)
+        if value < 0
+        {
+            return Date()
+        }
+        else
+        {
+            return Date(timeIntervalSinceReferenceDate: value)
+        }
     }
     
     var infiniteValue: Double

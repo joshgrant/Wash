@@ -18,7 +18,13 @@ class ContextPopulator
         fetchOrMakeSourceStock(context: context)
         fetchOrMakeSinkStock(context: context)
         
-        makeRandomStocks(context: context)
+        if systemCount(context: context) < 5
+        {
+            for _ in 0 ..< 5
+            {
+                makeRandomSystem(context: context)
+            }
+        }
         
         context.quickSave()
     }
@@ -113,11 +119,23 @@ class ContextPopulator
     private static func getRandomStocks(context: Context, max: Int = 3) -> [Stock]
     {
         let stockRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
-        stockRequest.fetchLimit = max
         
         do
         {
-            return try context.fetch(stockRequest)
+            let stocks = try context.fetch(stockRequest)
+            
+            guard stocks.count > 0 else { return [] }
+            
+            // Get random elements
+            
+            var output: [Stock] = []
+
+            for _ in 0 ..< max
+            {
+                output.append(stocks.randomElement()!)
+            }
+            
+            return output
         }
         catch
         {
@@ -126,26 +144,26 @@ class ContextPopulator
         }
     }
     
-    /// Limit is the maximum of stocks that can exist in the database
-    private static func makeRandomStocks(context: Context, limit: Int = 50)
-    {
-        let stockCountRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
-        
-        do
-        {
-            let fetchedStocks = try context.fetch(stockCountRequest)
-            guard fetchedStocks.count <= limit else { return }
-            for _ in 0 ..< Int.random(in: 1 ... 10)
-            {
-                makeRandomStock(context: context)
-            }
-        }
-        catch
-        {
-            assertionFailure(error.localizedDescription)
-        }
-    }
-    
+//    /// Limit is the maximum of stocks that can exist in the database
+//    private static func makeRandomStocks(context: Context, limit: Int = 50)
+//    {
+//        let stockCountRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
+//
+//        do
+//        {
+//            let fetchedStocks = try context.fetch(stockCountRequest)
+//            guard fetchedStocks.count <= limit else { return }
+//            for _ in 0 ..< Int.random(in: 1 ... 10)
+//            {
+//                makeRandomStock(context: context)
+//            }
+//        }
+//        catch
+//        {
+//            assertionFailure(error.localizedDescription)
+//        }
+//    }
+//
     @discardableResult private static func makeRandomStock(context: Context) -> Stock
     {
         let stock = Stock(context: context)
@@ -177,21 +195,53 @@ class ContextPopulator
     private static func makeRandomCondition(context: Context) -> Condition
     {
         let condition = Condition(context: context)
-        condition.comparisonType = .random()
-        condition.priorityType = .random()
         
-        condition.leftHand = makeRandomSource(context: context)
-        condition.rightHand = makeRandomSource(context: context)
-        condition.symbolName = makeRandomSymbol(context: context)
-        
-        // events (the events that this condition triggers)
-        condition.events = NSSet(array: [makeRandomEvent(context: context)])
+        // Date, boolean, number
+        // TODO: Switch between boolean, number, and date
+        // Make sure left and right hand types match
+        // Make sure some dates are "current" by having a negative sign
+        fatalError()
+//        condition.priorityType = .random()
+//
+//        condition.leftHand = makeRandomSource(context: context)
+//        condition.rightHand = makeRandomSource(context: context)
+//        condition.symbolName = makeRandomSymbol(context: context)
         
         return condition
     }
     
     // MARK: - Flow
     
+    private static func makeRandomFlow(context: Context) -> Flow
+    {
+        let flow = Flow(context: context)
+        flow.amount = .random(in: -1000 ... 1000)
+        flow.delay = .random(in: 0 ... 5)
+        flow.duration = .random(in: 0 ... 1000)
+        flow.requiresUserCompletion = .random()
+        
+        for _ in 0 ..< .random(in: 0 ... 3)
+        {
+            let event = makeRandomEvent(context: context)
+            flow.addToEvents(event)
+        }
+        
+        for _ in 0 ..< .random(in: 0 ... 10)
+        {
+            let history = makeRandomHistory(context: context)
+            flow.addToHistory(history)
+        }
+        
+        // TODO: A stocks inflow must have itself as the destination
+        // A stock outflow must have itself as the source...
+        
+        flow.from = getRandomStocks(context: context, max: 1).first
+        flow.to = getRandomStocks(context: context, max: 1).first
+        
+        flow.symbolName = makeRandomSymbol(context: context)
+        
+        return flow
+    }
     
     // MARK: - Events
     
@@ -203,16 +253,22 @@ class ContextPopulator
         event.symbolName = makeRandomSymbol(context: context)
         event.history = NSSet(array: makeRandomHistories(context: context))
         
-        for _ in 0 ..< Int.random(in: 0 ... 3)
+        if .random()
         {
-            let note = makeRandomNote(context: context)
-            event.addToNotes(note)
+            for _ in 0 ..< .random(in: 0 ... 3)
+            {
+                let note = makeRandomNote(context: context)
+                event.addToNotes(note)
+            }
         }
-
-        for _ in 0 ..< Int.random(in: 0 ... 3)
+        
+        if .random()
         {
-            let condition = makeRandomCondition(context: context)
-            event.addToConditions(condition)
+            for _ in 0 ..< .random(in: 0 ... 3)
+            {
+                let condition = makeRandomCondition(context: context)
+                event.addToConditions(condition)
+            }
         }
         
         return event
@@ -244,13 +300,13 @@ class ContextPopulator
     private static func makeRandomUnit(context: Context) -> Unit
     {
         let unit = Unit(context: context)
-        unit.isBase = Bool.random()
+        unit.isBase = .random()
         unit.abbreviation = faker.lorem.characters(amount: 3)
         unit.symbolName = makeRandomSymbol(context: context)
         
-        if Bool.random()
+        if .random()
         {
-            for _ in 0 ..< Int.random(in: 0 ... 3)
+            for _ in 0 ..< .random(in: 0 ... 3)
             {
                 let derivedUnit = makeRandomUnit(context: context)
                 unit.addToChildren(derivedUnit)
@@ -265,9 +321,9 @@ class ContextPopulator
     private static func makeRandomConversion(context: Context) -> Conversion
     {
         let conversion = Conversion(context: context)
-        conversion.isReversible = Bool.random()
-        conversion.leftValue = Double.random(in: -10e10 ... 10e10)
-        conversion.rightValue = Double.random(in: -10e10 ... 10e10)
+        conversion.isReversible = .random()
+        conversion.leftValue = .random(in: -10e10 ... 10e10)
+        conversion.rightValue = .random(in: -10e10 ... 10e10)
         conversion.symbolName = makeRandomSymbol(context: context)
         return conversion
     }
@@ -278,9 +334,9 @@ class ContextPopulator
     {
         let color = Color(context: context)
         
-        color.brightness = Double.random(in: 0 ... 1)
-        color.hue = Double.random(in: 0 ... 1)
-        color.saturation = Double.random(in: 0 ... 1)
+        color.brightness = .random(in: 0 ... 1)
+        color.hue = .random(in: 0 ... 1)
+        color.saturation = .random(in: 0 ... 1)
         
         return color
     }
@@ -294,24 +350,24 @@ class ContextPopulator
         let note = Note(context: context)
         
         // Add blocks
-        for _ in 0 ..< Int.random(in: 0 ... 10)
+        for _ in 0 ..< .random(in: 0 ... 10)
         {
             note.addToBlocks(makeRandomBlock(context: context))
         }
         
         // Add subnotes
-        if Bool.random()
+        if .random()
         {
-            for _ in 0 ..< Int.random(in: 0 ... 3)
+            for _ in 0 ..< .random(in: 0 ... 3)
             {
                 note.addToSubnotes(makeRandomNote(context: context))
             }
         }
         
         // Find related notes
-        if Bool.random()
+        if .random()
         {
-            let relatedNotes = NSSet(array: getRandomNote(context: context, limit: Int.random(in: 0 ... 5)))
+            let relatedNotes = NSSet(array: getRandomNote(context: context, limit: .random(in: 0 ... 5)))
             note.addToRelatedNotes(relatedNotes)
         }
         
@@ -325,7 +381,17 @@ class ContextPopulator
         
         do
         {
-            return try context.fetch(request)
+            let notes = try context.fetch(request)
+            guard notes.count > 0 else { return []}
+            
+            var output: [Note] = []
+            
+            for _ in 0 ..< limit
+            {
+                output.append(notes.randomElement()!)
+            }
+            
+            return output
         }
         catch
         {
@@ -340,10 +406,10 @@ class ContextPopulator
     {
         let history = History(context: context)
         
-        let endRange = Date(timeIntervalSinceNow: 0).timeIntervalSince1970
+        let endRange = Date(timeIntervalSinceNow: 0).timeIntervalSinceReferenceDate
         let interval = TimeInterval.random(in: 0 ..< endRange)
         
-        history.date = Date(timeIntervalSince1970: interval)
+        history.date = Date(timeIntervalSinceReferenceDate: interval)
         history.eventType = .random()
         history.source = makeRandomSource(context: context) // TODO: Could be better?
         
@@ -354,7 +420,7 @@ class ContextPopulator
     {
         var histories: [History] = []
         
-        for _ in 0 ..< Int.random(in: 0 ... limit)
+        for _ in 0 ..< .random(in: 0 ... limit)
         {
             histories.append(makeRandomHistory(context: context))
         }
@@ -364,21 +430,42 @@ class ContextPopulator
     
     // MARK: - Systems
     
-    private static func makeRandomSystem(context: Context) -> System
+    private static func systemCount(context: Context) -> Int
+    {
+        let request: NSFetchRequest<System> = System.fetchRequest()
+        do
+        {
+            return try context.fetch(request).count
+        }
+        catch
+        {
+            assertionFailure(error.localizedDescription)
+            return 0
+        }
+    }
+    
+    @discardableResult private static func makeRandomSystem(context: Context) -> System
     {
         let system = System(context: context)
         system.symbolName = makeRandomSymbol(context: context)
         
-        let randomStocks = getRandomStocks(context: context, max: .random(in: 1 ... 4))
-        let stocks = NSSet(array: randomStocks)
-        system.addToStocks(stocks)
+        for _ in 0 ..< .random(in: 0 ... 5)
+        {
+            let stock = makeRandomStock(context: context)
+            system.addToStocks(stock)
+        }
         
-        // Set events
-        // Set flows
-        // Set notes
-        // Set stocks
+        for _ in 0 ..< .random(in: 0 ... 3)
+        {
+            let flow = makeRandomFlow(context: context)
+            system.addToFlows(flow)
+        }
         
-        // Suggested flows?
+        for _ in 0 ..< .random(in: 0 ... 8)
+        {
+            let note = makeRandomNote(context: context)
+            system.addToNotes(note)
+        }
         
         return system
     }
