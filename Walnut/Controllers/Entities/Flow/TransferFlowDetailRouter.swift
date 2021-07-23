@@ -1,5 +1,5 @@
 //
-//  TransferFlowDetailRouter.swift
+//  FlowDetailRouter.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 6/28/21.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TransferFlowDetailRouterContainer: Container
+class FlowDetailRouterContainer: Container
 {
     // MARK: - Variables
     
@@ -24,7 +24,7 @@ class TransferFlowDetailRouterContainer: Container
     }
 }
 
-class TransferFlowDetailRouter: Router<TransferFlowDetailRouterContainer>
+class FlowDetailRouter: Router<FlowDetailRouterContainer>
 {
     // MARK: - Variables
     
@@ -32,7 +32,7 @@ class TransferFlowDetailRouter: Router<TransferFlowDetailRouterContainer>
     
     // MARK: - Initialization
     
-    required init(container: TransferFlowDetailRouterContainer)
+    required init(container: FlowDetailRouterContainer)
     {
         super.init(container: container)
         subscribe(to: container.stream)
@@ -84,7 +84,7 @@ class TransferFlowDetailRouter: Router<TransferFlowDetailRouterContainer>
     }
 }
 
-extension TransferFlowDetailRouter: Subscriber
+extension FlowDetailRouter: Subscriber
 {
     func receive(message: Message)
     {
@@ -99,7 +99,7 @@ extension TransferFlowDetailRouter: Subscriber
     
     private func handleTableViewSelectionMessage(_ message: TableViewSelectionMessage)
     {
-        guard let _ = message.tableView as? TableView<TransferFlowDetailTableViewContainer> else { return }
+        guard let _ = message.tableView as? TableView<FlowDetailTableViewContainer> else { return }
         
         // TODO: `fromStock` and `toStock` shouldn't Necessarily open up the link
         // screen. Rather, we should have a link button for each of the cells

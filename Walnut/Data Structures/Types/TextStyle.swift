@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum TextStyle: Int16
+public enum TextStyle: Int16, CaseIterable
 {
     case bold
     case italic
@@ -18,4 +18,12 @@ public enum TextStyle: Int16
 extension TextStyle: FallbackProtocol
 {
     static let fallback: TextStyle = .normal
+}
+
+extension TextStyle
+{
+    static func random() -> TextStyle
+    {
+        allCases.randomElement()!
+    }
 }

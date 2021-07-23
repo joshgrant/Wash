@@ -74,7 +74,6 @@ extension SymbolTableViewContainer: SymbolTableViewFactory
         let entities = [
             symbol.nameOfColor,
             symbol.nameOfFlow,
-            symbol.nameOfNote,
             symbol.nameOfEvent,
             symbol.nameOfState,
             symbol.nameOfStock,
@@ -100,7 +99,7 @@ extension SymbolTableViewContainer: SymbolTableViewFactory
     
     func makeLinkSection() -> TableViewSection
     {
-        let entities: [Entity] = symbol.unwrapped(\Symbol.links)
+        let entities: [Entity] = symbol.unwrapped(\Symbol.linkedEntities)
         
         let models: [TableViewCellModel] = entities.compactMap { named in
             guard let named = named as? NamedEntity else { return nil }

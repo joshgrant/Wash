@@ -132,8 +132,8 @@ extension Entity
                 context: context,
                 stream: stream)
             return factory.makeController()
-        case let f as TransferFlow:
-            let container = TransferFlowDetailContainer(
+        case let f as Flow:
+            let container = FlowDetailContainer(
                 flow: f,
                 context: context,
                 stream: stream)

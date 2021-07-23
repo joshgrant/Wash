@@ -1,5 +1,5 @@
 //
-//  TransferFlowDetailTableView.swift
+//  FlowDetailTableView.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 7/11/21.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol TransferFlowDetailTableViewFactory: Factory
+protocol FlowDetailTableViewFactory: Factory
 {
     func makeModel() -> TableViewModel
     func makeInfoSection() -> TableViewSection
@@ -16,19 +16,19 @@ protocol TransferFlowDetailTableViewFactory: Factory
     func makeHistorySection() -> TableViewSection
 }
 
-class TransferFlowDetailTableViewContainer: TableViewContainer
+class FlowDetailTableViewContainer: TableViewContainer
 {
     // MARK: - Variables
     
     var stream: Stream
     var style: UITableView.Style
-    var flow: TransferFlow
+    var flow: Flow
     
     lazy var model = makeModel()
     
     // MARK: - Initialization
     
-    init(stream: Stream, style: UITableView.Style, flow: TransferFlow)
+    init(stream: Stream, style: UITableView.Style, flow: Flow)
     {
         self.stream = stream
         self.style = style
@@ -36,7 +36,7 @@ class TransferFlowDetailTableViewContainer: TableViewContainer
     }
 }
 
-extension TransferFlowDetailTableViewContainer: TransferFlowDetailTableViewFactory
+extension FlowDetailTableViewContainer: FlowDetailTableViewFactory
 {
     func makeModel() -> TableViewModel
     {
@@ -123,7 +123,7 @@ extension TransferFlowDetailTableViewContainer: TransferFlowDetailTableViewFacto
     
     func makeEventsRows() -> [TableViewCellModel]
     {
-        let events: [Event] = flow.unwrapped(\TransferFlow.events)
+        let events: [Event] = flow.unwrapped(\Flow.events)
         return events.map { event in
             let flowCount = event.flows?.count ?? 0
             let flowsString = flowCount == 1 ? "flow" : "flows"
@@ -148,7 +148,7 @@ extension TransferFlowDetailTableViewContainer: TransferFlowDetailTableViewFacto
     
     func makeHistoryRows() -> [TableViewCellModel]
     {
-        let histories: [History] = flow.unwrapped(\TransferFlow.history)
+        let histories: [History] = flow.unwrapped(\Flow.history)
         return histories.map { history in
             let dateString = history.date!.format(with: .historyCellFormatter)
             var detailString: String = ""
@@ -171,6 +171,6 @@ extension TransferFlowDetailTableViewContainer: TransferFlowDetailTableViewFacto
     }
 }
 
-//class TransferFlowDetailTableView: TableView<TransferFlowDetailTableViewContainer>
+//class FlowDetailTableView: TableView<FlowDetailTableViewContainer>
 //{
 //}

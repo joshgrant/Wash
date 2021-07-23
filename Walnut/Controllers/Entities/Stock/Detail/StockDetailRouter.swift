@@ -68,13 +68,13 @@ class StockDetailRouter: Router<StockDetailRouterContainer>
         delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
-    func routeToInflow(flow: TransferFlow)
+    func routeToInflow(flow: Flow)
     {
         let controller = flow.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(controller, animated: true)
     }
     
-    func routeToOutFlow(flow: TransferFlow)
+    func routeToOutFlow(flow: Flow)
     {
         let controller = flow.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(controller, animated: true)

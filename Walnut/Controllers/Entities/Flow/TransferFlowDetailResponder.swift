@@ -1,5 +1,5 @@
 //
-//  TransferFlowDetailResponder.swift
+//  FlowDetailResponder.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 6/28/21.
@@ -8,16 +8,16 @@
 import Foundation
 import UIKit
 
-class TransferFlowDetailResponder
+class FlowDetailResponder
 {
     // MARK: - Variables
     
-    var flow: TransferFlow
+    var flow: Flow
     var stream: Stream
     
     // MARK: - Initialization
     
-    init(flow: TransferFlow, stream: Stream)
+    init(flow: Flow, stream: Stream)
     {
         self.flow = flow
         self.stream = stream

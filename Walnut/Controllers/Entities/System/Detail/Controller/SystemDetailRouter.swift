@@ -66,13 +66,13 @@ class SystemDetailRouter: Router<SystemDetailRouterContainer>
         delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
-    func routeToTransferFlowDetail(flow: TransferFlow)
+    func routeToFlowDetail(flow: Flow)
     {
         let detail = flow.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(detail, animated: true)
     }
     
-    func routeToProcessFlowDetail(flow: ProcessFlow)
+    func routeToProcessDetail(flow: Process)
     {
         let detail = flow.detailController(context: container.context, stream: container.stream)
         delegate?.navigationController?.pushViewController(detail, animated: true)
@@ -117,13 +117,13 @@ extension SystemDetailRouter: Subscriber
         case 2: // Flows
             let flow = container.system.unwrappedFlows[indexPath.row]
             
-            if let flow = flow as? TransferFlow
+            if let flow = flow as? Flow
             {
-                routeToTransferFlowDetail(flow: flow)
+                routeToFlowDetail(flow: flow)
             }
-            else if let flow = flow as? ProcessFlow
+            else if let flow = flow as? Process
             {
-                routeToProcessFlowDetail(flow: flow)
+                routeToProcessDetail(flow: flow)
             }
             else
             {

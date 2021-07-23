@@ -134,6 +134,8 @@ class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S,
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        collectionView.delegate = self
+        collectionView.delaysContentTouches = false
         applyModel(animated: false)
     }
     
@@ -169,6 +171,9 @@ class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
+        // Get the entity
+        // Send a message that the entity was selected
+        
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }

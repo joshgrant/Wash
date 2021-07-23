@@ -144,7 +144,7 @@ struct Identifier
         value: "main.userInterface")
     static let stockDetail = Identifier(
         value: "main.stockDetail")
-    static let transferFlow = Identifier(value: "main.transferFlow")
+    static let Flow = Identifier(value: "main.Flow")
 }
 
 extension Identifier: Equatable
@@ -242,8 +242,8 @@ public enum SelectionIdentifier
     case flowAmount
     case flowDuration
     case requiresUserCompletion(state: Bool)
-    case inflow(flow: TransferFlow)
-    case outflow(flow: TransferFlow)
+    case inflow(flow: Flow)
+    case outflow(flow: Flow)
     case flow(flow: Flow)
     
     case link(link: Named)

@@ -9,6 +9,15 @@
           "revision": "d8d056e78d84f781d69eeec9b4ebeec154649d74",
           "version": null
         }
+      },
+      {
+        "package": "Fakery",
+        "repositoryURL": "git@github.com:vadymmarkov/Fakery.git",
+        "state": {
+          "branch": "master",
+          "revision": "71cb3bf36a808534659d1248780c2bf3c4c4fc91",
+          "version": null
+        }
       }
     ]
   },

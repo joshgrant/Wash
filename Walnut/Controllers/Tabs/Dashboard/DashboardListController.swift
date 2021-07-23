@@ -210,16 +210,6 @@ class DashboardListController: ListController<DashboardSection, DashboardItem, D
     {
         unsubscribe(from: builder.stream)
     }
-    
-    // MARK: - Delegate
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
-    {
-        // Get the entity
-        // Send a message that the entity was selected
-        
-        super.collectionView(collectionView, didSelectItemAt: indexPath)
-    }
 }
 
 extension DashboardListController: SuggestedItemDelegate

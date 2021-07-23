@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum TextSize: Int16
+public enum TextSize: Int16, CaseIterable
 {
     case header
     case sectionTitle
@@ -18,4 +18,12 @@ public enum TextSize: Int16
 extension TextSize: FallbackProtocol
 {
     static let fallback: TextSize = .body
+}
+
+extension TextSize
+{
+    static func random() -> TextSize
+    {
+        allCases.randomElement()!
+    }
 }

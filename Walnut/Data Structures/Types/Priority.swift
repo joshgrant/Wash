@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Priority: Int16
+public enum Priority: Int16, CaseIterable
 {
     case linear
     case quadratic
@@ -17,4 +17,12 @@ public enum Priority: Int16
 extension Priority: FallbackProtocol
 {
     static let fallback: Priority = .linear
+}
+
+extension Priority
+{
+    static func random() -> Priority
+    {
+        allCases.randomElement()!
+    }
 }

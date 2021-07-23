@@ -150,8 +150,8 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
         let models = system.unwrappedNotes.map { note in
             DetailCellModel(
                 selectionIdentifier: .note(note: note),
-                title: note.title,
-                detail: note.firstLine ?? "None",
+                title: note.firstLine ?? "None",
+                detail: note.secondLine ?? "None",
                 disclosure: true)
         }
         

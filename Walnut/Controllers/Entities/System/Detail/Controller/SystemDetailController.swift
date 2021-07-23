@@ -251,9 +251,9 @@ extension SystemDetailController: Subscriber
         case let s as Stock:
             container.system.addToStocks(s)
             router.routeTostockDetail(stock: s)
-        case let f as TransferFlow:
+        case let f as Flow:
             container.system.addToFlows(f)
-            router.routeToTransferFlowDetail(flow: f)
+            router.routeToFlowDetail(flow: f)
         case let e as Event:
             container.system.addToEvents(e)
             router.routeToEventDetail(event: e)

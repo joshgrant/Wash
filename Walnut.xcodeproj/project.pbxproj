@@ -14,7 +14,6 @@
 		030B2188267FB6C80038C095 /* SuggestedFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2187267FB6C80038C095 /* SuggestedFlowCell.swift */; };
 		030B21A1267FEA230038C095 /* EntityListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A0267FEA230038C095 /* EntityListController.swift */; };
 		030B21A52680E7390038C095 /* Conversion+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A42680E7390038C095 /* Conversion+Extensions.swift */; };
-		030B21A72680E8230038C095 /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21A62680E8230038C095 /* Note+Extensions.swift */; };
 		030B21CE268121AA0038C095 /* SearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */; };
 		030B21D126815D930038C095 /* Notifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B21D026815D930038C095 /* Notifiable.swift */; };
 		030BC431269F7CE800442CE9 /* SliderRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC430269F7CE800442CE9 /* SliderRangeCell.swift */; };
@@ -96,12 +95,9 @@
 		038CF6862676829F00931595 /* Named.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6672676829E00931595 /* Named.swift */; };
 		038CF6912676829F00931595 /* ProcessFlow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6732676829E00931595 /* ProcessFlow+Extensions.swift */; };
 		038CF6942676829F00931595 /* State+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6762676829E00931595 /* State+Extensions.swift */; };
-		038CF6962676829F00931595 /* Person+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6782676829E00931595 /* Person+Extensions.swift */; };
-		038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6792676829E00931595 /* TextBlock+Searchable.swift */; };
 		038CF6982676829F00931595 /* Source+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF67A2676829E00931595 /* Source+Extensions.swift */; };
 		038CF6992676829F00931595 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF67B2676829E00931595 /* History+Extensions.swift */; };
 		038CF69B2676829F00931595 /* Entity+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF67D2676829E00931595 /* Entity+Extensions.swift */; };
-		038CF69D2676829F00931595 /* ImageBlock+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF67F2676829E00931595 /* ImageBlock+Searchable.swift */; };
 		038CF6BF267682C700931595 /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6A6267682C700931595 /* TimePeriod.swift */; };
 		038CF6C0267682C700931595 /* TextSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6A7267682C700931595 /* TextSize.swift */; };
 		038CF6C2267682C700931595 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6A9267682C700931595 /* Order.swift */; };
@@ -125,6 +121,8 @@
 		038CF6EA2676865600931595 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E92676865600931595 /* DetailCell.swift */; };
 		0393A887269B9B4E00D2BF81 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */; };
 		03A92FF026AB107100BB59F7 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A92FEF26AB107100BB59F7 /* Double+Extensions.swift */; };
+		03A92FF226AB510800BB59F7 /* Block+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A92FF126AB510800BB59F7 /* Block+Extensions.swift */; };
+		03A92FF526AB5B1D00BB59F7 /* Fakery in Frameworks */ = {isa = PBXBuildFile; productRef = 03A92FF426AB5B1D00BB59F7 /* Fakery */; };
 		03BF0BBC269D269B00A866E5 /* ContextPopulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BBB269D269B00A866E5 /* ContextPopulator.swift */; };
 		03BF0BC0269DF5E200A866E5 /* NewStockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BBF269DF5E200A866E5 /* NewStockController.swift */; };
 		03BF0BC2269DF5EB00A866E5 /* NewStockTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF0BC1269DF5EB00A866E5 /* NewStockTableView.swift */; };
@@ -223,7 +221,6 @@
 		030B2187267FB6C80038C095 /* SuggestedFlowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedFlowCell.swift; sourceTree = "<group>"; };
 		030B21A0267FEA230038C095 /* EntityListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListController.swift; sourceTree = "<group>"; };
 		030B21A42680E7390038C095 /* Conversion+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversion+Extensions.swift"; sourceTree = "<group>"; };
-		030B21A62680E8230038C095 /* Note+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
 		030B21CD268121AA0038C095 /* SearchControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerDelegate.swift; sourceTree = "<group>"; };
 		030B21D026815D930038C095 /* Notifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifiable.swift; sourceTree = "<group>"; };
 		030BC430269F7CE800442CE9 /* SliderRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderRangeCell.swift; sourceTree = "<group>"; };
@@ -311,12 +308,9 @@
 		038CF6672676829E00931595 /* Named.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Named.swift; sourceTree = "<group>"; };
 		038CF6732676829E00931595 /* ProcessFlow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProcessFlow+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6762676829E00931595 /* State+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "State+Extensions.swift"; sourceTree = "<group>"; };
-		038CF6782676829E00931595 /* Person+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+Extensions.swift"; sourceTree = "<group>"; };
-		038CF6792676829E00931595 /* TextBlock+Searchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TextBlock+Searchable.swift"; sourceTree = "<group>"; };
 		038CF67A2676829E00931595 /* Source+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Source+Extensions.swift"; sourceTree = "<group>"; };
 		038CF67B2676829E00931595 /* History+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
 		038CF67D2676829E00931595 /* Entity+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entity+Extensions.swift"; sourceTree = "<group>"; };
-		038CF67F2676829E00931595 /* ImageBlock+Searchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageBlock+Searchable.swift"; sourceTree = "<group>"; };
 		038CF6A6267682C700931595 /* TimePeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePeriod.swift; sourceTree = "<group>"; };
 		038CF6A7267682C700931595 /* TextSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSize.swift; sourceTree = "<group>"; };
 		038CF6A9267682C700931595 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -340,6 +334,7 @@
 		038CF6E92676865600931595 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		03A92FEF26AB107100BB59F7 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		03A92FF126AB510800BB59F7 /* Block+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Block+Extensions.swift"; sourceTree = "<group>"; };
 		03BF0BBB269D269B00A866E5 /* ContextPopulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPopulator.swift; sourceTree = "<group>"; };
 		03BF0BBF269DF5E200A866E5 /* NewStockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStockController.swift; sourceTree = "<group>"; };
 		03BF0BC1269DF5EB00A866E5 /* NewStockTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStockTableView.swift; sourceTree = "<group>"; };
@@ -418,6 +413,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03A92FF526AB5B1D00BB59F7 /* Fakery in Frameworks */,
 				03C4C48F26A60B590066E6ED /* Differ in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -839,23 +835,20 @@
 		038CF6712676829E00931595 /* Entity Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				03A92FF126AB510800BB59F7 /* Block+Extensions.swift */,
 				038CF6DE2676840300931595 /* Condition+Extensions.swift */,
 				030B21A42680E7390038C095 /* Conversion+Extensions.swift */,
 				038CF67D2676829E00931595 /* Entity+Extensions.swift */,
 				038CF6DA267683FB00931595 /* Event+Extensions.swift */,
 				031681B6267DA56700F493DA /* Flow+Extensions.swift */,
 				038CF67B2676829E00931595 /* History+Extensions.swift */,
-				038CF67F2676829E00931595 /* ImageBlock+Searchable.swift */,
-				038CF6782676829E00931595 /* Person+Extensions.swift */,
 				038CF6732676829E00931595 /* ProcessFlow+Extensions.swift */,
 				038CF67A2676829E00931595 /* Source+Extensions.swift */,
 				038CF6762676829E00931595 /* State+Extensions.swift */,
 				038CF6D6267683EE00931595 /* Stock+Extensions.swift */,
 				038CF6D7267683EE00931595 /* Symbol+Extensions.swift */,
 				038CF6E02676840E00931595 /* System+Extensions.swift */,
-				038CF6792676829E00931595 /* TextBlock+Searchable.swift */,
 				038CF6DB267683FB00931595 /* TransferFlow+Extensions.swift */,
-				030B21A62680E8230038C095 /* Note+Extensions.swift */,
 				03BF0BC3269F2AA400A866E5 /* Unit+Extensions.swift */,
 			);
 			path = "Entity Extensions";
@@ -1138,6 +1131,7 @@
 			name = Walnut;
 			packageProductDependencies = (
 				03C4C48E26A60B590066E6ED /* Differ */,
+				03A92FF426AB5B1D00BB59F7 /* Fakery */,
 			);
 			productName = Walnut;
 			productReference = 033FE693266CE2AA00BCF5AA /* Walnut.app */;
@@ -1212,6 +1206,7 @@
 			mainGroup = 033FE68A266CE2AA00BCF5AA;
 			packageReferences = (
 				03C4C48D26A60B590066E6ED /* XCRemoteSwiftPackageReference "Differ" */,
+				03A92FF326AB5B1D00BB59F7 /* XCRemoteSwiftPackageReference "Fakery" */,
 			);
 			productRefGroup = 033FE694266CE2AA00BCF5AA /* Products */;
 			projectDirPath = "";
@@ -1352,7 +1347,6 @@
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
 				03555B0126869DF1006E9EA1 /* Unique.swift in Sources */,
-				038CF69D2676829F00931595 /* ImageBlock+Searchable.swift in Sources */,
 				03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */,
 				030B21A1267FEA230038C095 /* EntityListController.swift in Sources */,
 				03CA1FD626A8929C00A7B10E /* NewSystemModel.swift in Sources */,
@@ -1363,7 +1357,6 @@
 				03FC2C0C269C977700B8CB36 /* IdealDetailTableView.swift in Sources */,
 				0370FECA268A0940001E099B /* StockValueTypeController.swift in Sources */,
 				03555B582686A487006E9EA1 /* TableViewCellModel.swift in Sources */,
-				030B21A72680E8230038C095 /* Note+Extensions.swift in Sources */,
 				03555B5D2686A487006E9EA1 /* UIView+Extensions.swift in Sources */,
 				0370FEDC268A184E001E099B /* TransferFlowDetailRouter.swift in Sources */,
 				03555B562686A487006E9EA1 /* ConfigurableTableViewCellProtocol.swift in Sources */,
@@ -1402,7 +1395,6 @@
 				03555B702686A487006E9EA1 /* View.swift in Sources */,
 				038CF6C8267682C700931595 /* CompletionType.swift in Sources */,
 				038CF6DD267683FB00931595 /* TransferFlow+Extensions.swift in Sources */,
-				038CF6962676829F00931595 /* Person+Extensions.swift in Sources */,
 				03555B622686A487006E9EA1 /* Array+Extensions.swift in Sources */,
 				03FAACD4269B533900CB7AB6 /* StockDetailTableView.swift in Sources */,
 				03BF0BC2269DF5EB00A866E5 /* NewStockTableView.swift in Sources */,
@@ -1425,8 +1417,8 @@
 				03BF0BD9269F51E700A866E5 /* NewStockModel.swift in Sources */,
 				033FE6C9266CE38800BCF5AA /* Application.swift in Sources */,
 				033FE697266CE2AA00BCF5AA /* AppDelegate.swift in Sources */,
+				03A92FF226AB510800BB59F7 /* Block+Extensions.swift in Sources */,
 				0370FECE268A0A87001E099B /* CheckmarkCell.swift in Sources */,
-				038CF6972676829F00931595 /* TextBlock+Searchable.swift in Sources */,
 				03555B632686A487006E9EA1 /* Int+Extensions.swift in Sources */,
 				038CF6862676829F00931595 /* Named.swift in Sources */,
 				03BF0BEC269F6C4A00A866E5 /* MinMaxTableView.swift in Sources */,
@@ -1765,6 +1757,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		03A92FF326AB5B1D00BB59F7 /* XCRemoteSwiftPackageReference "Fakery" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:vadymmarkov/Fakery.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		03C4C48D26A60B590066E6ED /* XCRemoteSwiftPackageReference "Differ" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tonyarnold/Differ";
@@ -1776,6 +1776,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		03A92FF426AB5B1D00BB59F7 /* Fakery */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03A92FF326AB5B1D00BB59F7 /* XCRemoteSwiftPackageReference "Fakery" */;
+			productName = Fakery;
+		};
 		03C4C48E26A60B590066E6ED /* Differ */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 03C4C48D26A60B590066E6ED /* XCRemoteSwiftPackageReference "Differ" */;

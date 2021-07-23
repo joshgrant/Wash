@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Comparison: Int16
+public enum Comparison: Int16, CaseIterable
 {
     case equal
     case notEqual
@@ -53,4 +53,12 @@ public enum Comparison: Int16
 extension Comparison: FallbackProtocol
 {
     static let fallback: Comparison = .equal
+}
+
+extension Comparison
+{
+    static func random() -> Comparison
+    {
+        allCases.randomElement()!
+    }
 }

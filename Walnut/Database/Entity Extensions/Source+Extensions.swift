@@ -103,24 +103,24 @@ extension Source
     }
 }
 
-extension Source: Comparable
-{
-    public static func < (lhs: Source, rhs: Source) -> Bool
-    {
-        guard lhs.valueType == rhs.valueType else { fatalError("Comparing incompatible sources") }
-        
-        switch lhs.valueType
-        {
-        case .boolean:
-            return false
-        case .date:
-            return lhs.dateValue < rhs.dateValue
-        case .infinite:
-            return lhs.infiniteValue < rhs.infiniteValue
-        case .percent:
-            return lhs.percentValue < rhs.percentValue
-        case .number:
-            return lhs.numberValue < rhs.numberValue
-        }
-    }
-}
+//extension Source: Comparable
+//{
+//    public static func < (lhs: Source, rhs: Source) -> Bool
+//    {
+//        guard lhs.valueType == rhs.valueType else { fatalError("Comparing incompatible sources") }
+//
+//        switch lhs.valueType
+//        {
+//        case .boolean:
+//            return false
+//        case .date:
+//            return lhs.dateValue < rhs.dateValue
+//        case .infinite:
+//            return lhs.infiniteValue < rhs.infiniteValue
+//        case .percent:
+//            return lhs.percentValue < rhs.percentValue
+//        case .number:
+//            return lhs.numberValue < rhs.numberValue
+//        }
+//    }
+//}

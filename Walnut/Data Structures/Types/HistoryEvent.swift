@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum HistoryEvent: Int16
+public enum HistoryEvent: Int16, CaseIterable
 {
     case created
     case updated
@@ -17,4 +17,12 @@ public enum HistoryEvent: Int16
 extension HistoryEvent: FallbackProtocol
 {
     static let fallback: HistoryEvent = .created
+}
+
+extension HistoryEvent
+{
+    static func random() -> HistoryEvent
+    {
+        allCases.randomElement()!
+    }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ConditionType: Int16
+public enum ConditionType: Int16, CaseIterable
 {
     case all
     case any

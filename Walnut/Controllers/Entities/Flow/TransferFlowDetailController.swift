@@ -1,5 +1,5 @@
 //
-//  TransferFlowDetailController.swift
+//  FlowDetailController.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 6/28/21.
@@ -8,29 +8,29 @@
 import Foundation
 import UIKit
 
-protocol TransferFlowFactory: Factory
+protocol FlowFactory: Factory
 {
-    func makeController() -> TransferFlowDetailController
-    func makeRouter() -> TransferFlowDetailRouter
-    func makeResponder() -> TransferFlowDetailResponder
-    func makeTableView() -> TableView<TransferFlowDetailTableViewContainer>
+    func makeController() -> FlowDetailController
+    func makeRouter() -> FlowDetailRouter
+    func makeResponder() -> FlowDetailResponder
+    func makeTableView() -> TableView<FlowDetailTableViewContainer>
     
     func makePinButton() -> UIBarButtonItem
-    func makeRunButton(responder: TransferFlowDetailResponder) -> UIBarButtonItem
+    func makeRunButton(responder: FlowDetailResponder) -> UIBarButtonItem
 }
 
-class TransferFlowDetailContainer: Container
+class FlowDetailContainer: Container
 {
     // MARK: - Variables
     
-    var flow: TransferFlow
+    var flow: Flow
     var context: Context
     var stream: Stream
     
     // MARK: - Initialization
     
     init(
-        flow: TransferFlow,
+        flow: Flow,
         context: Context,
         stream: Stream)
     {
@@ -40,29 +40,29 @@ class TransferFlowDetailContainer: Container
     }
 }
 
-extension TransferFlowDetailContainer: TransferFlowFactory
+extension FlowDetailContainer: FlowFactory
 {
-    func makeController() -> TransferFlowDetailController
+    func makeController() -> FlowDetailController
     {
         .init(container: self)
     }
     
-    func makeRouter() -> TransferFlowDetailRouter
+    func makeRouter() -> FlowDetailRouter
     {
-        let container = TransferFlowDetailRouterContainer(
+        let container = FlowDetailRouterContainer(
             stream: stream,
             context: context)
         return .init(container: container)
     }
     
-    func makeResponder() -> TransferFlowDetailResponder
+    func makeResponder() -> FlowDetailResponder
     {
         return .init(flow: flow, stream: stream)
     }
     
-    func makeTableView() -> TableView<TransferFlowDetailTableViewContainer>
+    func makeTableView() -> TableView<FlowDetailTableViewContainer>
     {
-        let container = TransferFlowDetailTableViewContainer(
+        let container = FlowDetailTableViewContainer(
             stream: stream,
             style: .grouped,
             flow: flow)
@@ -87,7 +87,7 @@ extension TransferFlowDetailContainer: TransferFlowFactory
             actionClosure: actionClosure)
     }
     
-    func makeRunButton(responder: TransferFlowDetailResponder) -> UIBarButtonItem
+    func makeRunButton(responder: FlowDetailResponder) -> UIBarButtonItem
     {
         UIBarButtonItem(
             image: Icon.activateFlow.image,
@@ -97,23 +97,23 @@ extension TransferFlowDetailContainer: TransferFlowFactory
     }
 }
 
-class TransferFlowDetailController: ViewController<TransferFlowDetailContainer>, RouterDelegate
+class FlowDetailController: ViewController<FlowDetailContainer>, RouterDelegate
 {
     // MARK: - Variables
     
     var id = UUID()
     
-    var router: TransferFlowDetailRouter
-    var responder: TransferFlowDetailResponder
+    var router: FlowDetailRouter
+    var responder: FlowDetailResponder
     
-    var tableView: TableView<TransferFlowDetailTableViewContainer>
+    var tableView: TableView<FlowDetailTableViewContainer>
     
     var pinButton: UIBarButtonItem
     var runButton: UIBarButtonItem
     
     // MARK: - Initialization
     
-    required init(container: TransferFlowDetailContainer)
+    required init(container: FlowDetailContainer)
     {
         let responder = container.makeResponder()
      
@@ -145,7 +145,7 @@ class TransferFlowDetailController: ViewController<TransferFlowDetailContainer>,
     }
 }
 
-extension TransferFlowDetailController: Subscriber
+extension FlowDetailController: Subscriber
 {
     func receive(message: Message)
     {

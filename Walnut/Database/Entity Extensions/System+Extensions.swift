@@ -19,7 +19,7 @@ extension System
 //    {
 //        // Finding the suggested flow means figuring out which flow
 //        // has the most net positive impact on the percent ideal
-//        return TransferFlow(context: self.managedObjectContext!)
+//        return Flow(context: self.managedObjectContext!)
 //    }
     
     var unwrappedStocks: [Stock] { unwrapped(\System.stocks) }

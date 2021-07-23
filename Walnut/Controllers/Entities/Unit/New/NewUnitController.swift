@@ -129,7 +129,7 @@ class NewUnitController: ViewController<NewUnitContainer>
         
         unit.abbreviation = container.model.symbol
         unit.isBase = container.model.isBaseUnit
-        unit.relativeTo = container.model.relativeTo
+        unit.parent = container.model.relativeTo
         
         container.context.quickSave()
         

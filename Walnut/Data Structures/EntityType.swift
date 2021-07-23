@@ -78,8 +78,8 @@ public enum EntityType
         {
         case .system: return System.self
         case .stock: return Stock.self
-        case .flow: return TransferFlow.self
-        case .process: return ProcessFlow.self
+        case .flow: return Flow.self
+        case .process: return Process.self
         case .event: return Event.self
         case .conversion: return Conversion.self
         case .condition: return Condition.self
@@ -115,8 +115,8 @@ public enum EntityType
         {
         case is System.Type: return .system
         case is Stock.Type: return .stock
-        case is TransferFlow.Type: return .flow
-        case is ProcessFlow.Type: return .process
+        case is Flow.Type: return .flow
+        case is Process.Type: return .process
         case is Event.Type: return .event
         case is Conversion.Type: return .conversion
         case is Condition.Type: return .condition
@@ -134,8 +134,8 @@ public enum EntityType
         {
         case is System: return .system
         case is Stock: return .stock
-        case is TransferFlow: return .flow
-        case is ProcessFlow: return .process
+        case is Flow: return .flow
+        case is Process: return .process
         case is Event: return .event
         case is Conversion: return .conversion
         case is Condition: return .condition
