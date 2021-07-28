@@ -24,6 +24,11 @@ class ContextPopulator
             {
                 makeRandomSystem(context: context)
             }
+            
+            for _ in 0 ..< 5
+            {
+                makeRandomConversion(context: context)
+            }
         }
         
         context.quickSave()
@@ -143,27 +148,7 @@ class ContextPopulator
             return []
         }
     }
-    
-//    /// Limit is the maximum of stocks that can exist in the database
-//    private static func makeRandomStocks(context: Context, limit: Int = 50)
-//    {
-//        let stockCountRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
-//
-//        do
-//        {
-//            let fetchedStocks = try context.fetch(stockCountRequest)
-//            guard fetchedStocks.count <= limit else { return }
-//            for _ in 0 ..< Int.random(in: 1 ... 10)
-//            {
-//                makeRandomStock(context: context)
-//            }
-//        }
-//        catch
-//        {
-//            assertionFailure(error.localizedDescription)
-//        }
-//    }
-//
+
     @discardableResult private static func makeRandomStock(context: Context) -> Stock
     {
         let stock = Stock(context: context)
@@ -175,6 +160,8 @@ class ContextPopulator
         return stock
     }
     
+    // MARK: - Source
+    
     private static func makeRandomSource(context: Context) -> Source
     {
         let source = Source(context: context)
@@ -182,6 +169,8 @@ class ContextPopulator
         source.value = .random(in: -10e10 ..< 10e10)
         return source
     }
+    
+    // MARK: - Symbol
     
     private static func makeRandomSymbol(context: Context) -> Symbol
     {
@@ -191,21 +180,67 @@ class ContextPopulator
     }
     
     // MARK: - Condition
-    
+
     private static func makeRandomCondition(context: Context) -> Condition
     {
         let condition = Condition(context: context)
         
-        // Date, boolean, number
-        // TODO: Switch between boolean, number, and date
-        // Make sure left and right hand types match
-        // Make sure some dates are "current" by having a negative sign
-        fatalError()
-//        condition.priorityType = .random()
-//
-//        condition.leftHand = makeRandomSource(context: context)
-//        condition.rightHand = makeRandomSource(context: context)
-//        condition.symbolName = makeRandomSymbol(context: context)
+        switch ComparisonType.random()
+        {
+        case .boolean:
+            condition.booleanComparisonType = .random()
+            
+            let symbol = Symbol(context: context)
+            symbol.name = "Boolean condition"
+            condition.symbolName = symbol
+            
+            let leftHand = Source(context: context)
+            leftHand.valueType = .boolean
+            leftHand.booleanValue = .random()
+            
+            let rightHand = Source(context: context)
+            rightHand.valueType = .boolean
+            rightHand.booleanValue = .random()
+            
+            condition.leftHand = leftHand
+            condition.rightHand = rightHand
+            
+        case .number:
+            condition.numberComparisonType = .random()
+            
+            let symbol = Symbol(context: context)
+            symbol.name = "Number condition"
+            condition.symbolName = symbol
+            
+            let leftHand = Source(context: context)
+            leftHand.valueType = .number
+            leftHand.numberValue = .random(in: -10e10 ... 10e10)
+            
+            let rightHand = Source(context: context)
+            rightHand.valueType = .number
+            rightHand.numberValue = .random(in: -10e10 ... 10e10)
+            
+            condition.leftHand = leftHand
+            condition.rightHand = rightHand
+            
+        case .date:
+            condition.dateComparisonType = .random()
+            
+            let symbol = Symbol(context: context)
+            symbol.name = "Date condition"
+            condition.symbolName = symbol
+            
+            let leftHand = Source(context: context)
+            leftHand.valueType = .date
+            leftHand.dateValue = Date(timeIntervalSinceReferenceDate: .random(in: -10e10 ... 10e10))
+            
+            let rightHand = Source(context: context)
+            rightHand.valueType = .date
+            rightHand.dateValue = Date(timeIntervalSinceReferenceDate: .random(in: -10e10 ... 10e10))
+            
+            condition.leftHand = leftHand
+            condition.rightHand = rightHand
+        }
         
         return condition
     }
@@ -318,12 +353,14 @@ class ContextPopulator
     
     // MARK: - Conversion
     
-    private static func makeRandomConversion(context: Context) -> Conversion
+    @discardableResult private static func makeRandomConversion(context: Context) -> Conversion
     {
         let conversion = Conversion(context: context)
         conversion.isReversible = .random()
         conversion.leftValue = .random(in: -10e10 ... 10e10)
         conversion.rightValue = .random(in: -10e10 ... 10e10)
+        conversion.leftUnit = makeRandomUnit(context: context)
+        conversion.rightUnit = makeRandomUnit(context: context)
         conversion.symbolName = makeRandomSymbol(context: context)
         return conversion
     }
@@ -428,6 +465,38 @@ class ContextPopulator
         return histories
     }
     
+    // MARK: - Tasks
+    
+    private static func makeRandomTask(context: Context, endCount: Int = 3) -> Task
+    {
+        let task = Task(context: context)
+        
+        task.completionOrderType = .random()
+        task.completionType = .random()
+        task.sortOrder = .random(in: 0 ..< 100) // Where this task belongs
+        task.secondaryText = faker.lorem.sentence()
+        task.text = faker.lorem.sentence()
+        
+        let requiredStocks = NSSet(array: getRandomStocks(context: context))
+        let producedStocks = NSSet(array: getRandomStocks(context: context))
+        
+        task.addToRequiredStocks(requiredStocks)
+        task.addToProducedStocks(producedStocks)
+        
+        guard endCount > 0 else { return task }
+        
+        if .random()
+        {
+            for _ in 0 ..< 5
+            {
+                let child = makeRandomTask(context: context, endCount: endCount - 1)
+                task.addToSubtasks(child)
+            }
+        }
+        
+        return task
+    }
+    
     // MARK: - Systems
     
     private static func systemCount(context: Context) -> Int
@@ -465,6 +534,12 @@ class ContextPopulator
         {
             let note = makeRandomNote(context: context)
             system.addToNotes(note)
+        }
+        
+        for _ in 0 ..< .random(in: 0 ... 5)
+        {
+            let task = makeRandomTask(context: context)
+            system.addToTasks(task)
         }
         
         return system

@@ -150,6 +150,7 @@
         <relationship name="flows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="system" inverseEntity="Flow"/>
         <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="systems" inverseEntity="Stock"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfSystem" inverseEntity="Symbol"/>
+        <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="system" inverseEntity="Task"/>
     </entity>
     <entity name="Task" representedClassName="Task" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="completionOrderTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -157,10 +158,11 @@
         <attribute name="secondaryText" optional="YES" attributeType="String"/>
         <attribute name="sortOrder" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
-        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="subflows" inverseEntity="Task"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="subtasks" inverseEntity="Task"/>
         <relationship name="producedStocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="producedStockOfProcesss" inverseEntity="Stock"/>
         <relationship name="requiredStocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="requiredStockOfProcesss" inverseEntity="Stock"/>
-        <relationship name="subflows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="parent" inverseEntity="Task"/>
+        <relationship name="subtasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="parent" inverseEntity="Task"/>
+        <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="tasks" inverseEntity="System"/>
     </entity>
     <entity name="Unit" representedClassName="Unit" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="abbreviation" optional="YES" attributeType="String"/>
@@ -179,15 +181,15 @@
         <element name="Conversion" positionX="0" positionY="45" width="128" height="119"/>
         <element name="Entity" positionX="9" positionY="54" width="128" height="14"/>
         <element name="Event" positionX="36" positionY="81" width="128" height="134"/>
+        <element name="Flow" positionX="-9" positionY="36" width="128" height="179"/>
         <element name="History" positionX="9" positionY="54" width="128" height="14"/>
         <element name="Note" positionX="45" positionY="90" width="128" height="14"/>
-        <element name="Task" positionX="0" positionY="45" width="128" height="164"/>
         <element name="Source" positionX="0" positionY="144" width="128" height="194"/>
         <element name="State" positionX="0" positionY="135" width="128" height="89"/>
         <element name="Stock" positionX="18" positionY="63" width="128" height="14"/>
         <element name="Symbol" positionX="27" positionY="72" width="128" height="14"/>
-        <element name="System" positionX="36" positionY="81" width="128" height="74"/>
-        <element name="Flow" positionX="-9" positionY="36" width="128" height="179"/>
+        <element name="System" positionX="36" positionY="81" width="128" height="89"/>
+        <element name="Task" positionX="0" positionY="45" width="128" height="179"/>
         <element name="Unit" positionX="0" positionY="144" width="128" height="149"/>
     </elements>
 </model>

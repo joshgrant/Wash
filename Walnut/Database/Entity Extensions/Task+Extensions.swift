@@ -12,17 +12,17 @@ extension Task
     var completionType: CompletionType
     {
         get {
-            CompletionType(rawValue: completionTypeRaw) ?? .fallback
+            CompletionType(rawValue: completionTypeRaw)!
         }
         set {
             completionTypeRaw = newValue.rawValue
         }
     }
     
-    var completionOrder: Order
+    var completionOrderType: OrderType
     {
         get {
-            Order(rawValue: completionOrderTypeRaw) ?? .fallback
+            OrderType(rawValue: completionOrderTypeRaw)!
         }
         set {
             completionOrderTypeRaw = newValue.rawValue

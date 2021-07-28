@@ -7,14 +7,17 @@
 
 import Foundation
 
-public enum Order: Int16
+public enum OrderType: Int16, CaseIterable
 {
     case sequential
     case parallel
     case independent
 }
 
-extension Order: FallbackProtocol
+extension OrderType
 {
-    static let fallback: Order = .sequential
+    static func random() -> OrderType
+    {
+        allCases.randomElement()!
+    }
 }

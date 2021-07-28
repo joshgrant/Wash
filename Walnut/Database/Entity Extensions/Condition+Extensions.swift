@@ -57,17 +57,17 @@ public extension Condition
         }
     }
     
-    var stringComparisonType: StringComparisonType?
-    {
-        get
-        {
-            .init(rawValue: stringComparisonTypeRaw)
-        }
-        set
-        {
-            stringComparisonTypeRaw = newValue?.rawValue ?? -1
-        }
-    }
+//    var stringComparisonType: StringComparisonType?
+//    {
+//        get
+//        {
+//            .init(rawValue: stringComparisonTypeRaw)
+//        }
+//        set
+//        {
+//            stringComparisonTypeRaw = newValue?.rawValue ?? -1
+//        }
+//    }
 }
 
 public extension Condition

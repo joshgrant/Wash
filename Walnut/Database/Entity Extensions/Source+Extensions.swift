@@ -25,35 +25,62 @@ public extension Source
     
     var booleanValue: Bool
     {
-        Int(value) == 1
+        get
+        {
+            Int(value) == 1
+        }
+        set
+        {
+            value = newValue ? 1 : 0
+        }
     }
     
-    // TODO: Prevent user from entering dates before the reference date...
     var dateValue: Date
     {
-        if value < 0
+        get
         {
-            return Date()
+            Date(timeIntervalSinceReferenceDate: value)
         }
-        else
+        set
         {
-            return Date(timeIntervalSinceReferenceDate: value)
+            value = newValue.timeIntervalSinceReferenceDate
         }
     }
     
     var infiniteValue: Double
     {
-        value > 0 ? Double.infinity : -Double.infinity
+        get
+        {
+            value >= 0 ? Double.infinity : -Double.infinity
+        }
+        set
+        {
+            value = newValue >= 0 ? Double.infinity : -Double.infinity
+        }
     }
     
     var percentValue: Double
     {
-        value.constrained(min: 0, max: 100)
+        get
+        {
+            value.constrained(min: 0, max: 100)
+        }
+        set
+        {
+            value = newValue.constrained(min: 0, max: 100)
+        }
     }
     
     var numberValue: Double
     {
-        value
+        get
+        {
+            value
+        }
+        set
+        {
+            value = newValue
+        }
     }
 }
 
@@ -77,25 +104,3 @@ extension Source
         }
     }
 }
-
-//extension Source: Comparable
-//{
-//    public static func < (lhs: Source, rhs: Source) -> Bool
-//    {
-//        guard lhs.valueType == rhs.valueType else { fatalError("Comparing incompatible sources") }
-//
-//        switch lhs.valueType
-//        {
-//        case .boolean:
-//            return false
-//        case .date:
-//            return lhs.dateValue < rhs.dateValue
-//        case .infinite:
-//            return lhs.infiniteValue < rhs.infiniteValue
-//        case .percent:
-//            return lhs.percentValue < rhs.percentValue
-//        case .number:
-//            return lhs.numberValue < rhs.numberValue
-//        }
-//    }
-//}

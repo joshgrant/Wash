@@ -11,7 +11,7 @@ public enum ComparisonType: Int16, CaseIterable, Random
 {
     case boolean
     case date
-    case string
+//    case string
     case number
 }
 
@@ -29,13 +29,13 @@ public enum DateComparisonType: Int16, CaseIterable, Random
 //    case notInTheLast
 }
 
-public enum StringComparisonType: Int16, CaseIterable, Random
-{
-    case beginsWith
-    case endsWith
-    case contains
-    case doesNotContain
-}
+//public enum StringComparisonType: Int16, CaseIterable, Random
+//{
+//    case beginsWith
+//    case endsWith
+//    case contains
+//    case doesNotContain
+//}
 
 public enum NumberComparisonType: Int16, CaseIterable, Random
 {

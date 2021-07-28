@@ -8,14 +8,17 @@
 import Foundation
 
 /// The completion type for a flow?
-public enum CompletionType: Int16
+public enum CompletionType: Int16, CaseIterable
 {
     // TODO: Not sure which completion type suits them all
     case boolean
     case children
 }
 
-extension CompletionType: FallbackProtocol
+extension CompletionType
 {
-    static let fallback: CompletionType = .boolean
+    static func random() -> CompletionType
+    {
+        allCases.randomElement()!
+    }
 }
