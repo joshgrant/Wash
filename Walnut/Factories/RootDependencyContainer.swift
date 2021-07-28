@@ -64,11 +64,9 @@ extension RootContainer: RootFactory
     
     private func makeLibraryNavigationController() -> UINavigationController
     {
-        let navigationController = UINavigationController()
-        let container = LibraryControllerContainer(context: context, stream: stream)
-        let controller = LibraryController(container: container)
-        navigationController.setViewControllers([controller], animated: false)
-        return navigationController
+        let builder = LibraryBuilder(context: context, stream: stream)
+        let controller = builder.makeController()
+        return UINavigationController(rootViewController: controller)
     }
     
     private func makeInboxNavigationController() -> UINavigationController

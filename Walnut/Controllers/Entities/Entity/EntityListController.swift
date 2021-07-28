@@ -11,6 +11,7 @@ import UIKit
 
 protocol EntityListFactory: Factory
 {
+    func makeController() -> EntityListController
     func makeTableView() -> EntityListTableView
     func makeModel() -> TableViewModel
     func makeMainSection() -> TableViewSection
@@ -41,6 +42,11 @@ class EntityListContainer: Container
 
 extension EntityListContainer: EntityListFactory
 {
+    func makeController() -> EntityListController
+    {
+        .init(container: self)
+    }
+    
     func makeTableView() -> EntityListTableView
     {
         let model = makeModel()

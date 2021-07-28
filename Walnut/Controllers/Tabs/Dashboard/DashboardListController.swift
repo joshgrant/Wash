@@ -225,18 +225,12 @@ class DashboardListController: ListController<DashboardSection, DashboardItem, D
     override init(builder: DashboardListBuilder)
     {
         super.init(builder: builder)
-        subscribe(to: builder.stream)
         self.builder.delegate = self
         
         title = builder.tabBarItemTitle
         tabBarItem = builder.makeTabBarItem()
         
         navigationItem.rightBarButtonItem = refreshButton
-    }
-    
-    deinit
-    {
-        unsubscribe(from: builder.stream)
     }
 }
 
@@ -247,14 +241,6 @@ extension DashboardListController: SuggestedItemDelegate
         var snapshot = dataSource.snapshot()
         snapshot.reloadItems([.suggested(item)])
         dataSource.apply(snapshot)
-    }
-}
-
-extension DashboardListController: Subscriber
-{
-    func receive(message: Message)
-    {
-        print("Message: \(message)")
     }
 }
 

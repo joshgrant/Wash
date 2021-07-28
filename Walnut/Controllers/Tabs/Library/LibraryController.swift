@@ -2,24 +2,62 @@
 //  LibraryController.swift
 //  Walnut
 //
-//  Created by Joshua Grant on 6/13/21.
+//  Created by Joshua Grant on 7/28/21.
 //
 
 import UIKit
 
-protocol LibraryControllerFactory: ViewControllerTabBarDelegate, Factory
+enum LibrarySection: Hashable
 {
-    func makeRouter() -> LibraryTableViewRouter
-    func makeTableView() -> TableView<LibraryTableViewContainer>
+    case main
 }
 
-class LibraryControllerContainer: Container
+enum LibraryItem: Hashable
+{
+    case header(HeaderItem)
+    case item(LeftImageItem)
+}
+
+class LibraryRouter
 {
     // MARK: - Variables
     
-    var tabBarItemTitle: String { "Library".localized }
-    var tabBarImage: UIImage? { Icon.library.image }
-    var tabBarTag: Int { 1 }
+    var context: Context
+    var stream: Stream
+    
+    weak var delegate: RouterDelegate?
+    
+    // MARK: - Initialization
+    
+    init(context: Context, stream: Stream)
+    {
+        self.context = context
+        self.stream = stream
+    }
+    
+    // MARK: - Functions
+    
+    func routeToDetail(entityType: Entity.Type)
+    {
+        let container = EntityListContainer(
+            entityType: entityType,
+            context: context,
+            stream: stream)
+        let controller = EntityListController(
+            container: container)
+        delegate?.navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+protocol LibraryBuilderFactory: Factory
+{
+    func makeController() -> LibraryController
+    func makeRouter() -> LibraryRouter
+}
+
+class LibraryBuilder: ListControllerBuilder<LibrarySection, LibraryItem>, LibraryBuilderFactory
+{
+    // MARK: - Variables
     
     var context: Context
     var stream: Stream
@@ -31,26 +69,73 @@ class LibraryControllerContainer: Container
         self.context = context
         self.stream = stream
     }
-}
-
-extension LibraryControllerContainer: LibraryControllerFactory
-{
-    func makeRouter() -> LibraryTableViewRouter
+    
+    // MARK: - Functions
+    
+    override func makeCollectionViewLayout() -> UICollectionViewLayout
     {
-        let container = LibraryTableViewRouterContainer(
-            context: context,
-            stream: stream)
-        return LibraryTableViewRouter(container: container)
+        var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+        configuration.headerMode = .firstItemInSection
+        configuration.footerMode = .none
+        return UICollectionViewCompositionalLayout.list(using: configuration)
     }
     
-    func makeTableView() -> TableView<LibraryTableViewContainer>
+    func makeController() -> LibraryController
     {
-        let container = LibraryTableViewContainer(
-            context: context,
-            stream: stream,
-            style: .grouped)
-        return container.makeTableView()
+        .init(builder: self)
     }
+    
+    func makeRouter() -> LibraryRouter
+    {
+        .init(context: context, stream: stream)
+    }
+    
+    override func makeInitialModel() -> ListControllerBuilder<LibrarySection, LibraryItem>.ListModel
+    {
+        [
+            .main: makeMainSection()
+        ]
+    }
+    
+    private func makeMainSection() -> [LibraryItem]
+    {
+        var items: [LibraryItem] = []
+        
+        items = EntityType.libraryVisible.map { entityType in
+            return .item(.init(entityType: entityType, context: context))
+        }
+        
+        let header = LibraryItem.header(.init(text: ""))
+        items.insert(header, at: 0)
+        
+        return items
+    }
+    
+    override func makeCellProvider() -> ListControllerBuilder<LibrarySection, LibraryItem>.CellProvider
+    {
+        { collectionView, indexPath, item in
+            switch item
+            {
+            case .header(let item):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: item.registration,
+                    for: indexPath,
+                    item: item)
+            case .item(let item):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: item.registration,
+                    for: indexPath,
+                    item: item)
+            }
+        }
+    }
+}
+
+extension LibraryBuilder: ViewControllerTabBarDelegate
+{
+    var tabBarItemTitle: String { "Library".localized }
+    var tabBarImage: UIImage? { Icon.library.image }
+    var tabBarTag: Int { 1 }
     
     func makeTabBarItem() -> UITabBarItem
     {
@@ -61,55 +146,52 @@ extension LibraryControllerContainer: LibraryControllerFactory
     }
 }
 
-class LibraryController: ViewController<LibraryControllerContainer>, RouterDelegate
+class LibraryController: ListController<LibrarySection, LibraryItem, LibraryBuilder>
 {
     // MARK: - Variables
     
-    var id = UUID()
-    var tableView: TableView<LibraryTableViewContainer>
-    var router: LibraryTableViewRouter
+    var router: LibraryRouter
     
     // MARK: - Initialization
     
-    required init(container: LibraryControllerContainer)
+    override init(builder: LibraryBuilder)
     {
-        self.tableView = container.makeTableView()
-        self.router = container.makeRouter()
+        self.router = builder.makeRouter()
         
-        super.init(container: container)
+        super.init(builder: builder)
         router.delegate = self
-        subscribe(to: container.stream)
         
-        tabBarItem = container.makeTabBarItem()
-        title = container.tabBarItemTitle
-    }
-
-    deinit
-    {
-        unsubscribe(from: container.stream)
+        title = builder.tabBarItemTitle
+        tabBarItem = builder.makeTabBarItem()
     }
     
     // MARK: - View lifecycle
     
-    override func viewDidLoad()
+    override func viewWillAppear(_ animated: Bool)
     {
-        super.viewDidLoad()
-        view.embed(tableView)
+        super.viewWillAppear(animated)
+        reload(animated: animated)
+    }
+    
+    // MARK: - Collection view
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        // Route to the detial controller
+        let item = model[.main]?[indexPath.row]
+        
+        switch item
+        {
+        case .item(let item):
+            let entityType = item.entityType
+            router.routeToDetail(entityType: entityType.managedObjectType)
+        default:
+            return
+        }
+        
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
     }
 }
 
-extension LibraryController: Subscriber
-{
-    func receive(message: Message)
-    {
-        switch message
-        {
-        case is EntityListDeleteMessage:
-            fallthrough
-        case is EntityListAddButtonMessage:
-            tableView.shouldReload = true
-        default:
-            break
-        }
-    }
-}
+extension LibraryController: RouterDelegate { }
+

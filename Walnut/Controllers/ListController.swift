@@ -141,6 +141,12 @@ class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S,
     
     // MARK: - Functions
     
+    func reload(animated: Bool)
+    {
+        model = builder.makeInitialModel()
+        applyModel(animated: animated)
+    }
+    
     func applyModel(animated: Bool, completion: (() -> Void)? = nil)
     {
         let dispatchGroup = DispatchGroup()

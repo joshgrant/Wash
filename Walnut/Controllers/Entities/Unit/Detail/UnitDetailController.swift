@@ -39,6 +39,7 @@ extension UnitDetailItem: Identifiable
 protocol UnitDetailFactory: Factory
 {
     func makeController() -> UnitDetailController
+    func makeRouter() -> UnitDetailRouter
 }
 
 class UnitDetailBuilder: ListControllerBuilder<UnitDetailSection, UnitDetailItem>
@@ -52,6 +53,7 @@ class UnitDetailBuilder: ListControllerBuilder<UnitDetailSection, UnitDetailItem
     
     weak var toggleDelegate: ToggleItemDelegate?
     weak var textDelegate: UITextFieldDelegate?
+    weak var routerDelegate: RouterDelegate?
     
     // MARK: - Initialization
     
@@ -67,6 +69,11 @@ class UnitDetailBuilder: ListControllerBuilder<UnitDetailSection, UnitDetailItem
     func makeController() -> UnitDetailController
     {
         .init(builder: self)
+    }
+    
+    func makeRouter() -> UnitDetailRouter
+    {
+        .init(unit: unit, context: context, stream: stream, delegate: routerDelegate)
     }
     
     override func makeCellProvider() -> ListControllerBuilder<UnitDetailSection, UnitDetailItem>.CellProvider
@@ -155,14 +162,19 @@ class UnitDetailController: ListController<UnitDetailSection, UnitDetailItem, Un
     
     var id = UUID()
     
+    lazy var router: UnitDetailRouter = builder.makeRouter()
+    
     // MARK: - Initialization
     
     override init(builder: UnitDetailBuilder)
     {
         super.init(builder: builder)
+        
         subscribe(to: builder.stream)
+        
         builder.toggleDelegate = self
         builder.textDelegate = self
+        builder.routerDelegate = self
         
         title = builder.unit.title
     }
@@ -170,6 +182,22 @@ class UnitDetailController: ListController<UnitDetailSection, UnitDetailItem, Un
     deinit
     {
         unsubscribe(from: builder.stream)
+    }
+    
+    // MARK: - View lifecycle
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        reload(animated: animated)
+    }
+    
+    // MARK: - Collection view
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        router.routeToLinkUnit(linkDelegate: self)
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
     }
 }
 
@@ -241,5 +269,17 @@ extension UnitDetailController: UITextFieldDelegate
         }
         
         builder.context.quickSave()
+    }
+}
+
+extension UnitDetailController: RouterDelegate { }
+
+extension UnitDetailController: LinkSearchControllerDelegate
+{
+    func didSelectEntity(entity: Entity, controller: LinkSearchController)
+    {
+        guard let parent = entity as? Unit else { fatalError() }
+        builder.unit.parent = parent
+        navigationController?.popViewController(animated: true)
     }
 }

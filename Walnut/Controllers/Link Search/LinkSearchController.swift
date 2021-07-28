@@ -5,87 +5,15 @@
 //  Created by Joshua Grant on 7/9/21.
 //
 
-import Foundation
 import UIKit
+import CoreData
 
-protocol LinkSearchControllerFactory: Factory
+protocol LinkSearchControllerDelegate: AnyObject
 {
-    func makeController() -> LinkSearchController
-    func makeTableViewManager() -> LinkSearchControllerTableViewManager
-    func makeSearchController(delegate: UISearchControllerDelegate,
-                              manager: LinkSearchControllerTableViewManager) -> UISearchController
-    func makeAddButton(target: LinkSearchController) -> UIBarButtonItem
+    func didSelectEntity(entity: Entity, controller: LinkSearchController)
 }
 
-class LinkSearchControllerContainer: Container
-{
-    // MARK: - Variables
-    
-    var context: Context
-    var stream: Stream
-    var origin: LinkSearchController.Origin
-    var hasAddButton: Bool
-    var entityType: NamedEntity.Type
-    
-    // MARK: - Initialization
-    
-    init(
-        context: Context,
-        stream: Stream,
-        origin: LinkSearchController.Origin,
-        hasAddButton: Bool,
-        entityType: NamedEntity.Type)
-    {
-        self.context = context
-        self.stream = stream
-        self.origin = origin
-        self.hasAddButton = hasAddButton
-        self.entityType = entityType
-    }
-}
-
-extension LinkSearchControllerContainer: LinkSearchControllerFactory
-{
-    func makeController() -> LinkSearchController
-    {
-        .init(container: self)
-    }
-    
-    func makeTableViewManager() -> LinkSearchControllerTableViewManager
-    {
-        let container = LinkSearchControllerTableViewManagerContainer(
-            entityType: entityType,
-            origin: origin,
-            context: context,
-            stream: stream)
-        return .init(container: container)
-    }
-    
-    func makeSearchController(
-        delegate: UISearchControllerDelegate,
-        manager: LinkSearchControllerTableViewManager) -> UISearchController
-    {
-        let controller = UISearchController(searchResultsController: nil)
-        controller.delegate = delegate
-        controller.searchResultsUpdater = manager
-        controller.hidesNavigationBarDuringPresentation = false
-        controller.obscuresBackgroundDuringPresentation = false
-        return controller
-    }
-    
-    // TODO: Use responder protocol instead
-    func makeAddButton(target: LinkSearchController) -> UIBarButtonItem
-    {
-        let button = UIBarButtonItem(systemItem: .add)
-        button.target = target
-        button.action = #selector(target.addButtonDidTouchUpInside(_:))
-        return button
-    }
-}
-
-// The wrapping view controller
-// TODO: Need to dismiss this from the presenting controller
-class LinkSearchController: ViewController<LinkSearchControllerContainer>
+class LinkSearchController: ViewController<LinkSearchControllerContainer>, UITableViewDelegate
 {
     // MARK: - Defined types
     
@@ -97,29 +25,55 @@ class LinkSearchController: ViewController<LinkSearchControllerContainer>
         case stockDimension
         case newStock
         case newUnit(id: UUID)
+        case unit
     }
     
     // MARK: - Variables
     
-    var tableViewManager: LinkSearchControllerTableViewManager
+    var tableView: UITableView
+    var searchCriteria: LinkSearchCriteria
+    var dataSourceReference: UITableViewDiffableDataSourceReference
+    var fetchResultsController: NSFetchedResultsController<NSFetchRequestResult>
+    var shouldAnimate: Bool = false
+    
+    weak var delegate: LinkSearchControllerDelegate?
 
     // MARK: - Initialization
     
     required init(container: LinkSearchControllerContainer)
     {
-        tableViewManager = container.makeTableViewManager()
+        let tableView = container.makeTableView()
+        let searchCriteria = container.makeSearchCriteria()
+        let fetchResultsController = container.makeFetchResultsController(searchCriteria: searchCriteria)
+    
+        self.tableView = tableView
+        self.searchCriteria = searchCriteria
+        self.fetchResultsController = fetchResultsController
+        
+        dataSourceReference = container.makeDataSourceReference(tableView: tableView, fetchController: fetchResultsController)
+        
         super.init(container: container)
     }
     
     // MARK: - View lifecycle
     
+    override func loadView()
+    {
+        tableView.register(RightImageCell.self,
+                           forCellReuseIdentifier: RightImageCellModel.cellReuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = dataSourceReference
+        
+        view = tableView
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        view.embed(tableViewManager.tableView)
-
-        navigationItem.searchController = container.makeSearchController(delegate: self, manager: tableViewManager)
+        navigationItem.searchController = container.makeSearchController(
+            delegate: self,
+            manager: self)
         navigationItem.hidesSearchBarWhenScrolling = false // It's not scrolled to top...
         
         if container.hasAddButton
@@ -129,7 +83,8 @@ class LinkSearchController: ViewController<LinkSearchControllerContainer>
         
         title = container.entityType.readableName
         
-        tableViewManager.configureFetchResultsController()
+        fetchResultsController.delegate = self
+        try! fetchResultsController.performFetch()
     }
     
     // TODO: These view lifecycle methods are scaryy....
@@ -139,13 +94,13 @@ class LinkSearchController: ViewController<LinkSearchControllerContainer>
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
-        tableViewManager.shouldAnimate = true
+        shouldAnimate = true
     }
     
     override func viewDidDisappear(_ animated: Bool)
     {
         super.viewDidDisappear(animated)
-        tableViewManager.shouldAnimate = false
+        shouldAnimate = false
     }
     
     // MARK: - UI Action
@@ -166,9 +121,39 @@ class LinkSearchController: ViewController<LinkSearchControllerContainer>
         
         navigationController?.pushViewController(detail, animated: true)
     }
+    
+    // MARK: - Table View
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        let link = fetchResultsController.item(at: indexPath) as! Entity
+        let message = LinkSelectionMessage(link: link, origin: container.origin)
+        container.stream.send(message: message)
+        
+        delegate?.didSelectEntity(entity: link, controller: self)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension LinkSearchController: UISearchControllerDelegate
 {
     
+}
+
+extension LinkSearchController: UISearchResultsUpdating
+{
+    func updateSearchResults(for searchController: UISearchController)
+    {
+        searchCriteria.searchString = searchController.searchBar.text ?? ""
+        
+    }
+}
+
+extension LinkSearchController: NSFetchedResultsControllerDelegate
+{
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference)
+    {
+        dataSourceReference.applySnapshot(snapshot, animatingDifferences: shouldAnimate)
+    }
 }
