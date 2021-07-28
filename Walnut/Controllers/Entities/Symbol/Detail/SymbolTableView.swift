@@ -55,13 +55,14 @@ extension SymbolTableViewContainer: SymbolTableViewFactory
     
     func makeInfoSection() -> TableViewSection
     {
-        let models = [
-            TextEditCellModel(
-                selectionIdentifier: .title,
-                text: symbol.name,
-                placeholder: "Name",
-                entity: symbol,
-                stream: stream)
+        let models: [TableViewCellModel] = [
+            // Replaced with the TextEditItem
+//            TextEditCellModel(
+//                selectionIdentifier: .title,
+//                text: symbol.name,
+//                placeholder: "Name",
+//                entity: symbol,
+//                stream: stream)
         ]
         
         return TableViewSection(

@@ -61,13 +61,14 @@ extension CurrentDetailTableViewContainer: CurrentDetailTableViewFactory
         let models: [TableViewCellModel] = [
             // Current value
             // State machine value (if applicable)
-            TextEditCellModel(
-                selectionIdentifier: .current(type: stock.valueType),
-                text: stock.currentDescription,
-                placeholder: "Current value".localized,
-                entity: stock,
-                keyboardType: .numberPad,
-                stream: stream)
+            // Now it's TextEditItem
+//            TextEditCellModel(
+//                selectionIdentifier: .current(type: stock.valueType),
+//                text: stock.currentDescription,
+//                placeholder: "Current value".localized,
+//                entity: stock,
+//                keyboardType: .numberPad,
+//                stream: stream)
         ]
         
         return TableViewSection(

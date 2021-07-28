@@ -56,12 +56,13 @@ class NewSystemTableViewBuilder: NewSystemTableviewFactory & NewSystemTableViewC
     func makeInfoSection() -> TableViewSection
     {
         TableViewSection(header: .info, models: [
-            TextEditCellModel(
-                selectionIdentifier: .title,
-                text: newSystemModel.title,
-                placeholder: "Title".localized,
-                entity: nil,
-                stream: stream)
+            // TextEditItem
+//            TextEditCellModel(
+//                selectionIdentifier: .title,
+//                text: newSystemModel.title,
+//                placeholder: "Title".localized,
+//                entity: nil,
+//                stream: stream)
         ])
     }
 }
@@ -70,7 +71,8 @@ class NewSystemTableView: TableView<NewSystemTableViewBuilder>
 {
     var titleCell: TextEditCell
     {
-        let indexPath = IndexPath(row: 0, section: 0)
-        return cellForRow(at: indexPath) as! TextEditCell
+        fatalError()
+//        let indexPath = IndexPath(row: 0, section: 0)
+//        return cellForRow(at: indexPath) as! TextEditCell
     }
 }

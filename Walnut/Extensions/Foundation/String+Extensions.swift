@@ -41,6 +41,9 @@ public extension String
     // MARK: - Unsorted
     
     static let edit = "Edit".localized
+    static let title = "Title".localized
+    static let abbreviation = "Abbreviation".localized
+    static let baseUnit = "Base Unit".localized
     
     // MARK: - Section Headers
     

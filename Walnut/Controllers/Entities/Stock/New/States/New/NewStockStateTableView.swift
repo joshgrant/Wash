@@ -88,12 +88,12 @@ extension NewStockStateTableViewContainer: NewStockStateTableViewFactory
         }()
         
         let models: [TableViewCellModel] = [
-            TextEditCellModel(
-                selectionIdentifier: .stateTitle(state: state),
-                text: state.title,
-                placeholder: "Title".localized,
-                entity: nil,
-                stream: stream),
+//            TextEditCellModel(
+//                selectionIdentifier: .stateTitle(state: state),
+//                text: state.title,
+//                placeholder: "Title".localized,
+//                entity: nil,
+//                stream: stream),
             RightEditCellModel(
                 selectionIdentifier: .stateFrom(state: state),
                 title: "From".localized,

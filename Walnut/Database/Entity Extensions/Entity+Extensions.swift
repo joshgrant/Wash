@@ -147,6 +147,12 @@ extension Entity
         case let s as Symbol:
             let container = SymbolControllerContainer(symbol: s, stream: stream)
             return container.makeController()
+        case let u as Unit:
+            let builder = UnitDetailBuilder(
+                unit: u,
+                context: context,
+                stream: stream)
+            return builder.makeController()
         default:
             assertionFailure("Unhandled entity: \(self)")
             return UIViewController()

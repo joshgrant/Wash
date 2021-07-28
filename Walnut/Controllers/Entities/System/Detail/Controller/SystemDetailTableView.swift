@@ -63,12 +63,13 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
     {
         var models: [TableViewCellModel] = []
         
-        models.append(TextEditCellModel(
-                        selectionIdentifier: .title,
-                        text: system.title,
-                        placeholder: "Name".localized,
-                        entity: system,
-                        stream: stream))
+        // Append the text edit item
+//        models.append(TextEditCellModel(
+//                        selectionIdentifier: .title,
+//                        text: system.title,
+//                        placeholder: "Name".localized,
+//                        entity: system,
+//                        stream: stream))
         
         models.append(InfoCellModel(
                         selectionIdentifier: .systemIdeal,
@@ -164,21 +165,21 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
 
 class SystemDetailTableView: TableView<SystemDetailTableViewContainer>
 {
-    // FIXME: This is a hack
-    func titleCell() -> TextEditCell
-    {
-        let indexPath = IndexPath(row: 0, section: 0)
-        let cell = cellForRow(at: indexPath)
-        return cell as! TextEditCell
-    }
-    
-    func makeTextCellFirstResponderIfEmpty()
-    {
-        let cell = titleCell()
-        
-        if cell.isEmpty
-        {
-            cell.textField.becomeFirstResponder()
-        }
-    }
+//    // FIXME: This is a hack
+//    func titleCell() -> TextEditCell
+//    {
+//        let indexPath = IndexPath(row: 0, section: 0)
+//        let cell = cellForRow(at: indexPath)
+//        return cell as! TextEditCell
+//    }
+//    
+//    func makeTextCellFirstResponderIfEmpty()
+//    {
+//        let cell = titleCell()
+//        
+//        if cell.isEmpty
+//        {
+//            cell.textField.becomeFirstResponder()
+//        }
+//    }
 }

@@ -139,7 +139,8 @@ class SystemDetailController: ViewController<SystemDetailContainer>, RouterDeleg
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
-        tableView.makeTextCellFirstResponderIfEmpty()
+        // Had to break with transition to collection view
+//        tableView.makeTextCellFirstResponderIfEmpty()
     }
     
     func configureNavigationItem(cellContent: String)

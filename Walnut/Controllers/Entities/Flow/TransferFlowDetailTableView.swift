@@ -59,12 +59,12 @@ extension FlowDetailTableViewContainer: FlowDetailTableViewFactory
     
     func makeInfoSectionRows() -> [TableViewCellModel]
     {
-        let titleEdit = TextEditCellModel(
-            selectionIdentifier: .title,
-            text: flow.title,
-            placeholder: "Title".localized,
-            entity: flow,
-            stream: stream)
+//        let titleEdit = TextEditCellModel(
+//            selectionIdentifier: .title,
+//            text: flow.title,
+//            placeholder: "Title".localized,
+//            entity: flow,
+//            stream: stream)
         
         let from = DetailCellModel(
             selectionIdentifier: .fromStock(stock: flow.from),
@@ -103,7 +103,7 @@ extension FlowDetailTableViewContainer: FlowDetailTableViewFactory
             stream: stream)
         
         return [
-            titleEdit,
+//            titleEdit,
             from,
             to,
             amount,

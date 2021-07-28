@@ -91,12 +91,12 @@ extension StockDetailTableViewContainer: StockDetailTableViewFactory
     private func makeDefaultInfoSectionModels() -> [TableViewCellModel]
     {
         [
-            TextEditCellModel(
-                selectionIdentifier: .title,
-                text: stock.title,
-                placeholder: "Title".localized,
-                entity: stock,
-                stream: stream),
+//            TextEditCellModel(
+//                selectionIdentifier: .title,
+//                text: stock.title,
+//                placeholder: "Title".localized,
+//                entity: stock,
+//                stream: stream),
             // Instead of stock type detail, just have a true/false (maybe toggle) for the "state machine"...
 //            DetailCellModel(
 //                selectionIdentifier: .type,

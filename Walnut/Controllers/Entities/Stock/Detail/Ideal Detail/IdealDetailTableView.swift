@@ -54,19 +54,20 @@ extension IdealDetailTableViewContainer: IdealDetailTableViewFactory
     func makeInfoSection() -> TableViewSection
     {
         var models: [TableViewCellModel] = []
-        let keyboardType: UIKeyboardType = .decimalPad // TODO: Use custom keyboard
+//        let keyboardType: UIKeyboardType = .decimalPad // TODO: Use custom keyboard
         
         if stock.valueType == .number
         {
             models = [
                 // TODO: Should have the state machine here as well (to set ideal state machine value)
-                TextEditCellModel(
-                    selectionIdentifier: .ideal(type: stock.valueType),
-                    text: stock.idealDescription,
-                    placeholder: "Ideal value".localized,
-                    entity: stock,
-                    keyboardType: keyboardType,
-                    stream: stream)
+                // TextEditItem
+//                TextEditCellModel(
+//                    selectionIdentifier: .ideal(type: stock.valueType),
+//                    text: stock.idealDescription,
+//                    placeholder: "Ideal value".localized,
+//                    entity: stock,
+//                    keyboardType: keyboardType,
+//                    stream: stream)
             ]
         }
         else

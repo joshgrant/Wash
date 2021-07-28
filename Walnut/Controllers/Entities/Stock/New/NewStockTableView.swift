@@ -52,12 +52,12 @@ extension NewStockTableViewContainer: NewStockTableViewFactory
     func makeInfoSection() -> TableViewSection
     {
         let models: [TableViewCellModel] = [
-            TextEditCellModel(
-                selectionIdentifier: .newStockName,
-                text: newStockModel.title,
-                placeholder: "Title".localized,
-                entity: nil,
-                stream: stream),
+//            TextEditCellModel(
+//                selectionIdentifier: .newStockName,
+//                text: newStockModel.title,
+//                placeholder: "Title".localized,
+//                entity: nil,
+//                stream: stream),
             DetailCellModel(
                 selectionIdentifier: .newStockUnit,
                 title: "Unit".localized,
@@ -110,19 +110,21 @@ class NewStockTableView: TableView<NewStockTableViewContainer>
         willDisplay cell: UITableViewCell,
         forRowAt indexPath: IndexPath)
     {
-        guard indexPath.section == 0 && indexPath.row == 0 else { return }
-        guard let textCell = cell as? TextEditCell else { return }
+        // Broken when making the collection view text edit cell
         
-        if let text = textCell.textField.text
-        {
-            if text.isEmpty
-            {
-                textCell.textField.becomeFirstResponder()
-            }
-        }
-        else
-        {
-            textCell.textField.becomeFirstResponder()
-        }
+//        guard indexPath.section == 0 && indexPath.row == 0 else { return }
+//        guard let textCell = cell as? TextEditCell else { return }
+//
+//        if let text = textCell.textField.text
+//        {
+//            if text.isEmpty
+//            {
+//                textCell.textField.becomeFirstResponder()
+//            }
+//        }
+//        else
+//        {
+//            textCell.textField.becomeFirstResponder()
+//        }
     }
 }

@@ -156,10 +156,11 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
         let request = Event.makeUpcomingEventsFetchRequest()
         do
         {
-//            let result = try context.fetch(request)
-//            items = result.compactMap { event in
-//                let forecastItem = ForecastItem(text: event.title, secondaryText: event.)
-//            }
+            let result = try context.fetch(request)
+            items = result.compactMap { event in
+                let item = ForecastItem(text: event.title, secondaryText: "Date goes here")
+                return .forecast(item)
+            }
         }
         catch
         {

@@ -64,17 +64,18 @@ public extension Event
     
     static func upcomingEvents(context: Context) -> [Event]
     {
-        var upcomingEvents: [Event] = []
-        
-        let allEvents = Event.all(context: context)
-        
-        for event in allEvents
-        {
-            var dateConditionSatisfied = false
-            
-            let conditions: [Condition] = event.unwrapped(\Event.conditions)
-            
-                
+        return []
+//        var upcomingEvents: [Event] = []
+//
+//        let allEvents = Event.all(context: context)
+//
+//        for event in allEvents
+//        {
+//            var dateConditionSatisfied = false
+//
+//            let conditions: [Condition] = event.unwrapped(\Event.conditions)
+//
+//
 //                if condition.leftHand!.valueType == .timeNow && condition.rightHand!.valueType == .date
 //                {
 //                    // This threshold represents a week. So dates less than 1 week apart are upcoming
@@ -88,10 +89,10 @@ public extension Event
 //                {
 //
 //                }
-            
-        }
-        
-        return upcomingEvents
+//
+//        }
+//
+//        return upcomingEvents
     }
 }
 
