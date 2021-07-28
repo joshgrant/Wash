@@ -11,7 +11,29 @@ class TextEditCell: UICollectionViewListCell
 {
     // MARK: - Variables
     
-    var textField = UITextField()
+    var textField: UITextField
+    
+    // MARK: - Initialization
+    
+    override init(frame: CGRect)
+    {
+        textField = UITextField()
+        
+        super.init(frame: frame)
+        
+        textField.set(height: 44)
+        
+        let padding = UIEdgeInsets(
+            top: 0, left: 16,
+            bottom: 0, right: 16)
+        
+        contentView.embed(textField, padding: padding)
+    }
+    
+    required init?(coder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Functions
     
@@ -19,6 +41,8 @@ class TextEditCell: UICollectionViewListCell
     {
         textField.text = item.text
         textField.placeholder = item.placeholder
+        textField.delegate = item.delegate
+        textField.tag = item.tag
     }
 }
 
@@ -31,6 +55,9 @@ struct TextEditItem: Hashable, Identifiable
     let text: String?
     let placeholder: String
     let keyboardType: UIKeyboardType
+    let tag: Int
+    
+    weak var delegate: UITextFieldDelegate?
     
     // MARK: - Equatable
     

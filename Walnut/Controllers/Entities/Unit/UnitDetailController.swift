@@ -50,6 +50,9 @@ class UnitDetailBuilder: ListControllerBuilder<UnitDetailSection, UnitDetailItem
     var context: Context
     var stream: Stream
     
+    weak var toggleDelegate: ToggleItemDelegate?
+    weak var textDelegate: UITextFieldDelegate?
+    
     // MARK: - Initialization
     
     init(unit: Unit, context: Context, stream: Stream)
@@ -115,14 +118,19 @@ class UnitDetailBuilder: ListControllerBuilder<UnitDetailSection, UnitDetailItem
         items.append(.name(.init(
                             text: unit.title,
                             placeholder: .title,
-                            keyboardType: .default)))
+                            keyboardType: .default,
+                            tag: UnitDetailController.TextFieldType.title.rawValue,
+                            delegate: textDelegate)))
         items.append(.abbreviation(.init(
                                     text: unit.abbreviation,
                                     placeholder: .abbreviation,
-                                    keyboardType: .default)))
+                                    keyboardType: .default,
+                                    tag: UnitDetailController.TextFieldType.abbreviation.rawValue,
+                                    delegate: textDelegate)))
         items.append(.baseUnit(.init(
                                 text: .baseUnit,
-                                isOn: unit.isBase)))
+                                isOn: unit.isBase,
+                                delegate: toggleDelegate)))
         
         if !unit.isBase, let parent = unit.parent
         {
@@ -135,6 +143,14 @@ class UnitDetailBuilder: ListControllerBuilder<UnitDetailSection, UnitDetailItem
 
 class UnitDetailController: ListController<UnitDetailSection, UnitDetailItem, UnitDetailBuilder>
 {
+    // MARK: - Defined types
+    
+    enum TextFieldType: Int
+    {
+        case title
+        case abbreviation
+    }
+    
     // MARK: - Variables
     
     var id = UUID()
@@ -145,6 +161,8 @@ class UnitDetailController: ListController<UnitDetailSection, UnitDetailItem, Un
     {
         super.init(builder: builder)
         subscribe(to: builder.stream)
+        builder.toggleDelegate = self
+        builder.textDelegate = self
         
         title = builder.unit.title
     }
@@ -160,5 +178,68 @@ extension UnitDetailController: Subscriber
     func receive(message: Message)
     {
         
+    }
+}
+
+extension UnitDetailController: ToggleItemDelegate
+{
+    @objc func toggleDidChangeValue(_ toggle: UISwitch)
+    {
+        builder.unit.isBase = toggle.isOn
+        
+        if toggle.isOn
+        {
+            removeRelativeItem()
+        }
+        else
+        {
+            addRelativeItem(unit: builder.unit)
+        }
+        
+        applyModel(animated: true)
+    }
+    
+    func addRelativeItem(unit: Unit)
+    {
+        let relativeItem = UnitDetailItem.relativeTo(.init(text: unit.parent?.title ?? ""))
+        model[.info]?.append(relativeItem)
+    }
+    
+    func removeRelativeItem()
+    {
+        model[.info] = model[.info]?.filter { item in
+            switch item
+            {
+            case .relativeTo:
+                return false
+            default:
+                return true
+            }
+        }
+    }
+}
+
+extension UnitDetailController: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        let type = TextFieldType(rawValue: textField.tag)!
+        
+        switch type
+        {
+        case .title:
+            builder.unit.title = textField.text ?? builder.unit.title // Save the title
+            title = textField.text // Update the controller title
+        case .abbreviation:
+            builder.unit.abbreviation = textField.text ?? builder.unit.abbreviation // Save the abbreviation
+        }
+        
+        builder.context.quickSave()
     }
 }

@@ -7,6 +7,11 @@
 
 import UIKit
 
+@objc protocol ToggleItemDelegate: AnyObject
+{
+    func toggleDidChangeValue(_ toggle: UISwitch)
+}
+
 struct ToggleItem: Hashable, Identifiable
 {
     // MARK: - Variables
@@ -15,6 +20,8 @@ struct ToggleItem: Hashable, Identifiable
     
     var text: String
     var isOn: Bool
+    
+    weak var delegate: ToggleItemDelegate?
     
     // MARK: - Equatable
     
@@ -40,15 +47,19 @@ extension ToggleItem: Registered
             configuration.text = item.text
             cell.contentConfiguration = configuration
             cell.accessories = [
-                makeToggleAccessory(isOn: item.isOn)
+                makeToggleAccessory(item: item)
             ]
         }
     }
     
-    private func makeToggleAccessory(isOn: Bool) -> UICellAccessory
+    private func makeToggleAccessory(item: ToggleItem) -> UICellAccessory
     {
         let toggle = UISwitch()
-        toggle.isOn = isOn
+        toggle.addTarget(
+            item.delegate,
+            action: #selector(item.delegate?.toggleDidChangeValue(_:)),
+            for: .valueChanged)
+        toggle.isOn = item.isOn
         
         let configuration = UICellAccessory.CustomViewConfiguration(customView: toggle, placement: .trailing(displayed: .always, at: { _ in 0 }))
         return .customView(configuration: configuration)

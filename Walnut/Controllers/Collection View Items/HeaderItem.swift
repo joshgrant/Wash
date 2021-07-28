@@ -94,8 +94,9 @@ extension HeaderItem: Registered
         return .customView(configuration: configuration)
     }
     
-    private func makeOutlineAccessory() -> UICellAccessory
+    private func makeOutlineAccessory() -> UICellAccessory?
     {
+        guard let _ = disclosure else { return nil }
         let options = UICellAccessory.OutlineDisclosureOptions(
             style: .cell,
             tintColor: .tableViewHeaderIcon)
@@ -103,8 +104,9 @@ extension HeaderItem: Registered
         return accessory
     }
     
-    private func makeImageAccessory() -> UICellAccessory
+    private func makeImageAccessory() -> UICellAccessory?
     {
+        guard let image = image else { return nil }
         let imageView = UIImageView(image: image)
         imageView.tintColor = .secondaryLabel
         let configuration = UICellAccessory.CustomViewConfiguration(
