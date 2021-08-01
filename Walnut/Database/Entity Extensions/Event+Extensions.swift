@@ -52,7 +52,10 @@ public extension Event
 //        }
   
         // Can't use predicateWithBlock...
-        fatalError()
+//        fatalError()
+        
+//        let events: NSFetchRequest<Event> = Event.fetchRequest()
+        return NSPredicate(value: true)
     }
     
     static func makeUpcomingEventsFetchRequest() -> NSFetchRequest<Event>

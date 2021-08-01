@@ -74,7 +74,7 @@ extension SystemDetailTableViewContainer: SystemDetailTableViewFactory
         models.append(InfoCellModel(
                         selectionIdentifier: .systemIdeal,
                         title: "Ideal".localized,
-                        detail: "\(system.percentIdeal)%"))
+                        detail: "\(system.ideal)%"))
         
         // TODO: Add in the suggested flow
         

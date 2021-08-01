@@ -8,6 +8,12 @@
 import Foundation
 import CoreData
 
+@objc(System)
+public class System: Entity {
+    
+}
+
+
 extension System: Named {}
 extension System: Pinnable {}
 
@@ -15,56 +21,10 @@ extension System: Pinnable {}
 
 extension System
 {
-//    var suggestedFlow: Flow?
-//    {
-//        // Finding the suggested flow means figuring out which flow
-//        // has the most net positive impact on the percent ideal
-//        return Flow(context: self.managedObjectContext!)
-//    }
-    
     var unwrappedStocks: [Stock] { unwrapped(\System.stocks) }
     var unwrappedFlows: [Flow] { unwrapped(\System.flows) }
-//    var unwrappedEvents: [Event] { unwrapped(\System.events) }
     var unwrappedNotes: [Note] { unwrapped(\System.notes) }
-    
-    // TODO: Need to weight the stock.amountValues / idealValue evenly?
-    var percentIdeal: Int
-    {
-        let count = Double(unwrappedStocks.count)
-        var total: Double = 0
-        
-        for stock in unwrappedStocks
-        {
-            total += calculateIdealPercent(stock: stock)
-        }
-        
-        print(total)
-        
-        if count == 0 { return 100 }
-        
-        return Int(total / count)
-    }
-    
-    /// Returns a value from 0 to 100
-    func calculateIdealPercent(stock: Stock) -> Double
-    {
-//        let minimum = stock.minimumValue
-//        let maximum = stock.maximumValue
-//        let current = stock.amountValue
-//        let ideal = stock.idealValue
-//
-//        // Use minimum and maximum to establish range for both current and ideal
-//        // Then, return the delta between the two
-//
-//        let range = maximum - minimum
-//
-//        let currentPercent = range - current / range
-//        let idealPercent = range - ideal / range
-//
-//        return idealPercent - currentPercent / idealPercent
-        
-        return 100
-    }
+
 }
 
 // MARK: - Fetching
@@ -89,4 +49,99 @@ extension System
             return []
         }
     }
+    
+    static func priorityFetchRequest() -> NSFetchRequest<System>
+    {
+        let request: NSFetchRequest<System> = System.fetchRequest()
+        request.predicate = NSPredicate(format: "ideal < 100")
+        request.sortDescriptors = [NSSortDescriptor(key: "ideal", ascending: true)]
+        request.fetchLimit = 5
+        return request
+    }
+}
+
+// Automatically Generated
+
+extension System {
+    
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<System> {
+        return NSFetchRequest<System>(entityName: "System")
+    }
+    
+    // Transient property
+    // TODO: This is a naive implementation: in reality, stocks
+    // have a min/max value so each has a certain "percentage"
+    // We need to calculate this "percentage" based on ideal and current
+    // and then return the total of all "current" percentages divided by
+    // ideal percentages (100%).
+    public var ideal: Double
+    {
+        var runningTotalCurrent: Double = 0
+        var runningTotalIdeal: Double = 0
+        
+        for stock in unwrappedStocks
+        {
+            runningTotalCurrent += stock.source?.value ?? 0
+            runningTotalIdeal += stock.ideal?.value ?? 0
+        }
+        
+        return (runningTotalCurrent / runningTotalIdeal) * 100
+    }
+    
+    @NSManaged public var flows: NSSet?
+    @NSManaged public var stocks: NSSet?
+    @NSManaged public var symbolName: Symbol?
+    @NSManaged public var tasks: NSSet?
+    
+}
+
+// MARK: Generated accessors for flows
+extension System {
+    
+    @objc(addFlowsObject:)
+    @NSManaged public func addToFlows(_ value: Flow)
+    
+    @objc(removeFlowsObject:)
+    @NSManaged public func removeFromFlows(_ value: Flow)
+    
+    @objc(addFlows:)
+    @NSManaged public func addToFlows(_ values: NSSet)
+    
+    @objc(removeFlows:)
+    @NSManaged public func removeFromFlows(_ values: NSSet)
+    
+}
+
+// MARK: Generated accessors for stocks
+extension System {
+    
+    @objc(addStocksObject:)
+    @NSManaged public func addToStocks(_ value: Stock)
+    
+    @objc(removeStocksObject:)
+    @NSManaged public func removeFromStocks(_ value: Stock)
+    
+    @objc(addStocks:)
+    @NSManaged public func addToStocks(_ values: NSSet)
+    
+    @objc(removeStocks:)
+    @NSManaged public func removeFromStocks(_ values: NSSet)
+    
+}
+
+// MARK: Generated accessors for tasks
+extension System {
+    
+    @objc(addTasksObject:)
+    @NSManaged public func addToTasks(_ value: Task)
+    
+    @objc(removeTasksObject:)
+    @NSManaged public func removeFromTasks(_ value: Task)
+    
+    @objc(addTasks:)
+    @NSManaged public func addToTasks(_ values: NSSet)
+    
+    @objc(removeTasks:)
+    @NSManaged public func removeFromTasks(_ values: NSSet)
+    
 }

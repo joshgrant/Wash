@@ -49,7 +49,7 @@
         <attribute name="isHidden" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isPinned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="uniqueID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="updatedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedDate" optional="YES" attributeType="Date" derived="YES" derivationExpression="now()" usesScalarValueType="NO"/>
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="linkedEntities" inverseEntity="Note"/>
         <relationship name="symbols" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Symbol" inverseName="linkedEntities" inverseEntity="Symbol"/>
         <uniquenessConstraints>
@@ -147,7 +147,8 @@
         <relationship name="nameOfTask" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="symbolName" inverseEntity="Task"/>
         <relationship name="nameOfUnit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="symbolName" inverseEntity="Unit"/>
     </entity>
-    <entity name="System" representedClassName="System" parentEntity="Entity" syncable="YES" codeGenerationType="class">
+    <entity name="System" representedClassName="System" parentEntity="Entity" syncable="YES">
+        <attribute name="ideal" optional="YES" transient="YES" attributeType="Double" usesScalarValueType="YES"/>
         <relationship name="flows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="system" inverseEntity="Flow"/>
         <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="systems" inverseEntity="Stock"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfSystem" inverseEntity="Symbol"/>
@@ -181,7 +182,7 @@
         <element name="Color" positionX="-54" positionY="-9" width="128" height="149"/>
         <element name="Condition" positionX="-36" positionY="9" width="128" height="164"/>
         <element name="Conversion" positionX="0" positionY="45" width="128" height="119"/>
-        <element name="Entity" positionX="9" positionY="54" width="128" height="14"/>
+        <element name="Entity" positionX="9" positionY="54" width="128" height="149"/>
         <element name="Event" positionX="36" positionY="81" width="128" height="134"/>
         <element name="Flow" positionX="-9" positionY="36" width="128" height="179"/>
         <element name="History" positionX="9" positionY="54" width="128" height="14"/>
@@ -190,7 +191,7 @@
         <element name="State" positionX="0" positionY="135" width="128" height="89"/>
         <element name="Stock" positionX="18" positionY="63" width="128" height="14"/>
         <element name="Symbol" positionX="27" positionY="72" width="128" height="209"/>
-        <element name="System" positionX="36" positionY="81" width="128" height="89"/>
+        <element name="System" positionX="36" positionY="81" width="128" height="104"/>
         <element name="Task" positionX="0" positionY="45" width="128" height="194"/>
         <element name="Unit" positionX="0" positionY="144" width="128" height="149"/>
     </elements>

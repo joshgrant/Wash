@@ -71,18 +71,8 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
         [
             .pinned: makePinnedItems(),
             .suggested: makeSuggestedItems(),
-            .forecast: [
-                .header(.init(text: "Forecast",
-                              image: .init(systemName: "calendar"))),
-                .forecast(.init(text: "Charlie Horse 5k",
-                                secondaryText: "Mon, Apr 3"))
-            ],
-            .priority: [
-                .header(.init(text: "Priority",
-                              image: .init(systemName: "network"))),
-                .priority(.init(text: "Chores",
-                                secondaryText: "25%"))
-            ]
+            .forecast: makeForecastItems(),
+            .priority: makePriorityItems()
         ]
     }
     
@@ -115,11 +105,34 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
     
     private func makeSuggestedItems() -> [DashboardItem]
     {
-        // 1. Get the out of balance systems
-        // 2. For each system, return the flow that has the most positive net impact on the system
-        // 2a. Each flow must determine if the input stock and output stock can transfer the desired amount
+        // 1. Get unbalanced systems
+        // 2. For each system, iterate through its flows
+        // 3. For each flow, calculate the net impact on the system
+        // 4. Return the flow with the largest net impact
         
-        return []
+        let unbalancedSystemsRequest = System.makeFetchRequest()
+        unbalancedSystemsRequest.predicate = NSPredicate(format: "ideal < 100")
+        unbalancedSystemsRequest.fetchLimit = 50;
+        
+        let result = (try? context.fetch(unbalancedSystemsRequest)) ?? []
+        
+        var suggestedFlows: [DashboardItem] = []
+        
+        for item in result
+        {
+//            let ideal = item.ideal
+            
+            for flow in item.unwrappedFlows
+            {
+                suggestedFlows.append(
+                    .suggested(.init(text: flow.title,
+                                     secondaryText: "Not true",
+                                     checked: false,
+                                     delegate: delegate)))
+            }
+        }
+        
+        return suggestedFlows
         
 //        var items: [DashboardItem] = []
 //
@@ -149,7 +162,7 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
 //        return items
     }
     
-    private func makeForecastItem() -> [DashboardItem]
+    private func makeForecastItems() -> [DashboardItem]
     {
         var items: [DashboardItem] = []
         
@@ -167,6 +180,35 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
             assertionFailure(error.localizedDescription)
             return []
         }
+        
+        let headerItem = DashboardItem.header(.init(text: .forecast, image: Icon.forecast.image))
+        items.insert(headerItem, at: 0)
+        
+        return items
+    }
+    
+    private func makePriorityItems() -> [DashboardItem]
+    {
+        var items: [DashboardItem] = []
+        
+        let request = System.priorityFetchRequest()
+        do
+        {
+            let result = try context.fetch(request)
+            items = result.compactMap { system in
+                let ideal = String(format: "%i%", Int(system.ideal))
+                let item = PriorityItem(text: system.title, secondaryText: ideal)
+                return .priority(item)
+            }
+        }
+        catch
+        {
+            assertionFailure(error.localizedDescription)
+            return []
+        }
+        
+        let headerItem = DashboardItem.header(.init(text: .priority, image: Icon.priority.image))
+        items.insert(headerItem, at: 0)
         
         return items
     }

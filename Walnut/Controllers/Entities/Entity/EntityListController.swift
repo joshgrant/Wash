@@ -269,6 +269,8 @@ class EntityListController: ListController<EntityListSection, EntityListItem, En
 {
     // MARK: - Variables
     
+    var router: EntityListRouter
+    
     lazy var addButtonItem: UIBarButtonItem = builder.makeAddButtonItem(target: self)
     lazy var searchController: UISearchController = builder.makeSearchController(delegate: self)
     
@@ -276,10 +278,12 @@ class EntityListController: ListController<EntityListSection, EntityListItem, En
     
     override init(builder: EntityListBuilder)
     {
+        self.router = builder.makeRouter()
         super.init(builder: builder)
         title = builder.entityType.readableName.pluralize()
         
         builder.swipeActionsDelegate = self
+        router.delegate = self
     }
     
     // MARK: - View lifecycle
@@ -294,32 +298,24 @@ class EntityListController: ListController<EntityListSection, EntityListItem, En
     
     // MARK: - Collection view
     
-    
-    
-    // TODO: Handle pin action
-    // Handle delete action:
-    /*
-     container.context.perform { [unowned self] in
-     let object = message.entity
-     self.container.context.delete(object)
-     self.container.context.quickSave()
-     
-     DispatchQueue.main.async
-     {
-     self.container.tableView.reload(shouldReloadTableView: false)
-     self.container.tableView.beginUpdates()
-     self.container.tableView.deleteRows(at: [message.indexPath], with: .automatic)
-     self.container.tableView.endUpdates()
-     }
-     }
-     */
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        // TODO: Inefficient
+        // Subtract 1 to account for invisible header
+        let entity = builder.entityType.all(context: builder.context)[indexPath.row - 1]
+        router.routeToDetail(entity: entity)
+        
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
+    }
 }
+
+extension EntityListController: RouterDelegate {}
 
 extension EntityListController: EntityListResponder
 {
     @objc func addButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        
+        // TODO: Add an item
     }
 }
 
@@ -334,6 +330,7 @@ extension EntityListController: EntityListSwipeActionsDelegate
     {
         builder.context.perform { [unowned self] in
             // Subtract one to account for the invisible header
+            // TODO: Inefficient
             let entity = self.builder.entityType.all(context: builder.context)[indexPath.row - 1]
             builder.context.delete(entity)
             builder.context.quickSave()
@@ -349,6 +346,7 @@ extension EntityListController: EntityListSwipeActionsDelegate
     func handlePin(action: UIContextualAction, indexPath: IndexPath)
     {
         // Subtract one to account for the invisible header
+        // TODO: Inefficient
         let entity = self.builder.entityType.all(context: builder.context)[indexPath.row - 1]
         if let pinnable = entity as? Pinnable
         {
