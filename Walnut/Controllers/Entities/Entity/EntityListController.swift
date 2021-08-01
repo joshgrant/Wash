@@ -2,33 +2,172 @@
 //  EntityListController.swift
 //  Walnut
 //
-//  Created by Joshua Grant on 6/20/21.
+//  Created by Joshua Grant on 7/28/21.
 //
 
-import Foundation
-import CoreData
 import UIKit
+
+enum EntityListSection: Hashable
+{
+    case main
+}
+
+enum EntityListItem: Hashable
+{
+    case header(HeaderItem)
+    case item(DetailItem)
+}
 
 protocol EntityListFactory: Factory
 {
     func makeController() -> EntityListController
-    func makeTableView() -> EntityListTableView
-    func makeModel() -> TableViewModel
-    func makeMainSection() -> TableViewSection
     func makeRouter() -> EntityListRouter
+    func makeAddButtonItem(target: EntityListResponder) -> UIBarButtonItem
+    func makeSearchController(delegate: UISearchControllerDelegate) -> UISearchController
 }
 
-class EntityListContainer: Container
+@objc protocol EntityListResponder
+{
+    func addButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
+}
+
+class EntityListRouter
+{
+    // MARK: - Variables
+    
+    var context: Context
+    var stream: Stream
+    
+    weak var delegate: RouterDelegate?
+    
+    // MARK: - Initialization
+    
+    init(context: Context, stream: Stream)
+    {
+        self.context = context
+        self.stream = stream
+    }
+    
+    // MARK: - Functions
+    
+    func routeToDetail(entity: Entity)
+    {
+        let detail = entity.detailController(
+            context: context,
+            stream: stream)
+        delegate?.navigationController?.pushViewController(detail, animated: true)
+    }
+    
+    func routeToAdd(entityType: Entity.Type)
+    {
+        switch entityType
+        {
+        case is System.Type:
+            routeToAddSystem()
+        case is Stock.Type:
+            routeToAddStock()
+        case is Flow.Type:
+            routeToAddFlow()
+        case is Task.Type:
+            routeToAddTask()
+        case is Event.Type:
+            routeToAddEvent()
+        case is Conversion.Type:
+            routeToAddConversion()
+        case is Condition.Type:
+            routeToAddCondition()
+        case is Symbol.Type:
+            routeToAddSymbol()
+        case is Note.Type:
+            routeToAddNote()
+        case is Unit.Type:
+            routeToAddUnit()
+        default:
+            fatalError()
+        }
+    }
+    
+    private func routeToAddSystem()
+    {
+        let builder = NewSystemControllerBuilder(context: context, stream: stream)
+        let controller = builder.makeController()
+        let navigation = UINavigationController(rootViewController: controller)
+        navigation.isModalInPresentation = true
+        delegate?.navigationController?.present(navigation, animated: true, completion: nil)
+        //    default:
+        //        let entity = entityType.init(context: container.context)
+        //        entity.createdDate = Date()
+        //        let detail = entity.detailController(context: container.context, stream: container.stream)
+        //        delegate?.navigationController?.pushViewController(detail, animated: true)
+        //        container.context.quickSave()
+    }
+    
+    private func routeToAddStock()
+    {
+        let container = NewStockControllerContainer(context: context, stream: stream)
+        let controller = container.makeController()
+        let detailNavigation = UINavigationController(rootViewController: controller)
+        detailNavigation.isModalInPresentation = true
+        delegate?.navigationController?.present(detailNavigation, animated: true, completion: nil)
+    }
+    
+    private func routeToAddFlow()
+    {
+        fatalError()
+    }
+    
+    private func routeToAddTask()
+    {
+        fatalError()
+    }
+    
+    private func routeToAddEvent()
+    {
+        fatalError()
+    }
+    
+    private func routeToAddConversion()
+    {
+        fatalError()
+    }
+    
+    private func routeToAddCondition()
+    {
+        fatalError()
+    }
+    
+    private func routeToAddSymbol()
+    {
+        fatalError()
+    }
+    
+    private func routeToAddNote()
+    {
+        fatalError()
+    }
+    
+    private func routeToAddUnit()
+    {
+        fatalError()
+    }
+}
+
+protocol EntityListSwipeActionsDelegate: AnyObject
+{
+    func handleDelete(action: UIContextualAction, indexPath: IndexPath)
+    func handlePin(action: UIContextualAction, indexPath: IndexPath)
+}
+
+class EntityListBuilder: ListControllerBuilder<EntityListSection, EntityListItem>, EntityListFactory
 {
     // MARK: - Variables
     
     var entityType: Entity.Type
+    
     var context: Context
     var stream: Stream
     
-    lazy var router: EntityListRouter = makeRouter()
-    
-    lazy var tableView: EntityListTableView = makeTableView()
+    weak var swipeActionsDelegate: EntityListSwipeActionsDelegate?
     
     // MARK: - Initialization
     
@@ -38,117 +177,149 @@ class EntityListContainer: Container
         self.context = context
         self.stream = stream
     }
-}
-
-extension EntityListContainer: EntityListFactory
-{
+    
+    // MARK: - Functions
+    
     func makeController() -> EntityListController
     {
-        .init(container: self)
-    }
-    
-    func makeTableView() -> EntityListTableView
-    {
-        let model = makeModel()
-        
-        let container = EntityListTableViewContainer(
-            model: model,
-            stream: stream,
-            style: .grouped,
-            entityType: entityType,
-            context: context)
-        return EntityListTableView(container: container)
-    }
-    
-    func makeModel() -> TableViewModel
-    {
-        TableViewModel(sections: [makeMainSection()])
-    }
-    
-    func makeMainSection() -> TableViewSection
-    {
-        let models: [TableViewCellModel] = entityType
-            .all(context: context)
-            .compactMap { entity in
-                guard let entity = entity as? Named else { return nil }
-                return TextCellModel(
-                    selectionIdentifier: .entity(entity: entity),
-                    title: entity.title,
-                    disclosureIndicator: true)
-            }
-        
-        return TableViewSection(models: models)
+        .init(builder: self)
     }
     
     func makeRouter() -> EntityListRouter
     {
-        let container = EntityListRouterContainer(
-            context: context,
-            stream: stream)
-        return EntityListRouter(container: container)
+        .init(context: context, stream: stream)
+    }
+    
+    func makeAddButtonItem(target: EntityListResponder) -> UIBarButtonItem
+    {
+        UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: target,
+            action: #selector(target.addButtonItemDidTouchUpInside(_:)))
+    }
+    
+    func makeSearchController(delegate: UISearchControllerDelegate) -> UISearchController
+    {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.delegate = delegate
+        return searchController
+    }
+    
+    override func makeCollectionViewLayout() -> UICollectionViewLayout
+    {
+        var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
+        configuration.headerMode = .firstItemInSection
+        configuration.footerMode = .supplementary
+        
+        configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
+            UISwipeActionsConfiguration(actions: [
+                .init(style: .destructive, title: "Delete".localized, handler: { [weak self] action, view, closure in
+                    self?.swipeActionsDelegate?.handleDelete(action: action, indexPath: indexPath)
+                    closure(true) // true if delete was successful
+                }),
+                .init(style: .normal, title: "Pin".localized, handler: { [weak self] action, view, closure in
+                    self?.swipeActionsDelegate?.handlePin(action: action, indexPath: indexPath)
+                    closure(true) // true if delete was successful
+                })
+            ])
+        }
+        
+        return UICollectionViewCompositionalLayout.list(using: configuration)
+    }
+    
+    override func makeInitialModel() -> ListControllerBuilder<EntityListSection, EntityListItem>.ListModel
+    {
+        [
+            .main: makeMainSection()
+        ]
+    }
+    
+    private func makeMainSection() -> [EntityListItem]
+    {
+        var items: [EntityListItem] = []
+        
+        items = entityType
+            .all(context: context)
+            .compactMap { entity in
+                guard let entity = entity as? Named else { fatalError() }
+                return .item(.init(text: entity.title))
+            }
+        
+        let header = EntityListItem.header(.init(text: ""))
+        items.insert(header, at: 0)
+        
+        return items
+    }
+    
+    override func makeCellProvider() -> ListControllerBuilder<EntityListSection, EntityListItem>.CellProvider
+    {
+        { collectionView, indexPath, item in
+            switch item
+            {
+            case .header(let item):
+                return collectionView.dequeueConfiguredReusableCell(using: item.registration, for: indexPath, item: item)
+            case .item(let item):
+                return collectionView.dequeueConfiguredReusableCell(using: item.registration, for: indexPath, item: item)
+            }
+        }
     }
 }
 
-class EntityListController: ViewController<EntityListContainer>, RouterDelegate
+class EntityListController: ListController<EntityListSection, EntityListItem, EntityListBuilder>
 {
     // MARK: - Variables
     
-    var id = UUID()
-
-    var addButtonImage: UIImage? { Icon.add.image }
-    var addButtonStyle: UIBarButtonItem.Style { .plain }
+    lazy var addButtonItem: UIBarButtonItem = builder.makeAddButtonItem(target: self)
+    lazy var searchController: UISearchController = builder.makeSearchController(delegate: self)
     
     // MARK: - Initialization
     
-    required init(container: EntityListContainer)
+    override init(builder: EntityListBuilder)
     {
-        super.init(container: container)
-        container.router.delegate = self
-        subscribe(to: container.stream)
-        configureForDisplay()
+        super.init(builder: builder)
+        title = builder.entityType.readableName.pluralize()
+        
+        builder.swipeActionsDelegate = self
     }
+    
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItem = addButtonItem
+        navigationItem.searchController = searchController
+    }
+    
+    // MARK: - Collection view
+    
+    
+    
+    // TODO: Handle pin action
+    // Handle delete action:
+    /*
+     container.context.perform { [unowned self] in
+     let object = message.entity
+     self.container.context.delete(object)
+     self.container.context.quickSave()
+     
+     DispatchQueue.main.async
+     {
+     self.container.tableView.reload(shouldReloadTableView: false)
+     self.container.tableView.beginUpdates()
+     self.container.tableView.deleteRows(at: [message.indexPath], with: .automatic)
+     self.container.tableView.endUpdates()
+     }
+     }
+     */
+}
 
-    deinit
+extension EntityListController: EntityListResponder
+{
+    @objc func addButtonItemDidTouchUpInside(_ sender: UIBarButtonItem)
     {
-        unsubscribe(from: container.stream)
-    }
-    
-    // MARK: - Functions
-    
-    private func configureForDisplay()
-    {
-        self.title = container.entityType.readableName.pluralize()
         
-        navigationItem.rightBarButtonItem = makeBarButtonItem()
-        navigationItem.searchController = makeSearchController(searchControllerDelegate: self)
-        navigationItem.hidesSearchBarWhenScrolling = true
-        
-        view.embed(container.tableView)
-    }
-    
-    // MARK: - Factory
-    
-    func makeBarButtonItem() -> BarButtonItem
-    {
-        let actionClosure = ActionClosure { [unowned self] sender in
-            let message = EntityListAddButtonMessage.init(sender: sender, entityType: self.container.entityType)
-            self.container.stream.send(message: message)
-        }
-        
-        return BarButtonItem(
-            image: Icon.add.image,
-            style: .plain,
-            actionClosure: actionClosure)
-    }
-    
-    func makeSearchController(searchControllerDelegate: UISearchControllerDelegate) -> UISearchController
-    {
-        // TODO: Make a better results controller
-        let searchResultsController = UIViewController()
-        searchResultsController.view.backgroundColor = .green
-        let searchController = UISearchController(searchResultsController: searchResultsController)
-        searchController.delegate = searchControllerDelegate
-        return searchController
     }
 }
 
@@ -157,38 +328,32 @@ extension EntityListController: UISearchControllerDelegate
     
 }
 
-extension EntityListController: Subscriber
+extension EntityListController: EntityListSwipeActionsDelegate
 {
-    func receive(message: Message)
+    func handleDelete(action: UIContextualAction, indexPath: IndexPath)
     {
-        switch message
-        {
-        case is EntityListAddButtonMessage,
-             is TextEditCellMessage,
-             is CancelCreationMessage,
-             is EntityInsertionMessage:
-            container.tableView.shouldReload = true
-        case let m as EntityListDeleteMessage:
-            handle(m)
-        default:
-            break
-        }
-    }
-    
-    private func handle(_ message: EntityListDeleteMessage)
-    {
-        container.context.perform { [unowned self] in
-            let object = message.entity
-            self.container.context.delete(object)
-            self.container.context.quickSave()
+        builder.context.perform { [unowned self] in
+            // Subtract one to account for the invisible header
+            let entity = self.builder.entityType.all(context: builder.context)[indexPath.row - 1]
+            builder.context.delete(entity)
+            builder.context.quickSave()
             
             DispatchQueue.main.async
             {
-                self.container.tableView.reload(shouldReloadTableView: false)
-                self.container.tableView.beginUpdates()
-                self.container.tableView.deleteRows(at: [message.indexPath], with: .automatic)
-                self.container.tableView.endUpdates()
+                self.model = builder.makeInitialModel()
+                self.applyModel(animated: true)
             }
+        }
+    }
+    
+    func handlePin(action: UIContextualAction, indexPath: IndexPath)
+    {
+        // Subtract one to account for the invisible header
+        let entity = self.builder.entityType.all(context: builder.context)[indexPath.row - 1]
+        if let pinnable = entity as? Pinnable
+        {
+            pinnable.isPinned.toggle()
+            builder.context.quickSave()
         }
     }
 }

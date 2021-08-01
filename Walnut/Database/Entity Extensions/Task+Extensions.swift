@@ -7,6 +7,8 @@
 
 import Foundation
 
+extension Task: Named {}
+
 extension Task
 {
     var completionType: CompletionType

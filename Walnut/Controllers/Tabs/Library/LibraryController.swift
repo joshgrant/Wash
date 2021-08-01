@@ -39,12 +39,11 @@ class LibraryRouter
     
     func routeToDetail(entityType: Entity.Type)
     {
-        let container = EntityListContainer(
+        let builder = EntityListBuilder(
             entityType: entityType,
             context: context,
             stream: stream)
-        let controller = EntityListController(
-            container: container)
+        let controller = builder.makeController()
         delegate?.navigationController?.pushViewController(controller, animated: true)
     }
 }

@@ -144,6 +144,7 @@
         <relationship name="nameOfState" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="State" inverseName="symbolName" inverseEntity="State"/>
         <relationship name="nameOfStock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="symbolName" inverseEntity="Stock"/>
         <relationship name="nameOfSystem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="symbolName" inverseEntity="System"/>
+        <relationship name="nameOfTask" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="symbolName" inverseEntity="Task"/>
         <relationship name="nameOfUnit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="symbolName" inverseEntity="Unit"/>
     </entity>
     <entity name="System" representedClassName="System" parentEntity="Entity" syncable="YES" codeGenerationType="class">
@@ -162,6 +163,7 @@
         <relationship name="producedStocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="producedStockOfProcesss" inverseEntity="Stock"/>
         <relationship name="requiredStocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="requiredStockOfProcesss" inverseEntity="Stock"/>
         <relationship name="subtasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="parent" inverseEntity="Task"/>
+        <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfTask" inverseEntity="Symbol"/>
         <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="tasks" inverseEntity="System"/>
     </entity>
     <entity name="Unit" representedClassName="Unit" parentEntity="Entity" syncable="YES" codeGenerationType="class">
@@ -187,9 +189,9 @@
         <element name="Source" positionX="0" positionY="144" width="128" height="194"/>
         <element name="State" positionX="0" positionY="135" width="128" height="89"/>
         <element name="Stock" positionX="18" positionY="63" width="128" height="14"/>
-        <element name="Symbol" positionX="27" positionY="72" width="128" height="14"/>
+        <element name="Symbol" positionX="27" positionY="72" width="128" height="209"/>
         <element name="System" positionX="36" positionY="81" width="128" height="89"/>
-        <element name="Task" positionX="0" positionY="45" width="128" height="179"/>
+        <element name="Task" positionX="0" positionY="45" width="128" height="194"/>
         <element name="Unit" positionX="0" positionY="144" width="128" height="149"/>
     </elements>
 </model>
