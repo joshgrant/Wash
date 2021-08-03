@@ -20,14 +20,14 @@ class StocksHeaderViewModelContainer: Container
 {
     // MARK: - Variables
     
-    var system: System
+//    var system: System
     var stream: Stream
     
     // MARK: - Initialization
     
-    init(system: System, stream: Stream)
+    init(stream: Stream)
     {
-        self.system = system
+//        self.system = system
         self.stream = stream
     }
 }
@@ -48,19 +48,21 @@ extension StocksHeaderViewModelContainer: StocksHeaderViewModelFactory
     
     func makeSearchButtonActionClosure() -> ActionClosure
     {
-        ActionClosure { [weak self] _ in
-            guard let self = self else { return }
-            let message = SectionHeaderSearchMessage(entityToSearchFrom: self.system, typeToSearch: Stock.self)
-            self.stream.send(message: message)
+        // FIXME: No action
+        ActionClosure { _ in
+//            guard let self = self else { return }
+//            let message = SectionHeaderSearchMessage(entityToSearchFrom: self.system, typeToSearch: Stock.self)
+//            self.stream.send(message: message)
         }
     }
     
     func makeAddButtonActionClosure() -> ActionClosure
     {
-        ActionClosure { [weak self] _ in
-            guard let self = self else { return }
-            let message = SectionHeaderAddMessage(entityToAddTo: self.system, entityType: Stock.self)
-            self.stream.send(message: message)
+        // FIXME: No action
+        ActionClosure { _ in
+//            guard let self = self else { return }
+//            let message = SectionHeaderAddMessage(entityToAddTo: self.system, entityType: Stock.self)
+//            self.stream.send(message: message)
         }
     }
 }

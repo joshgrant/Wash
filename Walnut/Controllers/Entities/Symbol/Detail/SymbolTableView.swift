@@ -78,7 +78,7 @@ extension SymbolTableViewContainer: SymbolTableViewFactory
             symbol.nameOfEvent,
             symbol.nameOfState,
             symbol.nameOfStock,
-            symbol.nameOfSystem,
+//            symbol.nameOfSystem,
             symbol.nameOfCondition,
             symbol.nameOfConversion
         ]

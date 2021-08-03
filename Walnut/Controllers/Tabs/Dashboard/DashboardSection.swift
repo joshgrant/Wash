@@ -10,7 +10,7 @@ import Foundation
 enum DashboardSection: Int, CaseIterable
 {
     case pinned
-    case priority
+//    case priority
     case suggested
     case forecast
 }

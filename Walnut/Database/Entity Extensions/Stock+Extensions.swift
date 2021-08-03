@@ -5,38 +5,50 @@
 //  Created by Joshua Grant on 10/6/20.
 //
 
-import Foundation
+import CoreData
 
 extension Stock: Named {}
 extension Stock: Pinnable {}
 
 extension Stock
 {
-    public override func awakeFromInsert()
-    {
-        super.awakeFromInsert()
+//    public override func awakeFromInsert()
+//    {
+//        super.awakeFromInsert()
+//        
+//        guard let context = managedObjectContext else { fatalError() }
         
-        guard let context = managedObjectContext else { fatalError() }
-        
-        let source = Source(context: context)
-        source.value = 0
-        source.valueType = .number
-        self.source = source
-        
-        let ideal = Source(context: context)
-        ideal.value = 0
-        ideal.valueType = .number
-        self.ideal = ideal
-        
-        let minimum = Source(context: context)
-        minimum.value = 0
-        minimum.valueType = .number
-        self.minimum = minimum
-        
-        let maximum = Source(context: context)
-        maximum.value = 0
-        maximum.valueType = .number
-        self.maximum = maximum
+//        if source == nil
+//        {
+//            let source = Source(context: context)
+//            source.value = 0
+//            source.valueType = .number
+//            self.source = source
+//        }
+//
+//        if ideal == nil
+//        {
+//            let ideal = Source(context: context)
+//            ideal.value = 0
+//            ideal.valueType = .number
+//            self.ideal = ideal
+//        }
+//
+//        if minimum == nil
+//        {
+//            let minimum = Source(context: context)
+//            minimum.value = 0
+//            minimum.valueType = .number
+//            self.minimum = minimum
+//        }
+//
+//        if maximum == nil
+//        {
+//            let maximum = Source(context: context)
+//            maximum.value = 0
+//            maximum.valueType = .number
+//            self.maximum = maximum
+//        }
     }
 }
 
@@ -130,5 +142,22 @@ extension Stock
     var maximumDescription: String
     {
         return String(format: "%.2f", maximum!.value)
+    }
+}
+
+extension Stock
+{
+    var current: Double { source!.value }
+    var target: Double { ideal!.value }
+    var min: Double { minimum!.value }
+    var max: Double { maximum!.value }
+    
+    public var percentIdeal: Double
+    {
+        return Double.percentDelta(
+            a: current,
+            b: target,
+            minimum: min,
+            maximum: max)
     }
 }

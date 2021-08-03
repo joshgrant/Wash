@@ -120,12 +120,12 @@ extension Entity
     {
         switch self
         {
-        case let s as System:
-            let container = SystemDetailContainer(
-                system: s,
-                context: context,
-                stream: stream)
-            return container.makeController()
+//        case let s as System:
+//            let container = SystemDetailContainer(
+//                system: s,
+//                context: context,
+//                stream: stream)
+//            return container.makeController()
         case let s as Stock:
             let factory = StockDetailContainer(
                 stock: s,

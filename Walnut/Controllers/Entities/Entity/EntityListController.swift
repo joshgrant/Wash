@@ -62,8 +62,8 @@ class EntityListRouter
     {
         switch entityType
         {
-        case is System.Type:
-            routeToAddSystem()
+//        case is System.Type:
+//            routeToAddSystem()
         case is Stock.Type:
             routeToAddStock()
         case is Flow.Type:
@@ -87,20 +87,20 @@ class EntityListRouter
         }
     }
     
-    private func routeToAddSystem()
-    {
-        let builder = NewSystemControllerBuilder(context: context, stream: stream)
-        let controller = builder.makeController()
-        let navigation = UINavigationController(rootViewController: controller)
-        navigation.isModalInPresentation = true
-        delegate?.navigationController?.present(navigation, animated: true, completion: nil)
-        //    default:
-        //        let entity = entityType.init(context: container.context)
-        //        entity.createdDate = Date()
-        //        let detail = entity.detailController(context: container.context, stream: container.stream)
-        //        delegate?.navigationController?.pushViewController(detail, animated: true)
-        //        container.context.quickSave()
-    }
+//    private func routeToAddSystem()
+//    {
+//        let builder = NewSystemControllerBuilder(context: context, stream: stream)
+//        let controller = builder.makeController()
+//        let navigation = UINavigationController(rootViewController: controller)
+//        navigation.isModalInPresentation = true
+//        delegate?.navigationController?.present(navigation, animated: true, completion: nil)
+//        //    default:
+//        //        let entity = entityType.init(context: container.context)
+//        //        entity.createdDate = Date()
+//        //        let detail = entity.detailController(context: container.context, stream: container.stream)
+//        //        delegate?.navigationController?.pushViewController(detail, animated: true)
+//        //        container.context.quickSave()
+//    }
     
     private func routeToAddStock()
     {

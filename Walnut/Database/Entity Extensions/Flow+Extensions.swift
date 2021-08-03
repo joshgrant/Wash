@@ -11,6 +11,9 @@ import CoreData
 extension Flow: Named {}
 extension Flow: Pinnable {}
 
+// TODO: Flow "amounts" can be dynamic or static - i.e for some "user-completed" flows
+// the amount should be "enterable" like - how much water did you just drinik?
+
 extension Flow
 {
     // We're taking a different approach for suggestions. Rather than have it be a property,

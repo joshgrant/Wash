@@ -11,7 +11,7 @@ import CoreData
 
 public enum EntityType
 {
-    case system
+//    case system
     case stock
     case flow
     case task
@@ -25,7 +25,7 @@ public enum EntityType
     static var libraryVisible: [EntityType]
     {
         [
-            .system,
+//            .system,
             .stock,
             .flow,
             .task,
@@ -42,7 +42,7 @@ public enum EntityType
     {
         switch self
         {
-        case .system: return "Systems".localized
+//        case .system: return "Systems".localized
         case .stock: return "Stocks".localized
         case .flow: return "Flows".localized
         case .task: return "Tasks".localized // TODO: Maybe UI-facing should be "Process" just because it's clearer
@@ -59,7 +59,7 @@ public enum EntityType
     {
         switch self
         {
-        case .system: return .system
+//        case .system: return .system
         case .stock: return .stock
         case .flow: return .flow
         case .task: return .task
@@ -76,7 +76,7 @@ public enum EntityType
     {
         switch self
         {
-        case .system: return System.self
+//        case .system: return System.self
         case .stock: return Stock.self
         case .flow: return Flow.self
         case .task: return Task.self
@@ -113,7 +113,7 @@ public enum EntityType
     {
         switch entityType
         {
-        case is System.Type: return .system
+//        case is System.Type: return .system
         case is Stock.Type: return .stock
         case is Flow.Type: return .flow
         case is Task.Type: return .task
@@ -132,7 +132,7 @@ public enum EntityType
     {
         switch entity
         {
-        case is System: return .system
+//        case is System: return .system
         case is Stock: return .stock
         case is Flow: return .flow
         case is Task: return .task

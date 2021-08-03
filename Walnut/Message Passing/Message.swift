@@ -103,7 +103,7 @@ class Message: Unique, CustomStringConvertible
         
         case selectedLink(entity: Entity, location: ViewLocation)
     
-        case duplicated(system: System)
+//        case duplicated(system: System)
     
         case headerAdd(header: HeaderType)
         case headerLink(header: HeaderType)
@@ -254,7 +254,7 @@ public enum SelectionIdentifier
     
     case note(note: Note)
     
-    case system(system: System)
+//    case system(system: System)
     
     case valueType(type: SourceValueType) // Also used in NewStock
     case transitionType(type: TransitionType)
@@ -440,19 +440,19 @@ class EntityPinnedMessage: Message
     }
 }
 
-class SystemDetailDuplicatedMessage: Message
-{
-    // MARK: - Variables
-    
-    var system: System
-    
-    // MARK: - Initialization
-    
-    init(system: System)
-    {
-        self.system = system
-    }
-}
+//class SystemDetailDuplicatedMessage: Message
+//{
+//    // MARK: - Variables
+//    
+//    var system: System
+//    
+//    // MARK: - Initialization
+//    
+//    init(system: System)
+//    {
+//        self.system = system
+//    }
+//}
 
 class EntityInsertionMessage: Message
 {

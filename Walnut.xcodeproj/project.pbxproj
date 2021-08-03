@@ -113,7 +113,6 @@
 		038CF6D9267683EE00931595 /* Symbol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6D7267683EE00931595 /* Symbol+Extensions.swift */; };
 		038CF6DC267683FB00931595 /* Event+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6DA267683FB00931595 /* Event+Extensions.swift */; };
 		038CF6DF2676840300931595 /* Condition+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6DE2676840300931595 /* Condition+Extensions.swift */; };
-		038CF6E12676840E00931595 /* System+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E02676840E00931595 /* System+Extensions.swift */; };
 		038CF6EA2676865600931595 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CF6E92676865600931595 /* DetailCell.swift */; };
 		0393A887269B9B4E00D2BF81 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */; };
 		03A92FF026AB107100BB59F7 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A92FEF26AB107100BB59F7 /* Double+Extensions.swift */; };
@@ -328,7 +327,6 @@
 		038CF6D7267683EE00931595 /* Symbol+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Symbol+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6DA267683FB00931595 /* Event+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6DE2676840300931595 /* Condition+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Condition+Extensions.swift"; sourceTree = "<group>"; };
-		038CF6E02676840E00931595 /* System+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "System+Extensions.swift"; sourceTree = "<group>"; };
 		038CF6E92676865600931595 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		0393A886269B9B4E00D2BF81 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		03A92FEF26AB107100BB59F7 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
@@ -842,7 +840,6 @@
 				038CF6762676829E00931595 /* State+Extensions.swift */,
 				038CF6D6267683EE00931595 /* Stock+Extensions.swift */,
 				038CF6D7267683EE00931595 /* Symbol+Extensions.swift */,
-				038CF6E02676840E00931595 /* System+Extensions.swift */,
 				038CF6732676829E00931595 /* Task+Extensions.swift */,
 				03BF0BC3269F2AA400A866E5 /* Unit+Extensions.swift */,
 			);
@@ -1328,7 +1325,6 @@
 				031681B7267DA56700F493DA /* Flow+Extensions.swift in Sources */,
 				038CF69B2676829F00931595 /* Entity+Extensions.swift in Sources */,
 				03C857A726B212DE007FAFE4 /* LibraryController.swift in Sources */,
-				038CF6E12676840E00931595 /* System+Extensions.swift in Sources */,
 				038CF6BF267682C700931595 /* TimePeriod.swift in Sources */,
 				038CF6C6267682C700931595 /* ConditionType.swift in Sources */,
 				03FAACBA2698D95600CB7AB6 /* LinkSearchCriteria.swift in Sources */,
