@@ -16,12 +16,15 @@ final class PinnedItem: Hashable, Identifiable
     let text: String
     let image: UIImage
     
+    let entity: Pinnable
+    
     // MARK: - Initialization
     
-    init(text: String, image: UIImage)
+    init(text: String, image: UIImage, entity: Pinnable)
     {
         self.text = text
         self.image = image
+        self.entity = entity
     }
     
     // MARK: - Equatable

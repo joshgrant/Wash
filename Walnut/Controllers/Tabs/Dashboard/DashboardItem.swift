@@ -14,7 +14,6 @@ enum DashboardItem: Hashable
     case pinned(PinnedItem)
     case suggested(SuggestedItem)
     case forecast(ForecastItem)
-    case priority(PriorityItem)
 }
 
 extension DashboardItem: Identifiable
@@ -27,7 +26,6 @@ extension DashboardItem: Identifiable
         case .pinned(let item): return item.id
         case .suggested(let item): return item.id
         case .forecast(let item): return item.id
-        case .priority(let item): return item.id
         }
     }
 }

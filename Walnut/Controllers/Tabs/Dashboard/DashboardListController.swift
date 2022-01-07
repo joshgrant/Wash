@@ -11,6 +11,30 @@ protocol DashboardListFactory: Factory
 {
     func makeRefreshButton(target: DashboardListResponder) -> UIBarButtonItem
     func makeSpinnerButton() -> UIBarButtonItem
+    func makeRouter() -> DashboardListRouter
+}
+
+class DashboardListRouter
+{
+    var context: Context
+    var stream: Stream
+    
+    weak var delegate: RouterDelegate?
+    
+    init(context: Context, stream: Stream)
+    {
+        self.context = context
+        self.stream = stream
+    }
+    
+    // MARK: - Functions
+    
+    func routeToDetail(entity: Entity) {
+        let detail = entity.detailController(
+            context: context,
+            stream: stream)
+        delegate?.navigationController?.pushViewController(detail, animated: true)
+    }
 }
 
 class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardItem>
@@ -28,7 +52,6 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
     var pinnedRegistration = PinnedItem.registration
     var suggestedRegistration = SuggestedItem.registration
     var forecastRegistration = ForecastItem.registration
-    var priorityRegistration = PriorityItem.registration
     
     // MARK: - Initialization
     
@@ -65,11 +88,6 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
                     using: self.forecastRegistration,
                     for: indexPath,
                     item: item)
-            case .priority(let item):
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: self.priorityRegistration,
-                    for: indexPath,
-                    item: item)
             }
         }
     }
@@ -79,8 +97,7 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
         [
             .pinned: makePinnedItems(),
             .suggested: makeSuggestedItems(),
-            .forecast: makeForecastItems(),
-//            .priority: makePriorityItems()
+            .forecast: makeForecastItems()
         ]
     }
     
@@ -95,7 +112,7 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
             items = result.compactMap { item in
                 guard let pin = item as? Pinnable else { return nil }
                 guard let type = EntityType.type(from: pin) else { return nil }
-                let pinnedItem = PinnedItem(text: pin.title, image: type.icon.image)
+                let pinnedItem = PinnedItem(text: pin.title, image: type.icon.image, entity: pin)
                 return DashboardItem.pinned(pinnedItem)
             }
         }
@@ -191,22 +208,6 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
         
         return items
     }
-    
-//    private func makePriorityItems() -> [DashboardItem]
-//    {
-//        var items: [DashboardItem] = []
-//
-//        items = System.prioritySystems(context: context).map { system in
-//            let ideal = String(format: "%i%", Int(system.ideal))
-//            let item = PriorityItem(text: system.title, secondaryText: ideal)
-//            return .priority(item)
-//        }
-//
-//        let headerItem = DashboardItem.header(.init(text: .priority, image: Icon.priority.image))
-//        items.insert(headerItem, at: 0)
-//
-//        return items
-//    }
 }
 
 extension DashboardListBuilder: ViewControllerTabBarDelegate
@@ -241,6 +242,11 @@ extension DashboardListBuilder: DashboardListFactory
         spinner.startAnimating()
         return UIBarButtonItem(customView: spinner)
     }
+    
+    func makeRouter() -> DashboardListRouter
+    {
+        .init(context: context, stream: stream)
+    }
 }
 
 @objc protocol DashboardListResponder
@@ -252,6 +258,8 @@ class DashboardListController: ListController<DashboardSection, DashboardItem, D
 {
     // MARK: - Variables
     
+    var router: DashboardListRouter
+    
     var id = UUID()
     
     lazy var refreshButton = builder.makeRefreshButton(target: self)
@@ -261,6 +269,7 @@ class DashboardListController: ListController<DashboardSection, DashboardItem, D
     
     override init(builder: DashboardListBuilder)
     {
+        self.router = builder.makeRouter()
         super.init(builder: builder)
         self.builder.delegate = self
         
@@ -268,8 +277,42 @@ class DashboardListController: ListController<DashboardSection, DashboardItem, D
         tabBarItem = builder.makeTabBarItem()
         
         navigationItem.rightBarButtonItem = refreshButton
+        
+        router.delegate = self
+    }
+    
+    // MARK: - Collection View
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        // If it's in the pinned section, route to that pinned item
+        let item = dataSource.itemIdentifier(for: indexPath)
+        switch item {
+        case .header(let header):
+            print(header)
+            // Route to the header item
+        case .pinned(let pinned):
+            print(pinned)
+            // Route to the pinned item
+            let item = pinned.entity
+            router.routeToDetail(entity: item)
+        case .forecast(let forecast):
+            print(forecast)
+            // Route to the forecast item
+        case .suggested(let suggested):
+            print(suggested)
+            // Route to the suggested item
+            
+        case .none:
+            assertionFailure("The item was nil.")
+        }
+        // If in the suggested section, route to that suggested item
+        // If in the forecast section, route to the forecast
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
     }
 }
+
+extension DashboardListController: RouterDelegate {}
 
 extension DashboardListController: SuggestedItemDelegate
 {
@@ -304,103 +347,3 @@ extension DashboardListController: DashboardListResponder
         }
     }
 }
-
-/*
- 
- // MARK: Flows
- 
- func makeFlowsSection() -> TableViewSection
- {
- TableViewSection(
- header: .flows,
- models: makeFlowModels())
- }
- 
- private func makeFlowModels() -> [TableViewCellModel]
- {
- let request = makeDashboardSuggestedFlowsFetchRequest()
- do
- {
- let result = try context.fetch(request)
- return result.map { flow in
- TextCellModel(
- selectionIdentifier: .flow(flow: flow),
- title: flow.title,
- disclosureIndicator: true)
- }
- }
- catch
- {
- assertionFailure(error.localizedDescription)
- return []
- }
- }
- 
- // MARK: Forecast
- 
- func makeForecastSection() -> TableViewSection
- {
- TableViewSection(
- header: .forecast,
- models: makeForecastModels())
- }
- 
- private func makeForecastModels() -> [TableViewCellModel]
- {
- let request = makeDateSourcesFetchRequest()
- do
- {
- let result = try context.fetch(request)
- let events = Event.eventsFromSources(result)
- return events.map { event in
- DetailCellModel(
- selectionIdentifier: .event(event: event),
- title: event.title,
- detail: "FIX ME",
- disclosure: true)
- }
- }
- catch
- {
- assertionFailure(error.localizedDescription)
- return []
- }
- }
- 
- // MARK: Priority
- 
- func makePrioritySection() -> TableViewSection
- {
- TableViewSection(
- header: .priority,
- models: makePriorityModels())
- }
- 
- private func makePriorityModels() -> [TableViewCellModel]
- {
- // TODO: Fetch unideal values
- // TODO: Sort on the ideal value, ascending
- 
- let request: NSFetchRequest<System> = System.fetchRequest()
- request.predicate = NSPredicate(value: true)
- request.sortDescriptors = [NSSortDescriptor(key: "ideal", ascending: true)]
- 
- do
- {
- let result = try context.fetch(request)
- return result.map { system in
- DetailCellModel(
- selectionIdentifier: .system(system: system),
- title: system.title,
- detail: "FIXME", // TODO: Should be the ideal value
- disclosure: true)
- }
- }
- catch
- {
- assertionFailure(error.localizedDescription)
- return []
- }
- }
-
- */
