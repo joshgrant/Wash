@@ -10,5 +10,5 @@ import UIKit
 protocol Registered
 {
     associatedtype Cell: UICollectionViewCell
-    var registration: UICollectionView.CellRegistration<Cell, Self> { get }
+    static var registration: UICollectionView.CellRegistration<Cell, Self> { get }
 }

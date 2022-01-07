@@ -41,7 +41,7 @@ final class ForecastItem: Hashable, Identifiable
 
 extension ForecastItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<UICollectionViewListCell, ForecastItem>
+    static var registration: UICollectionView.CellRegistration<UICollectionViewListCell, ForecastItem> =
     {
         .init { cell, indexPath, item in
             var configuration = UIListContentConfiguration.subtitleCell()
@@ -51,5 +51,5 @@ extension ForecastItem: Registered
             cell.contentConfiguration = configuration
             cell.accessories = [.disclosureIndicator()]
         }
-    }
+    }()
 }

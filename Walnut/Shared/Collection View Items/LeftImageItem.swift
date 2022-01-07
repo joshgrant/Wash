@@ -37,16 +37,16 @@ struct LeftImageItem: Hashable, Identifiable
 
 extension LeftImageItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<UICollectionViewListCell, LeftImageItem>
+    static var registration: UICollectionView.CellRegistration<UICollectionViewListCell, LeftImageItem> =
     {
         .init { cell, indexPath, item in
             var configuration = UIListContentConfiguration.valueCell()
             configuration.text = item.text
-            configuration.secondaryText = secondaryText
+            configuration.secondaryText = item.secondaryText
             configuration.image = item.image
             configuration.imageProperties.tintColor = .systemGray
             cell.contentConfiguration = configuration
             cell.accessories = [.disclosureIndicator()]
         }
-    }
+    }()
 }

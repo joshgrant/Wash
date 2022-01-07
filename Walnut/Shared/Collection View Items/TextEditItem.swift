@@ -76,12 +76,12 @@ struct TextEditItem: Hashable, Identifiable
 
 extension TextEditItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<TextEditCell, TextEditItem>
+    static var registration: UICollectionView.CellRegistration<TextEditCell, TextEditItem> =
     {
         .init { cell, indexPath, item in
             cell.configure(with: item)
         }
-    }
+    }()
 }
 
 /*

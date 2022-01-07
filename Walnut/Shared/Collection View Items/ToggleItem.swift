@@ -40,26 +40,26 @@ struct ToggleItem: Hashable, Identifiable
 
 extension ToggleItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<UICollectionViewListCell, ToggleItem>
+    static var registration: UICollectionView.CellRegistration<UICollectionViewListCell, ToggleItem> =
     {
         .init { cell, indexPath, item in
             var configuration = UIListContentConfiguration.cell()
             configuration.text = item.text
             cell.contentConfiguration = configuration
             cell.accessories = [
-                makeToggleAccessory(item: item)
+                item.makeToggleAccessory()
             ]
         }
-    }
+    }()
     
-    private func makeToggleAccessory(item: ToggleItem) -> UICellAccessory
+    private func makeToggleAccessory() -> UICellAccessory
     {
         let toggle = UISwitch()
         toggle.addTarget(
-            item.delegate,
-            action: #selector(item.delegate?.toggleDidChangeValue(_:)),
+            delegate,
+            action: #selector(delegate?.toggleDidChangeValue(_:)),
             for: .valueChanged)
-        toggle.isOn = item.isOn
+        toggle.isOn = isOn
         
         let configuration = UICellAccessory.CustomViewConfiguration(customView: toggle, placement: .trailing(displayed: .always, at: { _ in 0 }))
         return .customView(configuration: configuration)

@@ -37,7 +37,7 @@ struct HeaderItem: Hashable, Identifiable
 
 extension HeaderItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<UICollectionViewListCell, HeaderItem>
+    static var registration: UICollectionView.CellRegistration<UICollectionViewListCell, HeaderItem> =
     {
         .init { cell, indexPath, item in
             var configuration = UIListContentConfiguration.groupedHeader()
@@ -46,16 +46,16 @@ extension HeaderItem: Registered
             cell.backgroundConfiguration = UIBackgroundConfiguration.listGroupedHeaderFooter()
             
             let accessories: [UICellAccessory?] = [
-                makeImageAccessory(),
-                makeLinkAccessory(),
-                makeAddAccessory(),
-                makeSpacerAccesory(),
-                makeOutlineAccessory()
+                item.makeImageAccessory(),
+                item.makeLinkAccessory(),
+                item.makeAddAccessory(),
+                item.makeSpacerAccesory(),
+                item.makeOutlineAccessory()
             ]
             
             cell.accessories = accessories.compactMap { $0 }
         }
-    }
+    }()
     
     private func makeSpacerAccesory() -> UICellAccessory
     {

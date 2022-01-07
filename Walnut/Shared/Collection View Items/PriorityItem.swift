@@ -41,7 +41,7 @@ final class PriorityItem: Hashable, Identifiable
 
 extension PriorityItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<UICollectionViewListCell, PriorityItem>
+    static var registration: UICollectionView.CellRegistration<UICollectionViewListCell, PriorityItem> =
     {
         .init { cell, indexPath, item in
             var configuration = UIListContentConfiguration.valueCell()
@@ -50,5 +50,5 @@ extension PriorityItem: Registered
             cell.contentConfiguration = configuration
             cell.accessories = [.disclosureIndicator()]
         }
-    }
+    }()
 }

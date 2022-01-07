@@ -83,27 +83,27 @@ class UnitDetailBuilder: ListControllerBuilder<UnitDetailSection, UnitDetailItem
             {
             case .header(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: type(of: item).registration,
                     for: indexPath,
                     item: item)
             case .name(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: type(of: item).registration,
                     for: indexPath,
                     item: item)
             case .abbreviation(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: type(of: item).registration,
                     for: indexPath,
                     item: item)
             case .baseUnit(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: type(of: item).registration,
                     for: indexPath,
                     item: item)
             case .relativeTo(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: type(of: item).registration,
                     for: indexPath,
                     item: item)
             }

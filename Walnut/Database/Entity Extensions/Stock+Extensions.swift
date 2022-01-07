@@ -49,7 +49,7 @@ extension Stock
 //            maximum.valueType = .number
 //            self.maximum = maximum
 //        }
-    }
+//    }
 }
 
 extension Stock

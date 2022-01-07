@@ -22,6 +22,12 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
     
     weak var delegate: SuggestedItemDelegate?
     
+    var headerRegistration = HeaderItem.registration
+    var pinnedRegistration = PinnedItem.registration
+    var suggestedRegistration = SuggestedItem.registration
+    var forecastRegistration = ForecastItem.registration
+    var priorityRegistration = PriorityItem.registration
+    
     // MARK: - Initialization
     
     init(context: Context, stream: Stream)
@@ -39,27 +45,27 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
             {
             case .header(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: self.headerRegistration,
                     for: indexPath,
                     item: item)
             case .pinned(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: self.pinnedRegistration,
                     for: indexPath,
                     item: item)
             case .suggested(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: self.suggestedRegistration,
                     for: indexPath,
                     item: item)
             case .forecast(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: self.forecastRegistration,
                     for: indexPath,
                     item: item)
             case .priority(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: self.priorityRegistration,
                     for: indexPath,
                     item: item)
             }

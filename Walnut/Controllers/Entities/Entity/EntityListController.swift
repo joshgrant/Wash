@@ -257,9 +257,15 @@ class EntityListBuilder: ListControllerBuilder<EntityListSection, EntityListItem
             switch item
             {
             case .header(let item):
-                return collectionView.dequeueConfiguredReusableCell(using: item.registration, for: indexPath, item: item)
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: type(of: item).registration,
+                    for: indexPath,
+                    item: item)
             case .item(let item):
-                return collectionView.dequeueConfiguredReusableCell(using: item.registration, for: indexPath, item: item)
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: type(of: item).registration,
+                    for: indexPath,
+                    item: item)
             }
         }
     }

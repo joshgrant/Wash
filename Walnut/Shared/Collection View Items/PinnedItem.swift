@@ -41,18 +41,18 @@ final class PinnedItem: Hashable, Identifiable
 
 extension PinnedItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<UICollectionViewListCell, PinnedItem>
+    static var registration: UICollectionView.CellRegistration<UICollectionViewListCell, PinnedItem> =
     {
-        .init { [unowned self] cell, indexPath, item in
+        .init { cell, indexPath, item in
             var configuration = UIListContentConfiguration.cell()
             configuration.text = item.text
             cell.contentConfiguration = configuration
             cell.accessories = [
-                self.makeImageAccessory(),
+                item.makeImageAccessory(),
                 .disclosureIndicator()
             ]
         }
-    }
+    }()
     
     private func makeImageAccessory() -> UICellAccessory
     {

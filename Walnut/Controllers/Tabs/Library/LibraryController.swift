@@ -117,12 +117,12 @@ class LibraryBuilder: ListControllerBuilder<LibrarySection, LibraryItem>, Librar
             {
             case .header(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: type(of: item).registration,
                     for: indexPath,
                     item: item)
             case .item(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: item.registration,
+                    using: type(of: item).registration,
                     for: indexPath,
                     item: item)
             }

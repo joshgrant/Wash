@@ -51,9 +51,9 @@ final class SuggestedItem: Hashable, Identifiable
 
 extension SuggestedItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<UICollectionViewListCell, SuggestedItem>
+    static var registration: UICollectionView.CellRegistration<UICollectionViewListCell, SuggestedItem> =
     {
-        .init { [unowned self] cell, indexPath, item in
+        .init { cell, indexPath, item in
             print("Checked: \(item.checked)")
             var configuration = UIListContentConfiguration.subtitleCell()
             configuration.text = item.text
@@ -61,17 +61,18 @@ extension SuggestedItem: Registered
             configuration.secondaryTextProperties.color = .secondaryLabel
             cell.contentConfiguration = configuration
             cell.accessories = [
-                self.makeCheckboxAccessory(item: item),
-                .disclosureIndicator()]
+                item.makeCheckboxAccessory(),
+                .disclosureIndicator()
+            ]
         }
-    }
+    }()
     
-    private func makeCheckboxAccessory(item: SuggestedItem) -> UICellAccessory
+    private func makeCheckboxAccessory() -> UICellAccessory
     {
         let button = UIButton(type: .custom)
         
         // TODO: Use icons
-        if item.checked
+        if checked
         {
             button.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
         }

@@ -32,7 +32,7 @@ struct DetailItem: Hashable, Identifiable
 
 extension DetailItem: Registered
 {
-    var registration: UICollectionView.CellRegistration<UICollectionViewListCell, DetailItem>
+    static var registration: UICollectionView.CellRegistration<UICollectionViewListCell, DetailItem> =
     {
         .init { cell, indexPath, item in
             var configuration = UIListContentConfiguration.cell()
@@ -40,5 +40,5 @@ extension DetailItem: Registered
             cell.contentConfiguration = configuration
             cell.accessories = [.disclosureIndicator()]
         }
-    }
+    }()
 }
