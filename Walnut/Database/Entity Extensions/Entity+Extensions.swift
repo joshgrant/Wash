@@ -120,12 +120,6 @@ extension Entity
     {
         switch self
         {
-//        case let s as System:
-//            let container = SystemDetailContainer(
-//                system: s,
-//                context: context,
-//                stream: stream)
-//            return container.makeController()
         case let s as Stock:
             let factory = StockDetailContainer(
                 stock: s,
@@ -139,8 +133,11 @@ extension Entity
                 stream: stream)
             return container.makeController()
         case let e as Event:
-            print("Need detail controller for: \(e)")
-            return UIViewController()
+            let builder = EventDetailBuilder(
+                event: e,
+                context: context,
+                stream: stream)
+            return builder.makeController()
         case let n as Note:
             print("Need detail controller for: \(n)")
             return UIViewController()

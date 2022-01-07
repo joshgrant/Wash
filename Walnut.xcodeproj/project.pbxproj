@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0301A29A2788091500CCD891 /* EventDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0301A2992788091500CCD891 /* EventDetailController.swift */; };
 		030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2172267F7C130038C095 /* SystemDetailController.swift */; };
 		030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */; };
 		030B2186267FB2B50038C095 /* IdealInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2185267FB2B50038C095 /* IdealInfoCell.swift */; };
@@ -219,6 +220,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0301A2992788091500CCD891 /* EventDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailController.swift; sourceTree = "<group>"; };
 		030B2172267F7C130038C095 /* SystemDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailController.swift; sourceTree = "<group>"; };
 		030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B2185267FB2B50038C095 /* IdealInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealInfoCell.swift; sourceTree = "<group>"; };
@@ -445,6 +447,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0301A2982788087500CCD891 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				0301A2992788091500CCD891 /* EventDetailController.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
 		030B2175267F7D5E0038C095 /* Section Header */ = {
 			isa = PBXGroup;
 			children = (
@@ -901,6 +911,7 @@
 		038CF6F426768F4C00931595 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				0301A2982788087500CCD891 /* Event */,
 				030B2199267FE2C70038C095 /* Entity */,
 				0370FED6268A1824001E099B /* Flow */,
 				03555B8D268842F1006E9EA1 /* Stock */,
@@ -1348,6 +1359,7 @@
 				03555B452686A487006E9EA1 /* CollectionView.swift in Sources */,
 				03555B862687D77A006E9EA1 /* SystemDetailRouter.swift in Sources */,
 				038CF6C0267682C700931595 /* TextSize.swift in Sources */,
+				0301A29A2788091500CCD891 /* EventDetailController.swift in Sources */,
 				030BC433269F9BEC00442CE9 /* NewStockStateController.swift in Sources */,
 				030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */,
 				03555B472686A487006E9EA1 /* Observer.swift in Sources */,
