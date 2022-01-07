@@ -22,6 +22,8 @@ class DashboardListBuilder: ListControllerBuilder<DashboardSection, DashboardIte
     
     weak var delegate: SuggestedItemDelegate?
     
+    /// The reason this is necessary is to call the `registration` function so that it's created BEFORE the
+    /// cell provider. Otherwise, we'll get an error that the registration is being created every time (not true)
     var headerRegistration = HeaderItem.registration
     var pinnedRegistration = PinnedItem.registration
     var suggestedRegistration = SuggestedItem.registration

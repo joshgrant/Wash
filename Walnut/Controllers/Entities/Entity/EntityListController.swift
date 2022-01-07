@@ -167,6 +167,9 @@ class EntityListBuilder: ListControllerBuilder<EntityListSection, EntityListItem
     var context: Context
     var stream: Stream
     
+    var headerRegistration = HeaderItem.registration
+    var itemRegistration = DetailItem.registration
+    
     weak var swipeActionsDelegate: EntityListSwipeActionsDelegate?
     
     // MARK: - Initialization
@@ -258,12 +261,12 @@ class EntityListBuilder: ListControllerBuilder<EntityListSection, EntityListItem
             {
             case .header(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: type(of: item).registration,
+                    using: self.headerRegistration,
                     for: indexPath,
                     item: item)
             case .item(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: type(of: item).registration,
+                    using: self.itemRegistration,
                     for: indexPath,
                     item: item)
             }

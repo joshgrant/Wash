@@ -61,6 +61,9 @@ class LibraryBuilder: ListControllerBuilder<LibrarySection, LibraryItem>, Librar
     var context: Context
     var stream: Stream
     
+    var headerRegistration = HeaderItem.registration
+    var itemRegistration = LeftImageItem.registration
+    
     // MARK: - Initialization
     
     init(context: Context, stream: Stream)
@@ -117,12 +120,12 @@ class LibraryBuilder: ListControllerBuilder<LibrarySection, LibraryItem>, Librar
             {
             case .header(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: type(of: item).registration,
+                    using: self.headerRegistration,
                     for: indexPath,
                     item: item)
             case .item(let item):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: type(of: item).registration,
+                    using: self.itemRegistration,
                     for: indexPath,
                     item: item)
             }
