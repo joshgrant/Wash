@@ -22,15 +22,18 @@ final class SuggestedItem: Hashable, Identifiable
     let secondaryText: String
     var checked: Bool
     
+    let entity: Entity
+    
     weak var delegate: SuggestedItemDelegate?
     
     // MARK: - Initialization
     
-    init(text: String, secondaryText: String, checked: Bool, delegate: SuggestedItemDelegate?)
+    init(text: String, secondaryText: String, checked: Bool, entity: Entity, delegate: SuggestedItemDelegate?)
     {
         self.text = text
         self.secondaryText = secondaryText
         self.checked = checked
+        self.entity = entity
         self.delegate = delegate
     }
     

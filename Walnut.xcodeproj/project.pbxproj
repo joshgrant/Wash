@@ -29,6 +29,10 @@
 		033FE6B9266CE2AB00BCF5AA /* WalnutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE6B8266CE2AB00BCF5AA /* WalnutUITests.swift */; };
 		033FE6C7266CE31200BCF5AA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE6C6266CE31200BCF5AA /* main.swift */; };
 		033FE6C9266CE38800BCF5AA /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FE6C8266CE38800BCF5AA /* Application.swift */; };
+		034C0D802788039500CBFF13 /* DashboardListFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C0D7F2788039500CBFF13 /* DashboardListFactory.swift */; };
+		034C0D82278803A600CBFF13 /* DashboardListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C0D81278803A600CBFF13 /* DashboardListRouter.swift */; };
+		034C0D84278803BC00CBFF13 /* DashboardListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C0D83278803BC00CBFF13 /* DashboardListBuilder.swift */; };
+		034C0D86278803CE00CBFF13 /* DashboardListResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034C0D85278803CE00CBFF13 /* DashboardListResponder.swift */; };
 		03555AAE2684096D006E9EA1 /* WindowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AAD2684096D006E9EA1 /* WindowState.swift */; };
 		03555AFF26869DE5006E9EA1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555AFE26869DE5006E9EA1 /* Router.swift */; };
 		03555B0126869DF1006E9EA1 /* Unique.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B0026869DF1006E9EA1 /* Unique.swift */; };
@@ -243,6 +247,10 @@
 		033FE6BA266CE2AB00BCF5AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		033FE6C6266CE31200BCF5AA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		033FE6C8266CE38800BCF5AA /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		034C0D7F2788039500CBFF13 /* DashboardListFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardListFactory.swift; sourceTree = "<group>"; };
+		034C0D81278803A600CBFF13 /* DashboardListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardListRouter.swift; sourceTree = "<group>"; };
+		034C0D83278803BC00CBFF13 /* DashboardListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardListBuilder.swift; sourceTree = "<group>"; };
+		034C0D85278803CE00CBFF13 /* DashboardListResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardListResponder.swift; sourceTree = "<group>"; };
 		03555AAD2684096D006E9EA1 /* WindowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowState.swift; sourceTree = "<group>"; };
 		03555AF926869CDD006E9EA1 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 		03555AFA26869CDD006E9EA1 /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
@@ -738,6 +746,10 @@
 			children = (
 				03CA1FC226A7994E00A7B10E /* DashboardItem.swift */,
 				03CA1FB826A7776A00A7B10E /* DashboardListController.swift */,
+				034C0D85278803CE00CBFF13 /* DashboardListResponder.swift */,
+				034C0D83278803BC00CBFF13 /* DashboardListBuilder.swift */,
+				034C0D81278803A600CBFF13 /* DashboardListRouter.swift */,
+				034C0D7F2788039500CBFF13 /* DashboardListFactory.swift */,
 				03CA1FCA26A7BDBE00A7B10E /* DashboardSection.swift */,
 				03CA1FC826A7BDB500A7B10E /* ListItem.swift */,
 				03CA1FCC26A87F8100A7B10E /* ListSectionHeader.swift */,
@@ -1298,6 +1310,7 @@
 				03CA1FD826A898BD00A7B10E /* NewSystemTableView.swift in Sources */,
 				03BF0BD7269F455100A866E5 /* NewUnitModel.swift in Sources */,
 				03555B652686A487006E9EA1 /* NSSet+Extensions.swift in Sources */,
+				034C0D84278803BC00CBFF13 /* DashboardListBuilder.swift in Sources */,
 				038CF6D8267683EE00931595 /* Stock+Extensions.swift in Sources */,
 				03555B8F26884308006E9EA1 /* StockDetailController.swift in Sources */,
 				03BF0BE8269F649900A866E5 /* CurrentIdealNumericTableView.swift in Sources */,
@@ -1353,6 +1366,7 @@
 				038CF6C9267682C700931595 /* IdealType.swift in Sources */,
 				038CF6CF267682C700931595 /* FallbackProtocol.swift in Sources */,
 				03555B0126869DF1006E9EA1 /* Unique.swift in Sources */,
+				034C0D802788039500CBFF13 /* DashboardListFactory.swift in Sources */,
 				03FAACAD2698BF6100CB7AB6 /* DateFormatter+Extensions.swift in Sources */,
 				03CA1FD626A8929C00A7B10E /* NewSystemModel.swift in Sources */,
 				038CF6EA2676865600931595 /* DetailCell.swift in Sources */,
@@ -1392,6 +1406,7 @@
 				03FAACAB2698BF1200CB7AB6 /* Date+Extensions.swift in Sources */,
 				03555B4A2686A487006E9EA1 /* DatabaseError.swift in Sources */,
 				03BF0BBC269D269B00A866E5 /* ContextPopulator.swift in Sources */,
+				034C0D86278803CE00CBFF13 /* DashboardListResponder.swift in Sources */,
 				03CA1FB926A7776A00A7B10E /* DashboardListController.swift in Sources */,
 				03BF0BE6269F648E00A866E5 /* CurrentIdealStateTableView.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
@@ -1419,6 +1434,7 @@
 				03FAACC42699ECCB00CB7AB6 /* TableViewSection.swift in Sources */,
 				03555B6F2686A487006E9EA1 /* ViewController.swift in Sources */,
 				03C8579C26B1DB3F007FAFE4 /* TextEditItem.swift in Sources */,
+				034C0D82278803A600CBFF13 /* DashboardListRouter.swift in Sources */,
 				03FAACE8269B96E100CB7AB6 /* SystemDetailTableView.swift in Sources */,
 				03BF0BC8269F2E3300A866E5 /* NewUnitController.swift in Sources */,
 				03555B572686A487006E9EA1 /* TableViewCell.swift in Sources */,

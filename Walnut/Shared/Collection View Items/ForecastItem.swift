@@ -16,12 +16,15 @@ final class ForecastItem: Hashable, Identifiable
     let text: String
     let secondaryText: String
     
+    var event: Event
+    
     // MARK: - Initialization
     
-    init(text: String, secondaryText: String)
+    init(text: String, secondaryText: String, event: Event)
     {
         self.text = text
         self.secondaryText = secondaryText
+        self.event = event
     }
     
     // MARK: - Equatable
