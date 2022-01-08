@@ -11,12 +11,26 @@ public typealias NamedEntity = Entity & Named
 
 public protocol Named: Entity
 {
-    var symbolName: Symbol? { get set }
-    var unwrappedName: String? { get set }
+    var unwrappedName: String? { get }
     var managedObjectContext: Context? { get }
 }
 
 public extension Named
+{
+    var title: String
+    {
+        get {
+            unwrappedName ?? ""
+        }
+    }
+}
+
+public protocol SymbolNamed: Named
+{
+    var symbolName: Symbol? { get set }
+}
+
+public extension SymbolNamed
 {
     var unwrappedName: String? {
         get {
@@ -33,16 +47,6 @@ public extension Named
                 
                 symbolName = Symbol(context: context, name: newValue)
             }
-        }
-    }
-    
-    var title: String
-    {
-        get {
-            unwrappedName ?? ""
-        }
-        set {
-            unwrappedName = newValue
         }
     }
 }

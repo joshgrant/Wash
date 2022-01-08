@@ -7,4 +7,4 @@
 
 import Foundation
 
-extension Conversion: Named {}
+extension Conversion: SymbolNamed {}

@@ -603,39 +603,4 @@ class ContextPopulator
         
         return task
     }
-    
-    // MARK: - Systems
-    
-//    
-//    @discardableResult private static func makeRandomSystem(context: Context) -> System
-//    {
-//        let system = System(context: context)
-//        system.symbolName = makeRandomSymbol(context: context)
-//        
-//        for _ in 0 ..< .random(in: 0 ... 5)
-//        {
-//            let stock = makeRandomStock(context: context)
-//            system.addToStocks(stock)
-//        }
-//        
-//        for _ in 0 ..< .random(in: 0 ... 3)
-//        {
-//            let flow = makeRandomFlow(context: context)
-//            system.addToFlows(flow)
-//        }
-//        
-//        for _ in 0 ..< .random(in: 0 ... 8)
-//        {
-//            let note = makeRandomNote(context: context)
-//            system.addToNotes(note)
-//        }
-//        
-//        for _ in 0 ..< .random(in: 0 ... 5)
-//        {
-//            let task = makeRandomTask(context: context)
-//            system.addToTasks(task)
-//        }
-//        
-//        return system
-//    }
 }

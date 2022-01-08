@@ -153,7 +153,7 @@ extension StockDetailController: Subscriber
             tableView.shouldReload = true
         case .title:
             title = message.title
-            container.stock.title = message.title
+            container.stock.unwrappedName = message.title
         default:
             break
         }

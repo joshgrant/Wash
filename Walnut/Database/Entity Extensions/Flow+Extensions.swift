@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension Flow: Named {}
+extension Flow: SymbolNamed {}
 extension Flow: Pinnable {}
 
 // TODO: Flow "amounts" can be dynamic or static - i.e for some "user-completed" flows

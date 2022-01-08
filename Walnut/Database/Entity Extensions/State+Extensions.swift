@@ -7,4 +7,4 @@
 
 import Foundation
 
-extension State: Named {}
+extension State: SymbolNamed {}

@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Task: Named {}
+extension Task: SymbolNamed {}
 
 extension Task
 {

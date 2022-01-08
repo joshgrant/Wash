@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension Event: Named {}
+extension Event: SymbolNamed {}
 extension Event: Pinnable {}
 
 public extension Event

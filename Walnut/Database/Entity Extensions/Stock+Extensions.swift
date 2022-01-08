@@ -7,7 +7,7 @@
 
 import CoreData
 
-extension Stock: Named {}
+extension Stock: SymbolNamed {}
 extension Stock: Pinnable {}
 
 extension Stock

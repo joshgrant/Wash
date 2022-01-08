@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension Symbol: Named
+extension Symbol: SymbolNamed
 {
     public var symbolName: Symbol?
     {

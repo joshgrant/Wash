@@ -169,7 +169,7 @@ extension FlowDetailController: Subscriber
         if case .flow(let f) = message.selectionIdentifier, f == container.flow
         {
             title = message.title
-            container.flow.title = message.title
+            container.flow.unwrappedName = message.title
             container.flow.managedObjectContext?.quickSave()
         }
     }

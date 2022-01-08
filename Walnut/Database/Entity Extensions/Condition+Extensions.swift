@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Condition: Named {}
+extension Condition: SymbolNamed {}
 
 public extension Condition
 {

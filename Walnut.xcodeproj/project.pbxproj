@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0301A29A2788091500CCD891 /* EventDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0301A2992788091500CCD891 /* EventDetailController.swift */; };
+		0301A29C278A033900CCD891 /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0301A29B278A033900CCD891 /* Note+Extensions.swift */; };
 		030B2173267F7C130038C095 /* SystemDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2172267F7C130038C095 /* SystemDetailController.swift */; };
 		030B217B267F7ECB0038C095 /* StocksHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */; };
 		030B2186267FB2B50038C095 /* IdealInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030B2185267FB2B50038C095 /* IdealInfoCell.swift */; };
@@ -221,6 +222,7 @@
 
 /* Begin PBXFileReference section */
 		0301A2992788091500CCD891 /* EventDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailController.swift; sourceTree = "<group>"; };
+		0301A29B278A033900CCD891 /* Note+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
 		030B2172267F7C130038C095 /* SystemDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailController.swift; sourceTree = "<group>"; };
 		030B217A267F7ECB0038C095 /* StocksHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksHeaderViewModel.swift; sourceTree = "<group>"; };
 		030B2185267FB2B50038C095 /* IdealInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealInfoCell.swift; sourceTree = "<group>"; };
@@ -864,6 +866,7 @@
 				038CF6D7267683EE00931595 /* Symbol+Extensions.swift */,
 				038CF6732676829E00931595 /* Task+Extensions.swift */,
 				03BF0BC3269F2AA400A866E5 /* Unit+Extensions.swift */,
+				0301A29B278A033900CCD891 /* Note+Extensions.swift */,
 			);
 			path = "Entity Extensions";
 			sourceTree = "<group>";
@@ -1465,6 +1468,7 @@
 				033FE6C7266CE31200BCF5AA /* main.swift in Sources */,
 				03CA1FEB26A9F38100A7B10E /* ListController.swift in Sources */,
 				033FE699266CE2AA00BCF5AA /* SceneDelegate.swift in Sources */,
+				0301A29C278A033900CCD891 /* Note+Extensions.swift in Sources */,
 				038CF6D0267682C700931595 /* Searchable.swift in Sources */,
 				03555AAE2684096D006E9EA1 /* WindowState.swift in Sources */,
 				03555B6C2686A487006E9EA1 /* SpacerView.swift in Sources */,

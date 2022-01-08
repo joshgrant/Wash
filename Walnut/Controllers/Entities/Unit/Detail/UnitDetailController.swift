@@ -262,7 +262,7 @@ extension UnitDetailController: UITextFieldDelegate
         switch type
         {
         case .title:
-            builder.unit.title = textField.text ?? builder.unit.title // Save the title
+            builder.unit.unwrappedName = textField.text ?? builder.unit.title // Save the title
             title = textField.text // Update the controller title
         case .abbreviation:
             builder.unit.abbreviation = textField.text ?? builder.unit.abbreviation // Save the abbreviation
