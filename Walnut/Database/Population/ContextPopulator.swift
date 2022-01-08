@@ -494,7 +494,7 @@ class ContextPopulator
         let note = Note(context: context)
         
         // Add blocks
-        for _ in 0 ..< .random(in: 0 ... 10)
+        for _ in 1 ..< .random(in: 0 ... 10)
         {
             note.addToBlocks(makeRandomBlock(context: context))
         }
