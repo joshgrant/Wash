@@ -132,18 +132,27 @@ extension Entity
                 context: context,
                 stream: stream)
             return container.makeController()
+        case let t as Task:
+            print("Need detail controller for: \(t)")
+            return UIViewController()
         case let e as Event:
             let builder = EventDetailBuilder(
                 event: e,
                 context: context,
                 stream: stream)
             return builder.makeController()
-        case let n as Note:
-            print("Need detail controller for: \(n)")
+        case let c as Conversion:
+            print("Need detail controller for: \(c)")
+            return UIViewController()
+        case let c as Condition:
+            print("Need detail controller for: \(c)")
             return UIViewController()
         case let s as Symbol:
             let container = SymbolControllerContainer(symbol: s, stream: stream)
             return container.makeController()
+        case let n as Note:
+            print("Need detail controller for: \(n)")
+            return UIViewController()
         case let u as Unit:
             let builder = UnitDetailBuilder(
                 unit: u,
