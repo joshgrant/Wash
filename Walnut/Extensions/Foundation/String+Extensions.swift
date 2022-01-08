@@ -65,4 +65,6 @@ public extension String
     static let goal = "Goal".localized
     
     static let suggested = "Suggested".localized
+    
+    static let conditions = "Conditions".localized
 }

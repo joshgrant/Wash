@@ -90,6 +90,13 @@ class EventDetailBuilder: ListControllerBuilder<EventDetailSection, EventDetailI
     var context: Context
     var stream: Stream
     
+    /// The reason this is necessary is to call the `registration` function so that it's created BEFORE the
+    /// cell provider. Otherwise, we'll get an error that the registration is being created every time (not true)
+    var headerRegistration = HeaderItem.registration
+    var textEditRegistration = TextEditItem.registration
+    var toggleRegistration = ToggleItem.registration
+    var detailRegistration = DetailItem.registration
+    
     // MARK: - Initialization
     
     init(event: Event, context: Context, stream: Stream)
@@ -107,20 +114,84 @@ class EventDetailBuilder: ListControllerBuilder<EventDetailSection, EventDetailI
             switch item
             {
             case .header(let item):
-                fatalError()
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: self.headerRegistration,
+                    for: indexPath,
+                    item: item)
             case .text(let item):
-                fatalError()
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: self.textEditRegistration,
+                    for: indexPath,
+                    item: item)
             case .toggle(let item):
-                fatalError()
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: self.toggleRegistration,
+                    for: indexPath,
+                    item: item)
             case .detail(let item):
-                fatalError()
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: self.detailRegistration,
+                    for: indexPath,
+                    item: item)
             }
         }
     }
     
     override func makeInitialModel() -> ListControllerBuilder<EventDetailSection, EventDetailItem>.ListModel
     {
-        [:] // Populate with sections and data...
+        [
+            .info: makeInfoItems(),
+            .conditions: makeConditionsItems(),
+            .flows: makeFlowsItems(),
+            .history: makeHistoryItems()
+        ]
+    }
+    
+    private func makeInfoItems() -> [EventDetailItem]
+    {
+        [
+            EventDetailItem.header(.init(text: .info, image: nil))
+        ]
+    }
+    
+    private func makeConditionsItems() -> [EventDetailItem]
+    {
+        [
+            EventDetailItem.header(.init(
+                text: .conditions,
+                image: Icon.condition.image,
+                link: {
+                    print("Tapped link on condition ")
+                },
+                add: {
+                    print("Tapped add on condition")
+                }))
+        ]
+    }
+    
+    private func makeFlowsItems() -> [EventDetailItem]
+    {
+        [
+            EventDetailItem.header(.init(
+                text: .flows,
+                image: Icon.flow.image,
+                disclosure: {
+                    print("Disclosure was tapped on flow")
+                },
+                link: {
+                    print("Link was tapped")
+                },
+                add: {
+                    print("Add was tapped")
+                }))
+        ]
+    }
+    
+    private func makeHistoryItems() -> [EventDetailItem]
+    {
+        [
+            EventDetailItem.header(.init(text: .history, image: nil))
+        ]
     }
 }
 
@@ -147,5 +218,13 @@ class EventDetailController: ListController<EventDetailSection, EventDetailItem,
     {
         self.router = builder.makeRouter()
         super.init(builder: builder)
+        
+        title = builder.event.title
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        reload(animated: animated)
     }
 }
