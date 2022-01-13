@@ -92,19 +92,15 @@ class EventDetailBuilder: ListControllerBuilder<EventDetailSection, EventDetailI
             .detail(.init(text: $0.title))
         }
         
-        eventItems +=
-        [
-            .header(.init(
-                text: .conditions,
-                image: Icon.condition.image,
-                link: {
-                    print("Tapped link on condition ")
-                },
-                add: {
-                    print("Tapped add on condition")
-                })),
-            
-        ]
+        eventItems.insert(.header(.init(
+            text: .conditions,
+            image: Icon.condition.image,
+            link: {
+                print("Tapped link on condition ")
+            },
+            add: {
+                print("Tapped add on condition")
+            })), at: 0)
         
         return eventItems
     }
@@ -117,20 +113,18 @@ class EventDetailBuilder: ListControllerBuilder<EventDetailSection, EventDetailI
             .detail(.init(text: $0.title))
         }
         
-        flowItems += [
-            .header(.init(
-                text: .flows,
-                image: Icon.flow.image,
-                disclosure: {
-                    print("Disclosure was tapped on flow")
-                },
-                link: {
-                    print("Link was tapped")
-                },
-                add: {
-                    print("Add was tapped")
-                }))
-        ]
+        flowItems.insert(.header(.init(
+            text: .flows,
+            image: Icon.flow.image,
+            disclosure: {
+                print("Disclosure was tapped on flow")
+            },
+            link: {
+                print("Link was tapped")
+            },
+            add: {
+                print("Add was tapped")
+            })), at: 0)
         
         return flowItems
     }
