@@ -67,4 +67,5 @@ public extension String
     static let suggested = "Suggested".localized
     
     static let conditions = "Conditions".localized
+    static let active = "Active".localized
 }

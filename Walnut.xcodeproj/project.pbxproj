@@ -81,6 +81,11 @@
 		03555B862687D77A006E9EA1 /* SystemDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */; };
 		03555B882687D783006E9EA1 /* SystemDetailResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B872687D783006E9EA1 /* SystemDetailResponder.swift */; };
 		03555B8F26884308006E9EA1 /* StockDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03555B8E26884308006E9EA1 /* StockDetailController.swift */; };
+		035C974C278B47CC00736305 /* EventDetailBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035C974B278B47CC00736305 /* EventDetailBuilder.swift */; };
+		035C974E278B47D900736305 /* EventDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035C974D278B47D900736305 /* EventDetailRouter.swift */; };
+		035C9750278B47EF00736305 /* EventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035C974F278B47EF00736305 /* EventFactory.swift */; };
+		035C9752278B47FD00736305 /* EventDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035C9751278B47FD00736305 /* EventDetailItem.swift */; };
+		035C9754278B480700736305 /* EventDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035C9753278B480700736305 /* EventDetailSection.swift */; };
 		0370FEB62688B3F0001E099B /* SubtitleDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */; };
 		0370FEBD2688C170001E099B /* RightImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEBC2688C170001E099B /* RightImageCell.swift */; };
 		0370FECA268A0940001E099B /* StockValueTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370FEC9268A0940001E099B /* StockValueTypeController.swift */; };
@@ -301,6 +306,11 @@
 		03555B852687D77A006E9EA1 /* SystemDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailRouter.swift; sourceTree = "<group>"; };
 		03555B872687D783006E9EA1 /* SystemDetailResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDetailResponder.swift; sourceTree = "<group>"; };
 		03555B8E26884308006E9EA1 /* StockDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailController.swift; sourceTree = "<group>"; };
+		035C974B278B47CC00736305 /* EventDetailBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailBuilder.swift; sourceTree = "<group>"; };
+		035C974D278B47D900736305 /* EventDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailRouter.swift; sourceTree = "<group>"; };
+		035C974F278B47EF00736305 /* EventFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFactory.swift; sourceTree = "<group>"; };
+		035C9751278B47FD00736305 /* EventDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailItem.swift; sourceTree = "<group>"; };
+		035C9753278B480700736305 /* EventDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailSection.swift; sourceTree = "<group>"; };
 		0370FEB52688B3F0001E099B /* SubtitleDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleDetailCell.swift; sourceTree = "<group>"; };
 		0370FEBC2688C170001E099B /* RightImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightImageCell.swift; sourceTree = "<group>"; };
 		0370FEC9268A0940001E099B /* StockValueTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockValueTypeController.swift; sourceTree = "<group>"; };
@@ -453,6 +463,11 @@
 			isa = PBXGroup;
 			children = (
 				0301A2992788091500CCD891 /* EventDetailController.swift */,
+				035C9753278B480700736305 /* EventDetailSection.swift */,
+				035C9751278B47FD00736305 /* EventDetailItem.swift */,
+				035C974F278B47EF00736305 /* EventFactory.swift */,
+				035C974D278B47D900736305 /* EventDetailRouter.swift */,
+				035C974B278B47CC00736305 /* EventDetailBuilder.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -722,13 +737,6 @@
 			path = "Value Type";
 			sourceTree = "<group>";
 		};
-		0370FED5268A16E3001E099B /* Dimension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Dimension;
-			sourceTree = "<group>";
-		};
 		0370FED6268A1824001E099B /* Flow */ = {
 			isa = PBXGroup;
 			children = (
@@ -949,7 +957,6 @@
 				0370FED3268A0EE0001E099B /* StockDetailRouter.swift */,
 				03FAACD3269B533900CB7AB6 /* StockDetailTableView.swift */,
 				03FC2C0D269C9E8000B8CB36 /* Current Detail */,
-				0370FED5268A16E3001E099B /* Dimension */,
 				03FC2C08269C976200B8CB36 /* Ideal Detail */,
 				0370FEC8268A0914001E099B /* Value Type */,
 			);
@@ -1408,6 +1415,7 @@
 				0370FED4268A0EE0001E099B /* StockDetailRouter.swift in Sources */,
 				03555B502686A487006E9EA1 /* StateMachine.swift in Sources */,
 				03FAACD2269B491D00CB7AB6 /* TransferFlowDetailTableView.swift in Sources */,
+				035C974C278B47CC00736305 /* EventDetailBuilder.swift in Sources */,
 				03555B642686A487006E9EA1 /* String+Extensions.swift in Sources */,
 				03555B4E2686A487006E9EA1 /* Icon.swift in Sources */,
 				03C4C47B26A182710066E6ED /* NewStateModel.swift in Sources */,
@@ -1426,7 +1434,9 @@
 				03BF0BE6269F648E00A866E5 /* CurrentIdealStateTableView.swift in Sources */,
 				038CF61026763E1200931595 /* InboxController.swift in Sources */,
 				03A92FF026AB107100BB59F7 /* Double+Extensions.swift in Sources */,
+				035C974E278B47D900736305 /* EventDetailRouter.swift in Sources */,
 				03FAACCC2699ED1500CB7AB6 /* TableViewModel.swift in Sources */,
+				035C9752278B47FD00736305 /* EventDetailItem.swift in Sources */,
 				03C857A026B1E029007FAFE4 /* DetailItem.swift in Sources */,
 				03FAACBF2699078100CB7AB6 /* NSFetchedResultsController+Extensions.swift in Sources */,
 				03555B712686A487006E9EA1 /* ControllerModel.swift in Sources */,
@@ -1435,9 +1445,11 @@
 				038CF6C8267682C700931595 /* CompletionType.swift in Sources */,
 				03555B622686A487006E9EA1 /* Array+Extensions.swift in Sources */,
 				03FAACD4269B533900CB7AB6 /* StockDetailTableView.swift in Sources */,
+				035C9754278B480700736305 /* EventDetailSection.swift in Sources */,
 				03BF0BC2269DF5EB00A866E5 /* NewStockTableView.swift in Sources */,
 				03555B0326869E76006E9EA1 /* Message.swift in Sources */,
 				03C8579E26B1E020007FAFE4 /* ToggleItem.swift in Sources */,
+				035C9750278B47EF00736305 /* EventFactory.swift in Sources */,
 				03FC2C07269C82F200B8CB36 /* FlowDetailCell.swift in Sources */,
 				03555AFF26869DE5006E9EA1 /* Router.swift in Sources */,
 				038CF6992676829F00931595 /* History+Extensions.swift in Sources */,

@@ -7,9 +7,14 @@
 
 import UIKit
 
-enum UnitDetailSection: Hashable
+enum UnitDetailSection: Int, Hashable, Comparable
 {
     case info
+    
+    static func < (lhs: UnitDetailSection, rhs: UnitDetailSection) -> Bool
+    {
+        lhs.rawValue < rhs.rawValue
+    }
 }
 
 enum UnitDetailItem: Hashable

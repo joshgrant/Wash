@@ -7,9 +7,14 @@
 
 import Foundation
 
-enum DashboardSection: Int, CaseIterable
+enum DashboardSection: Int, CaseIterable, Comparable
 {
     case pinned
     case suggested
     case forecast
+    
+    static func < (lhs: DashboardSection, rhs: DashboardSection) -> Bool
+    {
+        lhs.rawValue < rhs.rawValue
+    }
 }

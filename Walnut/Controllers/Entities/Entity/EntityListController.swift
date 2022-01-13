@@ -7,9 +7,13 @@
 
 import UIKit
 
-enum EntityListSection: Hashable
+enum EntityListSection: Int, Hashable, Comparable
 {
     case main
+    
+    static func < (lhs: EntityListSection, rhs: EntityListSection) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
 }
 
 enum EntityListItem: Hashable

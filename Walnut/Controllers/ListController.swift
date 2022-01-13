@@ -9,7 +9,7 @@ import UIKit
 
 protocol ListControllerFactory: Factory
 {
-    associatedtype Section: Hashable
+    associatedtype Section: Comparable & Hashable
     associatedtype Item: Hashable
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
     typealias CellProvider = UICollectionViewDiffableDataSource<Section, Item>.CellProvider
@@ -30,7 +30,7 @@ protocol ListControllerContainer: Container
 {
 }
 
-class ListControllerBuilder<S: Hashable, I: Hashable>: ListControllerFactory & ListControllerContainer
+class ListControllerBuilder<S: Hashable & Comparable, I: Hashable>: ListControllerFactory & ListControllerContainer
 {
     // MARK: - Defined types
     
@@ -151,7 +151,11 @@ class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S,
     {
         let dispatchGroup = DispatchGroup()
         
-        for (section, items) in model
+        let sortedModel = model.sorted {
+            $0.key < $1.key
+        }
+        
+        for (section, items) in sortedModel
         {
             dispatchGroup.enter()
             

@@ -7,9 +7,14 @@
 
 import UIKit
 
-enum LibrarySection: Hashable
+enum LibrarySection: Int, Hashable, Comparable
 {
     case main
+    
+    static func < (lhs: LibrarySection, rhs: LibrarySection) -> Bool
+    {
+        lhs.rawValue < rhs.rawValue
+    }
 }
 
 enum LibraryItem: Hashable
