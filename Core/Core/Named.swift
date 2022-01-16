@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Named: Entity
+public protocol Named
 {
     var unwrappedName: String? { get }
     var managedObjectContext: Context? { get }

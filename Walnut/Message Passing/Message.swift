@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Core
 
 enum HeaderType
 {
@@ -200,7 +201,7 @@ extension MessageToken: Equatable
 
 
 
-public enum SelectionIdentifier
+public enum SelectionIdentifier: Identifiable
 {
     case title
     case systemIdeal

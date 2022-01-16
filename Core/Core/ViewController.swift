@@ -11,7 +11,7 @@ open class ViewController<Container>: UIViewController
 {
     // MARK: - Variables
     
-    var container: Container
+    public var container: Container
     
     // MARK: - Initialization
     

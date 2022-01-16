@@ -8,8 +8,9 @@
 import Foundation
 import CoreData
 import Fakery
+import Core
 
-class ContextPopulator
+public class ContextPopulator: CoreDataPopulator
 {
     static let faker = Faker()
     

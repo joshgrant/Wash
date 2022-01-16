@@ -19,14 +19,14 @@ open class Database
     
     // MARK: - Initialization
     
-    public init(modelName: String = "Model")
+    public init(modelName: String = "Model", populator: CoreDataPopulator)
     {
         self.modelName = modelName
         
         do
         {
             container = try CloudKitContainer(modelName: modelName)
-            try container.loadPersistentStores()
+            try container.loadPersistentStores(populator: populator)
         }
         catch
         {

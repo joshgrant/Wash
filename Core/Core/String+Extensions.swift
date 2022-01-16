@@ -9,12 +9,12 @@ import Foundation
 
 public extension String
 {
-    public var localized: String
+    var localized: String
     {
         NSLocalizedString(self, comment: "")
     }
     
-    public func insertSpacesBetweenCamelCaseWords() -> String
+    func insertSpacesBetweenCamelCaseWords() -> String
     {
         var output: String = ""
         
@@ -30,7 +30,7 @@ public extension String
         return output.trimmingCharacters(in: .whitespaces)
     }
     
-    public func pluralize() -> String
+    func pluralize() -> String
     {
         return self + "s"
     }

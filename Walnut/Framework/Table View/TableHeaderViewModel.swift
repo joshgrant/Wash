@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Core
 
-open class TableHeaderViewModel
+open class TableHeaderViewModel: TableHeaderVM
 {
     // MARK: - Variables
     

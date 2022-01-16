@@ -34,17 +34,17 @@ public class ListControllerBuilder<S: Hashable & Comparable, I: Hashable>: ListC
 {
     // MARK: - Defined types
     
-    typealias Section = S
-    typealias Item = I
+    public typealias Section = S
+    public typealias Item = I
     
     // MARK: - Functions
     
-    func makeInitialModel() -> ListModel
+    public func makeInitialModel() -> ListModel
     {
         fatalError("Implement in subclass")
     }
     
-    func makeCollectionViewLayout() -> UICollectionViewLayout
+    public func makeCollectionViewLayout() -> UICollectionViewLayout
     {
         var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
         configuration.headerMode = .firstItemInSection
@@ -52,13 +52,13 @@ public class ListControllerBuilder<S: Hashable & Comparable, I: Hashable>: ListC
         return UICollectionViewCompositionalLayout.list(using: configuration)
     }
     
-    func makeCollectionView() -> UICollectionView
+    public func makeCollectionView() -> UICollectionView
     {
         let layout = makeCollectionViewLayout()
         return .init(frame: .zero, collectionViewLayout: layout)
     }
     
-    func makeFooterRegistration() -> FooterRegistration
+    public func makeFooterRegistration() -> FooterRegistration
     {
         .init(elementKind: UICollectionView.elementKindSectionFooter) { view, kind, indexPath in
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -66,12 +66,12 @@ public class ListControllerBuilder<S: Hashable & Comparable, I: Hashable>: ListC
         }
     }
     
-    func makeCellProvider() -> CellProvider
+    public func makeCellProvider() -> CellProvider
     {
         fatalError("Implement in subclass")
     }
     
-    func makeSupplementaryProvider(registration: FooterRegistration) -> SupplementaryProvider
+    public func makeSupplementaryProvider(registration: FooterRegistration) -> SupplementaryProvider
     {
         { collectionView, kind, indexPath in
             
@@ -89,7 +89,7 @@ public class ListControllerBuilder<S: Hashable & Comparable, I: Hashable>: ListC
         }
     }
     
-    func makeDataSource(collectionView: UICollectionView) -> DataSource
+    public func makeDataSource(collectionView: UICollectionView) -> DataSource
     {
         let cellProvider = makeCellProvider()
         let dataSource = DataSource(collectionView: collectionView, cellProvider: cellProvider)
@@ -126,12 +126,12 @@ public class ListController<S: Hashable, I: Hashable, Builder: ListControllerBui
     
     // MARK: - View lifecycle
     
-    override func loadView()
+    public override func loadView()
     {
         view = collectionView
     }
     
-    override func viewDidLoad()
+    public override func viewDidLoad()
     {
         super.viewDidLoad()
         collectionView.delegate = self
@@ -179,7 +179,7 @@ public class ListController<S: Hashable, I: Hashable, Builder: ListControllerBui
     
     // MARK: - Delegate
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
         // Get the entity
         // Send a message that the entity was selected

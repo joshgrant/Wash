@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Double
+public extension Double
 {
     func constrained(min: Double, max: Double) -> Double 
     {

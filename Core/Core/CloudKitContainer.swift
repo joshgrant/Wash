@@ -39,12 +39,12 @@ public extension CloudKitContainer
         Bundle.main.url(forResource: modelName, withExtension: "momd")
     }
     
-    func loadPersistentStores() throws
+    func loadPersistentStores(populator: CoreDataPopulator) throws
     {
         loadPersistentStores { [unowned self] description, error in
             
             self.context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-            ContextPopulator.populate(context: self.context)
+            populator.populate(context: self.context)
             
             if let error = error as NSError?
             {
