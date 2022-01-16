@@ -36,7 +36,7 @@ public extension CloudKitContainer
     
     static func getModelURL(modelName: String) -> URL?
     {
-        Bundle.main.url(forResource: "Model", withExtension: "momd")
+        Bundle.main.url(forResource: modelName, withExtension: "momd")
     }
     
     func loadPersistentStores() throws

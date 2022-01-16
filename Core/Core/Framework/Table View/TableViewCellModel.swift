@@ -7,21 +7,6 @@
 
 import UIKit
 
-public enum TransitionType
-{
-    case continuous
-    case stateMachine
-    
-    var title: String
-    {
-        switch self
-        {
-        case .continuous: return "Continuous".localized
-        case .stateMachine: return "State Machine".localized
-        }
-    }
-}
-
 public protocol TableViewCellModel: AnyObject
 {
     var selectionIdentifier: SelectionIdentifier { get set }

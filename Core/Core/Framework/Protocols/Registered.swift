@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol Registered
+public protocol Registered
 {
     associatedtype Cell: UICollectionViewCell
     static var registration: UICollectionView.CellRegistration<Cell, Self> { get }

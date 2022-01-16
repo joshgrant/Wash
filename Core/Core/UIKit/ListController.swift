@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ListControllerFactory: Factory
+public protocol ListControllerFactory: Factory
 {
     associatedtype Section: Comparable & Hashable
     associatedtype Item: Hashable
@@ -26,11 +26,11 @@ protocol ListControllerFactory: Factory
     func makeDataSource(collectionView: UICollectionView) -> DataSource
 }
 
-protocol ListControllerContainer: Container
+public protocol ListControllerContainer: Container
 {
 }
 
-class ListControllerBuilder<S: Hashable & Comparable, I: Hashable>: ListControllerFactory & ListControllerContainer
+public class ListControllerBuilder<S: Hashable & Comparable, I: Hashable>: ListControllerFactory & ListControllerContainer
 {
     // MARK: - Defined types
     
@@ -99,7 +99,7 @@ class ListControllerBuilder<S: Hashable & Comparable, I: Hashable>: ListControll
     }
 }
 
-class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S, I>>: UIViewController, UICollectionViewDelegate
+public class ListController<S: Hashable, I: Hashable, Builder: ListControllerBuilder<S, I>>: UIViewController, UICollectionViewDelegate
 {
     // MARK: - Variables
     

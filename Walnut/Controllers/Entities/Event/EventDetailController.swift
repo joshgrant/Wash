@@ -18,18 +18,35 @@ class EventDetailController: ListController<EventDetailSection, EventDetailItem,
     
     override init(builder: EventDetailBuilder)
     {
-        self.router = builder.makeRouter()
+        router = builder.makeRouter()
         super.init(builder: builder)
         
         title = builder.event.title
         builder.textEditDelegate = self
         builder.toggleDelegate = self
+        router.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         reload(animated: animated)
+    }
+    
+    // MARK: - Collection View
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        let item = dataSource.itemIdentifier(for: indexPath)
+        switch item {
+        case .detail(let detailItem):
+            let entity = detailItem.entity
+            let message = EntitySelectionMessage(entity: entity)
+            builder.stream.send(message: message)
+        default:
+            break
+        }
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
     }
 }
 
@@ -55,3 +72,5 @@ extension EventDetailController: ToggleItemDelegate
         builder.event.isActive = toggle.isOn
     }
 }
+
+extension EventDetailController: RouterDelegate { }

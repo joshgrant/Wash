@@ -147,7 +147,7 @@ open class StateMachine<State>: Codable where State: Hashable & Codable
 
 public extension Notification.Name
 {
-    static let stateChangeRequest = Notification.Name("me.joshgrant.Center.notification.stateChangeRequest")
-    static let stateChangeFailed = Notification.Name("me.joshgrant.Center.notification.stateChangeFailed")
-    static let stateChange = Notification.Name("me.joshgrant.Center.notification.stateChange")
+    static let stateChangeRequest = Notification.Name("notification.stateChangeRequest")
+    static let stateChangeFailed = Notification.Name("notification.stateChangeFailed")
+    static let stateChange = Notification.Name("notification.stateChange")
 }

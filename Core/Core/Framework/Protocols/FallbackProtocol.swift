@@ -8,7 +8,7 @@
 import Foundation
 
 /// Provides a default value for enum properties, but `default` is reserved so I used `fallback` instead
-protocol FallbackProtocol
+public protocol FallbackProtocol
 {
     static var fallback: Self { get }
 }

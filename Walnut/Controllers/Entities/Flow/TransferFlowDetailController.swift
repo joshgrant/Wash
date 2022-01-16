@@ -176,25 +176,21 @@ extension FlowDetailController: Subscriber
     
     private func handle(_ message: LinkSelectionMessage)
     {
-//        guard let stock = message.link as? Stock else { return }
+        guard let stock = message.link as? Stock else { return }
         
-        fatalError("We need to know where to add the stock")
+        switch message.origin {
+        case .stockFrom:
+            container.flow.from = stock
+            stock.addToOutflows(container.flow)
+        case .stockTo:
+            container.flow.to = stock
+            stock.addToInflows(container.flow)
+        default:
+            break
+        }
         
-//        switch router.container
-//        {
-//        case .stockFrom:
-//            container.flow.from = stock
-//            stock.addToOutflows(flow)
-//        case .stockTo:
-//            container.flow.to = stock
-//            stock.addToInflows(flow)
-//        default:
-//            break
-//        }
-        
-//        container.flow.managedObjectContext?.quickSave()
-//        
-//        tableView.shouldReload = true
+        container.flow.managedObjectContext?.quickSave()
+        tableView.shouldReload = true
     }
     
     private func handle(_ message: ToggleCellMessage)

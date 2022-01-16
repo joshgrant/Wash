@@ -34,11 +34,13 @@ class FlowDetailTableViewContainer: TableViewContainer
         self.style = style
         self.flow = flow
     }
+    
+//    makeModel()
 }
 
 extension FlowDetailTableViewContainer: FlowDetailTableViewFactory
 {
-    func makeModel() -> TableViewModel
+    override func makeModel() -> TableViewModel
     {
         TableViewModel(sections: [
             makeInfoSection(),

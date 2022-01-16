@@ -249,7 +249,7 @@ class EntityListBuilder: ListControllerBuilder<EntityListSection, EntityListItem
             .all(context: context)
             .compactMap { entity in
                 guard let entity = entity as? Named else { fatalError() }
-                return .item(.init(text: entity.title))
+                return .item(.init(text: entity.title, entity: entity))
             }
         
         let header = EntityListItem.header(.init(text: ""))

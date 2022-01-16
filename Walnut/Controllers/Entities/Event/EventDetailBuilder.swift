@@ -89,7 +89,7 @@ class EventDetailBuilder: ListControllerBuilder<EventDetailSection, EventDetailI
         let conditions: [Condition] = event.unwrapped(\Event.conditions)
         var eventItems: [EventDetailItem] = conditions.map
         {
-            .detail(.init(text: $0.title))
+            .detail(.init(text: $0.title, entity: $0))
         }
         
         eventItems.insert(.header(.init(
@@ -110,7 +110,7 @@ class EventDetailBuilder: ListControllerBuilder<EventDetailSection, EventDetailI
         let flows: [Flow] = event.unwrapped(\Event.flows)
         var flowItems: [EventDetailItem] = flows.map
         {
-            .detail(.init(text: $0.title))
+            .detail(.init(text: $0.title, entity: $0))
         }
         
         flowItems.insert(.header(.init(
@@ -139,11 +139,14 @@ class EventDetailBuilder: ListControllerBuilder<EventDetailSection, EventDetailI
 
 extension EventDetailBuilder: EventFactory
 {
-    func makeController() -> EventDetailController {
+    func makeController() -> EventDetailController
+    {
         .init(builder: self)
     }
     
-    func makeRouter() -> EventDetailRouter {
-        .init(stream: stream, context: context)
+    func makeRouter() -> EventDetailRouter
+    {
+        let router = EventDetailRouter(stream: stream, context: context)
+        return router
     }
 }

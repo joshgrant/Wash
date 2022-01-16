@@ -6,13 +6,7 @@
 //
 
 import UIKit
-
-protocol TableViewContainer: Container
-{
-    var model: TableViewModel { get set }
-    var stream: Stream { get set }
-    var style: UITableView.Style { get }
-}
+import Core
 
 class TableView<Container: TableViewContainer>: UITableView, UITableViewDelegate, UITableViewDataSource
 {
@@ -77,7 +71,7 @@ class TableView<Container: TableViewContainer>: UITableView, UITableViewDelegate
     
     func reload(shouldReloadTableView: Bool = true)
     {
-//        container.model = makeModel() // TODO: Maybe do a diff?
+        container.model = makeModel() // TODO: Maybe do a diff?
         // TODO: Fix this too! Yikes really need diffing
         configure()
         
@@ -91,10 +85,10 @@ class TableView<Container: TableViewContainer>: UITableView, UITableViewDelegate
     
     // MARK: - Configuration
     
-//    func makeModel() -> TableViewModel
-//    {
-//        fatalError("Implement in subclass")
-//    }
+    func makeModel() -> TableViewModel
+    {
+        fatalError("Implement in subclass")
+    }
     
     func configure()
     {

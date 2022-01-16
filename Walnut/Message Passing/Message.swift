@@ -84,8 +84,13 @@ enum ViewLocation
     case unit(ViewType)
 }
 
-class Message: Unique, CustomStringConvertible
+class Message: Unique
 {
+    var id = UUID()
+    var timestamp: Date?
+}
+
+extension Message {
     enum Identifier
     {
         case createNew(type: EntityType)
@@ -115,12 +120,9 @@ class Message: Unique, CustomStringConvertible
         
         case tappedInfoButton(location: ViewLocation)
     }
-    
-    var id = UUID()
-    var timestamp: Date?
 }
 
-extension Message
+extension Message: CustomStringConvertible
 {
     var description: String
     {
@@ -263,31 +265,6 @@ public enum SelectionIdentifier
     case currentBool(state: Bool)
     case idealBool(state: Bool)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class TableViewSelectionMessage: Message
@@ -546,5 +523,14 @@ class LinkSelectionMessage: Message
     {
         self.link = link
         self.origin = origin
+    }
+}
+
+class EntitySelectionMessage: Message
+{
+    var entity: Entity
+    
+    init(entity: Entity) {
+        self.entity = entity
     }
 }

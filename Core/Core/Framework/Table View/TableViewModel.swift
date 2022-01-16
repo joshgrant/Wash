@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TableViewModel
+public class TableViewModel
 {
     var sections: [TableViewSection]
     var models: [[TableViewCellModel]]

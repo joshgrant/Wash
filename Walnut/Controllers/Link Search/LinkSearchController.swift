@@ -129,10 +129,9 @@ class LinkSearchController: ViewController<LinkSearchControllerContainer>, UITab
         let link = fetchResultsController.item(at: indexPath) as! Entity
         let message = LinkSelectionMessage(link: link, origin: container.origin)
         container.stream.send(message: message)
-        
         delegate?.didSelectEntity(entity: link, controller: self)
-        
         tableView.deselectRow(at: indexPath, animated: true)
+        dismiss(animated: true, completion: nil)
     }
 }
 

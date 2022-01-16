@@ -146,7 +146,7 @@ class UnitDetailBuilder: ListControllerBuilder<UnitDetailSection, UnitDetailItem
         
         if !unit.isBase, let parent = unit.parent
         {
-            items.append(.relativeTo(.init(text: parent.title)))
+            items.append(.relativeTo(.init(text: parent.title, entity: parent)))
         }
         
         return items
@@ -234,8 +234,10 @@ extension UnitDetailController: ToggleItemDelegate
     
     func addRelativeItem(unit: Unit)
     {
-        let relativeItem = UnitDetailItem.relativeTo(.init(text: unit.parent?.title ?? ""))
-        model[.info]?.append(relativeItem)
+        if let parent = unit.parent {
+            let relativeItem = UnitDetailItem.relativeTo(.init(text: parent.title, entity: parent))
+            model[.info]?.append(relativeItem)
+        }
     }
     
     func removeRelativeItem()
