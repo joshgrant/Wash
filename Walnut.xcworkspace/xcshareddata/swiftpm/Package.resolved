@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Differ",
+        "repositoryURL": "https://github.com/tonyarnold/Differ",
+        "state": {
+          "branch": "main",
+          "revision": "7f4710a4ac6d8374a4398af766226c739fb5d285",
+          "version": null
+        }
+      },
+      {
+        "package": "Fakery",
+        "repositoryURL": "git@github.com:vadymmarkov/Fakery.git",
+        "state": {
+          "branch": "master",
+          "revision": "71cb3bf36a808534659d1248780c2bf3c4c4fc91",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

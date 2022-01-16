@@ -7,6 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		037972F02794821A000FE2E4 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DD72794802700242959 /* Model.swift */; };
+		037972F12794821D000FE2E4 /* CloudKitContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DD82794802700242959 /* CloudKitContainer.swift */; };
+		037972F227948220000FE2E4 /* NSFetchedResultsController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DDA2794802700242959 /* NSFetchedResultsController+Extensions.swift */; };
+		037972F327948223000FE2E4 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DDB2794802700242959 /* DatabaseError.swift */; };
+		037972F427948223000FE2E4 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DDC2794802700242959 /* Context.swift */; };
+		037972F527948223000FE2E4 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DDD2794802700242959 /* Database.swift */; };
+		0379730F27948238000FE2E4 /* SearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DB22794802700242959 /* SearchBarDelegate.swift */; };
+		0379731027948238000FE2E4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DBE2794802700242959 /* ViewController.swift */; };
+		0379731127948238000FE2E4 /* ObserverForSceneUpdatesEventResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DA62794802700242959 /* ObserverForSceneUpdatesEventResponder.swift */; };
+		0379731227948238000FE2E4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DE02794802700242959 /* Coordinator.swift */; };
+		0379731327948238000FE2E4 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DB12794802700242959 /* Container.swift */; };
+		0379731427948238000FE2E4 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DBF2794802700242959 /* View.swift */; };
+		0379731527948238000FE2E4 /* Named.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DDF2794802700242959 /* Named.swift */; };
+		0379731627948238000FE2E4 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DCF2794802700242959 /* Notification+Extensions.swift */; };
+		0379731727948238000FE2E4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DD02794802700242959 /* String+Extensions.swift */; };
+		0379731827948238000FE2E4 /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DB72794802700242959 /* BarButtonItem.swift */; };
+		0379731927948238000FE2E4 /* EventResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DA82794802700242959 /* EventResponder.swift */; };
+		0379731A27948238000FE2E4 /* Registered.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DBC2794802700242959 /* Registered.swift */; };
+		0379731B27948239000FE2E4 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DC12794802700242959 /* Factory.swift */; };
+		0379731C27948239000FE2E4 /* NSSet+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DD12794802700242959 /* NSSet+Extensions.swift */; };
+		0379731D27948239000FE2E4 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DA52794802700242959 /* Observer.swift */; };
+		0379731E27948239000FE2E4 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DA72794802700242959 /* StateMachine.swift */; };
+		0379731F27948239000FE2E4 /* ActionClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DB82794802700242959 /* ActionClosure.swift */; };
+		0379732027948239000FE2E4 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DCD2794802700242959 /* Int+Extensions.swift */; };
+		0379732127948239000FE2E4 /* FallbackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DBA2794802700242959 /* FallbackProtocol.swift */; };
+		0379732227948239000FE2E4 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DD42794802700242959 /* Double+Extensions.swift */; };
+		0379732327948239000FE2E4 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DCE2794802700242959 /* DateFormatter+Extensions.swift */; };
+		0379732427948239000FE2E4 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DBB2794802700242959 /* Searchable.swift */; };
+		0379732527948239000FE2E4 /* ControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DC02794802700242959 /* ControllerModel.swift */; };
+		0379732627948239000FE2E4 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DD32794802700242959 /* Date+Extensions.swift */; };
+		0379732727948239000FE2E4 /* SpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DB62794802700242959 /* SpacerView.swift */; };
+		0379732827948239000FE2E4 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DD22794802700242959 /* Bundle+Extensions.swift */; };
+		0379732927948239000FE2E4 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DCC2794802700242959 /* Array+Extensions.swift */; };
+		0379732A27948257000FE2E4 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DC72794802700242959 /* UIImage+Extensions.swift */; };
+		0379732B27948257000FE2E4 /* TabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DB42794802700242959 /* TabBarControllerDelegate.swift */; };
+		0379732C27948257000FE2E4 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DAC2794802700242959 /* TableViewCell.swift */; };
+		0379732D27948257000FE2E4 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DC62794802700242959 /* UIView+Extensions.swift */; };
+		0379732E27948257000FE2E4 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DA32794802700242959 /* CollectionView.swift */; };
+		0379732F27948257000FE2E4 /* TableViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DAA2794802700242959 /* TableViewContainer.swift */; };
+		0379733027948257000FE2E4 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DA42794802700242959 /* CollectionViewCell.swift */; };
+		0379733127948257000FE2E4 /* TableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DAD2794802700242959 /* TableViewSection.swift */; };
+		0379733227948257000FE2E4 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DC32794802700242959 /* ListController.swift */; };
+		0379733327948257000FE2E4 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DC52794802700242959 /* UIViewController+Extensions.swift */; };
+		0379733427948257000FE2E4 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DC82794802700242959 /* UINavigationController+Extensions.swift */; };
+		0379733527948257000FE2E4 /* ConfigurableTableViewCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DAB2794802700242959 /* ConfigurableTableViewCellProtocol.swift */; };
+		0379733627948257000FE2E4 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DC92794802700242959 /* UIStackView+Extensions.swift */; };
+		0379733727948257000FE2E4 /* TableViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DB02794802700242959 /* TableViewRow.swift */; };
+		0379733827948257000FE2E4 /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DAF2794802700242959 /* TableViewModel.swift */; };
+		0379733927948257000FE2E4 /* TableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DAE2794802700242959 /* TableViewCellModel.swift */; };
+		0379733A27948257000FE2E4 /* ViewControllerTabBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8DB52794802700242959 /* ViewControllerTabBarDelegate.swift */; };
 		03AF8D8C2794800900242959 /* Core.docc in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8D8B2794800900242959 /* Core.docc */; };
 		03AF8D922794800900242959 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AF8D872794800900242959 /* Core.framework */; };
 		03AF8D972794800900242959 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AF8D962794800900242959 /* CoreTests.swift */; };
@@ -123,10 +173,56 @@
 			children = (
 				03AF8D8B2794800900242959 /* Core.docc */,
 				03AF8D8A2794800900242959 /* Core.h */,
-				03AF8DD62794802700242959 /* CoreData */,
-				03AF8DCA2794802700242959 /* Foundation */,
-				03AF8DA12794802700242959 /* Framework */,
-				03AF8DC22794802700242959 /* UIKit */,
+				03AF8DD72794802700242959 /* Model.swift */,
+				03AF8DD82794802700242959 /* CloudKitContainer.swift */,
+				03AF8DDA2794802700242959 /* NSFetchedResultsController+Extensions.swift */,
+				03AF8DDB2794802700242959 /* DatabaseError.swift */,
+				03AF8DDC2794802700242959 /* Context.swift */,
+				03AF8DDD2794802700242959 /* Database.swift */,
+				03AF8DDF2794802700242959 /* Named.swift */,
+				03AF8DE02794802700242959 /* Coordinator.swift */,
+				03AF8DCC2794802700242959 /* Array+Extensions.swift */,
+				03AF8DCD2794802700242959 /* Int+Extensions.swift */,
+				03AF8DCE2794802700242959 /* DateFormatter+Extensions.swift */,
+				03AF8DCF2794802700242959 /* Notification+Extensions.swift */,
+				03AF8DD02794802700242959 /* String+Extensions.swift */,
+				03AF8DD12794802700242959 /* NSSet+Extensions.swift */,
+				03AF8DD22794802700242959 /* Bundle+Extensions.swift */,
+				03AF8DD32794802700242959 /* Date+Extensions.swift */,
+				03AF8DD42794802700242959 /* Double+Extensions.swift */,
+				03AF8DA32794802700242959 /* CollectionView.swift */,
+				03AF8DA42794802700242959 /* CollectionViewCell.swift */,
+				03AF8DA52794802700242959 /* Observer.swift */,
+				03AF8DA62794802700242959 /* ObserverForSceneUpdatesEventResponder.swift */,
+				03AF8DA72794802700242959 /* StateMachine.swift */,
+				03AF8DA82794802700242959 /* EventResponder.swift */,
+				03AF8DAA2794802700242959 /* TableViewContainer.swift */,
+				03AF8DAB2794802700242959 /* ConfigurableTableViewCellProtocol.swift */,
+				03AF8DAC2794802700242959 /* TableViewCell.swift */,
+				03AF8DAD2794802700242959 /* TableViewSection.swift */,
+				03AF8DAE2794802700242959 /* TableViewCellModel.swift */,
+				03AF8DAF2794802700242959 /* TableViewModel.swift */,
+				03AF8DB02794802700242959 /* TableViewRow.swift */,
+				03AF8DB12794802700242959 /* Container.swift */,
+				03AF8DB22794802700242959 /* SearchBarDelegate.swift */,
+				03AF8DB42794802700242959 /* TabBarControllerDelegate.swift */,
+				03AF8DB52794802700242959 /* ViewControllerTabBarDelegate.swift */,
+				03AF8DB62794802700242959 /* SpacerView.swift */,
+				03AF8DB72794802700242959 /* BarButtonItem.swift */,
+				03AF8DB82794802700242959 /* ActionClosure.swift */,
+				03AF8DBA2794802700242959 /* FallbackProtocol.swift */,
+				03AF8DBB2794802700242959 /* Searchable.swift */,
+				03AF8DBC2794802700242959 /* Registered.swift */,
+				03AF8DBE2794802700242959 /* ViewController.swift */,
+				03AF8DBF2794802700242959 /* View.swift */,
+				03AF8DC02794802700242959 /* ControllerModel.swift */,
+				03AF8DC12794802700242959 /* Factory.swift */,
+				03AF8DC32794802700242959 /* ListController.swift */,
+				03AF8DC52794802700242959 /* UIViewController+Extensions.swift */,
+				03AF8DC62794802700242959 /* UIView+Extensions.swift */,
+				03AF8DC72794802700242959 /* UIImage+Extensions.swift */,
+				03AF8DC82794802700242959 /* UINavigationController+Extensions.swift */,
+				03AF8DC92794802700242959 /* UIStackView+Extensions.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -137,156 +233,6 @@
 				03AF8D962794800900242959 /* CoreTests.swift */,
 			);
 			path = CoreTests;
-			sourceTree = "<group>";
-		};
-		03AF8DA12794802700242959 /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DA22794802700242959 /* Collection View */,
-				03AF8DA52794802700242959 /* Observer.swift */,
-				03AF8DA62794802700242959 /* ObserverForSceneUpdatesEventResponder.swift */,
-				03AF8DA72794802700242959 /* StateMachine.swift */,
-				03AF8DA82794802700242959 /* EventResponder.swift */,
-				03AF8DA92794802700242959 /* Table View */,
-				03AF8DB12794802700242959 /* Container.swift */,
-				03AF8DB22794802700242959 /* SearchBarDelegate.swift */,
-				03AF8DB32794802700242959 /* Tab Bar */,
-				03AF8DB62794802700242959 /* SpacerView.swift */,
-				03AF8DB72794802700242959 /* BarButtonItem.swift */,
-				03AF8DB82794802700242959 /* ActionClosure.swift */,
-				03AF8DB92794802700242959 /* Protocols */,
-				03AF8DBD2794802700242959 /* V VM C CM */,
-				03AF8DC12794802700242959 /* Factory.swift */,
-			);
-			path = Framework;
-			sourceTree = "<group>";
-		};
-		03AF8DA22794802700242959 /* Collection View */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DA32794802700242959 /* CollectionView.swift */,
-				03AF8DA42794802700242959 /* CollectionViewCell.swift */,
-			);
-			path = "Collection View";
-			sourceTree = "<group>";
-		};
-		03AF8DA92794802700242959 /* Table View */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DAA2794802700242959 /* TableViewContainer.swift */,
-				03AF8DAB2794802700242959 /* ConfigurableTableViewCellProtocol.swift */,
-				03AF8DAC2794802700242959 /* TableViewCell.swift */,
-				03AF8DAD2794802700242959 /* TableViewSection.swift */,
-				03AF8DAE2794802700242959 /* TableViewCellModel.swift */,
-				03AF8DAF2794802700242959 /* TableViewModel.swift */,
-				03AF8DB02794802700242959 /* TableViewRow.swift */,
-			);
-			path = "Table View";
-			sourceTree = "<group>";
-		};
-		03AF8DB32794802700242959 /* Tab Bar */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DB42794802700242959 /* TabBarControllerDelegate.swift */,
-				03AF8DB52794802700242959 /* ViewControllerTabBarDelegate.swift */,
-			);
-			path = "Tab Bar";
-			sourceTree = "<group>";
-		};
-		03AF8DB92794802700242959 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DBA2794802700242959 /* FallbackProtocol.swift */,
-				03AF8DBB2794802700242959 /* Searchable.swift */,
-				03AF8DBC2794802700242959 /* Registered.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
-		03AF8DBD2794802700242959 /* V VM C CM */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DBE2794802700242959 /* ViewController.swift */,
-				03AF8DBF2794802700242959 /* View.swift */,
-				03AF8DC02794802700242959 /* ControllerModel.swift */,
-			);
-			path = "V VM C CM";
-			sourceTree = "<group>";
-		};
-		03AF8DC22794802700242959 /* UIKit */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DC32794802700242959 /* ListController.swift */,
-				03AF8DC42794802700242959 /* Extensions */,
-			);
-			path = UIKit;
-			sourceTree = "<group>";
-		};
-		03AF8DC42794802700242959 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DC52794802700242959 /* UIViewController+Extensions.swift */,
-				03AF8DC62794802700242959 /* UIView+Extensions.swift */,
-				03AF8DC72794802700242959 /* UIImage+Extensions.swift */,
-				03AF8DC82794802700242959 /* UINavigationController+Extensions.swift */,
-				03AF8DC92794802700242959 /* UIStackView+Extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		03AF8DCA2794802700242959 /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DCB2794802700242959 /* Extensions */,
-			);
-			path = Foundation;
-			sourceTree = "<group>";
-		};
-		03AF8DCB2794802700242959 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DCC2794802700242959 /* Array+Extensions.swift */,
-				03AF8DCD2794802700242959 /* Int+Extensions.swift */,
-				03AF8DCE2794802700242959 /* DateFormatter+Extensions.swift */,
-				03AF8DCF2794802700242959 /* Notification+Extensions.swift */,
-				03AF8DD02794802700242959 /* String+Extensions.swift */,
-				03AF8DD12794802700242959 /* NSSet+Extensions.swift */,
-				03AF8DD22794802700242959 /* Bundle+Extensions.swift */,
-				03AF8DD32794802700242959 /* Date+Extensions.swift */,
-				03AF8DD42794802700242959 /* Double+Extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		03AF8DD62794802700242959 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DD72794802700242959 /* Model.swift */,
-				03AF8DD82794802700242959 /* CloudKitContainer.swift */,
-				03AF8DD92794802700242959 /* Extensions */,
-				03AF8DDB2794802700242959 /* DatabaseError.swift */,
-				03AF8DDC2794802700242959 /* Context.swift */,
-				03AF8DDD2794802700242959 /* Database.swift */,
-				03AF8DDE2794802700242959 /* Protocols */,
-				03AF8DE02794802700242959 /* Coordinator.swift */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
-		03AF8DD92794802700242959 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DDA2794802700242959 /* NSFetchedResultsController+Extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		03AF8DDE2794802700242959 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				03AF8DDF2794802700242959 /* Named.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,7 +344,57 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0379731427948238000FE2E4 /* View.swift in Sources */,
+				0379732F27948257000FE2E4 /* TableViewContainer.swift in Sources */,
+				0379731A27948238000FE2E4 /* Registered.swift in Sources */,
+				0379732327948239000FE2E4 /* DateFormatter+Extensions.swift in Sources */,
+				0379731627948238000FE2E4 /* Notification+Extensions.swift in Sources */,
+				0379732727948239000FE2E4 /* SpacerView.swift in Sources */,
+				0379732227948239000FE2E4 /* Double+Extensions.swift in Sources */,
+				0379733927948257000FE2E4 /* TableViewCellModel.swift in Sources */,
+				0379732527948239000FE2E4 /* ControllerModel.swift in Sources */,
+				0379731827948238000FE2E4 /* BarButtonItem.swift in Sources */,
+				0379733227948257000FE2E4 /* ListController.swift in Sources */,
+				0379732B27948257000FE2E4 /* TabBarControllerDelegate.swift in Sources */,
+				0379731B27948239000FE2E4 /* Factory.swift in Sources */,
+				0379730F27948238000FE2E4 /* SearchBarDelegate.swift in Sources */,
+				0379732627948239000FE2E4 /* Date+Extensions.swift in Sources */,
+				0379732D27948257000FE2E4 /* UIView+Extensions.swift in Sources */,
+				0379731327948238000FE2E4 /* Container.swift in Sources */,
+				0379731727948238000FE2E4 /* String+Extensions.swift in Sources */,
+				037972F327948223000FE2E4 /* DatabaseError.swift in Sources */,
+				0379731F27948239000FE2E4 /* ActionClosure.swift in Sources */,
+				037972F12794821D000FE2E4 /* CloudKitContainer.swift in Sources */,
+				0379733627948257000FE2E4 /* UIStackView+Extensions.swift in Sources */,
+				0379732E27948257000FE2E4 /* CollectionView.swift in Sources */,
+				0379731C27948239000FE2E4 /* NSSet+Extensions.swift in Sources */,
+				0379733127948257000FE2E4 /* TableViewSection.swift in Sources */,
+				0379733727948257000FE2E4 /* TableViewRow.swift in Sources */,
+				0379732A27948257000FE2E4 /* UIImage+Extensions.swift in Sources */,
+				0379733527948257000FE2E4 /* ConfigurableTableViewCellProtocol.swift in Sources */,
+				0379731127948238000FE2E4 /* ObserverForSceneUpdatesEventResponder.swift in Sources */,
+				0379731E27948239000FE2E4 /* StateMachine.swift in Sources */,
+				0379732027948239000FE2E4 /* Int+Extensions.swift in Sources */,
+				0379731927948238000FE2E4 /* EventResponder.swift in Sources */,
+				0379733327948257000FE2E4 /* UIViewController+Extensions.swift in Sources */,
+				0379731027948238000FE2E4 /* ViewController.swift in Sources */,
 				03AF8D8C2794800900242959 /* Core.docc in Sources */,
+				0379731227948238000FE2E4 /* Coordinator.swift in Sources */,
+				0379732827948239000FE2E4 /* Bundle+Extensions.swift in Sources */,
+				0379732927948239000FE2E4 /* Array+Extensions.swift in Sources */,
+				037972F427948223000FE2E4 /* Context.swift in Sources */,
+				0379732C27948257000FE2E4 /* TableViewCell.swift in Sources */,
+				037972F527948223000FE2E4 /* Database.swift in Sources */,
+				0379733027948257000FE2E4 /* CollectionViewCell.swift in Sources */,
+				0379732127948239000FE2E4 /* FallbackProtocol.swift in Sources */,
+				0379733A27948257000FE2E4 /* ViewControllerTabBarDelegate.swift in Sources */,
+				037972F02794821A000FE2E4 /* Model.swift in Sources */,
+				0379733827948257000FE2E4 /* TableViewModel.swift in Sources */,
+				0379731D27948239000FE2E4 /* Observer.swift in Sources */,
+				0379732427948239000FE2E4 /* Searchable.swift in Sources */,
+				037972F227948220000FE2E4 /* NSFetchedResultsController+Extensions.swift in Sources */,
+				0379733427948257000FE2E4 /* UINavigationController+Extensions.swift in Sources */,
+				0379731527948238000FE2E4 /* Named.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,6 +600,7 @@
 		03AF8D9F2794800900242959 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 685257RUQP;
@@ -620,6 +617,7 @@
 		03AF8DA02794800900242959 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 685257RUQP;
