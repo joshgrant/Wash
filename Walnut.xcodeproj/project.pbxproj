@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		03797371279512F7000FE2E4 /* Walnut */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Walnut; sourceTree = BUILT_PRODUCTS_DIR; };
 		03797374279512F7000FE2E4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		0379737B2795131A000FE2E4 /* Database */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Database; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +58,7 @@
 		03797373279512F7000FE2E4 /* Walnut */ = {
 			isa = PBXGroup;
 			children = (
+				0379737B2795131A000FE2E4 /* Database */,
 				03797374279512F7000FE2E4 /* main.swift */,
 			);
 			path = Walnut;
