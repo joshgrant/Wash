@@ -9,3 +9,6 @@ import Foundation
 
 print("Hello, World!")
 
+var database = Database()
+var stream = Stream(identifier: .main)
+

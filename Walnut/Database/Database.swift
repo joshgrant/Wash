@@ -5,7 +5,8 @@
 //  Created by Joshua Grant on 6/6/21.
 //
 
-import UIKit
+import Foundation
+import Cocoa
 import CoreData
 
 open class Database
@@ -52,7 +53,7 @@ open class Database
     public func getItemInList<T: NSManagedObject>(at indexPath: IndexPath, context: Context, type: T.Type) -> T?
     {
         let items = getItemsForList(context: context, type: type)
-        return items[indexPath.row]
+        return items[indexPath.item]
     }
 }
 
@@ -68,11 +69,11 @@ extension Database
 {
     func handleNotifications()
     {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleApplicationWillTerminateNotification(_:)),
-            name: UIApplication.willTerminateNotification,
-            object: nil)
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(handleApplicationWillTerminateNotification(_:)),
+//            name: UIApplication.willTerminateNotification,
+//            object: nil)
     }
     
     @objc func handleApplicationWillTerminateNotification(_ notification: Notification)

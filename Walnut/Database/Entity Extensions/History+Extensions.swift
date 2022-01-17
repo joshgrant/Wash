@@ -17,9 +17,4 @@ extension History
             eventTypeRaw = newValue.rawValue
         }
     }
-    
-    var valueDescription: String
-    {
-        source?.description ?? ""
-    }
 }

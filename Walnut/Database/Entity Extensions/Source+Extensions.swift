@@ -7,8 +7,6 @@
 
 import Foundation
 
-// TODO: Let's do testing next
-
 public extension Source
 {
     var valueType: SourceValueType

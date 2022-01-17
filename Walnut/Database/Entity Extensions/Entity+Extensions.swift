@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreData
-import UIKit
 
 public extension Entity
 {
@@ -108,60 +107,6 @@ extension Entity
         {
             assertionFailure(error.localizedDescription)
             return []
-        }
-    }
-}
-
-// MARK: - Detail Controller
-
-extension Entity
-{
-    func detailController(context: Context, stream: Stream) -> UIViewController
-    {
-        switch self
-        {
-        case let s as Stock:
-            let factory = StockDetailContainer(
-                stock: s,
-                context: context,
-                stream: stream)
-            return factory.makeController()
-        case let f as Flow:
-            let container = FlowDetailContainer(
-                flow: f,
-                context: context,
-                stream: stream)
-            return container.makeController()
-        case let t as Task:
-            print("Need detail controller for: \(t)")
-            return UIViewController()
-        case let e as Event:
-            let builder = EventDetailBuilder(
-                event: e,
-                context: context,
-                stream: stream)
-            return builder.makeController()
-        case let c as Conversion:
-            print("Need detail controller for: \(c)")
-            return UIViewController()
-        case let c as Condition:
-            print("Need detail controller for: \(c)")
-            return UIViewController()
-        case let s as Symbol:
-            let container = SymbolControllerContainer(symbol: s, stream: stream)
-            return container.makeController()
-        case let n as Note:
-            print("Need detail controller for: \(n)")
-            return UIViewController()
-        case let u as Unit:
-            let builder = UnitDetailBuilder(
-                unit: u,
-                context: context,
-                stream: stream)
-            return builder.makeController()
-        default:
-            assertionFailure("Unhandled entity: \(self)")
-            return UIViewController()
         }
     }
 }
