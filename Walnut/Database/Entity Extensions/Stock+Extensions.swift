@@ -12,44 +12,12 @@ extension Stock: Pinnable {}
 
 extension Stock
 {
-//    public override func awakeFromInsert()
-//    {
-//        super.awakeFromInsert()
-//        
-//        guard let context = managedObjectContext else { fatalError() }
-        
-//        if source == nil
-//        {
-//            let source = Source(context: context)
-//            source.value = 0
-//            source.valueType = .number
-//            self.source = source
-//        }
-//
-//        if ideal == nil
-//        {
-//            let ideal = Source(context: context)
-//            ideal.value = 0
-//            ideal.valueType = .number
-//            self.ideal = ideal
-//        }
-//
-//        if minimum == nil
-//        {
-//            let minimum = Source(context: context)
-//            minimum.value = 0
-//            minimum.valueType = .number
-//            self.minimum = minimum
-//        }
-//
-//        if maximum == nil
-//        {
-//            let maximum = Source(context: context)
-//            maximum.value = 0
-//            maximum.valueType = .number
-//            self.maximum = maximum
-//        }
-//    }
+    public override var description: String
+    {
+        let name = unwrappedName ?? ""
+        let icon = Icon.stock.textIcon()
+        return "\(icon) \(name)"
+    }
 }
 
 extension Stock

@@ -10,7 +10,6 @@ import CoreData
 
 public enum EntityType
 {
-//    case system
     case stock
     case flow
     case task
@@ -24,7 +23,6 @@ public enum EntityType
     static var libraryVisible: [EntityType]
     {
         [
-//            .system,
             .stock,
             .flow,
             .task,
@@ -41,10 +39,9 @@ public enum EntityType
     {
         switch self
         {
-//        case .system: return "Systems".localized
         case .stock: return "Stocks".localized
         case .flow: return "Flows".localized
-        case .task: return "Tasks".localized // TODO: Maybe UI-facing should be "Process" just because it's clearer
+        case .task: return "Tasks".localized
         case .event: return "Events".localized
         case .conversion: return "Conversions".localized
         case .condition: return "Conditions".localized
@@ -54,28 +51,26 @@ public enum EntityType
         }
     }
     
-//    var icon: Icon
-//    {
-//        switch self
-//        {
-////        case .system: return .system
-//        case .stock: return .stock
-//        case .flow: return .flow
-//        case .task: return .task
-//        case .event: return .event
-//        case .conversion: return .conversion
-//        case .condition: return .condition
-//        case .symbol: return .symbol
-//        case .note: return .note
-//        case .unit: return .unit
-//        }
-//    }
+    var icon: Icon
+    {
+        switch self
+        {
+        case .stock: return .stock
+        case .flow: return .flow
+        case .task: return .task
+        case .event: return .event
+        case .conversion: return .conversion
+        case .condition: return .condition
+        case .symbol: return .symbol
+        case .note: return .note
+        case .unit: return .unit
+        }
+    }
     
     var managedObjectType: Entity.Type
     {
         switch self
         {
-//        case .system: return System.self
         case .stock: return Stock.self
         case .flow: return Flow.self
         case .task: return Task.self
@@ -112,7 +107,6 @@ public enum EntityType
     {
         switch entityType
         {
-//        case is System.Type: return .system
         case is Stock.Type: return .stock
         case is Flow.Type: return .flow
         case is Task.Type: return .task
@@ -131,7 +125,6 @@ public enum EntityType
     {
         switch entity
         {
-//        case is System: return .system
         case is Stock: return .stock
         case is Flow: return .flow
         case is Task: return .task
@@ -145,21 +138,6 @@ public enum EntityType
             return nil
         }
     }
-    
-//    func newController(context: Context, stream: Stream) -> UIViewController
-//    {
-//        switch self
-//        {
-//        case .unit:
-//            let container = NewUnitContainer(context: context, stream: stream)
-//            return container.makeController()
-//        case .stock:
-//            let container = NewStockControllerContainer(context: context, stream: stream)
-//            return container.makeController()
-//        default:
-//            fatalError("No controller")
-//        }
-//    }
 }
 
 extension EntityType: CaseIterable {}

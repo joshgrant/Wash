@@ -13,11 +13,28 @@ extension Event: Pinnable {}
 
 public extension Event
 {
-    var conditionType: ConditionType {
-        get {
+    override var description: String {
+        dashboardDescription
+    }
+    
+    var dashboardDescription: String
+    {
+        let name = unwrappedName ?? ""
+        let icon = Icon.event.textIcon()
+        return "\(icon) \(name)"
+    }
+}
+
+public extension Event
+{
+    var conditionType: ConditionType
+    {
+        get
+        {
             ConditionType(rawValue: conditionTypeRaw) ?? .fallback
         }
-        set {
+        set
+        {
             conditionTypeRaw = newValue.rawValue
         }
     }

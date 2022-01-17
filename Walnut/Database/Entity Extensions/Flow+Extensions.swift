@@ -14,6 +14,21 @@ extension Flow: Pinnable {}
 // TODO: Flow "amounts" can be dynamic or static - i.e for some "user-completed" flows
 // the amount should be "enterable" like - how much water did you just drinik?
 
+public extension Flow
+{
+    override var description: String
+    {
+        dashboardDescription
+    }
+    
+    var dashboardDescription: String
+    {
+        let name = unwrappedName ?? ""
+        let icon = Icon.flow.textIcon()
+        return "\(icon) \(name)"
+    }
+}
+
 extension Flow
 {
     // We're taking a different approach for suggestions. Rather than have it be a property,
