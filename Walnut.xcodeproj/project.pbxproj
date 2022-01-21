@@ -104,10 +104,10 @@
 		03FE67A1279519D300556CB7 /* Fakery in Frameworks */ = {isa = PBXBuildFile; productRef = 03FE67A0279519D300556CB7 /* Fakery */; };
 		03FE67A32795ED9100556CB7 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A22795ED9100556CB7 /* Icon.swift */; };
 		03FE67A62795F39200556CB7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A52795F39200556CB7 /* DashboardView.swift */; };
-		03FE67A82795F39B00556CB7 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A72795F39B00556CB7 /* View.swift */; };
-		03FE67AA2795F3A400556CB7 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A92795F3A400556CB7 /* Command.swift */; };
 		03FE67AC2796061F00556CB7 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AB2796061F00556CB7 /* LibraryView.swift */; };
 		03FE67AE2796083000556CB7 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AD2796083000556CB7 /* TabBar.swift */; };
+		03FE67B027960AC000556CB7 /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AF27960AC000556CB7 /* StockDetailView.swift */; };
+		03FE67EC279B340B00556CB7 /* Protyper in Frameworks */ = {isa = PBXBuildFile; productRef = 03FE67EB279B340B00556CB7 /* Protyper */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -220,10 +220,10 @@
 		03FE679D279518EC00556CB7 /* NewStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewStateModel.swift; sourceTree = "<group>"; };
 		03FE67A22795ED9100556CB7 /* Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		03FE67A52795F39200556CB7 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
-		03FE67A72795F39B00556CB7 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		03FE67A92795F3A400556CB7 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		03FE67AB2796061F00556CB7 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		03FE67AD2796083000556CB7 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		03FE67AF27960AC000556CB7 /* StockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
+		03FE67E9279B33F000556CB7 /* Protyper */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Protyper; path = ../Protyper; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FE67A1279519D300556CB7 /* Fakery in Frameworks */,
+				03FE67EC279B340B00556CB7 /* Protyper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +242,7 @@
 		03797368279512F7000FE2E4 = {
 			isa = PBXGroup;
 			children = (
+				03FE67E9279B33F000556CB7 /* Protyper */,
 				03797373279512F7000FE2E4 /* Walnut */,
 				03797372279512F7000FE2E4 /* Products */,
 			);
@@ -416,11 +418,10 @@
 		03FE67A42795F38600556CB7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				03FE67A92795F3A400556CB7 /* Command.swift */,
 				03FE67A52795F39200556CB7 /* DashboardView.swift */,
 				03FE67AB2796061F00556CB7 /* LibraryView.swift */,
-				03FE67A72795F39B00556CB7 /* View.swift */,
 				03FE67AD2796083000556CB7 /* TabBar.swift */,
+				03FE67AF27960AC000556CB7 /* StockDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -443,6 +444,7 @@
 			name = Walnut;
 			packageProductDependencies = (
 				03FE67A0279519D300556CB7 /* Fakery */,
+				03FE67EB279B340B00556CB7 /* Protyper */,
 			);
 			productName = Walnut;
 			productReference = 03797371279512F7000FE2E4 /* Walnut */;
@@ -475,6 +477,7 @@
 			mainGroup = 03797368279512F7000FE2E4;
 			packageReferences = (
 				03FE679F279519D300556CB7 /* XCRemoteSwiftPackageReference "Fakery" */,
+				03FE67EA279B340B00556CB7 /* XCRemoteSwiftPackageReference "Protyper" */,
 			);
 			productRefGroup = 03797372279512F7000FE2E4 /* Products */;
 			projectDirPath = "";
@@ -500,7 +503,6 @@
 				03FE6782279517DE00556CB7 /* Stock+CoreDataProperties.swift in Sources */,
 				03C0945C2795152E0067B16C /* Context.swift in Sources */,
 				03C094502795152E0067B16C /* Double+Extensions.swift in Sources */,
-				03FE67A82795F39B00556CB7 /* View.swift in Sources */,
 				03C094512795152E0067B16C /* Notifiable.swift in Sources */,
 				03C094542795152E0067B16C /* Router.swift in Sources */,
 				03FE6786279517DE00556CB7 /* Color+CoreDataProperties.swift in Sources */,
@@ -536,6 +538,7 @@
 				03FE6785279517DE00556CB7 /* Color+CoreDataClass.swift in Sources */,
 				03C0943D2795152E0067B16C /* StateMachine.swift in Sources */,
 				03C094442795152E0067B16C /* Unique.swift in Sources */,
+				03FE67B027960AC000556CB7 /* StockDetailView.swift in Sources */,
 				03C094552795152E0067B16C /* Searchable.swift in Sources */,
 				03C094372795152E0067B16C /* Observer.swift in Sources */,
 				03C0947B2795152E0067B16C /* Stock+Extensions.swift in Sources */,
@@ -559,7 +562,6 @@
 				03FE678C279517DE00556CB7 /* History+CoreDataProperties.swift in Sources */,
 				03C0945E2795152E0067B16C /* State+Extensions.swift in Sources */,
 				03C0944C2795152E0067B16C /* String+Extensions.swift in Sources */,
-				03FE67AA2795F3A400556CB7 /* Command.swift in Sources */,
 				03C094592795152E0067B16C /* Factory.swift in Sources */,
 				03FE6799279517DE00556CB7 /* Conversion+CoreDataClass.swift in Sources */,
 				03FE678A279517DE00556CB7 /* State+CoreDataProperties.swift in Sources */,
@@ -778,6 +780,14 @@
 				kind = branch;
 			};
 		};
+		03FE67EA279B340B00556CB7 /* XCRemoteSwiftPackageReference "Protyper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/joshgrant/Protyper";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -785,6 +795,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 03FE679F279519D300556CB7 /* XCRemoteSwiftPackageReference "Fakery" */;
 			productName = Fakery;
+		};
+		03FE67EB279B340B00556CB7 /* Protyper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03FE67EA279B340B00556CB7 /* XCRemoteSwiftPackageReference "Protyper" */;
+			productName = Protyper;
 		};
 /* End XCSwiftPackageProductDependency section */
 

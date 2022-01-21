@@ -12,13 +12,6 @@ var stream = Stream(identifier: .main)
 
 let dashboard = DashboardView(context: database.context)
 let library = LibraryView(context: database.context)
-//dashboard.display()
-//if let response = readLine()
-//{
-//    dashboard.handle(input: response)
-//}
-//dashboard.display()
-
 var loop = true
 
 var tabBar = TabBar(tabs: [dashboard, library])

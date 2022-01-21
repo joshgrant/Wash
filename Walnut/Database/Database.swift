@@ -64,20 +64,3 @@ public extension Database
         context.quickSave()
     }
 }
-
-extension Database
-{
-    func handleNotifications()
-    {
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(handleApplicationWillTerminateNotification(_:)),
-//            name: UIApplication.willTerminateNotification,
-//            object: nil)
-    }
-    
-    @objc func handleApplicationWillTerminateNotification(_ notification: Notification)
-    {
-        context.quickSave()
-    }
-}

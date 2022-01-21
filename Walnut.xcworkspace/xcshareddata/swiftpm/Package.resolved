@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Fakery",
+        "repositoryURL": "https://github.com/vadymmarkov/Fakery",
+        "state": {
+          "branch": "master",
+          "revision": "71cb3bf36a808534659d1248780c2bf3c4c4fc91",
+          "version": null
+        }
+      },
+      {
+        "package": "Protyper",
+        "repositoryURL": "https://github.com/joshgrant/Protyper",
+        "state": {
+          "branch": "main",
+          "revision": "77e205f5ac82e24460a0019a731c25e3c974bcaf",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

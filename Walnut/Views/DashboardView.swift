@@ -81,7 +81,15 @@ class DashboardView: View
         case (.some(let s), .some(let r), nil):
             let entity = entity(at: s, row: r)
             // Route to detail screen
-            print("Routing to detail screen of: \(entity)")
+            switch entity
+            {
+            case is Stock:
+                let stockDetailView = StockDetailView(context: context)
+                // Push onto the stack... right?
+                // Maybe we should get a basic navigational structure first...
+            default:
+                break
+            }
         default:
             print("Invalid command. Press 'h' for help.")
         }
