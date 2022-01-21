@@ -62,14 +62,13 @@ class DashboardViewController: ViewController
     
     override func handle(command: Command)
     {
+        guard let command = TableSelectionCommand(command: command) else {
+            return super.handle(command: command)
+        }
         
-    }
-    
-    func handle(section: Int?, row: Int?, command: String?)
-    {
-        print(section ?? -1, row ?? -1, command ?? "")
+        print(command.section ?? -1, command.row ?? -1, command.action ?? "")
         
-        switch (section, row, command)
+        switch (command.section, command.row, command.action)
         {
         case (_, _, "h"):
             print("No help yet, sorry.")
