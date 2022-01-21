@@ -6,16 +6,18 @@
 //
 
 import Foundation
+import Protyper
 
 var database = Database()
 var stream = Stream(identifier: .main)
 
-let dashboard = DashboardView(context: database.context)
-let library = LibraryView(context: database.context)
-var loop = true
+let dashboard = NavigationController(root: DashboardViewController(context: database.context))
+let library = NavigationController(root: LibraryViewController(context: database.context))
 
-var tabBar = TabBar(tabs: [dashboard, library])
-tabBar.display()
+let tabBarController = MainTabBarController(tabs: [dashboard, library])
+tabBarController.display()
+
+var loop = true
 
 while(loop)
 {
@@ -29,8 +31,9 @@ while(loop)
         database.context.quickSave()
         print("Done! Have a nice day.")
     default:
-        tabBar.handle(input: input)
-        tabBar.display()
+        let command = Command(rawString: input)
+        tabBarController.handle(command: command)
+        tabBarController.display()
     }
 }
 

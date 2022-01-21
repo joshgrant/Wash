@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Protyper
 
-class DashboardView: View
+class DashboardViewController: ViewController
 {
     var context: Context
     
@@ -18,6 +19,7 @@ class DashboardView: View
     init(context: Context)
     {
         self.context = context
+        super.init(title: "Dashboard", view: View())
     }
     
     func reload()
@@ -27,7 +29,7 @@ class DashboardView: View
         suggestedFlows = getSuggestedFlows()
     }
     
-    func display()
+    override func display()
     {
         reload()
         /// 1. Pinned
@@ -56,6 +58,11 @@ class DashboardView: View
             print("\(item.offset + 1): \(item.element.dashboardDescription)")
         }
         print("")
+    }
+    
+    override func handle(command: Command)
+    {
+        
     }
     
     func handle(section: Int?, row: Int?, command: String?)

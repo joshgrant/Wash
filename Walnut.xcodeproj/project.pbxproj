@@ -105,7 +105,7 @@
 		03FE67A32795ED9100556CB7 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A22795ED9100556CB7 /* Icon.swift */; };
 		03FE67A62795F39200556CB7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A52795F39200556CB7 /* DashboardView.swift */; };
 		03FE67AC2796061F00556CB7 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AB2796061F00556CB7 /* LibraryView.swift */; };
-		03FE67AE2796083000556CB7 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AD2796083000556CB7 /* TabBar.swift */; };
+		03FE67AE2796083000556CB7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AD2796083000556CB7 /* MainTabBarController.swift */; };
 		03FE67B027960AC000556CB7 /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AF27960AC000556CB7 /* StockDetailView.swift */; };
 		03FE67EC279B340B00556CB7 /* Protyper in Frameworks */ = {isa = PBXBuildFile; productRef = 03FE67EB279B340B00556CB7 /* Protyper */; };
 /* End PBXBuildFile section */
@@ -221,7 +221,7 @@
 		03FE67A22795ED9100556CB7 /* Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		03FE67A52795F39200556CB7 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		03FE67AB2796061F00556CB7 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
-		03FE67AD2796083000556CB7 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		03FE67AD2796083000556CB7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		03FE67AF27960AC000556CB7 /* StockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
 		03FE67E9279B33F000556CB7 /* Protyper */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Protyper; path = ../Protyper; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -420,7 +420,7 @@
 			children = (
 				03FE67A52795F39200556CB7 /* DashboardView.swift */,
 				03FE67AB2796061F00556CB7 /* LibraryView.swift */,
-				03FE67AD2796083000556CB7 /* TabBar.swift */,
+				03FE67AD2796083000556CB7 /* MainTabBarController.swift */,
 				03FE67AF27960AC000556CB7 /* StockDetailView.swift */,
 			);
 			path = Views;
@@ -511,7 +511,7 @@
 				03C0944A2795152E0067B16C /* DateFormatter+Extensions.swift in Sources */,
 				03C094472795152E0067B16C /* Array+Extensions.swift in Sources */,
 				03C0947C2795152E0067B16C /* Conversion+Extensions.swift in Sources */,
-				03FE67AE2796083000556CB7 /* TabBar.swift in Sources */,
+				03FE67AE2796083000556CB7 /* MainTabBarController.swift in Sources */,
 				03C094362795152E0067B16C /* Note+Extensions.swift in Sources */,
 				03FE6788279517DE00556CB7 /* Condition+CoreDataProperties.swift in Sources */,
 				03C0944E2795152E0067B16C /* Bundle+Extensions.swift in Sources */,

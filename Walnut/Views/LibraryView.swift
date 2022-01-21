@@ -6,17 +6,19 @@
 //
 
 import Foundation
+import Protyper
 
-class LibraryView: View
+class LibraryViewController: ViewController
 {
     var context: Context
     
     init(context: Context)
     {
         self.context = context
+        super.init(title: "Library", view: View())
     }
     
-    func display()
+    override func display()
     {
         EntityType.libraryVisible.enumerated().forEach { item in
             let index = item.offset + 1
@@ -27,8 +29,7 @@ class LibraryView: View
         }
     }
     
-    func handle(section: Int?, row: Int?, command: String?)
-    {
+    override func handle(command: Command) {
         
     }
 }

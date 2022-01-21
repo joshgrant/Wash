@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Protyper
 
 class StockDetailView: View
 {
@@ -14,15 +15,11 @@ class StockDetailView: View
     init(context: Context)
     {
         self.context = context
+        super.init()
     }
     
-    func display()
+    override func display()
     {
-        
-    }
-    
-    func handle(section: Int?, row: Int?, command: String?)
-    {
-        
+        print("Stock Detail View")
     }
 }
