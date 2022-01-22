@@ -24,7 +24,7 @@ public extension Flow
     var dashboardDescription: String
     {
         let name = unwrappedName ?? ""
-        let icon = Icon.flow.textIcon()
+        let icon = Icon.flow.text
         return "\(icon) \(name)"
     }
 }

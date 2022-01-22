@@ -15,7 +15,7 @@ extension Stock
     public override var description: String
     {
         let name = unwrappedName ?? ""
-        let icon = Icon.stock.textIcon()
+        let icon = Icon.stock.text
         return "\(icon) \(name)"
     }
 }

@@ -24,7 +24,7 @@ class LibraryViewController: ViewController
             let index = item.offset + 1
             let name = item.element.title
             let count = item.element.count(in: context)
-            let icon = item.element.icon.textIcon()
+            let icon = item.element.icon.text
             print("\(index): \(icon) \(name) (\(count))")
         }
     }

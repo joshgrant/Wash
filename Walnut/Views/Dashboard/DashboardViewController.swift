@@ -1,5 +1,5 @@
 //
-//  DashboardView.swift
+//  DashboardViewController.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 1/17/22.
@@ -33,7 +33,7 @@ class DashboardViewController: ViewController
     {
         reload()
         /// 1. Pinned
-        print("1. \(Icon.pinFill.textIcon()) PINNED")
+        print("1. \(Icon.pinFill.text) PINNED")
         print("–––––––––––––––––––––––––––––––––")
         for item in pinnedItems.enumerated()
         {
@@ -42,7 +42,7 @@ class DashboardViewController: ViewController
         print("")
         
         /// 2. Forecast
-        print("2. \(Icon.event.textIcon()) FORECAST")
+        print("2. \(Icon.event.text) FORECAST")
         print("–––––––––––––––––––––––––––––––––")
         for item in forecast.enumerated()
         {
@@ -51,7 +51,7 @@ class DashboardViewController: ViewController
         print("")
         
         /// 3. Suggested Flows
-        print("3. \(Icon.flow.textIcon()) SUGGESTED FLOWS")
+        print("3. \(Icon.flow.text) SUGGESTED FLOWS")
         print("–––––––––––––––––––––––––––––––––")
         for item in suggestedFlows.enumerated()
         {
@@ -89,10 +89,9 @@ class DashboardViewController: ViewController
             // Route to detail screen
             switch entity
             {
-            case is Stock:
-                let stockDetailView = StockDetailView(context: context)
-                // Push onto the stack... right?
-                // Maybe we should get a basic navigational structure first...
+            case let s as Stock:
+                let controller = StockDetailViewController(stock: s)
+                navigationController?.push(controller: controller)
             default:
                 break
             }

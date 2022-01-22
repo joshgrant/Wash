@@ -103,10 +103,10 @@
 		03FE679E279518ED00556CB7 /* NewStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE679D279518EC00556CB7 /* NewStateModel.swift */; };
 		03FE67A1279519D300556CB7 /* Fakery in Frameworks */ = {isa = PBXBuildFile; productRef = 03FE67A0279519D300556CB7 /* Fakery */; };
 		03FE67A32795ED9100556CB7 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A22795ED9100556CB7 /* Icon.swift */; };
-		03FE67A62795F39200556CB7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A52795F39200556CB7 /* DashboardView.swift */; };
+		03FE67A62795F39200556CB7 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A52795F39200556CB7 /* DashboardViewController.swift */; };
 		03FE67AC2796061F00556CB7 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AB2796061F00556CB7 /* LibraryView.swift */; };
 		03FE67AE2796083000556CB7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AD2796083000556CB7 /* MainTabBarController.swift */; };
-		03FE67B027960AC000556CB7 /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AF27960AC000556CB7 /* StockDetailView.swift */; };
+		03FE67B027960AC000556CB7 /* StockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AF27960AC000556CB7 /* StockDetailViewController.swift */; };
 		03FE67EC279B340B00556CB7 /* Protyper in Frameworks */ = {isa = PBXBuildFile; productRef = 03FE67EB279B340B00556CB7 /* Protyper */; };
 /* End PBXBuildFile section */
 
@@ -219,10 +219,10 @@
 		03FE677E279517DE00556CB7 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		03FE679D279518EC00556CB7 /* NewStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewStateModel.swift; sourceTree = "<group>"; };
 		03FE67A22795ED9100556CB7 /* Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
-		03FE67A52795F39200556CB7 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		03FE67A52795F39200556CB7 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		03FE67AB2796061F00556CB7 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		03FE67AD2796083000556CB7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		03FE67AF27960AC000556CB7 /* StockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
+		03FE67AF27960AC000556CB7 /* StockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
 		03FE67E9279B33F000556CB7 /* Protyper */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Protyper; path = ../Protyper; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -265,6 +265,14 @@
 				03C093E72795152D0067B16C /* Framework */,
 			);
 			path = Walnut;
+			sourceTree = "<group>";
+		};
+		03AE7B7E279B3F340099D6F5 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				03FE67A52795F39200556CB7 /* DashboardViewController.swift */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		03C093E72795152D0067B16C /* Framework */ = {
@@ -418,10 +426,10 @@
 		03FE67A42795F38600556CB7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				03FE67A52795F39200556CB7 /* DashboardView.swift */,
+				03AE7B7E279B3F340099D6F5 /* Dashboard */,
 				03FE67AB2796061F00556CB7 /* LibraryView.swift */,
 				03FE67AD2796083000556CB7 /* MainTabBarController.swift */,
-				03FE67AF27960AC000556CB7 /* StockDetailView.swift */,
+				03FE67AF27960AC000556CB7 /* StockDetailViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -538,14 +546,14 @@
 				03FE6785279517DE00556CB7 /* Color+CoreDataClass.swift in Sources */,
 				03C0943D2795152E0067B16C /* StateMachine.swift in Sources */,
 				03C094442795152E0067B16C /* Unique.swift in Sources */,
-				03FE67B027960AC000556CB7 /* StockDetailView.swift in Sources */,
+				03FE67B027960AC000556CB7 /* StockDetailViewController.swift in Sources */,
 				03C094552795152E0067B16C /* Searchable.swift in Sources */,
 				03C094372795152E0067B16C /* Observer.swift in Sources */,
 				03C0947B2795152E0067B16C /* Stock+Extensions.swift in Sources */,
 				03C094582795152E0067B16C /* SourceValueType.swift in Sources */,
 				03FE6784279517DE00556CB7 /* Block+CoreDataProperties.swift in Sources */,
 				03C0945A2795152E0067B16C /* ComparisonType.swift in Sources */,
-				03FE67A62795F39200556CB7 /* DashboardView.swift in Sources */,
+				03FE67A62795F39200556CB7 /* DashboardViewController.swift in Sources */,
 				03C0946A2795152E0067B16C /* NSFetchedResultsController+Extensions.swift in Sources */,
 				03C094402795152E0067B16C /* Message.swift in Sources */,
 				03FE6796279517DE00556CB7 /* Unit+CoreDataProperties.swift in Sources */,

@@ -57,7 +57,7 @@ public enum Icon: String
     
     var image: NSImage? { .init(systemSymbolName: rawValue, accessibilityDescription: nil) }
     
-    public func textIcon() -> String
+    public var text: String
     {
         switch self
         {

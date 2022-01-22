@@ -20,7 +20,7 @@ public extension Event
     var dashboardDescription: String
     {
         let name = unwrappedName ?? ""
-        let icon = Icon.event.textIcon()
+        let icon = Icon.event.text
         return "\(icon) \(name)"
     }
 }
