@@ -1,5 +1,5 @@
 //
-//  LibraryView.swift
+//  LibraryViewController.swift
 //  Walnut
 //
 //  Created by Joshua Grant on 1/17/22.
@@ -29,7 +29,12 @@ class LibraryViewController: ViewController
         }
     }
     
-    override func handle(command: Command) {
-        
+    override func handle(command: Command)
+    {
+        guard let command = TableSelectionCommand(command: command) else { return }
+        guard let row = command.row else { return }
+        let type = EntityType.libraryVisible[row - 1]
+        let controller = EntityListViewController(entityType: type, context: context)
+        navigationController?.push(controller: controller)
     }
 }

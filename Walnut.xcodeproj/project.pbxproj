@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03AE7B8E279CC9B70099D6F5 /* ConditionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B8D279CC9B70099D6F5 /* ConditionDetailViewController.swift */; };
+		03AE7B92279CC9CB0099D6F5 /* ConversionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B91279CC9CB0099D6F5 /* ConversionDetailViewController.swift */; };
+		03AE7B96279CC9D90099D6F5 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B95279CC9D90099D6F5 /* EventDetailViewController.swift */; };
+		03AE7B98279CC9EB0099D6F5 /* EntityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */; };
+		03AE7B9A279CC9F10099D6F5 /* FlowDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B99279CC9F10099D6F5 /* FlowDetailViewController.swift */; };
+		03AE7B9C279CC9F80099D6F5 /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B9B279CC9F80099D6F5 /* NoteDetailViewController.swift */; };
+		03AE7B9E279CC9FF0099D6F5 /* SymbolDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B9D279CC9FF0099D6F5 /* SymbolDetailViewController.swift */; };
+		03AE7BA0279CCA060099D6F5 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B9F279CCA060099D6F5 /* TaskDetailViewController.swift */; };
+		03AE7BA2279CCA0E0099D6F5 /* UnitDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7BA1279CCA0E0099D6F5 /* UnitDetailViewController.swift */; };
 		03C094362795152E0067B16C /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C093E62795152D0067B16C /* Note+Extensions.swift */; };
 		03C094372795152E0067B16C /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C093E82795152D0067B16C /* Observer.swift */; };
 		03C094382795152E0067B16C /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C093E92795152D0067B16C /* Random.swift */; };
@@ -104,7 +113,7 @@
 		03FE67A1279519D300556CB7 /* Fakery in Frameworks */ = {isa = PBXBuildFile; productRef = 03FE67A0279519D300556CB7 /* Fakery */; };
 		03FE67A32795ED9100556CB7 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A22795ED9100556CB7 /* Icon.swift */; };
 		03FE67A62795F39200556CB7 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A52795F39200556CB7 /* DashboardViewController.swift */; };
-		03FE67AC2796061F00556CB7 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AB2796061F00556CB7 /* LibraryView.swift */; };
+		03FE67AC2796061F00556CB7 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AB2796061F00556CB7 /* LibraryViewController.swift */; };
 		03FE67AE2796083000556CB7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AD2796083000556CB7 /* MainTabBarController.swift */; };
 		03FE67B027960AC000556CB7 /* StockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AF27960AC000556CB7 /* StockDetailViewController.swift */; };
 		03FE67EC279B340B00556CB7 /* Protyper in Frameworks */ = {isa = PBXBuildFile; productRef = 03FE67EB279B340B00556CB7 /* Protyper */; };
@@ -124,6 +133,15 @@
 
 /* Begin PBXFileReference section */
 		03797371279512F7000FE2E4 /* Walnut */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Walnut; sourceTree = BUILT_PRODUCTS_DIR; };
+		03AE7B8D279CC9B70099D6F5 /* ConditionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionDetailViewController.swift; sourceTree = "<group>"; };
+		03AE7B91279CC9CB0099D6F5 /* ConversionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionDetailViewController.swift; sourceTree = "<group>"; };
+		03AE7B95279CC9D90099D6F5 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListViewController.swift; sourceTree = "<group>"; };
+		03AE7B99279CC9F10099D6F5 /* FlowDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowDetailViewController.swift; sourceTree = "<group>"; };
+		03AE7B9B279CC9F80099D6F5 /* NoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
+		03AE7B9D279CC9FF0099D6F5 /* SymbolDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolDetailViewController.swift; sourceTree = "<group>"; };
+		03AE7B9F279CCA060099D6F5 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		03AE7BA1279CCA0E0099D6F5 /* UnitDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDetailViewController.swift; sourceTree = "<group>"; };
 		03C093E62795152D0067B16C /* Note+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
 		03C093E82795152D0067B16C /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		03C093E92795152D0067B16C /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
@@ -220,7 +238,7 @@
 		03FE679D279518EC00556CB7 /* NewStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewStateModel.swift; sourceTree = "<group>"; };
 		03FE67A22795ED9100556CB7 /* Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		03FE67A52795F39200556CB7 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
-		03FE67AB2796061F00556CB7 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		03FE67AB2796061F00556CB7 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		03FE67AD2796083000556CB7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		03FE67AF27960AC000556CB7 /* StockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
 		03FE67E9279B33F000556CB7 /* Protyper */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Protyper; path = ../Protyper; sourceTree = "<group>"; };
@@ -260,7 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				03C094232795152E0067B16C /* main.swift */,
-				03FE67A42795F38600556CB7 /* Views */,
+				03FE67A42795F38600556CB7 /* Controllers */,
 				03C09480279515A10067B16C /* Database */,
 				03C093E72795152D0067B16C /* Framework */,
 			);
@@ -273,6 +291,95 @@
 				03FE67A52795F39200556CB7 /* DashboardViewController.swift */,
 			);
 			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		03AE7B81279CC9710099D6F5 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */,
+				03AE7B87279CC9950099D6F5 /* Condition */,
+				03AE7B86279CC9910099D6F5 /* Conversion */,
+				03AE7B85279CC98D0099D6F5 /* Event */,
+				03AE7B83279CC9850099D6F5 /* Flow */,
+				03AE7B89279CC99D0099D6F5 /* Note */,
+				03AE7B82279CC97F0099D6F5 /* Stock */,
+				03AE7B88279CC9990099D6F5 /* Symbol */,
+				03AE7B84279CC9890099D6F5 /* Task */,
+				03AE7B8A279CC9A10099D6F5 /* Unit */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		03AE7B82279CC97F0099D6F5 /* Stock */ = {
+			isa = PBXGroup;
+			children = (
+				03FE67AF27960AC000556CB7 /* StockDetailViewController.swift */,
+			);
+			path = Stock;
+			sourceTree = "<group>";
+		};
+		03AE7B83279CC9850099D6F5 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7B99279CC9F10099D6F5 /* FlowDetailViewController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		03AE7B84279CC9890099D6F5 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7B9F279CCA060099D6F5 /* TaskDetailViewController.swift */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		03AE7B85279CC98D0099D6F5 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7B95279CC9D90099D6F5 /* EventDetailViewController.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		03AE7B86279CC9910099D6F5 /* Conversion */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7B91279CC9CB0099D6F5 /* ConversionDetailViewController.swift */,
+			);
+			path = Conversion;
+			sourceTree = "<group>";
+		};
+		03AE7B87279CC9950099D6F5 /* Condition */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7B8D279CC9B70099D6F5 /* ConditionDetailViewController.swift */,
+			);
+			path = Condition;
+			sourceTree = "<group>";
+		};
+		03AE7B88279CC9990099D6F5 /* Symbol */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7B9D279CC9FF0099D6F5 /* SymbolDetailViewController.swift */,
+			);
+			path = Symbol;
+			sourceTree = "<group>";
+		};
+		03AE7B89279CC99D0099D6F5 /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7B9B279CC9F80099D6F5 /* NoteDetailViewController.swift */,
+			);
+			path = Note;
+			sourceTree = "<group>";
+		};
+		03AE7B8A279CC9A10099D6F5 /* Unit */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7BA1279CCA0E0099D6F5 /* UnitDetailViewController.swift */,
+			);
+			path = Unit;
 			sourceTree = "<group>";
 		};
 		03C093E72795152D0067B16C /* Framework */ = {
@@ -423,15 +530,15 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
-		03FE67A42795F38600556CB7 /* Views */ = {
+		03FE67A42795F38600556CB7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				03AE7B81279CC9710099D6F5 /* Entities */,
 				03AE7B7E279B3F340099D6F5 /* Dashboard */,
-				03FE67AB2796061F00556CB7 /* LibraryView.swift */,
+				03FE67AB2796061F00556CB7 /* LibraryViewController.swift */,
 				03FE67AD2796083000556CB7 /* MainTabBarController.swift */,
-				03FE67AF27960AC000556CB7 /* StockDetailViewController.swift */,
 			);
-			path = Views;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -506,6 +613,7 @@
 				03FE6789279517DE00556CB7 /* State+CoreDataClass.swift in Sources */,
 				03C0944D2795152E0067B16C /* NSSet+Extensions.swift in Sources */,
 				03C0947A2795152E0067B16C /* Flow+Extensions.swift in Sources */,
+				03AE7BA0279CCA060099D6F5 /* TaskDetailViewController.swift in Sources */,
 				03C094662795152E0067B16C /* ContextPopulator.swift in Sources */,
 				03C094482795152E0067B16C /* Int+Extensions.swift in Sources */,
 				03FE6782279517DE00556CB7 /* Stock+CoreDataProperties.swift in Sources */,
@@ -514,10 +622,12 @@
 				03C094512795152E0067B16C /* Notifiable.swift in Sources */,
 				03C094542795152E0067B16C /* Router.swift in Sources */,
 				03FE6786279517DE00556CB7 /* Color+CoreDataProperties.swift in Sources */,
+				03AE7B98279CC9EB0099D6F5 /* EntityListViewController.swift in Sources */,
 				03C0946F2795152E0067B16C /* main.swift in Sources */,
 				03C0944F2795152E0067B16C /* Date+Extensions.swift in Sources */,
 				03C0944A2795152E0067B16C /* DateFormatter+Extensions.swift in Sources */,
 				03C094472795152E0067B16C /* Array+Extensions.swift in Sources */,
+				03AE7BA2279CCA0E0099D6F5 /* UnitDetailViewController.swift in Sources */,
 				03C0947C2795152E0067B16C /* Conversion+Extensions.swift in Sources */,
 				03FE67AE2796083000556CB7 /* MainTabBarController.swift in Sources */,
 				03C094362795152E0067B16C /* Note+Extensions.swift in Sources */,
@@ -535,13 +645,14 @@
 				03C094492795152E0067B16C /* Notification.Name+Extensions.swift in Sources */,
 				03FE6781279517DE00556CB7 /* Stock+CoreDataClass.swift in Sources */,
 				03C094462795152E0067B16C /* ConditionType.swift in Sources */,
+				03AE7B9A279CC9F10099D6F5 /* FlowDetailViewController.swift in Sources */,
 				03FE6780279517DE00556CB7 /* Note+CoreDataProperties.swift in Sources */,
 				03FE675D2795171600556CB7 /* TransitionType.swift in Sources */,
 				03FE6794279517DE00556CB7 /* Task+CoreDataProperties.swift in Sources */,
 				03C0943F2795152E0067B16C /* Order.swift in Sources */,
 				03C094732795152E0067B16C /* Database.swift in Sources */,
 				03C094772795152E0067B16C /* Task+Extensions.swift in Sources */,
-				03FE67AC2796061F00556CB7 /* LibraryView.swift in Sources */,
+				03FE67AC2796061F00556CB7 /* LibraryViewController.swift in Sources */,
 				03C0943A2795152E0067B16C /* TimePeriod.swift in Sources */,
 				03FE6785279517DE00556CB7 /* Color+CoreDataClass.swift in Sources */,
 				03C0943D2795152E0067B16C /* StateMachine.swift in Sources */,
@@ -558,12 +669,14 @@
 				03C094402795152E0067B16C /* Message.swift in Sources */,
 				03FE6796279517DE00556CB7 /* Unit+CoreDataProperties.swift in Sources */,
 				03C094612795152E0067B16C /* Coordinator.swift in Sources */,
+				03AE7B8E279CC9B70099D6F5 /* ConditionDetailViewController.swift in Sources */,
 				03C094782795152E0067B16C /* Unit+Extensions.swift in Sources */,
 				03FE6787279517DE00556CB7 /* Condition+CoreDataClass.swift in Sources */,
 				03C0943C2795152E0067B16C /* TextSize.swift in Sources */,
 				03FE6793279517DE00556CB7 /* Task+CoreDataClass.swift in Sources */,
 				03C094522795152E0067B16C /* Priority.swift in Sources */,
 				03C094382795152E0067B16C /* Random.swift in Sources */,
+				03AE7B9E279CC9FF0099D6F5 /* SymbolDetailViewController.swift in Sources */,
 				03C0943E2795152E0067B16C /* FallbackProtocol.swift in Sources */,
 				03C094652795152E0067B16C /* Symbol+Extensions.swift in Sources */,
 				03C094572795152E0067B16C /* IdealType.swift in Sources */,
@@ -572,6 +685,7 @@
 				03C0944C2795152E0067B16C /* String+Extensions.swift in Sources */,
 				03C094592795152E0067B16C /* Factory.swift in Sources */,
 				03FE6799279517DE00556CB7 /* Conversion+CoreDataClass.swift in Sources */,
+				03AE7B92279CC9CB0099D6F5 /* ConversionDetailViewController.swift in Sources */,
 				03FE678A279517DE00556CB7 /* State+CoreDataProperties.swift in Sources */,
 				03FE679E279518ED00556CB7 /* NewStateModel.swift in Sources */,
 				03FE6792279517DE00556CB7 /* Symbol+CoreDataProperties.swift in Sources */,
@@ -589,9 +703,11 @@
 				03FE679B279517DE00556CB7 /* Event+CoreDataClass.swift in Sources */,
 				03C0946E2795152E0067B16C /* CloudKitContainer.swift in Sources */,
 				03FE679C279517DE00556CB7 /* Event+CoreDataProperties.swift in Sources */,
+				03AE7B9C279CC9F80099D6F5 /* NoteDetailViewController.swift in Sources */,
 				03C094742795152E0067B16C /* Model.xcdatamodeld in Sources */,
 				03C0947E2795152E0067B16C /* Entity+Extensions.swift in Sources */,
 				03FE6795279517DE00556CB7 /* Unit+CoreDataClass.swift in Sources */,
+				03AE7B96279CC9D90099D6F5 /* EventDetailViewController.swift in Sources */,
 				03C094682795152E0067B16C /* Named.swift in Sources */,
 				03C094792795152E0067B16C /* Event+Extensions.swift in Sources */,
 				03FE6791279517DE00556CB7 /* Symbol+CoreDataClass.swift in Sources */,
