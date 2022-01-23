@@ -221,9 +221,14 @@ class ContextPopulator
             stock.ideal?.value = values[1]
         }
         
+        for _ in 0 ..< .random(in: 0 ... 5)
+        {
+            let note = makeRandomNote(context: context)
+            stock.addToNotes(note)
+        }
+        
         stock.maximum = Source(context: context)
         stock.maximum?.value = values[3]
-        
         
         stock.symbolName = makeRandomSymbol(context: context)
         stock.isPinned = .random()
@@ -357,7 +362,7 @@ class ContextPopulator
     @discardableResult private static func makeRandomFlow(context: Context) -> Flow
     {
         let flow = Flow(context: context)
-        flow.amount = .random(in: -1000 ... 1000)
+        flow.amount = .random(in: 0 ... 1000) // Flow amount is always positive, otherwise the flow from/to would be reversed
         flow.delay = .random(in: 0 ... 5)
         flow.duration = .random(in: 0 ... 1000)
         flow.requiresUserCompletion = .random()
@@ -374,15 +379,57 @@ class ContextPopulator
             flow.addToHistory(history)
         }
         
-        // TODO: A stocks inflow must have itself as the destination
+        for _ in 0 ..< .random(in: 0 ... 3)
+        {
+            let note = makeRandomNote(context: context)
+            flow.addToNotes(note)
+        }
+        
+        // TODO: A stock inflow must have itself as the destination
         // A stock outflow must have itself as the source...
         
-        flow.from = getRandomStocks(context: context, max: 1).first
-        flow.to = getRandomStocks(context: context, max: 1).first
+        let (from, to) = getFromToStocks(context: context)
+        flow.from = from
+        flow.to = to
+        
+        from.addToOutflows(flow)
+        to.addToInflows(flow)
         
         flow.symbolName = makeRandomSymbol(context: context)
         
         return flow
+    }
+    
+    /// Conditions:
+    /// 1. Sink can never be a "from" stock
+    /// 2. Source can never be a "to" stock
+    /// 3. A stock can not be both "from" and "to"
+    static func getFromToStocks(context: Context) -> (from: Stock, to: Stock)
+    {
+        var a: Stock?
+        var b: Stock?
+        
+        // Not super efficient...
+        while (a == nil || b == nil) {
+            if a == nil {
+                a = getRandomStocks(context: context, max: 1).first
+            }
+            
+            if b == nil {
+                b = getRandomStocks(context: context, max: 1).first
+            }
+            
+            if a?.uniqueID == sourceId && b?.uniqueID == sinkId { a = nil; b = nil; continue }
+            
+            if a?.uniqueID == sinkId { a = nil }
+            if b?.uniqueID == sourceId { b = nil }
+            
+            if a == b { b = nil }
+        }
+        
+        guard let a = a, let b = b else { fatalError() }
+        
+        return (a, b)
     }
     
     // MARK: - Events

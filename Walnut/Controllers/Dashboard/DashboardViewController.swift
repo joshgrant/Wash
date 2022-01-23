@@ -90,7 +90,7 @@ class DashboardViewController: ViewController
             switch entity
             {
             case let s as Stock:
-                let controller = StockDetailViewController(stock: s)
+                let controller = EntityDetailViewController(entity: s, configuration: .stock)
                 navigationController?.push(controller: controller)
             default:
                 break

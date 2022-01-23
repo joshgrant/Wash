@@ -16,6 +16,7 @@
 		03AE7B9E279CC9FF0099D6F5 /* SymbolDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B9D279CC9FF0099D6F5 /* SymbolDetailViewController.swift */; };
 		03AE7BA0279CCA060099D6F5 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B9F279CCA060099D6F5 /* TaskDetailViewController.swift */; };
 		03AE7BA2279CCA0E0099D6F5 /* UnitDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7BA1279CCA0E0099D6F5 /* UnitDetailViewController.swift */; };
+		03AE7BA4279D08650099D6F5 /* EntityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */; };
 		03C094362795152E0067B16C /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C093E62795152D0067B16C /* Note+Extensions.swift */; };
 		03C094372795152E0067B16C /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C093E82795152D0067B16C /* Observer.swift */; };
 		03C094382795152E0067B16C /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C093E92795152D0067B16C /* Random.swift */; };
@@ -142,6 +143,7 @@
 		03AE7B9D279CC9FF0099D6F5 /* SymbolDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolDetailViewController.swift; sourceTree = "<group>"; };
 		03AE7B9F279CCA060099D6F5 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 		03AE7BA1279CCA0E0099D6F5 /* UnitDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDetailViewController.swift; sourceTree = "<group>"; };
+		03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDetailViewController.swift; sourceTree = "<group>"; };
 		03C093E62795152D0067B16C /* Note+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
 		03C093E82795152D0067B16C /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		03C093E92795152D0067B16C /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 		03AE7B81279CC9710099D6F5 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */,
 				03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */,
 				03AE7B87279CC9950099D6F5 /* Condition */,
 				03AE7B86279CC9910099D6F5 /* Conversion */,
@@ -496,36 +499,36 @@
 		03FE6760279517C000556CB7 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				03FE6761279517DD00556CB7 /* Note+CoreDataClass.swift */,
-				03FE6762279517DD00556CB7 /* Note+CoreDataProperties.swift */,
-				03FE6763279517DD00556CB7 /* Stock+CoreDataClass.swift */,
-				03FE6764279517DD00556CB7 /* Stock+CoreDataProperties.swift */,
 				03FE6765279517DD00556CB7 /* Block+CoreDataClass.swift */,
 				03FE6766279517DD00556CB7 /* Block+CoreDataProperties.swift */,
 				03FE6767279517DD00556CB7 /* Color+CoreDataClass.swift */,
 				03FE6768279517DD00556CB7 /* Color+CoreDataProperties.swift */,
 				03FE6769279517DD00556CB7 /* Condition+CoreDataClass.swift */,
 				03FE676A279517DD00556CB7 /* Condition+CoreDataProperties.swift */,
-				03FE676B279517DD00556CB7 /* State+CoreDataClass.swift */,
-				03FE676C279517DE00556CB7 /* State+CoreDataProperties.swift */,
-				03FE676D279517DE00556CB7 /* History+CoreDataClass.swift */,
-				03FE676E279517DE00556CB7 /* History+CoreDataProperties.swift */,
+				03FE677B279517DE00556CB7 /* Conversion+CoreDataClass.swift */,
+				03FE677C279517DE00556CB7 /* Conversion+CoreDataProperties.swift */,
 				03FE676F279517DE00556CB7 /* Entity+CoreDataClass.swift */,
 				03FE6770279517DE00556CB7 /* Entity+CoreDataProperties.swift */,
+				03FE677D279517DE00556CB7 /* Event+CoreDataClass.swift */,
+				03FE677E279517DE00556CB7 /* Event+CoreDataProperties.swift */,
 				03FE6771279517DE00556CB7 /* Flow+CoreDataClass.swift */,
 				03FE6772279517DE00556CB7 /* Flow+CoreDataProperties.swift */,
+				03FE676D279517DE00556CB7 /* History+CoreDataClass.swift */,
+				03FE676E279517DE00556CB7 /* History+CoreDataProperties.swift */,
+				03FE6761279517DD00556CB7 /* Note+CoreDataClass.swift */,
+				03FE6762279517DD00556CB7 /* Note+CoreDataProperties.swift */,
+				03FE6779279517DE00556CB7 /* Source+CoreDataClass.swift */,
+				03FE677A279517DE00556CB7 /* Source+CoreDataProperties.swift */,
+				03FE676B279517DD00556CB7 /* State+CoreDataClass.swift */,
+				03FE676C279517DE00556CB7 /* State+CoreDataProperties.swift */,
+				03FE6763279517DD00556CB7 /* Stock+CoreDataClass.swift */,
+				03FE6764279517DD00556CB7 /* Stock+CoreDataProperties.swift */,
 				03FE6773279517DE00556CB7 /* Symbol+CoreDataClass.swift */,
 				03FE6774279517DE00556CB7 /* Symbol+CoreDataProperties.swift */,
 				03FE6775279517DE00556CB7 /* Task+CoreDataClass.swift */,
 				03FE6776279517DE00556CB7 /* Task+CoreDataProperties.swift */,
 				03FE6777279517DE00556CB7 /* Unit+CoreDataClass.swift */,
 				03FE6778279517DE00556CB7 /* Unit+CoreDataProperties.swift */,
-				03FE6779279517DE00556CB7 /* Source+CoreDataClass.swift */,
-				03FE677A279517DE00556CB7 /* Source+CoreDataProperties.swift */,
-				03FE677B279517DE00556CB7 /* Conversion+CoreDataClass.swift */,
-				03FE677C279517DE00556CB7 /* Conversion+CoreDataProperties.swift */,
-				03FE677D279517DE00556CB7 /* Event+CoreDataClass.swift */,
-				03FE677E279517DE00556CB7 /* Event+CoreDataProperties.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03C094412795152E0067B16C /* TextStyle.swift in Sources */,
+				03AE7BA4279D08650099D6F5 /* EntityDetailViewController.swift in Sources */,
 				03FE678E279517DE00556CB7 /* Entity+CoreDataProperties.swift in Sources */,
 				03FE6789279517DE00556CB7 /* State+CoreDataClass.swift in Sources */,
 				03C0944D2795152E0067B16C /* NSSet+Extensions.swift in Sources */,

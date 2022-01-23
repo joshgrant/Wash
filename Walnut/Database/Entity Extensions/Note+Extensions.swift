@@ -23,6 +23,7 @@ extension Note
     
     var secondLine: String?
     {
-        String(unwrappedBlocks[1].text?.prefix(25) ?? "")
+        guard unwrappedBlocks.count > 1 else { return "" }
+        return String(unwrappedBlocks[1].text?.prefix(25) ?? "")
     }
 }

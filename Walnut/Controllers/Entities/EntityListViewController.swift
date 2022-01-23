@@ -50,9 +50,10 @@ class EntityListViewController: ViewController
         switch entity
         {
         case let s as Stock:
-            return StockDetailViewController(stock: s)
+//            return StockDetailViewController(stock: s)
+            return EntityDetailViewController(entity: s, configuration: .stock)
         case let f as Flow:
-            return FlowDetailViewController(flow: f)
+            return EntityDetailViewController(entity: f, configuration: .flow)
         case let t as Task:
             return TaskDetailViewController(task: t)
         case let e as Event:
