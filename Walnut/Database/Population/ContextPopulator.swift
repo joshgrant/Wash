@@ -20,22 +20,22 @@ class ContextPopulator
         
         guard stockCount(context: context) < 12 else { return }
         
-        for _ in 0 ..< .random(in: 0 ... 10)
+        for _ in 0 ..< .random(in: 3 ... 5)
         {
             makeRandomStock(context: context)
         }
 
-        for _ in 0 ..< .random(in: 0 ... 10)
+        for _ in 0 ..< .random(in: 3 ... 5)
         {
             makeRandomFlow(context: context)
         }
 
-        for _ in 0 ..< .random(in: 0 ... 10)
+        for _ in 0 ..< .random(in: 0 ... 2)
         {
             makeRandomNote(context: context)
         }
 
-        for _ in 0 ..< .random(in: 0 ... 10)
+        for _ in 0 ..< .random(in: 1 ... 4)
         {
             makeRandomTask(context: context)
         }

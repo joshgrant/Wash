@@ -122,14 +122,43 @@ struct Configuration
 {
     var dataProvider: (Entity) -> [Section: [Row]]
     var commandHandler: ((Command) -> Void)? = nil
+    
+    static func configuration(for entity: Entity) -> Configuration
+    {
+        switch entity
+        {
+        case is Stock: return .stock
+        case is Flow: return .flow
+        case is Task: return .task
+        case is Event: return .event
+        case is Conversion: return .conversion
+        case is Condition: return .condition
+        case is Symbol: return .symbol
+        case is Note: return .note
+        case is Unit: return .unit
+        default:
+            fatalError("Unhandled entity")
+        }
+    }
 }
 
 extension Configuration
 {
-//    static let condition = Configuration(dataSource: [:])
-//    static let conversion = Configuration(dataSource: [:])
-//    static let event = Configuration(dataSource: [:])
-//    static let note = Configuration(dataSource: [:])
+    static let condition = Configuration { _ in
+        return [:]
+    }
+    
+    static let conversion = Configuration { _ in
+        return [:]
+    }
+    
+    static let event = Configuration { _ in
+        return [:]
+    }
+    
+    static let note = Configuration { _ in
+        return [:]
+    }
     
     static let flow = Configuration { entity in
         guard let flow = entity as? Flow else { return [:] }
@@ -177,7 +206,29 @@ extension Configuration
         }
         return configuration
     }
-//    static let symbol = Configuration(dataSource: [:])
-//    static let task = Configuration(dataSource: [:])
-//    static let unit = Configuration(dataSource: [:])
+    
+    static let symbol = Configuration { _ in
+        return [:]
+    }
+    
+    static let task = Configuration { _ in
+        return [:]
+    }
+    
+    static let unit = Configuration { entity in
+        guard let unit = entity as? Unit else { return [:] }
+        
+        var configuration: [Section: [Row]] = [:]
+        configuration[.info] = [
+            .keyValue(key: "Title", value: unit.title),
+            .keyValue(key: "Abbreviation", value: unit.abbreviation ?? "None"),
+            .keyValue(key: "Is Base", value: unit.isBase ? "Yes" : "No")
+        ]
+        
+        if !unit.isBase
+        {
+            configuration[.info]?.append(.keyValue(key: "Relative To", value: unit.parent?.title ?? "None"))
+        }
+        return configuration
+    }
 }

@@ -47,29 +47,7 @@ class EntityListViewController: ViewController
     
     private func detailViewController(for entity: Entity) -> ViewController
     {
-        switch entity
-        {
-        case let s as Stock:
-//            return StockDetailViewController(stock: s)
-            return EntityDetailViewController(entity: s, configuration: .stock)
-        case let f as Flow:
-            return EntityDetailViewController(entity: f, configuration: .flow)
-        case let t as Task:
-            return TaskDetailViewController(task: t)
-        case let e as Event:
-            return EventDetailViewController(event: e)
-        case let c as Conversion:
-            return ConversionDetailViewController(conversion: c)
-        case let c as Condition:
-            return ConditionDetailViewController(condition: c)
-        case let s as Symbol:
-            return SymbolDetailViewController(symbol: s)
-        case let n as Note:
-            return NoteDetailViewController(note: n)
-        case let u as Unit:
-            return UnitDetailViewController(unit: u)
-        default:
-            fatalError("Unhandled entity")
-        }
+        guard let entity = entity as? Named else { fatalError() }
+        return EntityDetailViewController(entity: entity, configuration: Configuration.configuration(for: entity))
     }
 }
