@@ -55,6 +55,8 @@ public enum Icon: String
     case arrowDown = "arrowtriangle.down.fill"
     case arrowRight = "arrowtriangle.right.fill"
     
+    case edit = "pencil"
+    
     var image: NSImage? { .init(systemSymbolName: rawValue, accessibilityDescription: nil) }
     
     public var text: String
@@ -102,6 +104,7 @@ public enum Icon: String
         case .enter: return "􀅇"
         case .arrowDown: return "􀄥"
         case .arrowRight: return "􀄧"
+        case .edit: return "􀈊"
         }
     }
 }

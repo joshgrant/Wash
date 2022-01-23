@@ -63,6 +63,8 @@ enum Row: CustomStringConvertible
     case flow(index: Int, flow: Flow)
     case note(index: Int, note: Note)
     case keyValue(key: String, value: String)
+    case editable(index: Int, text: String?, placeholder: String)
+    case toggle(index: Int, text: String, isOn: Bool)
     
     var description: String
     {
@@ -78,6 +80,10 @@ enum Row: CustomStringConvertible
             return " \(index). \(note.firstLine ?? "")\n    \(note.secondLine ?? "")"
         case .keyValue(let key, let value):
             return "\(key): \(value)"
+        case .editable(let index, let text, let placeholder):
+            return "\(index). \(text ?? placeholder)           \(Icon.edit.text)"
+        case .toggle(let index, let text, let isOn):
+            return "\(index). \(text): \(isOn ? Icon.checkBoxFilled.text : Icon.checkBoxEmpty.text)"
         }
     }
 }
@@ -152,8 +158,23 @@ extension Configuration
         return [:]
     }
     
-    static let event = Configuration { _ in
-        return [:]
+    static let event = Configuration { entity in
+        guard let event = entity as? Event else { return [:] }
+        
+        var configuration: [Section: [Row]] = [:]
+        
+        configuration[.info] = [
+            .editable(index: 1, text: event.title, placeholder: "Title"),
+            .toggle(index: 2, text: "Active", isOn: event.isActive)
+        ]
+        
+        let conditions: [Condition] = event.unwrapped(\Event.conditions)
+        configuration[.conditions] = conditions.enumerated().map {
+            let index = $0.offset + 1
+            let text = $0.element.title
+            return .detail(index: index, text: text)
+        }
+        return configuration
     }
     
     static let note = Configuration { _ in
@@ -220,8 +241,8 @@ extension Configuration
         
         var configuration: [Section: [Row]] = [:]
         configuration[.info] = [
-            .keyValue(key: "Title", value: unit.title),
-            .keyValue(key: "Abbreviation", value: unit.abbreviation ?? "None"),
+            .editable(index: 1, text: unit.title, placeholder: "Title"),
+            .editable(index: 2, text: unit.abbreviation, placeholder: "Abbreviation"),
             .keyValue(key: "Is Base", value: unit.isBase ? "Yes" : "No")
         ]
         
