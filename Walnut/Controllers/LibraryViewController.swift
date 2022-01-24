@@ -34,7 +34,18 @@ class LibraryViewController: ViewController
         guard let command = TableSelectionCommand(command: command) else { return }
         guard let row = command.row else { return }
         let type = EntityType.libraryVisible[row - 1]
-        let controller = EntityListViewController(entityType: type, context: context)
-        navigationController?.push(controller: controller)
+        
+        switch command.action
+        {
+        case .none:
+            let controller = EntityListViewController(entityType: type, context: context)
+            navigationController?.push(controller: controller)
+        case "+", "add":
+            // Adding a new row
+            let newEntity = type.insertNewEntity(into: context)
+            // TODO: Need a "new" entity flow, right?
+        default:
+            break
+        }
     }
 }

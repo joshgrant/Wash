@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		035225FB279F52B5006A8DED /* NewEntityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035225FA279F52B5006A8DED /* NewEntityViewController.swift */; };
 		03AE7B98279CC9EB0099D6F5 /* EntityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */; };
 		03AE7BA4279D08650099D6F5 /* EntityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */; };
 		03C094362795152E0067B16C /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C093E62795152D0067B16C /* Note+Extensions.swift */; };
@@ -124,6 +125,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		035225FA279F52B5006A8DED /* NewEntityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntityViewController.swift; sourceTree = "<group>"; };
 		03797371279512F7000FE2E4 /* Walnut */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Walnut; sourceTree = BUILT_PRODUCTS_DIR; };
 		03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListViewController.swift; sourceTree = "<group>"; };
 		03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDetailViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 			children = (
 				03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */,
 				03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */,
+				035225FA279F52B5006A8DED /* NewEntityViewController.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 		03C093E72795152D0067B16C /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				03FE675E2795174A00556CB7 /* ActionClosure.swift */,
 				03C0940C2795152D0067B16C /* ComparisonType.swift */,
 				03C094052795152D0067B16C /* CompletionType.swift */,
 				03C093F72795152D0067B16C /* ConditionType.swift */,
@@ -296,12 +300,10 @@
 				03C094082795152D0067B16C /* EntityType.swift */,
 				03C0940B2795152D0067B16C /* Factory.swift */,
 				03C093EF2795152D0067B16C /* FallbackProtocol.swift */,
-				03FE67A22795ED9100556CB7 /* Icon.swift */,
-				03FE675E2795174A00556CB7 /* ActionClosure.swift */,
 				03C093F32795152D0067B16C /* HistoryEvent.swift */,
+				03FE67A22795ED9100556CB7 /* Icon.swift */,
 				03C094092795152D0067B16C /* IdealType.swift */,
 				03C093F12795152D0067B16C /* Message.swift */,
-				03FE675C2795171600556CB7 /* TransitionType.swift */,
 				03FE679D279518EC00556CB7 /* NewStateModel.swift */,
 				03C094032795152D0067B16C /* Notifiable.swift */,
 				03C093E82795152D0067B16C /* Observer.swift */,
@@ -317,6 +319,7 @@
 				03C093ED2795152D0067B16C /* TextSize.swift */,
 				03C093F22795152D0067B16C /* TextStyle.swift */,
 				03C093EB2795152D0067B16C /* TimePeriod.swift */,
+				03FE675C2795171600556CB7 /* TransitionType.swift */,
 				03C093F52795152D0067B16C /* Unique.swift */,
 				03C093F42795152D0067B16C /* WrappedSubscriber.swift */,
 				03C093F82795152D0067B16C /* Extensions */,
@@ -547,6 +550,7 @@
 				03C094532795152E0067B16C /* CompletionType.swift in Sources */,
 				03C094492795152E0067B16C /* Notification.Name+Extensions.swift in Sources */,
 				03FE6781279517DE00556CB7 /* Stock+CoreDataClass.swift in Sources */,
+				035225FB279F52B5006A8DED /* NewEntityViewController.swift in Sources */,
 				03C094462795152E0067B16C /* ConditionType.swift in Sources */,
 				03FE6780279517DE00556CB7 /* Note+CoreDataProperties.swift in Sources */,
 				03FE675D2795171600556CB7 /* TransitionType.swift in Sources */,

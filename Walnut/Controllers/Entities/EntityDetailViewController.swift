@@ -122,6 +122,21 @@ class EntityDetailViewController: ViewController
             print("")
         }
     }
+    
+    override func handle(command: Command)
+    {
+        switch command.rawString
+        {
+        case "pin":
+            entity.isPinned = true
+        case "unpin":
+            entity.isPinned = false
+        default:
+            break
+        }
+        
+        navigationItem?.rightItem = entity.isPinned ? Icon.pinFill.text : nil
+    }
 }
 
 struct Configuration
