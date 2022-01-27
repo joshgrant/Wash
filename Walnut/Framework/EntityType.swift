@@ -139,7 +139,7 @@ public enum EntityType
         }
     }
     
-    static func configuration(for entity: Entity) -> EntityDetailViewController.Configuration
+    static func configuration(for entity: Entity) -> EntityDetailViewController.DataSource
     {
         switch entity
         {

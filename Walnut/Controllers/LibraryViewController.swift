@@ -40,7 +40,8 @@ extension LibraryViewController: TableViewDelegate
         {
         case "add", "+":
             let controller = NewEntityViewController(entityType: type, context: context)
-            navigationController?.push(controller: controller)
+            let nav = NavigationController(root: controller)
+            present(controller: nav)
         default:
             break
         }

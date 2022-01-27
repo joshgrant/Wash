@@ -45,8 +45,9 @@ class NewEntityViewController: ViewController
             stock.maximum = valueSource(from: max)
             stock.ideal = valueSource(from: ideal)
             stock.source = valueSource(from: current)
-            let controller = EntityDetailViewController(entity: stock, configuration: .stock)
-            navigationController?.push(controller: controller)
+//            let controller = EntityDetailViewController(entity: stock, configuration: .stock)
+//            navigationController?.push(controller: controller)
+            dismiss()
         case .flow:
             break
         case .task:

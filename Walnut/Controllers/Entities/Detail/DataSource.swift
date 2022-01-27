@@ -1,5 +1,5 @@
 //
-//  Configuration.swift
+//  DataSource.swift
 //  Walnut
 //
 //  Created by Josh Grant on 1/27/22.
@@ -9,16 +9,16 @@ import Foundation
 import Protyper
 
 extension EntityDetailViewController {
-    struct Configuration
+    struct DataSource
     {
         var dataProvider: (Entity) -> [Section: [Row]]
         var commandHandler: ((Command) -> Void)? = nil
     }
 }
 
-extension EntityDetailViewController.Configuration
+extension EntityDetailViewController.DataSource
 {
-    typealias Configuration = EntityDetailViewController.Configuration
+    typealias Configuration = EntityDetailViewController.DataSource
     typealias Section = EntityDetailViewController.Section
     typealias Row = EntityDetailViewController.Row
     
@@ -36,13 +36,13 @@ extension EntityDetailViewController.Configuration
         var configuration: [Section: [Row]] = [:]
         
         configuration[.info] = [
-            .editable(index: 1, text: event.title, placeholder: "Title"),
-            .toggle(index: 2, text: "Active", isOn: event.isActive)
+            .editable(index: 0, text: event.title, placeholder: "Title"),
+            .toggle(index: 1, text: "Active", isOn: event.isActive)
         ]
         
         let conditions: [Condition] = event.unwrapped(\Event.conditions)
         configuration[.conditions] = conditions.enumerated().map {
-            let index = $0.offset + 1
+            let index = $0.offset
             let text = $0.element.title
             return .detail(index: index, text: text)
         }
@@ -59,8 +59,8 @@ extension EntityDetailViewController.Configuration
         var configuration: [Section: [Row]] = [:]
         
         configuration[.info] = [
-            .detail(index: 1, text: "From: \(flow.from?.title ?? "")"),
-            .detail(index: 2, text: "To: \(flow.to?.title ?? "")")
+            .detail(index: 0, text: "From: \(flow.from?.title ?? "")"),
+            .detail(index: 1, text: "To: \(flow.to?.title ?? "")")
         ]
         
         return configuration
@@ -89,13 +89,13 @@ extension EntityDetailViewController.Configuration
         
         configuration[.states] = []
         configuration[.inflows] = stock.unwrappedInflows.enumerated().map({
-            .flow(index: $0.offset + 1, flow: $0.element)
+            .flow(index: $0.offset, flow: $0.element)
         })
         configuration[.outflows] = stock.unwrappedOutflows.enumerated().map {
-            .flow(index: $0.offset + 1, flow: $0.element)
+            .flow(index: $0.offset, flow: $0.element)
         }
         configuration[.notes] = stock.unwrapped(\Stock.notes).enumerated().map {
-            .note(index: $0.offset + 1, note: $0.element)
+            .note(index: $0.offset, note: $0.element)
         }
         return configuration
     }
@@ -113,8 +113,8 @@ extension EntityDetailViewController.Configuration
         
         var configuration: [Section: [Row]] = [:]
         configuration[.info] = [
-            .editable(index: 1, text: unit.title, placeholder: "Title"),
-            .editable(index: 2, text: unit.abbreviation, placeholder: "Abbreviation"),
+            .editable(index: 0, text: unit.title, placeholder: "Title"),
+            .editable(index: 1, text: unit.abbreviation, placeholder: "Abbreviation"),
             .keyValue(key: "Is Base", value: unit.isBase ? "Yes" : "No")
         ]
         

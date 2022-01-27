@@ -15,32 +15,19 @@ import Protyper
 class EntityDetailViewController: ViewController
 {
     var entity: Named
-    var configuration: Configuration
+    var configuration: DataSource
+    var tableView: TableView
     
-    init(entity: Named, configuration: Configuration)
+    lazy var data = configuration.dataProvider(entity).sorted { $0.key < $1.key }
+    
+    init(entity: Named, configuration: DataSource)
     {
         self.entity = entity
         self.configuration = configuration
-        super.init(title: entity.title, view: nil)
-    }
-    
-    override func display()
-    {
-        let data = configuration.dataProvider(entity).sorted { $0.key < $1.key }
-        for item in data.enumerated()
-        {
-            let index = item.offset + 1
-            let section = item.element.key
-            let rows = item.element.value
-            
-            print("\(index). \(section)")
-            print("   —–––")
-            for row in rows
-            {
-                print(row)
-            }
-            print("")
-        }
+        self.tableView = TableView()
+        super.init(title: entity.title, view: tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     override func handle(command: Command)
@@ -52,9 +39,39 @@ class EntityDetailViewController: ViewController
         case "unpin":
             entity.isPinned = false
         default:
-            break
+            super.handle(command: command)
         }
         
         navigationItem?.rightItem = entity.isPinned ? Icon.pinFill.text : nil
+    }
+}
+
+extension EntityDetailViewController: TableViewDelegate
+{
+    
+}
+
+extension EntityDetailViewController: TableViewDataSource
+{
+    func numberOfSections(in tableView: TableView) -> Int
+    {
+        data.count
+    }
+    
+    func tableView(_ tableView: TableView, numberOfRowsInSection section: Int) -> Int
+    {
+        data[section].value.count
+    }
+    
+    func tableView(_ tableView: TableView, cellForRowAt indexPath: Index) -> TableViewCell
+    {
+        let value = data[indexPath.section].value[indexPath.row]
+        return TableViewCell(contentView: nil, accessories: [.label(text: value.description)])
+    }
+    
+    func tableView(_ tableView: TableView, titleForHeaderInSection section: Int) -> String?
+    {
+        let title = data[section].key
+        return "\(section). \(title)"
     }
 }

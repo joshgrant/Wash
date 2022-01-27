@@ -38,12 +38,12 @@ class DashboardDataSource
     {
         switch section
         {
+        case 0:
+            return pinnedItems[row]
         case 1:
-            return pinnedItems[row - 1]
+            return forecast[row]
         case 2:
-            return forecast[row - 1]
-        case 3:
-            return suggestedFlows[row - 1]
+            return suggestedFlows[row]
         default:
             assertionFailure("Invalid section: \(section)")
             return nil
@@ -144,22 +144,8 @@ extension DashboardDataSource: TableViewDataSource
     
     func tableView(_ tableView: TableView, cellForRowAt indexPath: Index) -> TableViewCell
     {
-        let content: String
-        
-        switch indexPath.section
-        {
-        case 0:
-            let item = pinnedItems[indexPath.row]
-            content = "\(indexPath.row + 1): \(item)"
-        case 1:
-            let item = forecast[indexPath.row]
-            content = "\(indexPath.row + 1): \(item)"
-        case 2:
-            let item = suggestedFlows[indexPath.row]
-            content = "\(indexPath.row + 1): \(item)"
-        default:
-            fatalError("There shouldn't be 3 sections in the table view")
-        }
+        guard let item = entity(at: indexPath.section, row: indexPath.row) else { fatalError() }
+        let content = "\(indexPath.row): \(item)"
         
         return TableViewCell(contentView: nil, accessories: [.label(text: content)])
     }
