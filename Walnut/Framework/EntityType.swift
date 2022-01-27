@@ -138,6 +138,24 @@ public enum EntityType
             return nil
         }
     }
+    
+    static func configuration(for entity: Entity) -> Configuration
+    {
+        switch entity
+        {
+        case is Stock: return .stock
+        case is Flow: return .flow
+        case is Task: return .task
+        case is Event: return .event
+        case is Conversion: return .conversion
+        case is Condition: return .condition
+        case is Symbol: return .symbol
+        case is Note: return .note
+        case is Unit: return .unit
+        default:
+            fatalError("Unhandled entity")
+        }
+    }
 }
 
 extension EntityType: CaseIterable {}

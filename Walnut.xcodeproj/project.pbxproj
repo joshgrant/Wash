@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		035225FB279F52B5006A8DED /* NewEntityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035225FA279F52B5006A8DED /* NewEntityViewController.swift */; };
+		0387BEB827A3152400A708BE /* DashboardDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0387BEB727A3152400A708BE /* DashboardDataSource.swift */; };
+		039A2BEF27A1AC86000165C8 /* Protyper in Frameworks */ = {isa = PBXBuildFile; productRef = 039A2BEE27A1AC86000165C8 /* Protyper */; };
 		03AE7B98279CC9EB0099D6F5 /* EntityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */; };
 		03AE7BA4279D08650099D6F5 /* EntityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */; };
 		03C094362795152E0067B16C /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C093E62795152D0067B16C /* Note+Extensions.swift */; };
@@ -109,7 +111,6 @@
 		03FE67A62795F39200556CB7 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67A52795F39200556CB7 /* DashboardViewController.swift */; };
 		03FE67AC2796061F00556CB7 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AB2796061F00556CB7 /* LibraryViewController.swift */; };
 		03FE67AE2796083000556CB7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE67AD2796083000556CB7 /* MainTabBarController.swift */; };
-		03FE67EC279B340B00556CB7 /* Protyper in Frameworks */ = {isa = PBXBuildFile; productRef = 03FE67EB279B340B00556CB7 /* Protyper */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -127,6 +128,8 @@
 /* Begin PBXFileReference section */
 		035225FA279F52B5006A8DED /* NewEntityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntityViewController.swift; sourceTree = "<group>"; };
 		03797371279512F7000FE2E4 /* Walnut */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Walnut; sourceTree = BUILT_PRODUCTS_DIR; };
+		0387BEB727A3152400A708BE /* DashboardDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDataSource.swift; sourceTree = "<group>"; };
+		039A2BF227A1B8CE000165C8 /* Protyper */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Protyper; path = ../Protyper; sourceTree = "<group>"; };
 		03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListViewController.swift; sourceTree = "<group>"; };
 		03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDetailViewController.swift; sourceTree = "<group>"; };
 		03C093E62795152D0067B16C /* Note+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
@@ -227,7 +230,6 @@
 		03FE67A52795F39200556CB7 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		03FE67AB2796061F00556CB7 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		03FE67AD2796083000556CB7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		03FE67E9279B33F000556CB7 /* Protyper */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Protyper; path = ../Protyper; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,7 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FE67A1279519D300556CB7 /* Fakery in Frameworks */,
-				03FE67EC279B340B00556CB7 /* Protyper in Frameworks */,
+				039A2BEF27A1AC86000165C8 /* Protyper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +248,7 @@
 		03797368279512F7000FE2E4 = {
 			isa = PBXGroup;
 			children = (
-				03FE67E9279B33F000556CB7 /* Protyper */,
+				039A2BF227A1B8CE000165C8 /* Protyper */,
 				03797373279512F7000FE2E4 /* Walnut */,
 				03797372279512F7000FE2E4 /* Products */,
 			);
@@ -275,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				03FE67A52795F39200556CB7 /* DashboardViewController.swift */,
+				0387BEB727A3152400A708BE /* DashboardDataSource.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -466,7 +469,7 @@
 			name = Walnut;
 			packageProductDependencies = (
 				03FE67A0279519D300556CB7 /* Fakery */,
-				03FE67EB279B340B00556CB7 /* Protyper */,
+				039A2BEE27A1AC86000165C8 /* Protyper */,
 			);
 			productName = Walnut;
 			productReference = 03797371279512F7000FE2E4 /* Walnut */;
@@ -499,7 +502,7 @@
 			mainGroup = 03797368279512F7000FE2E4;
 			packageReferences = (
 				03FE679F279519D300556CB7 /* XCRemoteSwiftPackageReference "Fakery" */,
-				03FE67EA279B340B00556CB7 /* XCRemoteSwiftPackageReference "Protyper" */,
+				039A2BE827A1AB43000165C8 /* XCRemoteSwiftPackageReference "Protyper" */,
 			);
 			productRefGroup = 03797372279512F7000FE2E4 /* Products */;
 			projectDirPath = "";
@@ -596,6 +599,7 @@
 				03FE6790279517DE00556CB7 /* Flow+CoreDataProperties.swift in Sources */,
 				03FE678B279517DE00556CB7 /* History+CoreDataClass.swift in Sources */,
 				03C094762795152E0067B16C /* Source+Extensions.swift in Sources */,
+				0387BEB827A3152400A708BE /* DashboardDataSource.swift in Sources */,
 				03C094452795152E0067B16C /* Container.swift in Sources */,
 				03FE678F279517DE00556CB7 /* Flow+CoreDataClass.swift in Sources */,
 				03FE679A279517DE00556CB7 /* Conversion+CoreDataProperties.swift in Sources */,
@@ -796,6 +800,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		039A2BE827A1AB43000165C8 /* XCRemoteSwiftPackageReference "Protyper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/joshgrant/Protyper";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		03FE679F279519D300556CB7 /* XCRemoteSwiftPackageReference "Fakery" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vadymmarkov/Fakery";
@@ -804,26 +816,18 @@
 				kind = branch;
 			};
 		};
-		03FE67EA279B340B00556CB7 /* XCRemoteSwiftPackageReference "Protyper" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/joshgrant/Protyper";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		039A2BEE27A1AC86000165C8 /* Protyper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 039A2BE827A1AB43000165C8 /* XCRemoteSwiftPackageReference "Protyper" */;
+			productName = Protyper;
+		};
 		03FE67A0279519D300556CB7 /* Fakery */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 03FE679F279519D300556CB7 /* XCRemoteSwiftPackageReference "Fakery" */;
 			productName = Fakery;
-		};
-		03FE67EB279B340B00556CB7 /* Protyper */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 03FE67EA279B340B00556CB7 /* XCRemoteSwiftPackageReference "Protyper" */;
-			productName = Protyper;
 		};
 /* End XCSwiftPackageProductDependency section */
 

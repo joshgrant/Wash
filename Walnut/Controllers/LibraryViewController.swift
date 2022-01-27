@@ -11,41 +11,61 @@ import Protyper
 class LibraryViewController: ViewController
 {
     var context: Context
+    var tableView: TableView
     
     init(context: Context)
     {
         self.context = context
-        super.init(title: "Library", view: View())
+        self.tableView = TableView()
+        super.init(title: "Library", view: tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+}
+
+extension LibraryViewController: TableViewDelegate
+{
+    func tableView(_ tableView: TableView, didSelectRowAt indexPath: Index)
+    {
+        let type = EntityType.libraryVisible[indexPath.row]
+        let controller = EntityListViewController(entityType: type, context: context)
+        navigationController?.push(controller: controller)
     }
     
-    override func display()
+    func tableView(_ tableView: TableView, performAction action: String, forRowAtIndexPath indexPath: Index)
     {
-        EntityType.libraryVisible.enumerated().forEach { item in
-            let index = item.offset + 1
-            let name = item.element.title
-            let count = item.element.count(in: context)
-            let icon = item.element.icon.text
-            print("\(index): \(icon) \(name) (\(count))")
-        }
-    }
-    
-    override func handle(command: Command)
-    {
-        guard let command = TableSelectionCommand(command: command) else { return }
-        guard let row = command.row else { return }
-        let type = EntityType.libraryVisible[row - 1]
+        let type = EntityType.libraryVisible[indexPath.row]
         
-        switch command.action
+        switch action
         {
-        case .none:
-            let controller = EntityListViewController(entityType: type, context: context)
+        case "add", "+":
+            let newEntity: Named = type.insertNewEntity(into: context) as! Named
+            // Complains because we didn't initialize the values...
+            let configuration = EntityType.configuration(for: newEntity)
+            let controller = EntityDetailViewController(entity: newEntity, configuration: configuration)
             navigationController?.push(controller: controller)
-        case "+", "add":
-            // Adding a new row
-            let newEntity = type.insertNewEntity(into: context)
-            // TODO: Need a "new" entity flow, right?
         default:
             break
         }
+    }
+}
+
+extension LibraryViewController: TableViewDataSource
+{
+    func tableView(_ tableView: TableView, numberOfRowsInSection section: Int) -> Int
+    {
+        EntityType.libraryVisible.count
+    }
+    
+    func tableView(_ tableView: TableView, cellForRowAt indexPath: Index) -> TableViewCell
+    {
+        let entityType = EntityType.libraryVisible[indexPath.row]
+        let index = indexPath.row
+        let name = entityType.title
+        let count = entityType.count(in: context)
+        let icon = entityType.icon.text
+        
+        let text = "\(index): \(icon) \(name) (\(count))"
+        return TableViewCell(contentView: nil, accessories: [.label(text: text)])
     }
 }
