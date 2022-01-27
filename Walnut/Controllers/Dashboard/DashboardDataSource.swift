@@ -45,7 +45,6 @@ class DashboardDataSource
         case 2:
             return suggestedFlows[row]
         default:
-            assertionFailure("Invalid section: \(section)")
             return nil
         }
     }

@@ -15,12 +15,14 @@ let dashboard = NavigationController(root: DashboardViewController(context: data
 let library = NavigationController(root: LibraryViewController(context: database.context))
 
 let tabBarController = MainTabBarController(tabs: [dashboard, library])
-tabBarController.display()
 
 var loop = true
 
 while(loop)
 {
+    tabBarController.viewWillAppear()
+    tabBarController.viewDidAppear()
+    
     guard let input = readLine() else { continue }
     
     switch input
@@ -33,7 +35,6 @@ while(loop)
     default:
         let command = Command(rawString: input)
         tabBarController.handle(command: command)
-        tabBarController.display()
     }
 }
 

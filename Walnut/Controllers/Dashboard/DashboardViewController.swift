@@ -25,10 +25,10 @@ class DashboardViewController: ViewController
         tableView.dataSource = dataSource
     }
     
-    override func display()
+    override func viewWillAppear()
     {
+        super.viewWillAppear()
         dataSource.reload()
-        super.display()
     }
 }
 
@@ -40,5 +40,19 @@ extension DashboardViewController: TableViewDelegate
         let configuration = EntityType.configuration(for: entity)
         let controller = EntityDetailViewController(entity: entity, configuration: configuration)
         navigationController?.push(controller: controller)
+    }
+    
+    func tableView(_ tableView: TableView, performAction action: String, forRowAtIndexPath indexPath: Index) {
+        guard let entity = dataSource.entity(at: indexPath.section, row: indexPath.row) else { return }
+        
+        switch action
+        {
+        case "pin":
+            entity.isPinned = true
+        case "unpin":
+            entity.isPinned = false
+        default:
+            return
+        }
     }
 }

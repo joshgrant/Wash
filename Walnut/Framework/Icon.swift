@@ -65,7 +65,7 @@ public enum Icon: String
         {
         case .add: return "􀅼"
         case .pin: return "􀎦"
-        case .pinFill: return "􀎦"
+        case .pinFill: return "􀎧"
         case .flow: return "􀇤"
         case .forecast: return "􀉉"
         case .system: return "􀤆"

@@ -20,8 +20,10 @@ class NewEntityViewController: ViewController
         super.init(title: entityType.title, view: nil)
     }
     
-    override func display()
+    override func viewDidAppear()
     {
+        super.viewDidAppear()
+        
         // TODO: Something's wrong with presented view controllers... this one isn't showing...
         switch entityType {
         case .stock:

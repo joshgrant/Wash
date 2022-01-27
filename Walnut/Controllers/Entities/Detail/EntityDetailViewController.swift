@@ -29,6 +29,12 @@ class EntityDetailViewController: ViewController
         tableView.delegate = self
         tableView.dataSource = self
     }
+
+    override func viewWillAppear()
+    {
+        super.viewWillAppear()
+        navigationItem?.rightItem = entity.isPinned ? Icon.pinFill.text : Icon.pin.text
+    }
     
     override func handle(command: Command)
     {
@@ -42,7 +48,7 @@ class EntityDetailViewController: ViewController
             super.handle(command: command)
         }
         
-        navigationItem?.rightItem = entity.isPinned ? Icon.pinFill.text : nil
+        entity.managedObjectContext?.quickSave()
     }
 }
 
