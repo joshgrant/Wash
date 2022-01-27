@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		035225FB279F52B5006A8DED /* NewEntityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035225FA279F52B5006A8DED /* NewEntityViewController.swift */; };
 		0387BEB827A3152400A708BE /* DashboardDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0387BEB727A3152400A708BE /* DashboardDataSource.swift */; };
+		0387BEBA27A32BDF00A708BE /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0387BEB927A32BDF00A708BE /* Configuration.swift */; };
+		0387BEBD27A32C3C00A708BE /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0387BEBC27A32C3C00A708BE /* Section.swift */; };
+		0387BEBF27A32C4E00A708BE /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0387BEBE27A32C4E00A708BE /* Row.swift */; };
 		039A2BEF27A1AC86000165C8 /* Protyper in Frameworks */ = {isa = PBXBuildFile; productRef = 039A2BEE27A1AC86000165C8 /* Protyper */; };
 		03AE7B98279CC9EB0099D6F5 /* EntityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */; };
 		03AE7BA4279D08650099D6F5 /* EntityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */; };
@@ -129,6 +132,9 @@
 		035225FA279F52B5006A8DED /* NewEntityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntityViewController.swift; sourceTree = "<group>"; };
 		03797371279512F7000FE2E4 /* Walnut */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Walnut; sourceTree = BUILT_PRODUCTS_DIR; };
 		0387BEB727A3152400A708BE /* DashboardDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDataSource.swift; sourceTree = "<group>"; };
+		0387BEB927A32BDF00A708BE /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		0387BEBC27A32C3C00A708BE /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		0387BEBE27A32C4E00A708BE /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
 		039A2BF227A1B8CE000165C8 /* Protyper */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Protyper; path = ../Protyper; sourceTree = "<group>"; };
 		03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityListViewController.swift; sourceTree = "<group>"; };
 		03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDetailViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +279,17 @@
 			path = Walnut;
 			sourceTree = "<group>";
 		};
+		0387BEBB27A32BE200A708BE /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */,
+				0387BEB927A32BDF00A708BE /* Configuration.swift */,
+				0387BEBC27A32C3C00A708BE /* Section.swift */,
+				0387BEBE27A32C4E00A708BE /* Row.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		03AE7B7E279B3F340099D6F5 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,7 +302,7 @@
 		03AE7B81279CC9710099D6F5 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				03AE7BA3279D08650099D6F5 /* EntityDetailViewController.swift */,
+				0387BEBB27A32BE200A708BE /* Detail */,
 				03AE7B97279CC9EB0099D6F5 /* EntityListViewController.swift */,
 				035225FA279F52B5006A8DED /* NewEntityViewController.swift */,
 			);
@@ -603,10 +620,12 @@
 				03C094452795152E0067B16C /* Container.swift in Sources */,
 				03FE678F279517DE00556CB7 /* Flow+CoreDataClass.swift in Sources */,
 				03FE679A279517DE00556CB7 /* Conversion+CoreDataProperties.swift in Sources */,
+				0387BEBD27A32C3C00A708BE /* Section.swift in Sources */,
 				03C0945B2795152E0067B16C /* Model.swift in Sources */,
 				03C094672795152E0067B16C /* Pinnable.swift in Sources */,
 				03C094392795152E0067B16C /* Subscriber.swift in Sources */,
 				03FE679B279517DE00556CB7 /* Event+CoreDataClass.swift in Sources */,
+				0387BEBA27A32BDF00A708BE /* Configuration.swift in Sources */,
 				03C0946E2795152E0067B16C /* CloudKitContainer.swift in Sources */,
 				03FE679C279517DE00556CB7 /* Event+CoreDataProperties.swift in Sources */,
 				03C094742795152E0067B16C /* Model.xcdatamodeld in Sources */,
@@ -619,6 +638,7 @@
 				03FE6797279517DE00556CB7 /* Source+CoreDataClass.swift in Sources */,
 				03C094432795152E0067B16C /* WrappedSubscriber.swift in Sources */,
 				03FE678D279517DE00556CB7 /* Entity+CoreDataClass.swift in Sources */,
+				0387BEBF27A32C4E00A708BE /* Row.swift in Sources */,
 				03C0947D2795152E0067B16C /* Block+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

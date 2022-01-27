@@ -31,24 +31,21 @@ class EntityListViewController: ViewController
     
     override func display()
     {
-//        for item in allEntities.enumerated()
-//        {
-//            let entity = item.element
-//            let offset = item.offset
-//            let icon = entityType.icon
-//            print("\(offset). \(icon.text) \(entity.title)")
-//        }
         print(tableView.content)
     }
     
-//    override func handle(command: Command)
-//    {
-//        guard let command = TableSelectionCommand(command: command) else { return }
-//        guard let row = command.row else { return }
-//        let entity = allEntities[row - 1]
-//        let controller = detailViewController(for: entity)
-//        navigationController?.push(controller: controller)
-//    }
+    override func handle(command: Command)
+    {
+        switch command.rawString
+        {
+        case "add", "+":
+            let new = NewEntityViewController(entityType: entityType, context: context)
+            let nav = NavigationController(root: new)
+            present(controller: nav)
+        default:
+            super.handle(command: command)
+        }
+    }
     
     private func detailViewController(for entity: Entity) -> ViewController
     {

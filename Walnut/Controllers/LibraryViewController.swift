@@ -39,10 +39,7 @@ extension LibraryViewController: TableViewDelegate
         switch action
         {
         case "add", "+":
-            let newEntity: Named = type.insertNewEntity(into: context) as! Named
-            // Complains because we didn't initialize the values...
-            let configuration = EntityType.configuration(for: newEntity)
-            let controller = EntityDetailViewController(entity: newEntity, configuration: configuration)
+            let controller = NewEntityViewController(entityType: type, context: context)
             navigationController?.push(controller: controller)
         default:
             break
