@@ -21,5 +21,7 @@ class MainTabBarController: TabBarController
         default:
             activeTab.handle(command: command)
         }
+        
+        view?.update()
     }
 }
