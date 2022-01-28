@@ -25,12 +25,6 @@ class DashboardViewController: ViewController
         tableView.dataSource = dataSource
     }
     
-    override func viewWillAppear()
-    {
-        super.viewWillAppear()
-        dataSource.reload()
-    }
-    
     override func loadView()
     {
         view = tableView

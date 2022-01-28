@@ -69,6 +69,6 @@ extension LibraryViewController: TableViewDataSource
         let icon = entityType.icon.text
         
         let text = "\(index): \(icon) \(name) (\(count))"
-        return TableViewCell(contentView: nil, accessories: [.label(text: text)])
+        return TableViewCell(components: [.label(text: text)])
     }
 }

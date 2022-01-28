@@ -76,6 +76,6 @@ extension EntityListViewController: TableViewDataSource
         let entity = allEntities[indexPath.row]
         let icon = entityType.icon.text
         let text = "\(indexPath.row). \(icon) \(entity.title)"
-        return TableViewCell(contentView: nil, accessories: [.label(text: text)])
+        return TableViewCell(components: [.label(text: text)])
     }
 }

@@ -23,12 +23,7 @@ class DashboardDataSource
     init(context: Context)
     {
         self.context = context
-    }
-    
-    // MARK: - Public functions
-    
-    public func reload()
-    {
+        
         pinnedItems = getPinned()
         forecast = getForecast()
         suggestedFlows = getSuggestedFlows()
@@ -146,7 +141,7 @@ extension DashboardDataSource: TableViewDataSource
         guard let item = entity(at: indexPath.section, row: indexPath.row) else { fatalError() }
         let content = "\(indexPath.row): \(item)"
         
-        return TableViewCell(contentView: nil, accessories: [.label(text: content)])
+        return TableViewCell(components: [.label(text: content)])
     }
     
     func tableView(_ tableView: TableView, titleForHeaderInSection section: Int) -> String?

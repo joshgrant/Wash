@@ -77,7 +77,7 @@ extension EntityDetailViewController: TableViewDataSource
     func tableView(_ tableView: TableView, cellForRowAt indexPath: Index) -> TableViewCell
     {
         let value = data[indexPath.section].value[indexPath.row]
-        return TableViewCell(contentView: nil, accessories: [.label(text: value.description)])
+        return TableViewCell(components: [.label(text: value.description)])
     }
     
     func tableView(_ tableView: TableView, titleForHeaderInSection section: Int) -> String?

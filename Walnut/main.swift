@@ -23,7 +23,7 @@ var loop = true
 
 while(loop)
 {
-    window.draw()
+    window.update()
     
     guard let input = readLine() else { continue }
     
