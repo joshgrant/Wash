@@ -17,9 +17,14 @@ class LibraryViewController: ViewController
     {
         self.context = context
         self.tableView = TableView()
-        super.init(title: "Library", view: tableView)
+        super.init(title: "Library")
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    override func loadView()
+    {
+        view = tableView
     }
 }
 

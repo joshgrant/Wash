@@ -22,6 +22,8 @@ while(loop)
 {
     tabBarController.viewWillAppear()
     tabBarController.viewDidAppear()
+    // We tell the tabBarController to "display"
+    //
     
     guard let input = readLine() else { continue }
     

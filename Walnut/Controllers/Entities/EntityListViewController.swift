@@ -24,9 +24,14 @@ class EntityListViewController: ViewController
         self.entityType = entityType
         self.context = context
         self.tableView = TableView()
-        super.init(title: entityType.title, view: tableView)
+        super.init(title: entityType.title)
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    override func loadView()
+    {
+        view = tableView
     }
     
     override func handle(command: Command)

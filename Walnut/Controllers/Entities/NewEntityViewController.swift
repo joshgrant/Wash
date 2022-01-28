@@ -17,7 +17,13 @@ class NewEntityViewController: ViewController
     {
         self.entityType = entityType
         self.context = context
-        super.init(title: entityType.title, view: nil)
+        super.init(title: entityType.title)
+    }
+    
+    override func loadView()
+    {
+        // Setting the view to nil???
+        // View did appear is not the right place to print stuff out...
     }
     
     override func viewDidAppear()

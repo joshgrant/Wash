@@ -19,7 +19,7 @@ class DashboardViewController: ViewController
         self.context = context
         self.tableView = TableView()
         self.dataSource = DashboardDataSource(context: context)
-        super.init(title: "Dashboard", view: tableView)
+        super.init(title: "Dashboard")
         
         tableView.delegate = self
         tableView.dataSource = dataSource
@@ -29,6 +29,11 @@ class DashboardViewController: ViewController
     {
         super.viewWillAppear()
         dataSource.reload()
+    }
+    
+    override func loadView()
+    {
+        view = tableView
     }
 }
 

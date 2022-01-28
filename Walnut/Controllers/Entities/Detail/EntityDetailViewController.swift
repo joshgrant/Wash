@@ -25,9 +25,14 @@ class EntityDetailViewController: ViewController
         self.entity = entity
         self.configuration = configuration
         self.tableView = TableView()
-        super.init(title: entity.title, view: tableView)
+        super.init(title: entity.title)
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    override func loadView()
+    {
+        view = tableView
     }
 
     override func viewWillAppear()
