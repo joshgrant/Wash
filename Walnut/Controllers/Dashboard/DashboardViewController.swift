@@ -32,12 +32,11 @@ class DashboardViewController: ViewController
     
     override func handle(command: Command)
     {
-        self.tableView.handle(command: command)
+        tableView.handle(command: command)
     }
     
-    func delete(entity: Entity)
+    func reloadDataSource()
     {
-        context.delete(entity)
         dataSource = DashboardDataSource(context: context)
         tableView.dataSource = dataSource
     }
@@ -63,9 +62,11 @@ extension DashboardViewController: TableViewDelegate
         case "unpin":
             entity.isPinned = false
         case "delete":
-            delete(entity: entity)
+            context.delete(entity)
         default:
             return
         }
+        
+        reloadDataSource()
     }
 }

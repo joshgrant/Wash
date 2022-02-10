@@ -15,7 +15,10 @@ class EntityListViewController: ViewController
     var tableView: TableView
     
     var allEntities: [Named] {
-        let all = entityType.managedObjectType.all(context: context)
+        let all = entityType.managedObjectType.all(context: context).sorted(by: {
+            guard let first = $0.createdDate, let second = $1.createdDate else { return true }
+            return first > second
+        })
         return all.compactMap { $0 as? Named }
     }
     
@@ -43,14 +46,20 @@ class EntityListViewController: ViewController
             let nav = NavigationController(root: new)
             present(controller: nav)
         default:
-            super.handle(command: command)
+            tableView.handle(command: command)
         }
     }
     
-    private func detailViewController(for entity: Entity) -> ViewController
+    private func detailViewController(for entity: Named) -> ViewController
     {
-        guard let entity = entity as? Named else { fatalError() }
-        return EntityDetailViewController(entity: entity, configuration: EntityType.configuration(for: entity))
+        return EntityDetailViewController(
+            entity: entity,
+            configuration: EntityType.configuration(for: entity))
+    }
+    
+    private func entity(at indexPath: Index) -> Named
+    {
+        return allEntities[indexPath.row]
     }
 }
 
@@ -58,9 +67,21 @@ extension EntityListViewController: TableViewDelegate
 {
     func tableView(_ tableView: TableView, didSelectRowAt indexPath: Index)
     {
-        let entity = allEntities[indexPath.row]
+        let entity = entity(at: indexPath)
         let controller = detailViewController(for: entity)
         navigationController?.push(controller: controller)
+    }
+    
+    func tableView(_ tableView: TableView, performAction action: String, forRowAtIndexPath indexPath: Index)
+    {
+        let entity = entity(at: indexPath)
+        
+        switch action {
+        case "delete":
+            context.delete(entity)
+        default:
+            break
+        }
     }
 }
 

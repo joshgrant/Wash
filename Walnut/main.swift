@@ -24,6 +24,7 @@ var loop = true
 while(loop)
 {
     window.update()
+    database.context.quickSave()
     
     guard let input = readLine() else { continue }
     
