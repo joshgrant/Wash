@@ -129,6 +129,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		031830F527B4A0D4007A94C3 /* Walnut.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Walnut.entitlements; sourceTree = "<group>"; };
 		035225FA279F52B5006A8DED /* NewEntityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntityViewController.swift; sourceTree = "<group>"; };
 		03797371279512F7000FE2E4 /* Walnut */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Walnut; sourceTree = BUILT_PRODUCTS_DIR; };
 		0387BEB727A3152400A708BE /* DashboardDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDataSource.swift; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 		03797373279512F7000FE2E4 /* Walnut */ = {
 			isa = PBXGroup;
 			children = (
+				031830F527B4A0D4007A94C3 /* Walnut.entitlements */,
 				03C094232795152E0067B16C /* main.swift */,
 				03FE67A42795F38600556CB7 /* Controllers */,
 				03C09480279515A10067B16C /* Database */,
@@ -765,9 +767,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Walnut/Walnut.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 685257RUQP;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -783,9 +786,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Walnut/Walnut.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 685257RUQP;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

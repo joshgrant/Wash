@@ -29,6 +29,10 @@ class DashboardViewController: ViewController
     {
         view = tableView
     }
+    
+    override func handle(command: Command) {
+        self.tableView.handle(command: command)
+    }
 }
 
 extension DashboardViewController: TableViewDelegate
