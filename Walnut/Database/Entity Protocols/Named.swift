@@ -7,8 +7,6 @@
 
 import Foundation
 
-public typealias NamedEntity = Entity & Named
-
 public protocol Named: Entity
 {
     var unwrappedName: String? { get }

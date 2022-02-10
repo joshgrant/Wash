@@ -7,6 +7,7 @@
 
 import Foundation
 import Protyper
+import CoreData
 
 class EntityListViewController: ViewController
 {
@@ -14,13 +15,16 @@ class EntityListViewController: ViewController
     var context: Context
     var tableView: TableView
     
-    var allEntities: [Named] {
-        let all = entityType.managedObjectType.all(context: context).sorted(by: {
-            guard let first = $0.createdDate, let second = $1.createdDate else { return true }
-            return first > second
-        })
-        return all.compactMap { $0 as? Named }
-    }
+    lazy var fetchController: NSFetchedResultsController<NSFetchRequestResult> = {
+        let request: NSFetchRequest<NSFetchRequestResult> = entityType.managedObjectType.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: true)]
+        let controller = NSFetchedResultsController(fetchRequest: request,
+                                                    managedObjectContext: context,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        controller.delegate = self
+        return controller
+    }()
     
     init(entityType: EntityType, context: Context)
     {
@@ -30,6 +34,8 @@ class EntityListViewController: ViewController
         super.init(title: entityType.title)
         tableView.delegate = self
         tableView.dataSource = self
+        
+        try? fetchController.performFetch()
     }
     
     override func loadView()
@@ -59,7 +65,7 @@ class EntityListViewController: ViewController
     
     private func entity(at indexPath: Index) -> Named
     {
-        return allEntities[indexPath.row]
+        return fetchController.fetchedObjects![indexPath.row] as! Named
     }
 }
 
@@ -89,14 +95,22 @@ extension EntityListViewController: TableViewDataSource
 {
     func tableView(_ tableView: TableView, numberOfRowsInSection section: Int) -> Int
     {
-        allEntities.count
+        fetchController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: TableView, cellForRowAt indexPath: Index) -> TableViewCell
     {
-        let entity = allEntities[indexPath.row]
+        let entity = entity(at: indexPath)
         let icon = entityType.icon.text
         let text = "\(indexPath.row). \(icon) \(entity.title)"
         return TableViewCell(components: [.label(text: text)])
+    }
+}
+
+extension EntityListViewController: NSFetchedResultsControllerDelegate
+{
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
+    {
+        print("Hello")
     }
 }
