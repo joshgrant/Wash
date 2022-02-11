@@ -63,9 +63,11 @@ class EntityListViewController: ViewController
             configuration: EntityType.configuration(for: entity))
     }
     
-    private func entity(at indexPath: Index) -> Named
+    private func entity(at indexPath: Index) -> Named?
     {
-        return fetchController.fetchedObjects![indexPath.row] as! Named
+        guard let objects = fetchController.fetchedObjects else { return nil }
+        guard objects.count > indexPath.row else { return nil }
+        return objects[indexPath.row] as? Named
     }
 }
 
@@ -73,14 +75,14 @@ extension EntityListViewController: TableViewDelegate
 {
     func tableView(_ tableView: TableView, didSelectRowAt indexPath: Index)
     {
-        let entity = entity(at: indexPath)
+        guard let entity = entity(at: indexPath) else { return }
         let controller = detailViewController(for: entity)
         navigationController?.push(controller: controller)
     }
     
     func tableView(_ tableView: TableView, performAction action: String, forRowAtIndexPath indexPath: Index)
     {
-        let entity = entity(at: indexPath)
+        guard let entity = entity(at: indexPath) else { return }
         
         switch action {
         case "delete":
@@ -100,7 +102,7 @@ extension EntityListViewController: TableViewDataSource
     
     func tableView(_ tableView: TableView, cellForRowAt indexPath: Index) -> TableViewCell
     {
-        let entity = entity(at: indexPath)
+        guard let entity = entity(at: indexPath) else { fatalError() }
         let icon = entityType.icon.text
         let text = "\(indexPath.row). \(icon) \(entity.title)"
         return TableViewCell(components: [.label(text: text)])
