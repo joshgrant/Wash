@@ -12,7 +12,7 @@ extension EntityDetailViewController {
     struct DataSource
     {
         var dataProvider: (Entity) -> [Section: [Row]]
-        var commandHandler: ((Command) -> Void)? = nil
+        var commandHandler: ((Entity, Command) -> Void)? = nil
     }
 }
 
@@ -21,6 +21,7 @@ extension EntityDetailViewController.DataSource
     typealias Configuration = EntityDetailViewController.DataSource
     typealias Section = EntityDetailViewController.Section
     typealias Row = EntityDetailViewController.Row
+    typealias TableData = [Section: [Row]]
     
     static let condition = Configuration { _ in
         return [:]
@@ -30,24 +31,38 @@ extension EntityDetailViewController.DataSource
         return [:]
     }
     
-    static let event = Configuration { entity in
-        guard let event = entity as? Event else { return [:] }
-        
-        var configuration: [Section: [Row]] = [:]
-        
-        configuration[.info] = [
-            .editable(index: 0, text: event.title, placeholder: "Title"),
-            .toggle(index: 1, text: "Active", isOn: event.isActive)
-        ]
-        
-        let conditions: [Condition] = event.unwrapped(\Event.conditions)
-        configuration[.conditions] = conditions.enumerated().map {
-            let index = $0.offset
-            let text = $0.element.title
-            return .detail(index: index, text: text)
-        }
-        return configuration
-    }
+    static let event = Configuration(
+        dataProvider: { entity in
+            guard let event = entity as? Event else { return [:] }
+            
+            var configuration: [Section: [Row]] = [:]
+            
+            configuration[.info] = [
+                .editable(index: 0, text: event.title, placeholder: "Title"),
+                .toggle(index: 1, text: "Active", isOn: event.isActive)
+            ]
+            
+            let conditions: [Condition] = event.unwrapped(\Event.conditions)
+            configuration[.conditions] = conditions.enumerated().map {
+                let index = $0.offset
+                let text = $0.element.title
+                return .detail(index: index, text: text)
+            }
+            
+            return configuration
+        },
+        commandHandler: { entity, command in
+            guard let event = entity as? Event else { return }
+            switch command.rawString
+            {
+            case "toggle":
+                event.isActive.toggle()
+                // TODO: Some way to reload the table view...
+            default:
+                break
+            }
+        })
+            
     
     static let note = Configuration { _ in
         return [:]
@@ -59,8 +74,8 @@ extension EntityDetailViewController.DataSource
         var configuration: [Section: [Row]] = [:]
         
         configuration[.info] = [
-            .detail(index: 0, text: "From: \(flow.from?.title ?? "")"),
-            .detail(index: 1, text: "To: \(flow.to?.title ?? "")")
+            .keyValue(index: 0, key: "From", value: flow.from?.title ?? ""),
+            .keyValue(index: 1, key: "To", value: flow.to?.title ?? "")
         ]
         
         return configuration
@@ -77,13 +92,13 @@ extension EntityDetailViewController.DataSource
         }
         else
         {
-            let current = String(format: "%.2f", stock.current)
-            let target = String(format: "%.2f", stock.target)
-            let currentText = "Current: \(current)"
-            let targetText = "Target: \(target)"
+            let unitAbbreviation = stock.unit?.abbreviation ?? ""
+            let current = String(format: "%.2f \(unitAbbreviation)", stock.current)
+            let target = String(format: "%.2f \(unitAbbreviation)", stock.target)
+            
             configuration[.info] = [
-                .text(string: "Current: \(current)"),
-                .text(string: "Target: \(target)")
+                .keyValue(index: 0, key: "Current", value: current),
+                .keyValue(index: 1, key: "Target", value: target)
             ]
         }
         
@@ -115,12 +130,12 @@ extension EntityDetailViewController.DataSource
         configuration[.info] = [
             .editable(index: 0, text: unit.title, placeholder: "Title"),
             .editable(index: 1, text: unit.abbreviation, placeholder: "Abbreviation"),
-            .keyValue(key: "Is Base", value: unit.isBase ? "Yes" : "No")
+            .keyValue(index: 2, key: "Is Base", value: unit.isBase ? "Yes" : "No")
         ]
         
         if !unit.isBase
         {
-            configuration[.info]?.append(.keyValue(key: "Relative To", value: unit.parent?.title ?? "None"))
+            configuration[.info]?.append(.keyValue(index: 3, key: "Relative To", value: unit.parent?.title ?? "None"))
         }
         return configuration
     }

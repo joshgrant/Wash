@@ -17,19 +17,19 @@ let library = NavigationController(root: LibraryViewController(context: database
 let tabBarController = MainTabBarController(tabs: [dashboard, library])
 let window = Window()
 window.rootViewController = tabBarController
-window.makeVisible()
+window.draw()
 
 var loop = true
 
 while(loop)
 {
-    window.update()
-    database.context.quickSave()
-    
     guard let input = readLine() else { continue }
+    window.clear()
     
     switch input
     {
+    case "clear":
+        database.clear()
     case "q":
         loop = false
         print("Saving...")
@@ -39,6 +39,8 @@ while(loop)
         let command = Command(rawString: input)
         tabBarController.handle(command: command)
     }
+    
+    database.context.quickSave()
 }
 /**
  

@@ -229,6 +229,7 @@ class ContextPopulator
         
         stock.maximum = Source(context: context)
         stock.maximum?.value = values[3]
+        stock.unit = makeOrFindRandomUnit(context: context)
         
         stock.symbolName = makeRandomSymbol(context: context)
         stock.isPinned = .random()
@@ -505,6 +506,20 @@ class ContextPopulator
         return unit
     }
     
+    private static func makeOrFindRandomUnit(context: Context) -> Unit
+    {
+        let request: NSFetchRequest<Unit> = Unit.fetchRequest()
+        let allUnits = (try? context.fetch(request)) ?? []
+        if allUnits.count < 5
+        {
+            return makeRandomUnit(context: context)
+        }
+        else
+        {
+            return allUnits.randomElement()!
+        }
+    }
+    
     // MARK: - Conversion
     
     @discardableResult private static func makeRandomConversion(context: Context) -> Conversion
@@ -513,8 +528,8 @@ class ContextPopulator
         conversion.isReversible = .random()
         conversion.leftValue = .random(in: -10e10 ... 10e10)
         conversion.rightValue = .random(in: -10e10 ... 10e10)
-        conversion.leftUnit = makeRandomUnit(context: context)
-        conversion.rightUnit = makeRandomUnit(context: context)
+        conversion.leftUnit = makeOrFindRandomUnit(context: context)
+        conversion.rightUnit = makeOrFindRandomUnit(context: context)
         conversion.symbolName = makeRandomSymbol(context: context)
         return conversion
     }

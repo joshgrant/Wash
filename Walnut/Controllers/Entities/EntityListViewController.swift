@@ -113,6 +113,5 @@ extension EntityListViewController: NSFetchedResultsControllerDelegate
 {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
     {
-        print("Hello")
     }
 }

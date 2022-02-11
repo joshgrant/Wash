@@ -11,30 +11,42 @@ import CoreData
 
 open class Database
 {
+    // MARK: - Defined types
+    
+    private enum Constants
+    {
+        static let modelName = "Model"
+    }
+    
     // MARK: - Variables
     
-    public var modelName: String
     public var container: CloudKitContainer
     
     public var context: Context { container.context }
     
     // MARK: - Initialization
     
-    public init(modelName: String = "Model")
+    public init()
     {
-        self.modelName = modelName
-        
+        container = Self.createContainer()
+        populate(context: context)
+    }
+    
+    // MARK: Factory
+    
+    /// Separating the container creation allows us to destroy and re-init the container.
+    static func createContainer(modelName: String = Constants.modelName) -> CloudKitContainer
+    {
         do
         {
-            container = try CloudKitContainer(modelName: modelName)
+            let container = try CloudKitContainer(modelName: modelName)
             try container.loadPersistentStores()
+            return container
         }
         catch
         {
             fatalError("Failed to create the container: \(error)")
         }
-        
-        populate(context: context)
     }
     
     // MARK: - Functions
@@ -62,5 +74,17 @@ public extension Database
     func populate(context: Context)
     {
         context.quickSave()
+    }
+    
+    func clear()
+    {
+        let coordinator = container.persistentStoreCoordinator
+        
+        for store in coordinator.persistentStores
+        {
+            try! coordinator.destroyPersistentStore(at: store.url!, ofType: store.type, options: nil)
+        }
+        
+        container = Self.createContainer()
     }
 }

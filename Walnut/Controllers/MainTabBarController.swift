@@ -22,6 +22,6 @@ class MainTabBarController: TabBarController
             activeTab.handle(command: command)
         }
         
-        view?.update()
+        view?.draw()
     }
 }

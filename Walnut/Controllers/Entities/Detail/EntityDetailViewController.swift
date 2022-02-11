@@ -18,14 +18,14 @@ class EntityDetailViewController: ViewController
     var configuration: DataSource
     var tableView: TableView
     
-    lazy var data = configuration.dataProvider(entity).sorted { $0.key < $1.key }
+    lazy var data = loadData()
     
     init(entity: Named, configuration: DataSource)
     {
         self.entity = entity
         self.configuration = configuration
         self.tableView = TableView()
-        super.init(title: entity.title)
+        super.init(title: "\(EntityType.type(from: entity)?.icon.text ?? "") \(entity.title)")
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -50,16 +50,35 @@ class EntityDetailViewController: ViewController
         case "unpin":
             entity.isPinned = false
         default:
-            super.handle(command: command)
+            if let handler = configuration.commandHandler
+            {
+                // TODO: Even with a valid command handler, might not handle this command, i.e return
+                handler(entity, command)
+                // TODO: No clear API coms that this needs to reload the table view (our data is lazy)
+                reloadData()
+            }
+            else
+            {
+                super.handle(command: command)
+            }
         }
-        
-        entity.managedObjectContext?.quickSave()
+    }
+    
+    // MARK: - Reloading
+    
+    private func loadData() -> [Dictionary<DataSource.Section, [DataSource.Row]>.Element]
+    {
+        return configuration.dataProvider(entity).sorted { $0.key < $1.key }
+    }
+    
+    private func reloadData()
+    {
+        data = loadData()
     }
 }
 
 extension EntityDetailViewController: TableViewDelegate
 {
-    
 }
 
 extension EntityDetailViewController: TableViewDataSource
