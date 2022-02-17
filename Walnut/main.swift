@@ -15,14 +15,13 @@ let dashboard = NavigationController(root: DashboardViewController(context: data
 let library = NavigationController(root: LibraryViewController(context: database.context))
 
 let tabBarController = MainTabBarController(tabs: [dashboard, library])
-let window = Window()
-window.rootViewController = tabBarController
-window.draw()
+let window = Window(rootViewController: tabBarController)
 
 var loop = true
 
 while(loop)
 {
+    window.draw()
     guard let input = readLine() else { continue }
     window.clear()
     

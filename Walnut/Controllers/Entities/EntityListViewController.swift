@@ -52,7 +52,7 @@ class EntityListViewController: ViewController
             let nav = NavigationController(root: new)
             present(controller: nav)
         default:
-            tableView.handle(command: command)
+            super.handle(command: command)
         }
     }
     

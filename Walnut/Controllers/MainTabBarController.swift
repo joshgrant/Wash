@@ -19,9 +19,7 @@ class MainTabBarController: TabBarController
         case "library":
             selectedIndex = 1
         default:
-            activeTab.handle(command: command)
+            super.handle(command: command)
         }
-        
-        view?.draw()
     }
 }

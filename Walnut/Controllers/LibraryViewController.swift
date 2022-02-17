@@ -26,11 +26,6 @@ class LibraryViewController: ViewController
     {
         view = tableView
     }
-    
-    override func handle(command: Command)
-    {
-        tableView.handle(command: command)
-    }
 }
 
 extension LibraryViewController: TableViewDelegate
