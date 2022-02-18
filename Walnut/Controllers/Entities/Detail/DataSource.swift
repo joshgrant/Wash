@@ -55,6 +55,10 @@ extension EntityDetailViewController.DataSource
             guard let event = entity as? Event else { return }
             switch command.rawString
             {
+            case "edit":
+                print("Please enter the new title:")
+                event.symbolName?.name = readLine()
+                // Reload the nav bar
             case "toggle":
                 event.isActive.toggle()
                 // TODO: Some way to reload the table view...

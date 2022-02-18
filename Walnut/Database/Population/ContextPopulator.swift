@@ -15,6 +15,8 @@ class ContextPopulator
     
     static func populate(context: Context)
     {
+        guard false else { return }
+        
         fetchOrMakeSourceStock(context: context)
         fetchOrMakeSinkStock(context: context)
         

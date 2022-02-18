@@ -51,6 +51,18 @@ class EntityListViewController: ViewController
             let new = NewEntityViewController(entityType: entityType, context: context)
             let nav = NavigationController(root: new)
             present(controller: nav)
+        case "delete":
+            let command = TableSelectionCommand(command: command)
+            
+            if let row = command?.row, let entity = fetchController.fetchedObjects?[row] as? Entity {
+                context.delete(entity)
+            }
+        case "delete all":
+            let allObjects = entityType.managedObjectType.all(context: context)
+            for object in allObjects {
+                context.delete(object)
+            }
+            context.quickSave()
         default:
             super.handle(command: command)
         }
