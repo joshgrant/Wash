@@ -80,7 +80,8 @@ while(loop)
     case ("set-from", let arguments):   setFrom(arguments: arguments)
     case ("set-to", let arguments): setTo(arguments: arguments)
     case ("run", _): run()
-    default: break
+    default:
+        print("Invalid command.")
     }
     
     lastCommand = command
@@ -228,11 +229,13 @@ func select(arguments: [String])
 /// Then, add it to the workspace.
 func choose(arguments: [String], lastCommand: Command)
 {
-    let items: [NSFetchRequestResult]
+    let items: [Any]
     
     switch lastCommand.command {
     case "all":
         items = all(arguments: lastCommand.arguments)
+    case "priority":
+        items = priority()
     default:
         print("Last command wasn't valid to choose from")
         return
@@ -379,41 +382,61 @@ func pinned()
     print("Pins: \(pins)")
 }
 
-func priority()
+@discardableResult func priority() -> [Flow]
 {
-    var suggested: [Flow] = []
+    var suggested: Set<Flow> = []
     let allStocks: [Stock] = Stock.all(context: database.context)
     let unbalancedStocks = allStocks.filter { stock in
-        stock.percentIdeal < 100
+        stock.percentIdeal < 1
     }
     
     for stock in unbalancedStocks
     {
         var bestFlow: Flow?
-        var bestDelta: Double = 0
+        var bestPercentIdeal: Double = 0
         
         let allFlows = stock.unwrappedInflows + stock.unwrappedOutflows
         
         for flow in allFlows
         {
-            let amount = flow.amount
-            let projectedCurrent = stock.source!.value + amount
-            let projectedDelta = Double.percentDelta(a: projectedCurrent, b: stock.ideal!.value, minimum: stock.minimum!.value, maximum: stock.maximum!.value)
-            let deltaProjectedActual = abs(stock.percentIdeal - projectedDelta)
-            if deltaProjectedActual > bestDelta
+            let amount: Double
+            
+            // TODO: Could clean this up a bit
+            if stock.unwrappedInflows.contains(where: { $0 == flow })
+            {
+                amount = -flow.amount
+            }
+            else if stock.unwrappedOutflows.contains(where: { $0 == flow })
+            {
+                amount = flow.amount
+            }
+            else
+            {
+                print("Something's wrong: flow wasn't part of inflows or outflows")
+                fatalError()
+            }
+            
+            let projectedCurrent = min(stock.max, stock.current + amount)
+            let projectedPercentIdeal = Double.percentDelta(
+                a: projectedCurrent,
+                b: stock.target,
+                minimum: stock.min,
+                maximum: stock.max)
+            if projectedPercentIdeal > bestPercentIdeal
             {
                 bestFlow = flow
-                bestDelta = deltaProjectedActual
+                bestPercentIdeal = projectedPercentIdeal
             }
         }
         
         if let flow = bestFlow
         {
-            suggested.append(flow)
+            suggested.insert(flow)
         }
     }
     
     print("Priority: \(suggested)")
+    return Array(suggested)
 }
 
 @discardableResult func all(arguments: [String]) -> [NSFetchRequestResult]
