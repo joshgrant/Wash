@@ -236,6 +236,8 @@ func choose(arguments: [String], lastCommand: Command)
         items = all(arguments: lastCommand.arguments)
     case "priority":
         items = priority()
+    case "pinned":
+        items = pinned()
     default:
         print("Last command wasn't valid to choose from")
         return
@@ -374,12 +376,13 @@ func library()
     }
 }
 
-func pinned()
+func pinned() -> [Pinnable]
 {
     let request = Entity.makePinnedObjectsFetchRequest(context: database.context)
     let result = (try? database.context.fetch(request)) ?? []
     let pins = result.compactMap { $0 as? Pinnable }
     print("Pins: \(pins)")
+    return pins
 }
 
 @discardableResult func priority() -> [Flow]
