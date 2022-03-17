@@ -9,6 +9,8 @@ import Foundation
 import Cocoa
 import CoreData
 
+public typealias Container = NSPersistentContainer
+
 open class Database
 {
     // MARK: - Defined types
@@ -20,9 +22,11 @@ open class Database
     
     // MARK: - Variables
     
-    public var container: CloudKitContainer
+    public var container: Container
     
-    public var context: Context { container.context }
+    public var context: Context { container.viewContext }
+    public var model: Model { container.managedObjectModel }
+    public var coordinator: Coordinator { container.persistentStoreCoordinator }
     
     // MARK: - Initialization
     
@@ -35,18 +39,21 @@ open class Database
     // MARK: Factory
     
     /// Separating the container creation allows us to destroy and re-init the container.
-    static func createContainer(modelName: String = Constants.modelName) -> CloudKitContainer
+    static func createContainer(modelName: String = Constants.modelName) -> Container
     {
-        do
-        {
-            let container = try CloudKitContainer(modelName: modelName)
-            try container.loadPersistentStores()
-            return container
+        let model = NSManagedObjectModel.mergedModel(from: nil)!
+        let container = Container(name: modelName, managedObjectModel: model)
+        container.loadPersistentStores { description, error in
+            
+            container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+            
+            if let error = error as NSError?
+            {
+                fatalError("\(error.userInfo)")
+            }
         }
-        catch
-        {
-            fatalError("Failed to create the container: \(error)")
-        }
+        
+        return container
     }
     
     // MARK: - Functions
