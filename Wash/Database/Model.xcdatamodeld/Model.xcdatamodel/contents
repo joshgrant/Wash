@@ -26,6 +26,7 @@
     </entity>
     <entity name="Condition" representedClassName="Condition" parentEntity="Entity" syncable="YES">
         <attribute name="booleanComparisonTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="conditionTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dateComparisonTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="numberComparisonTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="priorityTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -167,7 +168,7 @@
     <elements>
         <element name="Block" positionX="-63" positionY="-18" width="128" height="209"/>
         <element name="Color" positionX="-54" positionY="-9" width="128" height="149"/>
-        <element name="Condition" positionX="-36" positionY="9" width="128" height="164"/>
+        <element name="Condition" positionX="-36" positionY="9" width="128" height="179"/>
         <element name="Conversion" positionX="0" positionY="45" width="128" height="119"/>
         <element name="Entity" positionX="9" positionY="54" width="128" height="149"/>
         <element name="Event" positionX="36" positionY="81" width="128" height="134"/>

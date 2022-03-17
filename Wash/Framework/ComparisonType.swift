@@ -15,6 +15,21 @@ public enum ComparisonType: Int16, CaseIterable, Random
     case number
 }
 
+extension ComparisonType: CustomStringConvertible
+{
+    public var description: String
+    {
+        switch self {
+        case .boolean:
+            return "Boolean"
+        case .date:
+            return "Date"
+        case .number:
+            return "Number"
+        }
+    }
+}
+
 public enum BooleanComparisonType: Int16, CaseIterable, Random
 {
     case equal

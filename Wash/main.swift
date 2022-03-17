@@ -56,6 +56,7 @@ while(loop)
     case ("unhide", _):                 unhide()
     case ("view", _):                   view()
     case ("delete", _):                 delete()
+    case ("nuke", _):                   nuke()
     case ("all", let arguments):        all(arguments: arguments)
         
         // MARK: - Stocks
@@ -78,8 +79,19 @@ while(loop)
     case ("set-duration", let arguments):   setDuration(arguments: arguments)
     case ("set-requires", let arguments):   setRequiresUserCompletion(arguments: arguments)
     case ("set-from", let arguments):   setFrom(arguments: arguments)
-    case ("set-to", let arguments): setTo(arguments: arguments)
+    case ("set-to", let arguments):     setTo(arguments: arguments)
     case ("run", _): run()
+        
+        // MARK: - Events
+    case ("set-is-active", let arguments): setIsActive(arguments: arguments)
+    case ("add-condition", let arguments): addCondition(arguments: arguments)
+    case ("set-condition-type", let arguments): setConditionType(arguments: arguments)
+        
+        // MARK: Conditions
+    case ("set-comparison", let arguments): setComparison(arguments: arguments)
+    case ("set-left-hand", let arguments): setLeftHand(arguments: arguments)
+    case ("set-right-hand", let arguments): setRightHand(arguments: arguments)
+        
     default:
         print("Invalid command.")
     }
@@ -87,6 +99,11 @@ while(loop)
     lastCommand = command
     
     print("Workspace: \(workspace)")
+}
+
+func nuke()
+{
+    database.clear()
 }
 
 func add(arguments: [String])
@@ -110,6 +127,8 @@ func add(arguments: [String])
         makeEvent(name: name)
     case "unit":
         makeUnit(name: name)
+    case "condition":
+        makeCondition(name: name)
     default:
         print("Tried to add an invalid entity")
         return
@@ -196,6 +215,18 @@ func makeUnit(name: String?)
     }
     
     workspace.insert(unit, at: 0)
+}
+
+func makeCondition(name: String?)
+{
+    let condition = Condition(context: database.context)
+    
+    if let name = name
+    {
+        condition.symbolName = Symbol(context: database.context, name: name)
+    }
+    
+    workspace.insert(condition, at: 0)
 }
 
 /// Selecting is for focusing a certain item already in the workspace
@@ -376,7 +407,7 @@ func library()
     }
 }
 
-func pinned() -> [Pinnable]
+@discardableResult func pinned() -> [Pinnable]
 {
     let request = Entity.makePinnedObjectsFetchRequest(context: database.context)
     let result = (try? database.context.fetch(request)) ?? []
@@ -462,6 +493,8 @@ func pinned() -> [Pinnable]
         entityType = .unit
     case "event":
         entityType = .event
+    case "condition":
+        entityType = .condition
     default:
         print("Invalid entity type")
         return []
@@ -779,4 +812,299 @@ func runHelper(flow: Flow, amount: Double)
     print("Sleeping for 1 second")
     sleep(1)
     runHelper(flow: flow, amount: amount - amountToSubtract)
+}
+
+func setIsActive(arguments: [String])
+{
+    guard let (bool, event): (Bool, Event) = getBooleanArgumentAndEntity(arguments: arguments) else
+    {
+        print("Couldn't get an event and a boolean to set is active")
+        return
+    }
+    
+    event.isActive = bool
+}
+
+func addCondition(arguments: [String])
+{
+    guard let (event, condition): (Event, Condition) = getEntities(arguments: arguments) else
+    {
+        print("Couldn't find an event, condition")
+        return
+    }
+    
+    event.addToConditions(condition)
+}
+
+/// Sets `all` or `any` on the condition
+func setConditionType(arguments: [String])
+{
+    guard let string = arguments.first else
+    {
+        print("Please provide a condition type: `all` or `any`")
+        return
+    }
+    
+    guard let type = ConditionType(string) else
+    {
+        print("Invalid condition type")
+        return
+    }
+    
+    guard let event = workspace.first as? Event else
+    {
+        print("The first entity in the workspace was not an event")
+        return
+    }
+    
+    event.conditionType = type
+}
+
+/// Sets both the comparison type and cancels the other comparisons
+/// Needs two arguments
+func setComparison(arguments: [String])
+{
+    guard let comparison = arguments.first else
+    {
+        print("No argument. Pass a comparison type.")
+        return
+    }
+    
+    let comparisonType: ComparisonType
+    
+    switch comparison
+    {
+    case "bool", "boolean":
+        comparisonType = .boolean
+    case "date":
+        comparisonType = .date
+    case "number":
+        comparisonType = .number
+    default:
+        print("Invalid comparison. Either `bool`, `date`, or `number`")
+        return
+    }
+    
+    guard arguments.count > 1 else
+    {
+        print("No second argument. Pass a more specific comparison. Options are:")
+        print("Bool: `equal`, `not-equal`")
+        print("Date: `after`, `before`")
+        print("Number: `equal`, `not-equal`, `greater-than`, `less-than`, `gtoe`, `ltoe")
+        return
+    }
+    
+    let type = arguments[1]
+    
+    guard let condition = workspace.first as? Condition else
+    {
+        print("No condition as first in workspace")
+        return
+    }
+    
+    func cancelNumberDate()
+    {
+        condition.numberComparisonType = .none
+        condition.dateComparisonType = .none
+    }
+    
+    func cancelBoolNumber()
+    {
+        condition.booleanComparisonType = .none
+        condition.numberComparisonType = .none
+    }
+    
+    func cancelBoolDate()
+    {
+        condition.booleanComparisonType = .none
+        condition.dateComparisonType = .none
+    }
+    
+    switch (comparisonType, type)
+    {
+    case (.boolean, "equal"):
+        condition.booleanComparisonType = .equal
+        cancelNumberDate()
+    case (.boolean, "not-equal"):
+        condition.booleanComparisonType = .notEqual
+        cancelNumberDate()
+    case (.date, "after"):
+        condition.dateComparisonType = .after
+        cancelBoolNumber()
+    case (.date, "before"):
+        condition.dateComparisonType = .before
+        cancelBoolNumber()
+    case (.number, "equal"):
+        condition.numberComparisonType = .equal
+        cancelBoolDate()
+    case (.number, "not-equal"):
+        condition.numberComparisonType = .notEqual
+        cancelBoolDate()
+    case (.number, "greaterThan"):
+        condition.numberComparisonType = .greaterThan
+        cancelBoolDate()
+    case (.number, "lessThan"):
+        condition.numberComparisonType = .lessThan
+        cancelBoolDate()
+    case (.number, "gtoe"):
+        condition.numberComparisonType = .greaterThanOrEqual
+        cancelBoolDate()
+    case (.number, "ltoe"):
+        condition.numberComparisonType = .lessThanOrEqual
+        cancelBoolDate()
+    default:
+        print("Failed to find a matching comparison type")
+        return
+    }
+}
+
+func setLeftHand(arguments: [String])
+{
+    guard let condition = workspace.first as? Condition else
+    {
+        print("Failed to get a condition from the workspace")
+        return
+    }
+    condition.leftHand = makeSource(from: arguments)
+}
+
+func setRightHand(arguments: [String])
+{
+    guard let condition = workspace.first as? Condition else
+    {
+        print("Failed to get a condition from the workspace")
+        return
+    }
+    condition.rightHand = makeSource(from: arguments)
+}
+
+func makeSource(from arguments: [String]) -> Source
+{
+    if let argument = parseWorkspaceSource(from: arguments)
+    {
+        return argument
+    }
+    if let dateSource = parseDateSource(from: arguments)
+    {
+        return dateSource
+    }
+    else if let number = parseDouble(from: arguments)
+    {
+        return makeSource(with: number, type: .number)
+    }
+    else if let bool = parseBool(from: arguments)
+    {
+        return makeSource(with: bool)
+    }
+    // TODO: Parse percent, infinity
+    
+    fatalError()
+}
+
+func parseWorkspaceSource(from arguments: [String]) -> Source?
+{
+    guard let first = arguments.first else
+    {
+        print("No arguments, no source")
+        return nil
+    }
+    
+    if first.first == "$"
+    {
+        if let number = try? Int(first, strategy: IntegerParseStrategy(format: .currency(code: "usd")))
+        {
+            guard workspace.count > number else
+            {
+                print("Magic workspace argument was too large. Out-of-bounds")
+                return nil
+            }
+            
+            return getSource(from: workspace[number])
+        }
+        
+        return nil
+    }
+    else
+    {
+        return nil
+    }
+}
+
+func getSource(from entity: Entity) -> Source?
+{
+    switch entity
+    {
+    case (let s as Stock):
+        return s.source
+    default:
+        return nil
+    }
+}
+
+func makeSource(with value: Double, type: SourceValueType) -> Source
+{
+    let source = Source(context: database.context)
+    source.value = value
+    source.valueType = type
+    return source
+}
+
+func makeSource(with bool: Bool) -> Source
+{
+    let source = Source(context: database.context)
+    source.booleanValue = bool
+    source.valueType = .boolean
+    return source
+}
+
+func parseDateSource(from arguments: [String]) -> Source?
+{
+    guard arguments.count > 0 else
+    {
+        print("Couldn't parse date; arguments was empty")
+        return nil
+    }
+    
+    let argument = arguments.joined(separator: " ")
+    
+    if argument.localizedLowercase == "now"
+    {
+        let source = Source(context: database.context)
+        source.valueType = .date
+        source.value = -1 // -1 is how we show "now"
+        return source
+    }
+    else if let date = try? Date(argument, strategy: .dateTime.month().day().year())
+    {
+        let source = Source(context: database.context)
+        source.valueType = .date
+        source.value = date.timeIntervalSinceReferenceDate
+        return source
+    }
+    else
+    {
+        return nil
+    }
+}
+
+func parseDouble(from arguments: [String]) -> Double?
+{
+    guard let first = arguments.first else
+    {
+        print("Couldn't parse double; no arguments")
+        return nil
+    }
+    
+    return Double(first)
+}
+
+func parseBool(from arguments: [String]) -> Bool?
+{
+    guard let first = arguments.first else
+    {
+        print("Couldn't parse bool; no arguments")
+        return nil
+    }
+    
+    return Bool(first)
 }

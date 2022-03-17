@@ -9,8 +9,79 @@ import Foundation
 
 extension Condition: SymbolNamed {}
 
+extension Condition
+{
+    public override var description: String
+    {
+        let name = unwrappedName ?? ""
+        let icon = Icon.condition.text
+        return "\(icon) \(name)"
+    }
+}
+
+extension Condition: Printable
+{
+    var fullDescription: String
+    {
+        let comparisonDetail: String
+        
+        switch comparisonType
+        {
+        case .boolean:
+            switch booleanComparisonType {
+            case .notEqual: comparisonDetail = "Not equal"
+            case .equal:    comparisonDetail = "Equal"
+            default:        comparisonDetail = "nil:bool"
+            }
+        case .number:
+            switch numberComparisonType {
+            case .equal:                comparisonDetail = "Equal"
+            case .notEqual:             comparisonDetail = "Not equal"
+            case .lessThanOrEqual:      comparisonDetail = "Less than or equal"
+            case .greaterThanOrEqual:   comparisonDetail = "Greater than or equal"
+            case .lessThan:             comparisonDetail = "Less than"
+            case .greaterThan:          comparisonDetail = "Greater than"
+            default:                    comparisonDetail = "nil:num"
+            }
+        case .date:
+            switch dateComparisonType {
+            case .before:   comparisonDetail = "Before"
+            case .after:    comparisonDetail = "After"
+            default:        comparisonDetail = "nil:date"
+            }
+        default:
+            comparisonDetail = "nil:none"
+        }
+        
+        return
+"""
+Name:               \(unwrappedName ?? "")
+Is satisfied:       \(isSatisfied)
+Comparison type:    \(comparisonType?.description ?? "nil")
+Comparison detail:  \(comparisonDetail)
+Priority type:      \(priorityType)
+Left hand:          \(leftHand?.description ?? "nil")
+Right hand:         \(rightHand?.description ?? "nil")
+"""
+    }
+}
+
 public extension Condition
 {
+    var comparisonType: ComparisonType?
+    {
+        switch (booleanComparisonType, dateComparisonType, numberComparisonType) {
+        case (.some, .none, .none):
+            return .boolean
+        case (.none, .some, .none):
+            return .date
+        case (.none, .none, .some):
+            return .number
+        default:
+            return nil
+        }
+    }
+    
     var priorityType: Priority
     {
         get {
@@ -57,17 +128,17 @@ public extension Condition
         }
     }
     
-//    var stringComparisonType: StringComparisonType?
-//    {
-//        get
-//        {
-//            .init(rawValue: stringComparisonTypeRaw)
-//        }
-//        set
-//        {
-//            stringComparisonTypeRaw = newValue?.rawValue ?? -1
-//        }
-//    }
+    //    var stringComparisonType: StringComparisonType?
+    //    {
+    //        get
+    //        {
+    //            .init(rawValue: stringComparisonTypeRaw)
+    //        }
+    //        set
+    //        {
+    //            stringComparisonTypeRaw = newValue?.rawValue ?? -1
+    //        }
+    //    }
 }
 
 public extension Condition
@@ -86,8 +157,10 @@ public extension Condition
 {
     var isSatisfied: Bool {
         
-        let leftHand = leftHand!
-        let rightHand = rightHand!
+        guard let leftHand = leftHand, let rightHand = rightHand else {
+            assertionFailure()
+            return false
+        }
         
         // We can't compare values without the same type
         guard leftHand.valueType == rightHand.valueType else { return false }

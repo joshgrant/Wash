@@ -15,7 +15,7 @@ public enum EntityType
 //    case task
     case event
 //    case conversion
-//    case condition
+    case condition
 //    case symbol
 //    case note
     case unit
@@ -28,7 +28,7 @@ public enum EntityType
 //            .task,
             .event,
 //            .conversion,
-//            .condition,
+            .condition,
 //            .symbol,
 //            .note,
             .unit
@@ -44,7 +44,7 @@ public enum EntityType
 //        case .task: return "Tasks".localized
         case .event: return "Events".localized
 //        case .conversion: return "Conversions".localized
-//        case .condition: return "Conditions".localized
+        case .condition: return "Conditions".localized
 //        case .symbol: return "Symbols".localized
 //        case .note: return "Notes".localized
         case .unit: return "Units".localized
@@ -60,7 +60,7 @@ public enum EntityType
 //        case .task: return .task
         case .event: return .event
 //        case .conversion: return .conversion
-//        case .condition: return .condition
+        case .condition: return .condition
 //        case .symbol: return .symbol
 //        case .note: return .note
         case .unit: return .unit
@@ -76,7 +76,7 @@ public enum EntityType
 //        case .task: return Task.self
         case .event: return Event.self
 //        case .conversion: return Conversion.self
-//        case .condition: return Condition.self
+        case .condition: return Condition.self
 //        case .symbol: return Symbol.self
 //        case .note: return Note.self
         case .unit: return Unit.self
@@ -112,7 +112,7 @@ public enum EntityType
 //        case is Task.Type: return .task
         case is Event.Type: return .event
 //        case is Conversion.Type: return .conversion
-//        case is Condition.Type: return .condition
+        case is Condition.Type: return .condition
 //        case is Symbol.Type: return .symbol
 //        case is Note.Type: return .note
         case is Unit.Type: return .unit
@@ -130,7 +130,7 @@ public enum EntityType
 //        case is Task: return .task
         case is Event: return .event
 //        case is Conversion: return .conversion
-//        case is Condition: return .condition
+        case is Condition: return .condition
 //        case is Symbol: return .symbol
 //        case is Note: return .note
         case is Unit: return .unit

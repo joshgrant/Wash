@@ -37,7 +37,14 @@ public extension Source
     {
         get
         {
-            Date(timeIntervalSinceReferenceDate: value)
+            if value < 0
+            {
+                return Date.now
+            }
+            else
+            {
+                return Date(timeIntervalSinceReferenceDate: value)
+            }
         }
         set
         {
@@ -91,8 +98,16 @@ extension Source
         case .boolean:
             return booleanValue ? "True".localized : "False".localized
         case .date:
-            let formatter = DateFormatter() // TODO: Reuse
-            return formatter.string(from: dateValue)
+            
+            // The current date
+            if dateValue.timeIntervalSinceReferenceDate < 0
+            {
+                return Date.now.formatted(.dateTime.day().month().year())
+            }
+            else
+            {
+                return dateValue.formatted(.dateTime.day().month().year())
+            }
         case .infinite:
             return infiniteValue > 0 ? "Infinity" : "Negative Infinity"
         case .percent:

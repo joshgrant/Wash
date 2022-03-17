@@ -17,3 +17,16 @@ extension ConditionType: FallbackProtocol
 {
     static let fallback: ConditionType = .all
 }
+
+extension ConditionType
+{
+    init?(_ string: String)
+    {
+        switch string
+        {
+        case "all": self = .all
+        case "any": self = .any
+        default:    self.init(rawValue: .max)
+        }
+    }
+}

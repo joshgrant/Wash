@@ -13,7 +13,8 @@ extension Event: Pinnable {}
 
 public extension Event
 {
-    override var description: String {
+    override var description: String
+    {
         dashboardDescription
     }
     
@@ -22,6 +23,40 @@ public extension Event
         let name = unwrappedName ?? ""
         let icon = Icon.event.text
         return "\(icon) \(name)"
+    }
+}
+
+extension Event: Printable
+{
+    var isSatisfied: Bool
+    {
+        let conditions = unwrappedConditions
+        guard conditions.count > 0 else { return false }
+        
+        for condition in conditions
+        {
+            if !condition.isSatisfied
+            {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    var fullDescription: String
+    {
+        let name = unwrappedName ?? ""
+        return
+"""
+Name:           \(name)
+Is Active:      \(isActive)
+Is Satisfied:   \(isSatisfied)
+Condition Type: \(conditionType)
+Conditions:     \(unwrappedConditions)
+Flows:          \(unwrappedFlows)
+Stocks:         \(unwrappedStocks)
+"""
     }
 }
 
@@ -131,5 +166,23 @@ public extension Event
         targetEvents.append(contentsOf: valueEvents)
         
         return targetEvents
+    }
+}
+
+public extension Event
+{
+    var unwrappedConditions: [Condition]
+    {
+        return unwrapped(\Event.conditions)
+    }
+    
+    var unwrappedFlows: [Flow]
+    {
+        unwrapped(\Event.flows)
+    }
+    
+    var unwrappedStocks: [Stock]
+    {
+        unwrapped(\Event.stocks)
     }
 }

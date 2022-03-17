@@ -15,7 +15,6 @@ public enum SourceValueType: Int16, CaseIterable
     case percent
     case number
     
-    // If the time since reference date < 0, we treat it as the current date
     case date
 }
 
