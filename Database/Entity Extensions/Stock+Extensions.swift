@@ -12,6 +12,8 @@ extension Stock: Pinnable {}
 
 extension Stock
 {
+    static let thresholdPercent: Double = 0.8
+    
     public override var description: String
     {
         let name = unwrappedName ?? ""
@@ -25,17 +27,18 @@ extension Stock: Printable
     var fullDescription: String
     {
 """
-Name:       \(unwrappedName ?? "")
-Type:       \(typeDescription)
-Unit:       \(unitDescription)
-Current:    \(currentDescription)
-Ideal:      \(idealDescription)
-Net:        \(netDescription)
-Min:        \(minimumDescription)
-Max:        \(maximumDescription)
-Inflows:    \(unwrappedInflows)
-Outflows:   \(unwrappedOutflows)
-Events:     \(unwrappedEvents)
+Name:           \(unwrappedName ?? "")
+Type:           \(typeDescription)
+Unit:           \(unitDescription)
+Current:        \(currentDescription)
+Ideal:          \(idealDescription)
+Percent Ideal:  \(percentIdeal)
+Net:            \(netDescription)
+Min:            \(minimumDescription)
+Max:            \(maximumDescription)
+Inflows:        \(unwrappedInflows)
+Outflows:       \(unwrappedOutflows)
+Events:         \(unwrappedEvents)
 """
     }
 }

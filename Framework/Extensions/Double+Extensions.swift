@@ -16,8 +16,6 @@ extension Double
     
     static func percentDelta(a: Double, b: Double, minimum: Double, maximum: Double) -> Double
     {
-//        guard a <= maximum, b <= maximum, a >= minimum, b >= minimum, maximum >= minimum else { preconditionFailure() }
-        
         let delta = abs(b - a)
         let scale = max(maximum - b, b - minimum)
         

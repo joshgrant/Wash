@@ -101,7 +101,7 @@
 		03B4AA9B27C1A31E0071F63E /* FallbackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4AA6827C1A31E0071F63E /* FallbackProtocol.swift */; };
 		03B4AA9C27C1A31E0071F63E /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4AA6427C1A31E0071F63E /* Priority.swift */; };
 		03B4AA9F27C32CD40071F63E /* ContextPopulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4AA9E27C32CD40071F63E /* ContextPopulator.swift */; };
-		03E40A2E27E3CF4B00688AE8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03B4AA1327C1A0F90071F63E /* Model.xcdatamodeld */; };
+		03E40A2F27E3D45E00688AE8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03B4AA1327C1A0F90071F63E /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -229,10 +229,10 @@
 		03B4A9C727C005F10071F63E = {
 			isa = PBXGroup;
 			children = (
-				03B4AA4D27C1A31E0071F63E /* Framework */,
-				03B4A9DA27C1A0F80071F63E /* Database */,
 				03B4A9D327C005F10071F63E /* main.swift */,
 				0333F48B27D3FA3C00B4C284 /* Command.swift */,
+				03B4A9DA27C1A0F80071F63E /* Database */,
+				03B4AA4D27C1A31E0071F63E /* Framework */,
 				03B4A9D127C005F10071F63E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -450,7 +450,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03E40A2E27E3CF4B00688AE8 /* Model.xcdatamodeld in Sources */,
+				03E40A2F27E3D45E00688AE8 /* Model.xcdatamodeld in Sources */,
 				03B4AA2527C1A0F90071F63E /* Stock+Extensions.swift in Sources */,
 				03B4AA9527C1A31E0071F63E /* StateMachine.swift in Sources */,
 				03B4AA9127C1A31E0071F63E /* Order.swift in Sources */,

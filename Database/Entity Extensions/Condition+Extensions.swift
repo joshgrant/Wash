@@ -158,7 +158,6 @@ public extension Condition
     var isSatisfied: Bool {
         
         guard let leftHand = leftHand, let rightHand = rightHand else {
-            assertionFailure()
             return false
         }
         

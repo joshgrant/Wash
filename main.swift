@@ -45,6 +45,7 @@ while(loop)
         // Choose is for `all`
     case ("choose", let arguments):     choose(arguments: arguments, lastCommand: lastCommand)
     case ("pinned", _):                 pinned()
+    case ("unbalanced", _):             unbalanced()
     case ("library", _):                library()
     case ("priority", _):               priority()
     case ("events", _):                 events()
@@ -58,6 +59,7 @@ while(loop)
     case ("view", _):                   view()
     case ("delete", _):                 delete()
     case ("nuke", _):                   nuke()
+    case ("clear", _):                  workspace.removeAll()
     case ("all", let arguments):        all(arguments: arguments)
         
         // MARK: - Stocks
@@ -444,6 +446,15 @@ func library()
     let pins = result.compactMap { $0 as? Pinnable }
     print("Pins: \(pins)")
     return pins
+}
+
+@discardableResult func unbalanced() -> [Stock]
+{
+    let request: NSFetchRequest<Stock> = Stock.fetchRequest()
+    let result = (try? database.context.fetch(request)) ?? []
+    let unbalanced = result.filter { $0.percentIdeal < Stock.thresholdPercent }
+    print("Unbalanced: \(unbalanced)")
+    return unbalanced
 }
 
 @discardableResult func priority() -> [Flow]
