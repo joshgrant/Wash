@@ -47,6 +47,7 @@ while(loop)
     case ("pinned", _):                 pinned()
     case ("library", _):                library()
     case ("priority", _):               priority()
+    case ("events", _):                 events()
     case ("pin", _):                    pin()
     case ("unpin", _):                  unpin()
     case ("save", _):                   save()
@@ -99,6 +100,35 @@ while(loop)
     lastCommand = command
     
     print("Workspace: \(workspace)")
+}
+
+// Returns events that are active and satisfied
+func activeAndSatisfiedEvents() -> [Event]
+{
+    let request: NSFetchRequest<Event> = Event.fetchRequest()
+    request.predicate = NSPredicate(format: "isActive == true")
+    let events = (try? database.context.fetch(request)) ?? []
+    
+    var trueEvents: [Event] = []
+    
+    for event in events
+    {
+        if event.isSatisfied
+        {
+            trueEvents.append(event)
+        }
+    }
+    
+    return trueEvents
+}
+
+func events()
+{
+    let events = activeAndSatisfiedEvents()
+    for event in events
+    {
+        print(event)
+    }
 }
 
 func nuke()
