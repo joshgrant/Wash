@@ -39,63 +39,64 @@ while(loop)
     
     switch (command.command, command.arguments)
     {
-    case ("add", let arguments):        add(arguments: arguments)
+    case ("add", let arguments):                add(arguments: arguments)
         // Select is for the workspace
-    case ("select", let arguments):     select(arguments: arguments)
+    case ("select", let arguments):             select(arguments: arguments)
         // Choose is for `all`
-    case ("choose", let arguments):     choose(arguments: arguments, lastCommand: lastCommand)
-    case ("pinned", _):                 pinned()
-    case ("unbalanced", _):             unbalanced()
-    case ("library", _):                library()
-    case ("priority", _):               priority()
-    case ("events", _):                 events()
-    case ("pin", _):                    pin()
-    case ("unpin", _):                  unpin()
-    case ("save", _):                   save()
-    case ("quit", _):                   quit()
-    case ("set-name", let arguments):   setName(arguments: arguments)
-    case ("hide", _):                   hide()
-    case ("unhide", _):                 unhide()
-    case ("view", _):                   view()
-    case ("delete", _):                 delete()
-    case ("nuke", _):                   nuke()
-    case ("clear", _):                  workspace.removeAll()
-    case ("all", let arguments):        all(arguments: arguments)
+    case ("choose", let arguments):             choose(arguments: arguments, lastCommand: lastCommand)
+    case ("pinned", _):                         pinned()
+    case ("unbalanced", _):                     unbalanced()
+    case ("library", _):                        library()
+    case ("priority", _):                       priority()
+    case ("events", _):                         events()
+    case ("pin", _):                            pin()
+    case ("unpin", _):                          unpin()
+    case ("save", _):                           save()
+    case ("quit", _):                           quit()
+    case ("set-name", let arguments):           setName(arguments: arguments)
+    case ("hide", _):                           hide()
+    case ("unhide", _):                         unhide()
+    case ("view", _):                           view()
+    case ("delete", _):                         delete()
+    case ("nuke", _):                           nuke()
+    case ("clear", _):                          workspace.removeAll()
+    case ("all", let arguments):                all(arguments: arguments)
         
         // MARK: - Stocks
-    case ("set-type", let arguments):   setType(arguments: arguments)
-    case ("set-current", let arguments):    setCurrent(arguments: arguments)
-    case ("set-ideal", let arguments):  setIdeal(arguments: arguments)
-    case ("set-min", let arguments):    setMin(arguments: arguments)
-    case ("set-max", let arguments):    setMax(arguments: arguments)
-    case ("set-unit", let arguments):   setUnit(arguments: arguments)
-    case ("link-outflow", let arguments):   linkOutflow(arguments: arguments)
-    case ("link-inflow", let arguments):    linkInflow(arguments: arguments)
-    case ("unlink-outflow", let arguments): unlinkOutflow(arguments: arguments)
-    case ("unlink-inflow", let arguments):  unlinkInflow(arguments: arguments)
-    case ("link-event", let arguments): linkEvent(arguments: arguments)
-    case ("unlink-event", let arguments):   unlinkEvent(arguments: arguments)
+    case ("set-type", let arguments):           setType(arguments: arguments)
+    case ("set-current", let arguments):        setCurrent(arguments: arguments)
+    case ("set-ideal", let arguments):          setIdeal(arguments: arguments)
+    case ("set-min", let arguments):            setMin(arguments: arguments)
+    case ("set-max", let arguments):            setMax(arguments: arguments)
+    case ("set-unit", let arguments):           setUnit(arguments: arguments)
+    case ("link-outflow", let arguments):       linkOutflow(arguments: arguments)
+    case ("link-inflow", let arguments):        linkInflow(arguments: arguments)
+    case ("unlink-outflow", let arguments):     unlinkOutflow(arguments: arguments)
+    case ("unlink-inflow", let arguments):      unlinkInflow(arguments: arguments)
+    case ("link-event", let arguments):         linkEvent(arguments: arguments)
+    case ("unlink-event", let arguments):       unlinkEvent(arguments: arguments)
         
         // MARK: - Flows
-    case ("set-amount", let arguments): setAmount(arguments: arguments)
-    case ("set-delay", let arguments):  setDelay(arguments: arguments)
-    case ("set-duration", let arguments):   setDuration(arguments: arguments)
-    case ("set-requires", let arguments):   setRequiresUserCompletion(arguments: arguments)
-    case ("set-from", let arguments):   setFrom(arguments: arguments)
-    case ("set-to", let arguments):     setTo(arguments: arguments)
+    case ("set-amount", let arguments):         setAmount(arguments: arguments)
+    case ("set-delay", let arguments):          setDelay(arguments: arguments)
+    case ("set-duration", let arguments):       setDuration(arguments: arguments)
+    case ("set-requires", let arguments):       setRequiresUserCompletion(arguments: arguments)
+    case ("set-from", let arguments):           setFrom(arguments: arguments)
+    case ("set-to", let arguments):             setTo(arguments: arguments)
     case ("run", _): run()
-    case ("add-event", let arguments):  addEvent(arguments: arguments)
+    case ("add-event", let arguments):          addEvent(arguments: arguments)
         
         // MARK: - Events
-    case ("set-is-active", let arguments): setIsActive(arguments: arguments)
-    case ("add-condition", let arguments): addCondition(arguments: arguments)
+    case ("set-is-active", let arguments):      setIsActive(arguments: arguments)
+    case ("add-condition", let arguments):      addCondition(arguments: arguments)
     case ("set-condition-type", let arguments): setConditionType(arguments: arguments)
-    case ("link-flow", let arguments): linkFlow(arguments: arguments)
+    case ("link-flow", let arguments):          linkFlow(arguments: arguments)
+    case ("set-cooldown", let arguments):       setCooldown(arguments: arguments)
         
         // MARK: Conditions
-    case ("set-comparison", let arguments): setComparison(arguments: arguments)
-    case ("set-left-hand", let arguments): setLeftHand(arguments: arguments)
-    case ("set-right-hand", let arguments): setRightHand(arguments: arguments)
+    case ("set-comparison", let arguments):     setComparison(arguments: arguments)
+    case ("set-left-hand", let arguments):      setLeftHand(arguments: arguments)
+    case ("set-right-hand", let arguments):     setRightHand(arguments: arguments)
         
     default:
         print("Invalid command.")
@@ -103,27 +104,81 @@ while(loop)
     
     lastCommand = command
     
+    evaluateActiveEvents()
+    evaluateInactiveEvents()
+    
     print("Workspace: \(workspace)")
 }
 
-// Returns events that are active and satisfied
+func evaluateInactiveEvents()
+{
+    let request: NSFetchRequest<Event> = Event.fetchRequest()
+    request.predicate = NSPredicate(format: "isActive == false")
+    let events = (try? database.context.fetch(request)) ?? []
+    for event in events
+    {
+        guard let lastTrigger = event.lastTrigger else { continue }
+        let cooldownDate = Date(timeInterval: event.cooldownSeconds, since: lastTrigger)
+        if cooldownDate.timeIntervalSinceNow <= 0
+        {
+            event.isActive = true
+        }
+    }
+}
+
+// TODO: Questions - an event may be active for a long time.
+/// Options: 1. Kill switch. Once an event is run, it gets set to "isActive: false". Add a "cooldown" value that determines how long until the event is active again
+// TODO: Automatically add a condition and stock upon event creation (isActive) ?? and 
+func evaluateActiveEvents()
+{
+    let events = activeAndSatisfiedEvents()
+    for event in events
+    {
+        for flow in event.unwrappedFlows
+        {
+            if !flow.requiresUserCompletion
+            {
+                run(flow: flow)
+            }
+            else
+            {
+                // TODO: FIX THIS
+                // Add the flow to the ones requiring user completion???
+            }
+        }
+        event.lastTrigger = Date()
+        event.isActive = false
+    }
+}
+
+/// Returns events that are active and satisfied
+/// AKA Events that should trigger
 func activeAndSatisfiedEvents() -> [Event]
 {
     let request: NSFetchRequest<Event> = Event.fetchRequest()
-    request.predicate = NSPredicate(format: "isActive == true")
     let events = (try? database.context.fetch(request)) ?? []
     
     var trueEvents: [Event] = []
     
     for event in events
     {
-        if event.isSatisfied
+        if event.shouldTrigger
         {
             trueEvents.append(event)
         }
     }
     
     return trueEvents
+}
+
+func setCooldown(arguments: [String])
+{
+    guard let (cooldown, event): (Double, Event) = getNumberArgumentAndEntity(arguments: arguments) else
+    {
+        print("Failed to get a number and event")
+        return
+    }
+    event.cooldownSeconds = cooldown
 }
 
 func events()
@@ -798,9 +853,9 @@ func setTo(arguments: [String])
     flow.to = stock
 }
 
-func run()
+func run(flow: Flow? = nil)
 {
-    guard let flow = workspace.first as? Flow else
+    guard let flow = flow ?? (workspace.first as? Flow) else
     {
         print("First entity wasn't a flow")
         return
