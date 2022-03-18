@@ -84,11 +84,13 @@ while(loop)
     case ("set-from", let arguments):   setFrom(arguments: arguments)
     case ("set-to", let arguments):     setTo(arguments: arguments)
     case ("run", _): run()
+    case ("add-event", let arguments):  addEvent(arguments: arguments)
         
         // MARK: - Events
     case ("set-is-active", let arguments): setIsActive(arguments: arguments)
     case ("add-condition", let arguments): addCondition(arguments: arguments)
     case ("set-condition-type", let arguments): setConditionType(arguments: arguments)
+    case ("link-flow", let arguments): linkFlow(arguments: arguments)
         
         // MARK: Conditions
     case ("set-comparison", let arguments): setComparison(arguments: arguments)
@@ -131,6 +133,26 @@ func events()
     {
         print(event)
     }
+}
+
+func addEvent(arguments: [String])
+{
+    if let (flow, event): (Flow, Event) = getEntities(arguments: arguments) {
+        flow.addToEvents(event)
+        return
+    }
+    
+    print("Unhandled entity. Go to `addEvent` to update")
+}
+
+func linkFlow(arguments: [String])
+{
+    if let (event, flow): (Event, Flow) = getEntities(arguments: arguments) {
+        event.addToFlows(flow)
+        return
+    }
+    
+    print("Unhandled entity. Go to `linkFlow` to update")
 }
 
 func nuke()
@@ -660,6 +682,7 @@ func setMax(arguments: [String])
     stock.max = number
 }
 
+/// Option A is the first entity in the workspace. Option B is from the arguments
 func getEntities<A: Entity, B: Entity>(arguments: [String]) -> (A, B)?
 {
     guard workspace.count > 0 else

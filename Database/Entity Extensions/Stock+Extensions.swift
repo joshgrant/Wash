@@ -32,7 +32,7 @@ Type:           \(typeDescription)
 Unit:           \(unitDescription)
 Current:        \(currentDescription)
 Ideal:          \(idealDescription)
-Percent Ideal:  \(percentIdeal)
+Percent Ideal:  \(percentIdealDescription)
 Net:            \(netDescription)
 Min:            \(minimumDescription)
 Max:            \(maximumDescription)
@@ -106,16 +106,14 @@ extension Stock
         return valueType.description
     }
     
-    // TODO: These descriptions are out of date!
-    
     var currentDescription: String
     {
-        return String(format: "%.2f", source!.value)
+        return current.formatted(.number.precision(.fractionLength(2)))
     }
     
     var idealDescription: String
     {
-        return String(format: "%.2f", ideal!.value)
+        return target.formatted(.number.precision(.fractionLength(2)))
     }
     
     var netDescription: String
@@ -127,12 +125,12 @@ extension Stock
     
     var minimumDescription: String
     {
-        return String(format: "%.2f", minimum!.value)
+        return min.formatted(.number.precision(.fractionLength(2)))
     }
     
     var maximumDescription: String
     {
-        return String(format: "%.2f", maximum!.value)
+        return max.formatted(.number.precision(.fractionLength(2)))
     }
     
     var unitDescription: String
@@ -143,6 +141,11 @@ extension Stock
         }
         
         return unit.description
+    }
+    
+    var percentIdealDescription: String
+    {
+        return percentIdeal.formatted(.percent.precision(.fractionLength(2)))
     }
 }
 
