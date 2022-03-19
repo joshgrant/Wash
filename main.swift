@@ -7,22 +7,17 @@
 
 import Foundation
 import CoreData
+import SpriteKit
+import Core
 
 // The timer that tracks the flows
 var timer: Timer?
 let database = Database()
-var workspace: [Entity] = []
 
 let source = ContextPopulator.fetchOrMakeSourceStock(context: database.context)
 let sink = ContextPopulator.fetchOrMakeSinkStock(context: database.context)
 
-// TODO: Next order of business:
-// 1. We need to have a "sprite kit" style run loop with the updated interval. Why? Let's say we have
-// a flow that gets triggered every 1 second. Unless the user is refreshing the `while` loop every second
-// the program won't be able to trigger those flows twice in the appropriate amount of time.
-// This is what's needed to make the program even more "alive" because we need it to be able to respond
-// to stimulus every second, for example, as stock values change, so events get satisfied, so flows
-// get triggered, so stocks update. 
+var workspace: [Entity] = [source, sink]
 
 print("Hello, world!")
 
@@ -41,28 +36,28 @@ while(loop)
     
     switch (command.command, command.arguments)
     {
-    case ("add", let arguments):                add(arguments: arguments)
+    case ("add", let arguments):                add(arguments: arguments, in: database.context)
         // Select is for the workspace
     case ("select", let arguments):             select(arguments: arguments)
         // Choose is for `all`
-    case ("choose", let arguments):             choose(arguments: arguments, lastCommand: lastCommand)
-    case ("pinned", _):                         pinned()
-    case ("unbalanced", _):                     unbalanced()
-    case ("library", _):                        library()
-    case ("priority", _):                       priority()
-    case ("events", _):                         events()
+    case ("choose", let arguments):             choose(arguments: arguments, lastCommand: lastCommand, in: database.context)
+    case ("pinned", _):                         pinned(context: database.context)
+    case ("unbalanced", _):                     unbalanced(context: database.context)
+    case ("library", _):                        library(context: database.context)
+    case ("priority", _):                       priority(context: database.context)
+    case ("events", _):                         events(context: database.context)
     case ("pin", _):                            pin()
     case ("unpin", _):                          unpin()
-    case ("save", _):                           save()
+    case ("save", _):                           save(context: database.context)
     case ("quit", _):                           quit()
-    case ("set-name", let arguments):           setName(arguments: arguments)
+    case ("set-name", let arguments):           setName(arguments: arguments, in: database.context)
     case ("hide", _):                           hide()
     case ("unhide", _):                         unhide()
     case ("view", _):                           view()
-    case ("delete", _):                         delete()
-    case ("nuke", _):                           nuke()
+    case ("delete", _):                         delete(context: database.context)
+    case ("nuke", _):                           nuke(database: database)
     case ("clear", _):                          workspace.removeAll()
-    case ("all", let arguments):                all(arguments: arguments)
+    case ("all", let arguments):                all(arguments: arguments, in: database.context)
         
         // MARK: - Stocks
     case ("set-type", let arguments):           setType(arguments: arguments)
@@ -97,8 +92,8 @@ while(loop)
         
         // MARK: Conditions
     case ("set-comparison", let arguments):     setComparison(arguments: arguments)
-    case ("set-left-hand", let arguments):      setLeftHand(arguments: arguments)
-    case ("set-right-hand", let arguments):     setRightHand(arguments: arguments)
+    case ("set-left-hand", let arguments):      setLeftHand(arguments: arguments, in: database.context)
+    case ("set-right-hand", let arguments):     setRightHand(arguments: arguments, in: database.context)
         
     default:
         print("Invalid command.")
@@ -106,17 +101,17 @@ while(loop)
     
     lastCommand = command
     
-    evaluateActiveEvents()
-    evaluateInactiveEvents()
+    evaluateActiveEvents(context: database.context)
+    evaluateInactiveEvents(context: database.context)
     
     print("Workspace: \(workspace)")
 }
 
-func evaluateInactiveEvents()
+func evaluateInactiveEvents(context: Context)
 {
     let request: NSFetchRequest<Event> = Event.fetchRequest()
     request.predicate = NSPredicate(format: "isActive == false")
-    let events = (try? database.context.fetch(request)) ?? []
+    let events = (try? context.fetch(request)) ?? []
     for event in events
     {
         guard let lastTrigger = event.lastTrigger else { continue }
@@ -131,9 +126,9 @@ func evaluateInactiveEvents()
 // TODO: Questions - an event may be active for a long time.
 /// Options: 1. Kill switch. Once an event is run, it gets set to "isActive: false". Add a "cooldown" value that determines how long until the event is active again
 // TODO: Automatically add a condition and stock upon event creation (isActive) ?? and
-func evaluateActiveEvents()
+func evaluateActiveEvents(context: Context)
 {
-    let events = activeAndSatisfiedEvents()
+    let events = activeAndSatisfiedEvents(context: context)
     for event in events
     {
         for flow in event.unwrappedFlows
@@ -155,10 +150,10 @@ func evaluateActiveEvents()
 
 /// Returns events that are active and satisfied
 /// AKA Events that should trigger
-func activeAndSatisfiedEvents() -> [Event]
+func activeAndSatisfiedEvents(context: Context) -> [Event]
 {
     let request: NSFetchRequest<Event> = Event.fetchRequest()
-    let events = (try? database.context.fetch(request)) ?? []
+    let events = (try? context.fetch(request)) ?? []
     
     var trueEvents: [Event] = []
     
@@ -183,9 +178,9 @@ func setCooldown(arguments: [String])
     event.cooldownSeconds = cooldown
 }
 
-func events()
+func events(context: Context)
 {
-    let events = activeAndSatisfiedEvents()
+    let events = activeAndSatisfiedEvents(context: context)
     for event in events
     {
         print(event)
@@ -212,12 +207,12 @@ func linkFlow(arguments: [String])
     print("Unhandled entity. Go to `linkFlow` to update")
 }
 
-func nuke()
+func nuke(database: Database)
 {
     database.clear()
 }
 
-func add(arguments: [String])
+func add(arguments: [String], in context: Context)
 {
     guard arguments.count > 0 else
     {
@@ -231,59 +226,59 @@ func add(arguments: [String])
     switch entityType
     {
     case "stock":
-        makeStock(name: name)
+        makeStock(name: name, in: context)
     case "flow":
-        makeFlow(name: name)
+        makeFlow(name: name, in: context)
     case "event":
-        makeEvent(name: name)
+        makeEvent(name: name, in: context)
     case "unit":
-        makeUnit(name: name)
+        makeUnit(name: name, in: context)
     case "condition":
-        makeCondition(name: name)
+        makeCondition(name: name, in: context)
     default:
         print("Tried to add an invalid entity")
         return
     }
 }
 
-func makeStock(name: String?)
+func makeStock(name: String?, in context: Context)
 {
-    let stock = Stock(context: database.context)
+    let stock = Stock(context: context)
     stock.stateMachine = false
     stock.isPinned = false
     stock.createdDate = Date()
     
-    let source = Source(context: database.context)
+    let source = Source(context: context)
     source.valueType = .number
     source.value = 0
     stock.source = source
     
-    let minimum = Source(context: database.context)
+    let minimum = Source(context: context)
     minimum.valueType = .number
     minimum.value = 0
     stock.minimum = minimum
     
-    let maximum = Source(context: database.context)
+    let maximum = Source(context: context)
     maximum.valueType = .number
     maximum.value = 100
     stock.maximum = maximum
     
-    let ideal = Source(context: database.context)
+    let ideal = Source(context: context)
     ideal.valueType = .number
     ideal.value = 100
     stock.ideal = ideal
     
     if let name = name
     {
-        stock.symbolName = Symbol(context: database.context, name: name)
+        stock.symbolName = Symbol(context: context, name: name)
     }
     
     workspace.insert(stock, at: 0)
 }
 
-func makeFlow(name: String?)
+func makeFlow(name: String?, in context: Context)
 {
-    let flow = Flow(context: database.context)
+    let flow = Flow(context: context)
     
     flow.amount = 1
     flow.delay = 0
@@ -292,49 +287,49 @@ func makeFlow(name: String?)
     
     if let name = name
     {
-        flow.symbolName = Symbol(context: database.context, name: name)
+        flow.symbolName = Symbol(context: context, name: name)
     }
     
     workspace.insert(flow, at: 0)
 }
 
-func makeEvent(name: String?)
+func makeEvent(name: String?, in context: Context)
 {
-    let event = Event(context: database.context)
+    let event = Event(context: context)
     
     event.conditionType = .all
     event.isActive = true
     
     if let name = name
     {
-        event.symbolName = Symbol(context: database.context, name: name)
+        event.symbolName = Symbol(context: context, name: name)
     }
     
     workspace.insert(event, at: 0)
 }
 
-func makeUnit(name: String?)
+func makeUnit(name: String?, in context: Context)
 {
-    let unit = Unit(context: database.context)
+    let unit = Unit(context: context)
     
     unit.isBase = true
     
     if let name = name
     {
-        unit.symbolName = Symbol(context: database.context, name: name)
+        unit.symbolName = Symbol(context: context, name: name)
         unit.abbreviation = name
     }
     
     workspace.insert(unit, at: 0)
 }
 
-func makeCondition(name: String?)
+func makeCondition(name: String?, in context: Context)
 {
-    let condition = Condition(context: database.context)
+    let condition = Condition(context: context)
     
     if let name = name
     {
-        condition.symbolName = Symbol(context: database.context, name: name)
+        condition.symbolName = Symbol(context: context, name: name)
     }
     
     workspace.insert(condition, at: 0)
@@ -369,17 +364,17 @@ func select(arguments: [String])
 /// Choosing is for adding an item from a list (such as `all stock`)
 /// It has to take the last command and then figure out which item to choose...
 /// Then, add it to the workspace.
-func choose(arguments: [String], lastCommand: Command)
+func choose(arguments: [String], lastCommand: Command, in context: Context)
 {
     let items: [Any]
     
     switch lastCommand.command {
     case "all":
-        items = all(arguments: lastCommand.arguments)
+        items = all(arguments: lastCommand.arguments, in: context)
     case "priority":
-        items = priority()
+        items = priority(context: context)
     case "pinned":
-        items = pinned()
+        items = pinned(context: context)
     default:
         print("Last command wasn't valid to choose from")
         return
@@ -450,9 +445,9 @@ func unhide()
     entity.isHidden = false
 }
 
-func save()
+func save(context: Context)
 {
-    database.context.quickSave()
+    context.quickSave()
 }
 
 func quit()
@@ -460,7 +455,7 @@ func quit()
     loop = false
 }
 
-func setName(arguments: [String])
+func setName(arguments: [String], in context: Context)
 {
     guard arguments.count > 0 else
     {
@@ -476,7 +471,7 @@ func setName(arguments: [String])
         return
     }
     
-    let symbol = Symbol(context: database.context, name: name)
+    let symbol = Symbol(context: context, name: name)
     entity.symbolName = symbol
 }
 
@@ -498,7 +493,7 @@ func view()
     }
 }
 
-func delete()
+func delete(context: Context)
 {
     guard let entity = workspace.first else
     {
@@ -506,40 +501,40 @@ func delete()
         return
     }
     
-    database.context.delete(entity)
+    context.delete(entity)
 }
 
-func library()
+func library(context: Context)
 {
     for type in EntityType.libraryVisible
     {
-        let count = type.count(in: database.context)
+        let count = type.count(in: context)
         print("\(type.icon.text) \(type.title) (\(count))")
     }
 }
 
-@discardableResult func pinned() -> [Pinnable]
+@discardableResult func pinned(context: Context) -> [Pinnable]
 {
-    let request = Entity.makePinnedObjectsFetchRequest(context: database.context)
-    let result = (try? database.context.fetch(request)) ?? []
+    let request = Entity.makePinnedObjectsFetchRequest(context: context)
+    let result = (try? context.fetch(request)) ?? []
     let pins = result.compactMap { $0 as? Pinnable }
     print("Pins: \(pins)")
     return pins
 }
 
-@discardableResult func unbalanced() -> [Stock]
+@discardableResult func unbalanced(context: Context) -> [Stock]
 {
     let request: NSFetchRequest<Stock> = Stock.fetchRequest()
-    let result = (try? database.context.fetch(request)) ?? []
+    let result = (try? context.fetch(request)) ?? []
     let unbalanced = result.filter { $0.percentIdeal < Stock.thresholdPercent }
     print("Unbalanced: \(unbalanced)")
     return unbalanced
 }
 
-@discardableResult func priority() -> [Flow]
+@discardableResult func priority(context: Context) -> [Flow]
 {
     var suggested: Set<Flow> = []
-    let allStocks: [Stock] = Stock.all(context: database.context)
+    let allStocks: [Stock] = Stock.all(context: context)
     let unbalancedStocks = allStocks.filter { stock in
         stock.percentIdeal < 1
     }
@@ -593,7 +588,7 @@ func library()
     return Array(suggested)
 }
 
-@discardableResult func all(arguments: [String]) -> [NSFetchRequestResult]
+@discardableResult func all(arguments: [String], in context: Context) -> [NSFetchRequestResult]
 {
     guard let first = arguments.first else
     {
@@ -622,7 +617,7 @@ func library()
     
     let request: NSFetchRequest<NSFetchRequestResult> = entityType.managedObjectType.fetchRequest()
     request.sortDescriptors = [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: true)]
-    let result = (try? database.context.fetch(request)) ?? []
+    let result = (try? context.fetch(request)) ?? []
     guard result.count > 0 else {
         print("No results")
         return []
@@ -1079,43 +1074,43 @@ func setComparison(arguments: [String])
     }
 }
 
-func setLeftHand(arguments: [String])
+func setLeftHand(arguments: [String], in context: Context)
 {
     guard let condition = workspace.first as? Condition else
     {
         print("Failed to get a condition from the workspace")
         return
     }
-    condition.leftHand = makeSource(from: arguments)
+    condition.leftHand = makeSource(from: arguments, in: context)
 }
 
-func setRightHand(arguments: [String])
+func setRightHand(arguments: [String], in context: Context)
 {
     guard let condition = workspace.first as? Condition else
     {
         print("Failed to get a condition from the workspace")
         return
     }
-    condition.rightHand = makeSource(from: arguments)
+    condition.rightHand = makeSource(from: arguments, in: context)
 }
 
-func makeSource(from arguments: [String]) -> Source
+func makeSource(from arguments: [String], in context: Context) -> Source
 {
     if let argument = parseWorkspaceSource(from: arguments)
     {
         return argument
     }
-    if let dateSource = parseDateSource(from: arguments)
+    if let dateSource = parseDateSource(from: arguments, in: context)
     {
         return dateSource
     }
-    else if let number = parseDouble(from: arguments)
+    else if let number: Double = parseType(from: arguments)
     {
-        return makeSource(with: number, type: .number)
+        return makeSource(with: number, type: .number, in: context)
     }
-    else if let bool = parseBool(from: arguments)
+    else if let bool: Bool = parseType(from: arguments)
     {
-        return makeSource(with: bool)
+        return makeSource(with: bool, in: context)
     }
     // TODO: Parse percent, infinity
     
@@ -1162,23 +1157,23 @@ func getSource(from entity: Entity) -> Source?
     }
 }
 
-func makeSource(with value: Double, type: SourceValueType) -> Source
+func makeSource(with value: Double, type: SourceValueType, in context: Context) -> Source
 {
-    let source = Source(context: database.context)
+    let source = Source(context: context)
     source.value = value
     source.valueType = type
     return source
 }
 
-func makeSource(with bool: Bool) -> Source
+func makeSource(with bool: Bool, in context: Context) -> Source
 {
-    let source = Source(context: database.context)
+    let source = Source(context: context)
     source.booleanValue = bool
     source.valueType = .boolean
     return source
 }
 
-func parseDateSource(from arguments: [String]) -> Source?
+func parseDateSource(from arguments: [String], in context: Context) -> Source?
 {
     guard arguments.count > 0 else
     {
@@ -1190,14 +1185,14 @@ func parseDateSource(from arguments: [String]) -> Source?
     
     if argument.localizedLowercase == "now"
     {
-        let source = Source(context: database.context)
+        let source = Source(context: context)
         source.valueType = .date
         source.value = -1 // -1 is how we show "now"
         return source
     }
     else if let date = try? Date(argument, strategy: .dateTime.month().day().year())
     {
-        let source = Source(context: database.context)
+        let source = Source(context: context)
         source.valueType = .date
         source.value = date.timeIntervalSinceReferenceDate
         return source
@@ -1206,26 +1201,4 @@ func parseDateSource(from arguments: [String]) -> Source?
     {
         return nil
     }
-}
-
-func parseDouble(from arguments: [String]) -> Double?
-{
-    guard let first = arguments.first else
-    {
-        print("Couldn't parse double; no arguments")
-        return nil
-    }
-    
-    return Double(first)
-}
-
-func parseBool(from arguments: [String]) -> Bool?
-{
-    guard let first = arguments.first else
-    {
-        print("Couldn't parse bool; no arguments")
-        return nil
-    }
-    
-    return Bool(first)
 }
