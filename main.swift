@@ -16,11 +16,13 @@ var workspace: [Entity] = []
 let source = ContextPopulator.fetchOrMakeSourceStock(context: database.context)
 let sink = ContextPopulator.fetchOrMakeSinkStock(context: database.context)
 
-// 1. We need to maintain a "context" or "workspace" that contains all of the entities that we're interested in... Like a "recent" or something.
-// Whenever we add a new entity - it gets added to the list. The top item is the "automatic" item that's currently selected.
-// The rest have a number, 1-10. When we delete an item, it gets removed from the list
-// When we select an item, it gets moved into the top spot.
-// When we are trying to link items, we use the context numbers to link them...
+// TODO: Next order of business:
+// 1. We need to have a "sprite kit" style run loop with the updated interval. Why? Let's say we have
+// a flow that gets triggered every 1 second. Unless the user is refreshing the `while` loop every second
+// the program won't be able to trigger those flows twice in the appropriate amount of time.
+// This is what's needed to make the program even more "alive" because we need it to be able to respond
+// to stimulus every second, for example, as stock values change, so events get satisfied, so flows
+// get triggered, so stocks update. 
 
 print("Hello, world!")
 
@@ -128,7 +130,7 @@ func evaluateInactiveEvents()
 
 // TODO: Questions - an event may be active for a long time.
 /// Options: 1. Kill switch. Once an event is run, it gets set to "isActive: false". Add a "cooldown" value that determines how long until the event is active again
-// TODO: Automatically add a condition and stock upon event creation (isActive) ?? and 
+// TODO: Automatically add a condition and stock upon event creation (isActive) ?? and
 func evaluateActiveEvents()
 {
     let events = activeAndSatisfiedEvents()
