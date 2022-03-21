@@ -10,8 +10,6 @@ import CoreData
 import SpriteKit
 import Core
 
-// The timer that tracks the flows
-var timer: Timer?
 let database = Database()
 
 let source = ContextPopulator.fetchOrMakeSourceStock(context: database.context)
@@ -21,91 +19,113 @@ var workspace: [Entity] = [source, sink]
 
 print("Hello, world!")
 
-var loop = true
-var lastCommand = Command(input: "")
+var lastCommand = CommandData(input: "")
+var lastResult: [Entity] = []
 
-while(loop)
-{
-    guard let input = readLine() else
-    {
-        print("No input")
-        continue
-    }
+let inputLoop: (Heartbeat) -> Void = { heartbeat in
+    guard let input = readLine() else { return }
+    let commandData = CommandData(input: input)
+    let command = Command(command: commandData, workspace: &workspace)
+    // Gets the command (string) and arguments ([String])
     
-    let command = Command(input: input)
-    
-    switch (command.command, command.arguments)
-    {
-    case ("add", let arguments):                add(arguments: arguments, in: database.context)
-        // Select is for the workspace
-    case ("select", let arguments):             select(arguments: arguments)
-        // Choose is for `all`
-    case ("choose", let arguments):             choose(arguments: arguments, lastCommand: lastCommand, in: database.context)
-    case ("pinned", _):                         pinned(context: database.context)
-    case ("unbalanced", _):                     unbalanced(context: database.context)
-    case ("library", _):                        library(context: database.context)
-    case ("priority", _):                       priority(context: database.context)
-    case ("events", _):                         events(context: database.context)
-    case ("pin", _):                            pin()
-    case ("unpin", _):                          unpin()
-    case ("save", _):                           save(context: database.context)
-    case ("quit", _):                           quit()
-    case ("set-name", let arguments):           setName(arguments: arguments, in: database.context)
-    case ("hide", _):                           hide()
-    case ("unhide", _):                         unhide()
-    case ("view", _):                           view()
-    case ("delete", _):                         delete(context: database.context)
-    case ("nuke", _):                           nuke(database: database)
-    case ("clear", _):                          workspace.removeAll()
-    case ("all", let arguments):                all(arguments: arguments, in: database.context)
-        
-        // MARK: - Stocks
-    case ("set-type", let arguments):           setType(arguments: arguments)
-    case ("set-current", let arguments):        setCurrent(arguments: arguments)
-    case ("set-ideal", let arguments):          setIdeal(arguments: arguments)
-    case ("set-min", let arguments):            setMin(arguments: arguments)
-    case ("set-max", let arguments):            setMax(arguments: arguments)
-    case ("set-unit", let arguments):           setUnit(arguments: arguments)
-    case ("link-outflow", let arguments):       linkOutflow(arguments: arguments)
-    case ("link-inflow", let arguments):        linkInflow(arguments: arguments)
-    case ("unlink-outflow", let arguments):     unlinkOutflow(arguments: arguments)
-    case ("unlink-inflow", let arguments):      unlinkInflow(arguments: arguments)
-    case ("link-event", let arguments):         linkEvent(arguments: arguments)
-    case ("unlink-event", let arguments):       unlinkEvent(arguments: arguments)
-        
-        // MARK: - Flows
-    case ("set-amount", let arguments):         setAmount(arguments: arguments)
-    case ("set-delay", let arguments):          setDelay(arguments: arguments)
-    case ("set-duration", let arguments):       setDuration(arguments: arguments)
-    case ("set-requires", let arguments):       setRequiresUserCompletion(arguments: arguments)
-    case ("set-from", let arguments):           setFrom(arguments: arguments)
-    case ("set-to", let arguments):             setTo(arguments: arguments)
-    case ("run", _): run()
-    case ("add-event", let arguments):          addEvent(arguments: arguments)
-        
-        // MARK: - Events
-    case ("set-is-active", let arguments):      setIsActive(arguments: arguments)
-    case ("add-condition", let arguments):      addCondition(arguments: arguments)
-    case ("set-condition-type", let arguments): setConditionType(arguments: arguments)
-    case ("link-flow", let arguments):          linkFlow(arguments: arguments)
-    case ("set-cooldown", let arguments):       setCooldown(arguments: arguments)
-        
-        // MARK: Conditions
-    case ("set-comparison", let arguments):     setComparison(arguments: arguments)
-    case ("set-left-hand", let arguments):      setLeftHand(arguments: arguments, in: database.context)
-    case ("set-right-hand", let arguments):     setRightHand(arguments: arguments, in: database.context)
-        
-    default:
-        print("Invalid command.")
-    }
-    
-    lastCommand = command
-    
-    evaluateActiveEvents(context: database.context)
-    evaluateInactiveEvents(context: database.context)
-    
-    print("Workspace: \(workspace)")
 }
+
+let eventLoop: (Heartbeat) -> Void = { heartbeat in
+    
+}
+
+Heartbeat.init(inputLoop: inputLoop, eventLoop: eventLoop)
+RunLoop.current.run()
+
+
+//    let command = Command(input: input)
+//
+//    if Condition.handleCommand(command: command) {
+//        // TODO: Call all of the other functions...
+//        continue
+//    }
+//
+//    switch (command.command, command.arguments)
+//    {
+//    case ("add", let arguments):                add(arguments: arguments, in: database.context)
+//        // Select is for the workspace
+//    case ("select", let arguments):             select(arguments: arguments)
+//        // Choose is for `all`
+//    case ("choose", let arguments):             choose(arguments: arguments, lastCommand: lastCommand, in: database.context)
+//    case ("pinned", _):                         pinned(context: database.context)
+//    case ("unbalanced", _):                     unbalanced(context: database.context)
+//    case ("library", _):                        library(context: database.context)
+//    case ("priority", _):                       priority(context: database.context)
+//    case ("events", _):                         events(context: database.context)
+//    case ("pin", _):                            pin()
+//    case ("unpin", _):                          unpin()
+//    case ("save", _):                           save(context: database.context)
+//    case ("quit", _):                           quit()
+//    case ("set-name", let arguments):           setName(arguments: arguments, in: database.context)
+//    case ("hide", _):                           hide()
+//    case ("unhide", _):                         unhide()
+//    case ("view", _):                           view()
+//    case ("delete", _):                         delete(context: database.context)
+//    case ("nuke", _):                           nuke(database: database)
+//    case ("clear", _):                          workspace.removeAll()
+//    case ("all", let arguments):                all(arguments: arguments, in: database.context)
+//
+//        // MARK: - Stocks
+//    case ("set-type", let arguments):           setType(arguments: arguments)
+//    case ("set-current", let arguments):        setCurrent(arguments: arguments)
+//    case ("set-ideal", let arguments):          setIdeal(arguments: arguments)
+//    case ("set-min", let arguments):            setMin(arguments: arguments)
+//    case ("set-max", let arguments):            setMax(arguments: arguments)
+//    case ("set-unit", let arguments):           setUnit(arguments: arguments)
+//    case ("link-outflow", let arguments):       linkOutflow(arguments: arguments)
+//    case ("link-inflow", let arguments):        linkInflow(arguments: arguments)
+//    case ("unlink-outflow", let arguments):     unlinkOutflow(arguments: arguments)
+//    case ("unlink-inflow", let arguments):      unlinkInflow(arguments: arguments)
+//    case ("link-event", let arguments):         linkEvent(arguments: arguments)
+//    case ("unlink-event", let arguments):       unlinkEvent(arguments: arguments)
+//
+//        // MARK: - Flows
+//    case ("set-amount", let arguments):         setAmount(arguments: arguments)
+//    case ("set-delay", let arguments):          setDelay(arguments: arguments)
+//    case ("set-duration", let arguments):       setDuration(arguments: arguments)
+//    case ("set-requires", let arguments):       setRequiresUserCompletion(arguments: arguments)
+//    case ("set-from", let arguments):           setFrom(arguments: arguments)
+//    case ("set-to", let arguments):             setTo(arguments: arguments)
+//    case ("run", _): run()
+//    case ("add-event", let arguments):          addEvent(arguments: arguments)
+//
+//        // MARK: - Events
+//    case ("set-is-active", let arguments):      setIsActive(arguments: arguments)
+//    case ("add-condition", let arguments):      addCondition(arguments: arguments)
+//    case ("set-condition-type", let arguments): setConditionType(arguments: arguments)
+//    case ("link-flow", let arguments):          linkFlow(arguments: arguments)
+//    case ("set-cooldown", let arguments):       setCooldown(arguments: arguments)
+//
+////        // MARK: Conditions
+////    case ("set-comparison", let arguments):
+////        guard let condition: Condition = getEntity(from: workspace),
+////              let (c, t) = parseTwoStrings(arguments: arguments)
+////        else {
+////            continue
+////        }
+////        condition.setComparison(c, type: t)
+////    case ("set-left-hand", let arguments):
+////        guard let condition: Condition = getEntity(from: workspace) else { continue }
+////        condition.leftHand = makeSource(from: arguments, in: database.context)
+////    case ("set-right-hand", let arguments):
+////        guard let condition: Condition = getEntity(from: workspace) else { continue }
+////        condition.rightHand = makeSource(from: arguments, in: database.context)
+//    default:
+//        print("Invalid command.")
+//    }
+//
+//    lastCommand = command
+//
+//    evaluateActiveEvents(context: database.context)
+//    evaluateInactiveEvents(context: database.context)
+//
+//    print("Workspace: \(workspace)")
+//}
 
 func evaluateInactiveEvents(context: Context)
 {
@@ -212,128 +232,34 @@ func nuke(database: Database)
     database.clear()
 }
 
-func add(arguments: [String], in context: Context)
-{
-    guard arguments.count > 0 else
-    {
-        print("Please include an entity type with the add command")
-        return
-    }
-    
-    let entityType = arguments[0]
-    let name = (arguments.count > 1) ? arguments[1] : nil
-    
-    switch entityType
-    {
-    case "stock":
-        makeStock(name: name, in: context)
-    case "flow":
-        makeFlow(name: name, in: context)
-    case "event":
-        makeEvent(name: name, in: context)
-    case "unit":
-        makeUnit(name: name, in: context)
-    case "condition":
-        makeCondition(name: name, in: context)
-    default:
-        print("Tried to add an invalid entity")
-        return
-    }
-}
-
-func makeStock(name: String?, in context: Context)
-{
-    let stock = Stock(context: context)
-    stock.stateMachine = false
-    stock.isPinned = false
-    stock.createdDate = Date()
-    
-    let source = Source(context: context)
-    source.valueType = .number
-    source.value = 0
-    stock.source = source
-    
-    let minimum = Source(context: context)
-    minimum.valueType = .number
-    minimum.value = 0
-    stock.minimum = minimum
-    
-    let maximum = Source(context: context)
-    maximum.valueType = .number
-    maximum.value = 100
-    stock.maximum = maximum
-    
-    let ideal = Source(context: context)
-    ideal.valueType = .number
-    ideal.value = 100
-    stock.ideal = ideal
-    
-    if let name = name
-    {
-        stock.symbolName = Symbol(context: context, name: name)
-    }
-    
-    workspace.insert(stock, at: 0)
-}
-
-func makeFlow(name: String?, in context: Context)
-{
-    let flow = Flow(context: context)
-    
-    flow.amount = 1
-    flow.delay = 0
-    flow.duration = 1
-    flow.requiresUserCompletion = false
-    
-    if let name = name
-    {
-        flow.symbolName = Symbol(context: context, name: name)
-    }
-    
-    workspace.insert(flow, at: 0)
-}
-
-func makeEvent(name: String?, in context: Context)
-{
-    let event = Event(context: context)
-    
-    event.conditionType = .all
-    event.isActive = true
-    
-    if let name = name
-    {
-        event.symbolName = Symbol(context: context, name: name)
-    }
-    
-    workspace.insert(event, at: 0)
-}
-
-func makeUnit(name: String?, in context: Context)
-{
-    let unit = Unit(context: context)
-    
-    unit.isBase = true
-    
-    if let name = name
-    {
-        unit.symbolName = Symbol(context: context, name: name)
-        unit.abbreviation = name
-    }
-    
-    workspace.insert(unit, at: 0)
-}
-
-func makeCondition(name: String?, in context: Context)
-{
-    let condition = Condition(context: context)
-    
-    if let name = name
-    {
-        condition.symbolName = Symbol(context: context, name: name)
-    }
-    
-    workspace.insert(condition, at: 0)
-}
+//func add(arguments: [String], in context: Context)
+//{
+//    guard arguments.count > 0 else
+//    {
+//        print("Please include an entity type with the add command")
+//        return
+//    }
+//
+//    let entityType = arguments[0]
+//    let name = (arguments.count > 1) ? arguments[1] : nil
+//
+//    switch entityType
+//    {
+//    case "stock":
+//        makeStock(name: name, in: context)
+//    case "flow":
+//        makeFlow(name: name, in: context)
+//    case "event":
+//        makeEvent(name: name, in: context)
+//    case "unit":
+//        Unit.make(name: name, in: context, workspace: &workspace)
+//    case "condition":
+//        Condition.make(name: name, in: context, workspace: &workspace)
+//    default:
+//        print("Tried to add an invalid entity")
+//        return
+//    }
+//}
 
 /// Selecting is for focusing a certain item already in the workspace
 func select(arguments: [String])
@@ -364,7 +290,7 @@ func select(arguments: [String])
 /// Choosing is for adding an item from a list (such as `all stock`)
 /// It has to take the last command and then figure out which item to choose...
 /// Then, add it to the workspace.
-func choose(arguments: [String], lastCommand: Command, in context: Context)
+func choose(arguments: [String], lastCommand: CommandData, in context: Context)
 {
     let items: [Any]
     
@@ -452,7 +378,7 @@ func save(context: Context)
 
 func quit()
 {
-    loop = false
+//    loop = false
 }
 
 func setName(arguments: [String], in context: Context)
@@ -676,40 +602,6 @@ func setType(arguments: [String])
     }
 }
 
-func getNumberArgumentAndEntity<T: Entity>(arguments: [String]) -> (Double, T)?
-{
-    guard let argument = arguments.first, let number = Double(argument) else
-    {
-        print("Please enter a number.")
-        return nil
-    }
-    
-    guard let entity = workspace.first as? T else
-    {
-        print("No entity, or entity isn't a \(T.self)")
-        return nil
-    }
-    
-    return (number, entity)
-}
-
-func getBooleanArgumentAndEntity<T: Entity>(arguments: [String]) -> (Bool, T)?
-{
-    guard let argument = arguments.first, let bool = Bool(argument) else
-    {
-        print("Please enter a boolean")
-        return nil
-    }
-    
-    guard let entity = workspace.first as? T else
-    {
-        print("No entity, or entity isn't a \(T.self)")
-        return nil
-    }
-    
-    return (bool, entity)
-}
-
 func setCurrent(arguments: [String])
 {
     guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
@@ -732,41 +624,6 @@ func setMax(arguments: [String])
 {
     guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
     stock.max = number
-}
-
-/// Option A is the first entity in the workspace. Option B is from the arguments
-func getEntities<A: Entity, B: Entity>(arguments: [String]) -> (A, B)?
-{
-    guard workspace.count > 0 else
-    {
-        print("The workspace is empty")
-        return nil
-    }
-    
-    guard let a = workspace.first as? A else
-    {
-        print("The first entity was not \(A.self)")
-        return nil
-    }
-    
-    guard let indexString = arguments.first, let index = Int(indexString) else
-    {
-        print("Please provide an Int argument for the index. You might be trying to add something when you really want to link it to something in the workspace.")
-        return nil
-    }
-    
-    guard index < workspace.count else
-    {
-        print("The index for the second entity is out of bounds")
-        return nil
-    }
-    
-    guard let b = workspace[index] as? B else {
-        print("The second entity was not \(B.self)")
-        return nil
-    }
-    
-    return (a, b)
 }
 
 // TODO: Rather than searching/creating a unit,
@@ -976,114 +833,6 @@ func setConditionType(arguments: [String])
     event.conditionType = type
 }
 
-/// Sets both the comparison type and cancels the other comparisons
-/// Needs two arguments
-func setComparison(arguments: [String])
-{
-    guard let comparison = arguments.first else
-    {
-        print("No argument. Pass a comparison type.")
-        return
-    }
-    
-    let comparisonType: ComparisonType
-    
-    switch comparison
-    {
-    case "bool", "boolean":
-        comparisonType = .boolean
-    case "date":
-        comparisonType = .date
-    case "number":
-        comparisonType = .number
-    default:
-        print("Invalid comparison. Either `bool`, `date`, or `number`")
-        return
-    }
-    
-    guard arguments.count > 1 else
-    {
-        print("No second argument. Pass a more specific comparison. Options are:")
-        print("Bool: `equal`, `not-equal`")
-        print("Date: `after`, `before`")
-        print("Number: `equal`, `not-equal`, `greater-than`, `less-than`, `gtoe`, `ltoe")
-        return
-    }
-    
-    let type = arguments[1]
-    
-    guard let condition = workspace.first as? Condition else
-    {
-        print("No condition as first in workspace")
-        return
-    }
-    
-    func cancelNumberDate()
-    {
-        condition.numberComparisonType = .none
-        condition.dateComparisonType = .none
-    }
-    
-    func cancelBoolNumber()
-    {
-        condition.booleanComparisonType = .none
-        condition.numberComparisonType = .none
-    }
-    
-    func cancelBoolDate()
-    {
-        condition.booleanComparisonType = .none
-        condition.dateComparisonType = .none
-    }
-    
-    switch (comparisonType, type)
-    {
-    case (.boolean, "equal"):
-        condition.booleanComparisonType = .equal
-        cancelNumberDate()
-    case (.boolean, "not-equal"):
-        condition.booleanComparisonType = .notEqual
-        cancelNumberDate()
-    case (.date, "after"):
-        condition.dateComparisonType = .after
-        cancelBoolNumber()
-    case (.date, "before"):
-        condition.dateComparisonType = .before
-        cancelBoolNumber()
-    case (.number, "equal"):
-        condition.numberComparisonType = .equal
-        cancelBoolDate()
-    case (.number, "not-equal"):
-        condition.numberComparisonType = .notEqual
-        cancelBoolDate()
-    case (.number, "greaterThan"):
-        condition.numberComparisonType = .greaterThan
-        cancelBoolDate()
-    case (.number, "lessThan"):
-        condition.numberComparisonType = .lessThan
-        cancelBoolDate()
-    case (.number, "gtoe"):
-        condition.numberComparisonType = .greaterThanOrEqual
-        cancelBoolDate()
-    case (.number, "ltoe"):
-        condition.numberComparisonType = .lessThanOrEqual
-        cancelBoolDate()
-    default:
-        print("Failed to find a matching comparison type")
-        return
-    }
-}
-
-func setLeftHand(arguments: [String], in context: Context)
-{
-    guard let condition = workspace.first as? Condition else
-    {
-        print("Failed to get a condition from the workspace")
-        return
-    }
-    condition.leftHand = makeSource(from: arguments, in: context)
-}
-
 func setRightHand(arguments: [String], in context: Context)
 {
     guard let condition = workspace.first as? Condition else
@@ -1093,6 +842,8 @@ func setRightHand(arguments: [String], in context: Context)
     }
     condition.rightHand = makeSource(from: arguments, in: context)
 }
+
+// MARK: - Utility
 
 func makeSource(from arguments: [String], in context: Context) -> Source
 {
@@ -1145,6 +896,7 @@ func parseWorkspaceSource(from arguments: [String]) -> Source?
         return nil
     }
 }
+
 
 func getSource(from entity: Entity) -> Source?
 {
@@ -1201,4 +953,84 @@ func parseDateSource(from arguments: [String], in context: Context) -> Source?
     {
         return nil
     }
+}
+
+func getEntity<T: Entity>(from workspace: [Entity]) -> T?
+{
+    guard let entity = workspace.first as? T else
+    {
+        print("Couldn't find an entity of type \(T.self)")
+        return nil
+    }
+    
+    return entity
+}
+
+/// Option A is the first entity in the workspace. Option B is from the arguments
+func getEntities<A: Entity, B: Entity>(arguments: [String]) -> (A, B)?
+{
+    guard workspace.count > 0 else
+    {
+        print("The workspace is empty")
+        return nil
+    }
+    
+    guard let a = workspace.first as? A else
+    {
+        print("The first entity was not \(A.self)")
+        return nil
+    }
+    
+    guard let indexString = arguments.first, let index = Int(indexString) else
+    {
+        print("Please provide an Int argument for the index. You might be trying to add something when you really want to link it to something in the workspace.")
+        return nil
+    }
+    
+    guard index < workspace.count else
+    {
+        print("The index for the second entity is out of bounds")
+        return nil
+    }
+    
+    guard let b = workspace[index] as? B else {
+        print("The second entity was not \(B.self)")
+        return nil
+    }
+    
+    return (a, b)
+}
+
+func getNumberArgumentAndEntity<T: Entity>(arguments: [String]) -> (Double, T)?
+{
+    guard let argument = arguments.first, let number = Double(argument) else
+    {
+        print("Please enter a number.")
+        return nil
+    }
+    
+    guard let entity = workspace.first as? T else
+    {
+        print("No entity, or entity isn't a \(T.self)")
+        return nil
+    }
+    
+    return (number, entity)
+}
+
+func getBooleanArgumentAndEntity<T: Entity>(arguments: [String]) -> (Bool, T)?
+{
+    guard let argument = arguments.first, let bool = Bool(argument) else
+    {
+        print("Please enter a boolean")
+        return nil
+    }
+    
+    guard let entity = workspace.first as? T else
+    {
+        print("No entity, or entity isn't a \(T.self)")
+        return nil
+    }
+    
+    return (bool, entity)
 }

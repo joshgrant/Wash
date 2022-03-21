@@ -83,11 +83,22 @@ public enum EntityType
         }
     }
     
-    func insertNewEntity(into context: Context) -> Entity
+    @discardableResult
+    func insertNewEntity(into context: Context, name: String?) -> Entity
     {
-        // TODO: Verify that this works...
-        let description = managedObjectType.entity()
-        return Entity(entity: description, insertInto: context)
+        switch self
+        {
+        case .stock:
+            return makeStock(name: name, in: context)
+        case .flow:
+            return makeFlow(name: name, in: context)
+        case .event:
+            return makeEvent(name: name, in: context)
+        case .condition:
+            return makeCondition(name: name, in: context)
+        case .unit:
+            return makeUnit(name: name, in: context)
+        }
     }
     
     func count(in context: Context) -> Int
@@ -139,6 +150,20 @@ public enum EntityType
         }
     }
     
+    init?(string: String)
+    {
+        switch string
+        {
+        case "stock": self = .stock
+        case "flow": self = .flow
+        case "event": self = .event
+        case "condition": self = .condition
+        case "unit": self = .unit
+        default:
+            return nil
+        }
+    }
+    
 //    static func configuration(for entity: Entity) -> EntityDetailViewController.DataSource
 //    {
 //        switch entity
@@ -156,6 +181,110 @@ public enum EntityType
 //            fatalError("Unhandled entity")
 //        }
 //    }
+}
+
+// MARK: - Creating entities
+
+extension EntityType
+{
+    @discardableResult
+    func makeStock(name: String?, in context: Context) -> Stock
+    {
+        let stock = Stock(context: context)
+        stock.stateMachine = false
+        stock.isPinned = false
+        stock.createdDate = Date()
+        
+        let source = Source(context: context)
+        source.valueType = .number
+        source.value = 0
+        stock.source = source
+        
+        let minimum = Source(context: context)
+        minimum.valueType = .number
+        minimum.value = 0
+        stock.minimum = minimum
+        
+        let maximum = Source(context: context)
+        maximum.valueType = .number
+        maximum.value = 100
+        stock.maximum = maximum
+        
+        let ideal = Source(context: context)
+        ideal.valueType = .number
+        ideal.value = 100
+        stock.ideal = ideal
+        
+        if let name = name
+        {
+            stock.symbolName = Symbol(context: context, name: name)
+        }
+        
+        return stock
+    }
+
+    @discardableResult
+    func makeFlow(name: String?, in context: Context) -> Flow
+    {
+        let flow = Flow(context: context)
+        
+        flow.amount = 1
+        flow.delay = 0
+        flow.duration = 1
+        flow.requiresUserCompletion = false
+        
+        if let name = name
+        {
+            flow.symbolName = Symbol(context: context, name: name)
+        }
+        
+        return flow
+    }
+
+    @discardableResult
+    func makeEvent(name: String?, in context: Context) -> Event
+    {
+        let event = Event(context: context)
+        
+        event.conditionType = .all
+        event.isActive = true
+        
+        if let name = name
+        {
+            event.symbolName = Symbol(context: context, name: name)
+        }
+        
+        return event
+    }
+    
+    @discardableResult
+    func makeCondition(name: String?, in context: Context) -> Condition
+    {
+        let condition = Condition(context: context)
+        
+        if let name = name
+        {
+            condition.symbolName = Symbol(context: context, name: name)
+        }
+        
+        return condition
+    }
+    
+    @discardableResult
+    func makeUnit(name: String?, in context: Context) -> Unit
+    {
+        let unit = Unit(context: context)
+        
+        unit.isBase = true
+        
+        if let name = name
+        {
+            unit.symbolName = Symbol(context: context, name: name)
+            unit.abbreviation = name
+        }
+        
+        return unit
+    }
 }
 
 extension EntityType: CaseIterable {}
