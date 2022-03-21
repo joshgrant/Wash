@@ -78,17 +78,17 @@ enum Command
     case setLeftHand(condition: Condition, source: Source)
     case setRightHand(condition: Condition, source: Source)
     
-    init?(command: CommandData, workspace: inout [Entity])
+    init?(commandData: CommandData, workspace: inout [Entity], lastResult: [Entity])
     {
-        switch command.command
+        switch commandData.command
         {
         case "add":
-            guard let type = command.getEntityType() else { break }
-            let name = command.getName(startingAt: 1)
+            guard let type = commandData.getEntityType() else { break }
+            let name = commandData.getName(startingAt: 1)
             self = .add(entityType: type, name: name)
         case "set-name":
             guard let entity = workspace.first as? SymbolNamed else { break }
-            guard let name = command.getName() else { break }
+            guard let name = commandData.getName() else { break }
             self = .setName(entity: entity, name: name)
         case "hide":
             guard let entity = workspace.first else { break }
@@ -109,16 +109,18 @@ enum Command
             guard let entity = workspace.first as? Pinnable else { break }
             self = .unpin(entity: entity)
         case "select":
-            guard let index = command.getIndex() else { break }
+            guard let index = commandData.getIndex() else { break }
             self = .select(index: index)
         case "choose":
-            self = .choose(index: <#T##Int#>, lastResult: <#T##[Entity]#>)
+            guard let index = commandData.getIndex() else { break }
+            self = .choose(index: index, lastResult: lastResult)
         case "pinned":
             self = .pinned
         case "library":
             self = .library
         case "all":
-            self = .all(entityType: <#T##EntityType#>)
+            guard let entityType = commandData.getEntityType() else { break }
+            self = .all(entityType: entityType)
         case "unbalanced":
             self = .unbalanced
         case "priority":
@@ -134,49 +136,76 @@ enum Command
         case "clear":
             self = .clear
         case "set-stock-type":
-            self = .setStockType(stock: <#T##Stock#>, type: <#T##SourceValueType#>)
+            guard let stock = workspace.first as? Stock else { break }
+            guard let type = commandData.getSourceValueType() else { break }
+            self = .setStockType(stock: stock, type: type)
         case "set-current":
-            self = .setCurrent(stock: <#T##Stock#>, current: <#T##Double#>)
+            guard let stock = workspace.first as? Stock else { break }
+            guard let number = commandData.getNumber() else { break }
+            self = .setCurrent(stock: stock, current: number)
         case "set-ideal":
-            self = .setIdeal(stock: <#T##Stock#>, ideal: <#T##Double#>)
+            guard let stock = workspace.first as? Stock else { break }
+            guard let number = commandData.getNumber() else { break }
+            self = .setIdeal(stock: stock, ideal: number)
         case "set-min":
-            self = .setMin(stock: <#T##Stock#>, min: <#T##Double#>)
+            guard let stock = workspace.first as? Stock else { break }
+            guard let number = commandData.getNumber() else { break }
+            self = .setMin(stock: stock, min: number)
         case "set-max":
-            self = .setMax(stock: <#T##Stock#>, max: <#T##Double#>)
+            guard let stock = workspace.first as? Stock else { break }
+            guard let number = commandData.getNumber() else { break }
+            self = .setMax(stock: stock, max: number)
         case "set-unit":
-            self = .setUnit(stock: <#T##Stock#>, unit: <#T##Unit#>)
+            guard let (stock, unit): (Stock, Unit) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .setUnit(stock: stock, unit: unit)
         case "link-outflow":
-            self = .linkOutflow(stock: <#T##Stock#>, flow: <#T##Flow#>)
+            guard let (stock, flow): (Stock, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .linkOutflow(stock: stock, flow: flow)
         case "link-inflow":
-            self = .linkInflow(stock: <#T##Stock#>, flow: <#T##Flow#>)
+            guard let (stock, flow): (Stock, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .linkInflow(stock: stock, flow: flow)
         case "unlink-outflow":
-            self = .unlinkOutflow(stock: <#T##Stock#>, flow: <#T##Flow#>)
+            guard let (stock, flow): (Stock, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .unlinkOutflow(stock: stock, flow: flow)
         case "unlink-inflow":
-            self = .unlinkInflow(stock: <#T##Stock#>, flow: <#T##Flow#>)
+            guard let (stock, flow): (Stock, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .unlinkInflow(stock: stock, flow: flow)
         case "link-stock-event":
-            self = .linkStockEvent(stock: <#T##Stock#>, event: <#T##Event#>)
+            guard let (stock, event): (Stock, Event) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .linkStockEvent(stock: stock, event: event)
         case "unlink-stock-event":
-            self = .unlinkStockEvent(stock: <#T##<<error type>>#>, event: <#T##Event#>)
+            guard let (stock, event): (Stock, Event) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .unlinkStockEvent(stock: stock, event: event)
         case "set-amount":
-            self = .setAmount(flow: <#T##Flow#>, amount: <#T##Double#>)
+            guard let (flow, amount): (Flow, Double) = getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
+            self = .setAmount(flow: flow, amount: amount)
         case "set-delay":
-            self = .setDelay(flow: <#T##Flow#>, delay: <#T##Double#>)
+            guard let (flow, delay): (Flow, Double) = getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
+            self = .setDelay(flow: flow, delay: delay)
         case "set-duration":
-            self = .setDuration(flow: <#T##Flow#>, duration: <#T##Double#>)
+            guard let (flow, duration): (Flow, Double) = getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
+            self = .setDuration(flow: flow, duration: duration)
         case "set-requires":
-            self = .setRequires(flow: <#T##Flow#>, requires: <#T##Bool#>)
+            guard let (flow, requires): (Flow, Bool) = getEntityAndBool(commandData: commandData, workspace: workspace) else { break }
+            self = .setRequires(flow: flow, requires: requires)
         case "set-from":
-            self = .setFrom(flow: <#T##Flow#>, stock: <#T##Stock#>)
+            guard let (flow, stock): (Flow, Stock) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .setFrom(flow: flow, stock: stock)
         case "set-to":
-            self = .setTo(flow: <#T##Flow#>, stock: <#T##Stock#>)
+            guard let (flow, stock): (Flow, Stock) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .setTo(flow: flow, stock: stock)
         case "run":
-            self = .run(flow: <#T##Flow#>)
+            guard let flow: Flow = getEntity(in: workspace) else { break }
+            self = .run(flow: flow)
         case "link-flow-event":
-            self = .linkFlowEvent(flow: <#T##Flow#>, event: <#T##Event#>)
+            guard let (flow, event): (Flow, Event) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .linkFlowEvent(flow: flow, event: event)
         case "unlink-flow-event":
-            self = .unlinkFlowEvent(flow: <#T##Flow#>, event: <#T##Event#>)
+            guard let (flow, event): (Flow, Event) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .unlinkFlowEvent(flow: flow, event: event)
         case "set-active":
-            self = .setIsActive(event: <#T##Event#>, isActive: <#T##Bool#>)
+            guard let (event, isActive): (Event, Bool) = getEntityAndBool(commandData: commandData, workspace: workspace) else { break }
+            self = .setIsActive(event: event, isActive: isActive)
         case "link-cndition":
             self = .linkCondition(event: <#T##Event#>, condition: <#T##Condition#>)
         case "set-condition":
@@ -184,9 +213,11 @@ enum Command
         case "set-condition-type":
             self = .setConditionType(event: <#T##Event#>, type: <#T##ConditionType#>)
         case "link-flow":
-            self = .linkFlow(event: <#T##Event#>, flow: <#T##Flow#>)
+            guard let (event, flow): (Event, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .linkFlow(event: event, flow: flow)
         case "set-cooldown":
-            self = .setCooldown(event: <#T##Event#>, cooldown: <#T##Double#>)
+            guard let (event, cooldown): (Event, Double) = getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
+            self = .setCooldown(event: event, cooldown: cooldown)
         case "set-comparison":
             self = .setComparison(condition: <#T##Condition#>, comparison: <#T##ComparisonType#>, type: <#T##String#>)
         case "set-left-hand":
@@ -267,7 +298,7 @@ enum Command
             break
         case .linkStockEvent(stock: let stock, event: let event):
             break
-        case .unlinkEvent:
+        case .unlinkStockEvent(stock: let stock, event: let event):
             break
         case .setAmount(flow: let flow, amount: let amount):
             break
@@ -275,15 +306,17 @@ enum Command
             break
         case .setDuration(flow: let flow, duration: let duration):
             break
-        case .setRequires:
+        case .setRequires(flow: let flow, requires: let requires):
             break
-        case .setFrom:
+        case .setFrom(flow: let flow, stock: let stock):
             break
         case .setTo(flow: let flow, stock: let stock):
             break
         case .run(flow: let flow):
             break
         case .linkFlowEvent(flow: let flow, event: let event):
+            break
+        case .unlinkFlowEvent(flow: let flow, event: let event):
             break
         case .setIsActive(event: let event, isActive: let isActive):
             break
@@ -304,6 +337,76 @@ enum Command
         case .setRightHand(condition: let condition, source: let source):
             break
         }
+    }
+    
+    func getEntity<T: Entity>(in workspace: [Entity], at index: Int = 0) -> T?
+    {
+        guard workspace.count > index else
+        {
+            print("The index \(index) is out of bounds.")
+            return nil
+        }
+        
+        guard let entity = workspace[index] as? T else
+        {
+            print("The entity at index \(index) was not a(n) \(T.self)")
+            return nil
+        }
+        
+        return entity
+    }
+    
+    func getEntities<A: Entity, B: Entity>(commandData: CommandData, workspace: [Entity]) -> (A, B)?
+    {
+        guard let index = commandData.getIndex() else
+        {
+            print("No index.")
+            return nil
+        }
+        
+        let first: A? = getEntity(in: workspace, at: 0)
+        let second: B? = getEntity(in: workspace, at: index)
+        
+        guard let f = first, let s = second else
+        {
+            return nil
+        }
+        
+        return (f, s)
+    }
+    
+    func getEntityAndDouble<T: Entity>(commandData: CommandData, workspace: [Entity]) -> (T, Double)?
+    {
+        guard let argument = commandData.arguments.first, let number = Double(argument) else
+        {
+            print("Please enter a number.")
+            return nil
+        }
+        
+        guard let entity = workspace.first as? T else
+        {
+            print("No entity, or entity isn't a \(T.self)")
+            return nil
+        }
+        
+        return (entity, number)
+    }
+
+    func getEntityAndBool<T: Entity>(commandData: CommandData, workspace: [Entity]) -> (T, Bool)?
+    {
+        guard let argument = commandData.arguments.first, let bool = Bool(argument) else
+        {
+            print("Please enter a boolean")
+            return nil
+        }
+        
+        guard let entity = workspace.first as? T else
+        {
+            print("No entity, or entity isn't a \(T.self)")
+            return nil
+        }
+        
+        return (entity, bool)
     }
 }
 
@@ -400,10 +503,38 @@ struct CommandData
     {
         guard index < workspace.count else
         {
-            print("index was out of bounds")
+            print("Index was out of bounds.")
             return nil
         }
         
         return workspace[index]
+    }
+    
+    func getSourceValueType() -> SourceValueType?
+    {
+        guard let first = arguments.first?.lowercased() else
+        {
+            print("No arguments.")
+            return nil
+        }
+        
+        return SourceValueType(string: first)
+    }
+    
+    func getNumber() -> Double?
+    {
+        guard let first = arguments.first else
+        {
+            print("No arguments.")
+            return nil
+        }
+        
+        guard let number = Double(first) else
+        {
+            print("First argument wasn't a number.")
+            return nil
+        }
+        
+        return number
     }
 }

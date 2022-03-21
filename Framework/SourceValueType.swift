@@ -16,6 +16,20 @@ public enum SourceValueType: Int16, CaseIterable
     case number
     
     case date
+    
+    init?(string: String)
+    {
+        switch string
+        {
+        case "boolean": self = .boolean
+        case "infinite", "infinity": self = .infinite
+        case "percent": self = .percent
+        case "number", "decimal": self = .number
+        case "date": self = .date
+        default:
+            return nil
+        }
+    }
 }
 
 extension SourceValueType: CustomStringConvertible

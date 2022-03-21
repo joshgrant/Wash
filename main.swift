@@ -955,82 +955,82 @@ func parseDateSource(from arguments: [String], in context: Context) -> Source?
     }
 }
 
-func getEntity<T: Entity>(from workspace: [Entity]) -> T?
-{
-    guard let entity = workspace.first as? T else
-    {
-        print("Couldn't find an entity of type \(T.self)")
-        return nil
-    }
-    
-    return entity
-}
+//func getEntity<T: Entity>(from workspace: [Entity]) -> T?
+//{
+//    guard let entity = workspace.first as? T else
+//    {
+//        print("Couldn't find an entity of type \(T.self)")
+//        return nil
+//    }
+//
+//    return entity
+//}
 
 /// Option A is the first entity in the workspace. Option B is from the arguments
-func getEntities<A: Entity, B: Entity>(arguments: [String]) -> (A, B)?
-{
-    guard workspace.count > 0 else
-    {
-        print("The workspace is empty")
-        return nil
-    }
-    
-    guard let a = workspace.first as? A else
-    {
-        print("The first entity was not \(A.self)")
-        return nil
-    }
-    
-    guard let indexString = arguments.first, let index = Int(indexString) else
-    {
-        print("Please provide an Int argument for the index. You might be trying to add something when you really want to link it to something in the workspace.")
-        return nil
-    }
-    
-    guard index < workspace.count else
-    {
-        print("The index for the second entity is out of bounds")
-        return nil
-    }
-    
-    guard let b = workspace[index] as? B else {
-        print("The second entity was not \(B.self)")
-        return nil
-    }
-    
-    return (a, b)
-}
+//func getEntities<A: Entity, B: Entity>(arguments: [String]) -> (A, B)?
+//{
+//    guard workspace.count > 0 else
+//    {
+//        print("The workspace is empty")
+//        return nil
+//    }
+//
+//    guard let a = workspace.first as? A else
+//    {
+//        print("The first entity was not \(A.self)")
+//        return nil
+//    }
+//
+//    guard let indexString = arguments.first, let index = Int(indexString) else
+//    {
+//        print("Please provide an Int argument for the index. You might be trying to add something when you really want to link it to something in the workspace.")
+//        return nil
+//    }
+//
+//    guard index < workspace.count else
+//    {
+//        print("The index for the second entity is out of bounds")
+//        return nil
+//    }
+//
+//    guard let b = workspace[index] as? B else {
+//        print("The second entity was not \(B.self)")
+//        return nil
+//    }
+//
+//    return (a, b)
+//}
 
-func getNumberArgumentAndEntity<T: Entity>(arguments: [String]) -> (Double, T)?
-{
-    guard let argument = arguments.first, let number = Double(argument) else
-    {
-        print("Please enter a number.")
-        return nil
-    }
-    
-    guard let entity = workspace.first as? T else
-    {
-        print("No entity, or entity isn't a \(T.self)")
-        return nil
-    }
-    
-    return (number, entity)
-}
-
-func getBooleanArgumentAndEntity<T: Entity>(arguments: [String]) -> (Bool, T)?
-{
-    guard let argument = arguments.first, let bool = Bool(argument) else
-    {
-        print("Please enter a boolean")
-        return nil
-    }
-    
-    guard let entity = workspace.first as? T else
-    {
-        print("No entity, or entity isn't a \(T.self)")
-        return nil
-    }
-    
-    return (bool, entity)
-}
+//func getNumberArgumentAndEntity<T: Entity>(arguments: [String]) -> (Double, T)?
+//{
+//    guard let argument = arguments.first, let number = Double(argument) else
+//    {
+//        print("Please enter a number.")
+//        return nil
+//    }
+//    
+//    guard let entity = workspace.first as? T else
+//    {
+//        print("No entity, or entity isn't a \(T.self)")
+//        return nil
+//    }
+//    
+//    return (number, entity)
+//}
+//
+//func getBooleanArgumentAndEntity<T: Entity>(arguments: [String]) -> (Bool, T)?
+//{
+//    guard let argument = arguments.first, let bool = Bool(argument) else
+//    {
+//        print("Please enter a boolean")
+//        return nil
+//    }
+//    
+//    guard let entity = workspace.first as? T else
+//    {
+//        print("No entity, or entity isn't a \(T.self)")
+//        return nil
+//    }
+//    
+//    return (bool, entity)
+//}
