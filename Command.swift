@@ -64,7 +64,6 @@ enum Command
     // MARK: - Events
     
     case setIsActive(event: Event, isActive: Bool)
-    case linkCondition(event: Event, condition: Condition)
     case setCondition(event: Event, condition: Condition)
     case setConditionType(event: Event, type: ConditionType)
     case linkFlow(event: Event, flow: Flow)
@@ -206,12 +205,13 @@ enum Command
         case "set-active":
             guard let (event, isActive): (Event, Bool) = getEntityAndBool(commandData: commandData, workspace: workspace) else { break }
             self = .setIsActive(event: event, isActive: isActive)
-        case "link-cndition":
-            self = .linkCondition(event: <#T##Event#>, condition: <#T##Condition#>)
         case "set-condition":
-            self = .setCondition(event: <#T##Event#>, condition: <#T##Condition#>)
+            guard let (event, condition): (Event, Condition) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .setCondition(event: event, condition: condition)
         case "set-condition-type":
-            self = .setConditionType(event: <#T##Event#>, type: <#T##ConditionType#>)
+            guard let event = getEntity(in: workspace) else { break }
+            guard let conditionType = commandData.getConditionType() else { break }
+            self = .setConditionType(event: event, type: conditionType)
         case "link-flow":
             guard let (event, flow): (Event, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .linkFlow(event: event, flow: flow)
@@ -319,8 +319,6 @@ enum Command
         case .unlinkFlowEvent(flow: let flow, event: let event):
             break
         case .setIsActive(event: let event, isActive: let isActive):
-            break
-        case .linkCondition(event: let event, condition: let condition):
             break
         case .setCondition(event: let event, condition: let condition):
             break
@@ -536,5 +534,16 @@ struct CommandData
         }
         
         return number
+    }
+    
+    func getConditionType() -> ConditionType?
+    {
+        guard let string = arguments.first else
+        {
+            print("Please provide a condition type: `all` or `any`")
+            return nil
+        }
+        
+        return ConditionType(string)
     }
 }
