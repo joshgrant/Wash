@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 enum Command
 {
@@ -155,189 +156,243 @@ enum Command
             guard let number = commandData.getNumber() else { break }
             self = .setMax(stock: stock, max: number)
         case "set-unit":
-            guard let (stock, unit): (Stock, Unit) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (stock, unit): (Stock, Unit) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .setUnit(stock: stock, unit: unit)
         case "link-outflow":
-            guard let (stock, flow): (Stock, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (stock, flow): (Stock, Flow) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .linkOutflow(stock: stock, flow: flow)
         case "link-inflow":
-            guard let (stock, flow): (Stock, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (stock, flow): (Stock, Flow) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .linkInflow(stock: stock, flow: flow)
         case "unlink-outflow":
-            guard let (stock, flow): (Stock, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (stock, flow): (Stock, Flow) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .unlinkOutflow(stock: stock, flow: flow)
         case "unlink-inflow":
-            guard let (stock, flow): (Stock, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (stock, flow): (Stock, Flow) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .unlinkInflow(stock: stock, flow: flow)
         case "link-stock-event":
-            guard let (stock, event): (Stock, Event) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (stock, event): (Stock, Event) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .linkStockEvent(stock: stock, event: event)
         case "unlink-stock-event":
-            guard let (stock, event): (Stock, Event) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (stock, event): (Stock, Event) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .unlinkStockEvent(stock: stock, event: event)
         case "set-amount":
-            guard let (flow, amount): (Flow, Double) = getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
+            guard let (flow, amount): (Flow, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
             self = .setAmount(flow: flow, amount: amount)
         case "set-delay":
-            guard let (flow, delay): (Flow, Double) = getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
+            guard let (flow, delay): (Flow, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
             self = .setDelay(flow: flow, delay: delay)
         case "set-duration":
-            guard let (flow, duration): (Flow, Double) = getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
+            guard let (flow, duration): (Flow, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
             self = .setDuration(flow: flow, duration: duration)
         case "set-requires":
-            guard let (flow, requires): (Flow, Bool) = getEntityAndBool(commandData: commandData, workspace: workspace) else { break }
+            guard let (flow, requires): (Flow, Bool) = Self.getEntityAndBool(commandData: commandData, workspace: workspace) else { break }
             self = .setRequires(flow: flow, requires: requires)
         case "set-from":
-            guard let (flow, stock): (Flow, Stock) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (flow, stock): (Flow, Stock) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .setFrom(flow: flow, stock: stock)
         case "set-to":
-            guard let (flow, stock): (Flow, Stock) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (flow, stock): (Flow, Stock) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .setTo(flow: flow, stock: stock)
         case "run":
-            guard let flow: Flow = getEntity(in: workspace) else { break }
+            guard let flow: Flow = Self.getEntity(in: workspace) else { break }
             self = .run(flow: flow)
         case "link-flow-event":
-            guard let (flow, event): (Flow, Event) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (flow, event): (Flow, Event) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .linkFlowEvent(flow: flow, event: event)
         case "unlink-flow-event":
-            guard let (flow, event): (Flow, Event) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (flow, event): (Flow, Event) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .unlinkFlowEvent(flow: flow, event: event)
         case "set-active":
-            guard let (event, isActive): (Event, Bool) = getEntityAndBool(commandData: commandData, workspace: workspace) else { break }
+            guard let (event, isActive): (Event, Bool) = Self.getEntityAndBool(commandData: commandData, workspace: workspace) else { break }
             self = .setIsActive(event: event, isActive: isActive)
         case "set-condition":
-            guard let (event, condition): (Event, Condition) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (event, condition): (Event, Condition) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .setCondition(event: event, condition: condition)
         case "set-condition-type":
-            guard let event = getEntity(in: workspace) else { break }
+            guard let event = Self.getEntity(in: workspace) as? Event else { break }
             guard let conditionType = commandData.getConditionType() else { break }
             self = .setConditionType(event: event, type: conditionType)
         case "link-flow":
-            guard let (event, flow): (Event, Flow) = getEntities(commandData: commandData, workspace: workspace) else { break }
+            guard let (event, flow): (Event, Flow) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
             self = .linkFlow(event: event, flow: flow)
         case "set-cooldown":
-            guard let (event, cooldown): (Event, Double) = getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
+            guard let (event, cooldown): (Event, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace) else { break }
             self = .setCooldown(event: event, cooldown: cooldown)
         case "set-comparison":
-            self = .setComparison(condition: <#T##Condition#>, comparison: <#T##ComparisonType#>, type: <#T##String#>)
+            guard let condition = Self.getEntity(in: workspace) as? Condition else { break }
+            guard let comparison = commandData.getComparisonType() else { break }
+            guard let type = commandData.getArgument(at: 1) else { break }
+            self = .setComparison(condition: condition, comparison: comparison, type: type)
         case "set-left-hand":
-            self = .setLeftHand(condition: <#T##Condition#>, source: <#T##Source#>)
+            guard let (condition, source): (Condition, Source) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .setLeftHand(condition: condition, source: source)
         case "set-right-hand":
-            self = .setRightHand(condition: <#T##Condition#>, source: <#T##Source#>)
+            guard let (condition, source): (Condition, Source) = Self.getEntities(commandData: commandData, workspace: workspace) else { break }
+            self = .setRightHand(condition: condition, source: source)
         default:
             return nil
         }
         
-        print("Failed to run \(command.command) with \(command.arguments)")
+        print("Failed to run \(commandData.command) with \(commandData.arguments)")
         return nil
     }
     
-    func run(context: Context, workspace: inout [Entity])
+    func run(database: Database, workspace: inout [Entity]) -> [Entity]?
     {
+        let context = database.context
+        
+        var output: [Entity] = []
+        
         switch self
         {
-        case .add(entityType: let entityType, name: let name):
-            entityType.insertNewEntity(into: context, name: name)
-        case .setName(entity: let entity, name: let name):
-            break
-        case .hide(entity: let entity):
-            break
-        case .unhide(entity: let entity):
-            break
-        case .view(entity: let entity):
-            break
-        case .delete(entity: let entity):
-            break
+        case .add(let entityType, let name):
+            let entity = entityType.insertNewEntity(into: context, name: name)
+            output = [entity]
+        case .setName(let entity, let name):
+            if let entity = entity as? SymbolNamed {
+                entity.unwrappedName = name
+            }
+            output = [entity]
+        case .hide(let entity):
+            entity.isHidden = true
+            output = [entity]
+        case .unhide(let entity):
+            entity.isHidden = false
+            output = [entity]
+        case .view(let printable):
+            print(printable.fullDescription)
+        case .delete(let entity):
+            context.delete(entity)
+            output = [entity]
         case .pin(entity: let entity):
-            break
+            entity.isPinned = true
+            output = [entity]
         case .unpin(entity: let entity):
-            break
-        case .select(index: let index):
-            break
-        case .choose(index: let index, lastResult: let lastResult):
-            break
+            entity.isPinned = false
+            output = [entity]
+        case .select(let index):
+            let item = workspace[index]
+            workspace.remove(at: index)
+            workspace.insert(item, at: 0)
+            output = [item]
+        case .choose(let index, let lastResult):
+            let item = lastResult[index]
+            workspace.insert(item, at: 0)
+            output = [item]
         case .pinned:
-            break
+            output = runPinned(context: context)
         case .library:
-            break
-        case .all(entityType: let entityType):
-            break
+            output = runLibrary(context: context)
+        case .all(let entityType):
+            output = runAll(entityType: entityType, context: context)
         case .unbalanced:
-            break
+            output = runUnbalanced(context: context)
         case .priority:
-            break
+            output = runPriority(context: context)
         case .events:
-            break
+            output = runEvents(context: context)
         case .save:
-            break
+            context.quickSave()
         case .quit:
-            break
+            context.quickSave()
         case .nuke:
-            break
+            database.clear()
         case .clear:
-            break
-        case .setStockType(stock: let stock, type: let type):
-            break
-        case .setCurrent(stock: let stock, current: let current):
-            break
-        case .setIdeal(stock: let stock, ideal: let ideal):
-            break
-        case .setMin(stock: let stock, min: let min):
-            break
-        case .setMax(stock: let stock, max: let max):
-            break
-        case .setUnit(stock: let stock, unit: let unit):
-            break
-        case .linkOutflow(stock: let stock, flow: let flow):
-            break
-        case .linkInflow(stock: let stock, flow: let flow):
-            break
-        case .unlinkOutflow(stock: let stock, flow: let flow):
-            break
-        case .unlinkInflow(stock: let stock, flow: let flow):
-            break
-        case .linkStockEvent(stock: let stock, event: let event):
-            break
-        case .unlinkStockEvent(stock: let stock, event: let event):
-            break
-        case .setAmount(flow: let flow, amount: let amount):
-            break
-        case .setDelay(flow: let flow, delay: let delay):
-            break
-        case .setDuration(flow: let flow, duration: let duration):
-            break
-        case .setRequires(flow: let flow, requires: let requires):
-            break
-        case .setFrom(flow: let flow, stock: let stock):
-            break
-        case .setTo(flow: let flow, stock: let stock):
-            break
-        case .run(flow: let flow):
-            break
-        case .linkFlowEvent(flow: let flow, event: let event):
-            break
-        case .unlinkFlowEvent(flow: let flow, event: let event):
-            break
-        case .setIsActive(event: let event, isActive: let isActive):
-            break
-        case .setCondition(event: let event, condition: let condition):
-            break
-        case .setConditionType(event: let event, type: let type):
-            break
-        case .linkFlow(event: let event, flow: let flow):
-            break
-        case .setCooldown(event: let event, cooldown: let cooldown):
-            break
-        case .setComparison(condition: let condition, comparison: let comparison, type: let type):
-            break
-        case .setLeftHand(condition: let condition, source: let source):
-            break
-        case .setRightHand(condition: let condition, source: let source):
-            break
+            workspace.removeAll()
+        case .setStockType(let stock, let type):
+            stock.source?.valueType = type
+            output = [stock]
+        case .setCurrent(let stock, let current):
+            stock.current = current
+            output = [stock]
+        case .setIdeal(let stock, let ideal):
+            stock.target = ideal
+            output = [stock]
+        case .setMin(let stock, let min):
+            stock.min = min
+            output = [stock]
+        case .setMax(let stock, let max):
+            stock.max = max
+            output = [stock]
+        case .setUnit(let stock, let unit):
+            stock.unit = unit
+            output = [stock]
+        case .linkOutflow(let stock, let flow):
+            stock.addToOutflows(flow)
+            output = [stock]
+        case .linkInflow(let stock, let flow):
+            stock.addToInflows(flow)
+            output = [stock]
+        case .unlinkOutflow(let stock, let flow):
+            stock.removeFromOutflows(flow)
+            output = [stock]
+        case .unlinkInflow(let stock, let flow):
+            stock.removeFromInflows(flow)
+            output = [stock]
+        case .linkStockEvent(let stock, let event):
+            stock.addToEvents(event)
+            output = [stock]
+        case .unlinkStockEvent(let stock, let event):
+            stock.removeFromEvents(event)
+            output = [stock]
+        case .setAmount(let flow, let amount):
+            flow.amount = amount
+            output = [flow]
+        case .setDelay(let flow, let delay):
+            flow.delay = delay
+            output = [flow]
+        case .setDuration(let flow, let duration):
+            flow.duration = duration
+            output = [flow]
+        case .setRequires(let flow, let requires):
+            flow.requiresUserCompletion = requires
+            output = [flow]
+        case .setFrom(let flow, let stock):
+            flow.from = stock
+            output = [flow]
+        case .setTo(let flow, let stock):
+            flow.to = stock
+            output = [flow]
+        case .run(let flow):
+            flow.run()
+            output = [flow]
+        case .linkFlowEvent(let flow, let event):
+            flow.addToEvents(event)
+            output = [flow]
+        case .unlinkFlowEvent(let flow, let event):
+            flow.removeFromEvents(event)
+            output = [flow]
+        case .setIsActive(let event, let isActive):
+            event.isActive = isActive
+            output = [event]
+        case .setCondition(let event, let condition):
+            event.addToConditions(condition)
+            output = [event]
+        case .setConditionType(let event, let type):
+            event.conditionType = type
+            output = [event]
+        case .linkFlow(let event, let flow):
+            event.addToFlows(flow)
+            output = [event]
+        case .setCooldown(let event, let cooldown):
+            event.cooldownSeconds = cooldown
+            output = [event]
+        case .setComparison(let condition, let comparison, let type):
+            condition.setComparison(comparison, type: type)
+            output = [condition]
+        case .setLeftHand(let condition, let source):
+            condition.leftHand = source
+            output = [condition]
+        case .setRightHand(let condition, let source):
+            condition.rightHand = source
+            output = [condition]
         }
+        
+        return output
     }
     
-    func getEntity<T: Entity>(in workspace: [Entity], at index: Int = 0) -> T?
+    static func getEntity<T: Entity>(in workspace: [Entity], at index: Int = 0) -> T?
     {
         guard workspace.count > index else
         {
@@ -354,7 +409,7 @@ enum Command
         return entity
     }
     
-    func getEntities<A: Entity, B: Entity>(commandData: CommandData, workspace: [Entity]) -> (A, B)?
+    static func getEntities<A: Entity, B: Entity>(commandData: CommandData, workspace: [Entity]) -> (A, B)?
     {
         guard let index = commandData.getIndex() else
         {
@@ -373,7 +428,7 @@ enum Command
         return (f, s)
     }
     
-    func getEntityAndDouble<T: Entity>(commandData: CommandData, workspace: [Entity]) -> (T, Double)?
+    static func getEntityAndDouble<T: Entity>(commandData: CommandData, workspace: [Entity]) -> (T, Double)?
     {
         guard let argument = commandData.arguments.first, let number = Double(argument) else
         {
@@ -390,7 +445,7 @@ enum Command
         return (entity, number)
     }
 
-    func getEntityAndBool<T: Entity>(commandData: CommandData, workspace: [Entity]) -> (T, Bool)?
+    static func getEntityAndBool<T: Entity>(commandData: CommandData, workspace: [Entity]) -> (T, Bool)?
     {
         guard let argument = commandData.arguments.first, let bool = Bool(argument) else
         {
@@ -405,6 +460,126 @@ enum Command
         }
         
         return (entity, bool)
+    }
+}
+
+extension Command
+{
+    func runPinned(context: Context) -> [Entity]
+    {
+        let request = Entity.makePinnedObjectsFetchRequest(context: context)
+        let result = (try? context.fetch(request)) ?? []
+        let pins = result.compactMap { $0 as? Pinnable }
+        print("Pins: \(pins)")
+        return pins
+    }
+    
+    func runLibrary(context: Context) -> [Entity]
+    {
+        for type in EntityType.libraryVisible
+        {
+            let count = type.count(in: context)
+            print("\(type.icon.text) \(type.title) (\(count))")
+        }
+        return []
+    }
+    
+    func runAll(entityType: EntityType, context: Context) -> [Entity]
+    {
+        let request: NSFetchRequest<NSFetchRequestResult> = entityType.managedObjectType.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: true)]
+        let result = (try? context.fetch(request)) ?? []
+        guard result.count > 0 else {
+            print("No results")
+            return []
+        }
+        
+        for item in result.enumerated()
+        {
+            if let entity = item.element as? Named
+            {
+                let icon = entityType.icon.text
+                print("\(item.offset): \(icon) \(entity.title)")
+            }
+        }
+        
+        return result as? [Entity] ?? []
+    }
+    
+    func runUnbalanced(context: Context) -> [Entity]
+    {
+        let request: NSFetchRequest<Stock> = Stock.fetchRequest()
+        let result = (try? context.fetch(request)) ?? []
+        let unbalanced = result.filter { $0.percentIdeal < Stock.thresholdPercent }
+        print("Unbalanced: \(unbalanced)")
+        return unbalanced
+    }
+    
+    func runPriority(context: Context) -> [Entity]
+    {
+        var suggested: Set<Flow> = []
+        let allStocks: [Stock] = Stock.all(context: context)
+        let unbalancedStocks = allStocks.filter { stock in
+            stock.percentIdeal < 1
+        }
+        
+        for stock in unbalancedStocks
+        {
+            var bestFlow: Flow?
+            var bestPercentIdeal: Double = 0
+            
+            let allFlows = stock.unwrappedInflows + stock.unwrappedOutflows
+            
+            for flow in allFlows
+            {
+                let amount: Double
+                
+                // TODO: Could clean this up a bit
+                if stock.unwrappedInflows.contains(where: { $0 == flow })
+                {
+                    amount = -flow.amount
+                }
+                else if stock.unwrappedOutflows.contains(where: { $0 == flow })
+                {
+                    amount = flow.amount
+                }
+                else
+                {
+                    print("Something's wrong: flow wasn't part of inflows or outflows")
+                    fatalError()
+                }
+                
+                let projectedCurrent = min(stock.max, stock.current + amount)
+                let projectedPercentIdeal = Double.percentDelta(
+                    a: projectedCurrent,
+                    b: stock.target,
+                    minimum: stock.min,
+                    maximum: stock.max)
+                if projectedPercentIdeal > bestPercentIdeal
+                {
+                    bestFlow = flow
+                    bestPercentIdeal = projectedPercentIdeal
+                }
+            }
+            
+            if let flow = bestFlow
+            {
+                suggested.insert(flow)
+            }
+        }
+        
+        print("Priority: \(suggested)")
+        return Array(suggested)
+    }
+    
+    func runEvents(context: Context) -> [Entity]
+    {
+        let events = Event.activeAndSatisfiedEvents(context: context)
+        for event in events
+        {
+            print(event)
+        }
+        return events
     }
 }
 
@@ -545,5 +720,27 @@ struct CommandData
         }
         
         return ConditionType(string)
+    }
+    
+    func getComparisonType() -> ComparisonType?
+    {
+        guard let string = arguments.first else
+        {
+            print("Please provide a comparison type: `bool`, `date`, or `number`")
+            return nil
+        }
+        
+        return ComparisonType(string: string)
+    }
+    
+    func getArgument(at index: Int) -> String?
+    {
+        guard arguments.count > index else
+        {
+            print("Not enough arguments in \(arguments) to get an argument at index \(index)")
+            return nil
+        }
+        
+        return arguments[index]
     }
 }

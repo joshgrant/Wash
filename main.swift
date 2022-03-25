@@ -25,13 +25,13 @@ var lastResult: [Entity] = []
 let inputLoop: (Heartbeat) -> Void = { heartbeat in
     guard let input = readLine() else { return }
     let commandData = CommandData(input: input)
-    let command = Command(command: commandData, workspace: &workspace)
-    // Gets the command (string) and arguments ([String])
-    
+    let command = Command(commandData: commandData, workspace: &workspace, lastResult: lastResult)
+    lastResult = command?.run(database: database, workspace: &workspace) ?? []
 }
 
 let eventLoop: (Heartbeat) -> Void = { heartbeat in
-    
+    evaluateActiveEvents(context: database.context)
+    evaluateInactiveEvents(context: database.context)
 }
 
 Heartbeat.init(inputLoop: inputLoop, eventLoop: eventLoop)
@@ -148,14 +148,14 @@ func evaluateInactiveEvents(context: Context)
 // TODO: Automatically add a condition and stock upon event creation (isActive) ?? and
 func evaluateActiveEvents(context: Context)
 {
-    let events = activeAndSatisfiedEvents(context: context)
+    let events = Event.activeAndSatisfiedEvents(context: context)
     for event in events
     {
         for flow in event.unwrappedFlows
         {
             if !flow.requiresUserCompletion
             {
-                run(flow: flow)
+                flow.run()
             }
             else
             {
@@ -170,67 +170,67 @@ func evaluateActiveEvents(context: Context)
 
 /// Returns events that are active and satisfied
 /// AKA Events that should trigger
-func activeAndSatisfiedEvents(context: Context) -> [Event]
-{
-    let request: NSFetchRequest<Event> = Event.fetchRequest()
-    let events = (try? context.fetch(request)) ?? []
-    
-    var trueEvents: [Event] = []
-    
-    for event in events
-    {
-        if event.shouldTrigger
-        {
-            trueEvents.append(event)
-        }
-    }
-    
-    return trueEvents
-}
+//func activeAndSatisfiedEvents(context: Context) -> [Event]
+//{
+//    let request: NSFetchRequest<Event> = Event.fetchRequest()
+//    let events = (try? context.fetch(request)) ?? []
+//    
+//    var trueEvents: [Event] = []
+//    
+//    for event in events
+//    {
+//        if event.shouldTrigger
+//        {
+//            trueEvents.append(event)
+//        }
+//    }
+//    
+//    return trueEvents
+//}
 
-func setCooldown(arguments: [String])
-{
-    guard let (cooldown, event): (Double, Event) = getNumberArgumentAndEntity(arguments: arguments) else
-    {
-        print("Failed to get a number and event")
-        return
-    }
-    event.cooldownSeconds = cooldown
-}
+//func setCooldown(arguments: [String])
+//{
+//    guard let (cooldown, event): (Double, Event) = getNumberArgumentAndEntity(arguments: arguments) else
+//    {
+//        print("Failed to get a number and event")
+//        return
+//    }
+//    event.cooldownSeconds = cooldown
+//}
+//
+//func events(context: Context)
+//{
+//    let events = activeAndSatisfiedEvents(context: context)
+//    for event in events
+//    {
+//        print(event)
+//    }
+//}
 
-func events(context: Context)
-{
-    let events = activeAndSatisfiedEvents(context: context)
-    for event in events
-    {
-        print(event)
-    }
-}
-
-func addEvent(arguments: [String])
-{
-    if let (flow, event): (Flow, Event) = getEntities(arguments: arguments) {
-        flow.addToEvents(event)
-        return
-    }
-    
-    print("Unhandled entity. Go to `addEvent` to update")
-}
-
-func linkFlow(arguments: [String])
-{
-    if let (event, flow): (Event, Flow) = getEntities(arguments: arguments) {
-        event.addToFlows(flow)
-        return
-    }
-    
-    print("Unhandled entity. Go to `linkFlow` to update")
-}
-
-func nuke(database: Database)
-{
-    database.clear()
-}
+//func addEvent(arguments: [String])
+//{
+//    if let (flow, event): (Flow, Event) = getEntities(arguments: arguments) {
+//        flow.addToEvents(event)
+//        return
+//    }
+//
+//    print("Unhandled entity. Go to `addEvent` to update")
+//}
+//
+//func linkFlow(arguments: [String])
+//{
+//    if let (event, flow): (Event, Flow) = getEntities(arguments: arguments) {
+//        event.addToFlows(flow)
+//        return
+//    }
+//
+//    print("Unhandled entity. Go to `linkFlow` to update")
+//}
+//
+//func nuke(database: Database)
+//{
+//    database.clear()
+//}
 
 //func add(arguments: [String], in context: Context)
 //{
@@ -262,552 +262,513 @@ func nuke(database: Database)
 //}
 
 /// Selecting is for focusing a certain item already in the workspace
-func select(arguments: [String])
-{
-    guard let first = arguments.first else
-    {
-        print("Please include the index to select")
-        return
-    }
-    
-    guard let number = Int(first) else
-    {
-        print("Index was not a number")
-        return
-    }
-    
-    guard number < workspace.count else
-    {
-        print("Index was out of bounds")
-        return
-    }
-    
-    let entity = workspace[number]
-    workspace.remove(at: number)
-    workspace.insert(entity, at: 0)
-}
+//func select(arguments: [String])
+//{
+//    guard let first = arguments.first else
+//    {
+//        print("Please include the index to select")
+//        return
+//    }
+//
+//    guard let number = Int(first) else
+//    {
+//        print("Index was not a number")
+//        return
+//    }
+//
+//    guard number < workspace.count else
+//    {
+//        print("Index was out of bounds")
+//        return
+//    }
+//
+//    let entity = workspace[number]
+//    workspace.remove(at: number)
+//    workspace.insert(entity, at: 0)
+//}
 
 /// Choosing is for adding an item from a list (such as `all stock`)
 /// It has to take the last command and then figure out which item to choose...
 /// Then, add it to the workspace.
-func choose(arguments: [String], lastCommand: CommandData, in context: Context)
-{
-    let items: [Any]
-    
-    switch lastCommand.command {
-    case "all":
-        items = all(arguments: lastCommand.arguments, in: context)
-    case "priority":
-        items = priority(context: context)
-    case "pinned":
-        items = pinned(context: context)
-    default:
-        print("Last command wasn't valid to choose from")
-        return
-    }
-    
-    guard let indexString = arguments.first, let index = Int(indexString) else
-    {
-        print("Pass an index to the choose command")
-        return
-    }
-    
-    guard index < items.count else
-    {
-        print("The index was greater than the previous command's items count")
-        return
-    }
-    
-    guard let item = items[index] as? Named else
-    {
-        print("The item wasn't `Named`")
-        return
-    }
-    
-    workspace.insert(item, at: 0)
-}
+//func choose(arguments: [String], lastCommand: CommandData, in context: Context)
+//{
+//    let items: [Any]
+//
+//    switch lastCommand.command {
+//    case "all":
+//        items = all(arguments: lastCommand.arguments, in: context)
+//    case "priority":
+//        items = priority(context: context)
+//    case "pinned":
+//        items = pinned(context: context)
+//    default:
+//        print("Last command wasn't valid to choose from")
+//        return
+//    }
+//
+//    guard let indexString = arguments.first, let index = Int(indexString) else
+//    {
+//        print("Pass an index to the choose command")
+//        return
+//    }
+//
+//    guard index < items.count else
+//    {
+//        print("The index was greater than the previous command's items count")
+//        return
+//    }
+//
+//    guard let item = items[index] as? Named else
+//    {
+//        print("The item wasn't `Named`")
+//        return
+//    }
+//
+//    workspace.insert(item, at: 0)
+//}
 
-func pin()
-{
-    guard let entity = workspace.first else
-    {
-        print("No entity to pin")
-        return
-    }
-    
-    entity.isPinned = true
-}
+//func pin()
+//{
+//    guard let entity = workspace.first else
+//    {
+//        print("No entity to pin")
+//        return
+//    }
+//
+//    entity.isPinned = true
+//}
+//
+//func unpin()
+//{
+//    guard let entity = workspace.first else
+//    {
+//        print("No entity to unpin")
+//        return
+//    }
+//
+//    entity.isPinned = false
+//}
 
-func unpin()
-{
-    guard let entity = workspace.first else
-    {
-        print("No entity to unpin")
-        return
-    }
-    
-    entity.isPinned = false
-}
+//func hide()
+//{
+//    guard let entity = workspace.first else
+//    {
+//        print("No entity")
+//        return
+//    }
+//
+//    entity.isHidden = true
+//}
+//
+//func unhide()
+//{
+//    guard let entity = workspace.first else
+//    {
+//        print("No entity")
+//        return
+//    }
+//
+//    entity.isHidden = false
+//}
+//
+//func save(context: Context)
+//{
+//    context.quickSave()
+//}
+//
+//func quit()
+//{
+////    loop = false
+//}
 
-func hide()
-{
-    guard let entity = workspace.first else
-    {
-        print("No entity")
-        return
-    }
-    
-    entity.isHidden = true
-}
+//func setName(arguments: [String], in context: Context)
+//{
+//    guard arguments.count > 0 else
+//    {
+//        print("No name to set")
+//        return
+//    }
+//
+//    let name = arguments.joined(separator: " ")
+//
+//    guard let entity = workspace.first as? SymbolNamed else
+//    {
+//        print("No entity")
+//        return
+//    }
+//
+//    let symbol = Symbol(context: context, name: name)
+//    entity.symbolName = symbol
+//}
+//
+//func view()
+//{
+//    guard let entity = workspace.first else
+//    {
+//        print("No entity")
+//        return
+//    }
+//
+//    if let entity = entity as? Printable
+//    {
+//        print(entity.fullDescription)
+//    }
+//    else
+//    {
+//        print(entity)
+//    }
+//}
+//
+//func delete(context: Context)
+//{
+//    guard let entity = workspace.first else
+//    {
+//        print("No entity")
+//        return
+//    }
+//
+//    context.delete(entity)
+//}
 
-func unhide()
-{
-    guard let entity = workspace.first else
-    {
-        print("No entity")
-        return
-    }
-    
-    entity.isHidden = false
-}
+//func library(context: Context)
+//{
+//    for type in EntityType.libraryVisible
+//    {
+//        let count = type.count(in: context)
+//        print("\(type.icon.text) \(type.title) (\(count))")
+//    }
+//}
 
-func save(context: Context)
-{
-    context.quickSave()
-}
+//@discardableResult func pinned(context: Context) -> [Pinnable]
+//{
+//    let request = Entity.makePinnedObjectsFetchRequest(context: context)
+//    let result = (try? context.fetch(request)) ?? []
+//    let pins = result.compactMap { $0 as? Pinnable }
+//    print("Pins: \(pins)")
+//    return pins
+//}
 
-func quit()
-{
-//    loop = false
-}
+//@discardableResult func unbalanced(context: Context) -> [Stock]
+//{
+//    let request: NSFetchRequest<Stock> = Stock.fetchRequest()
+//    let result = (try? context.fetch(request)) ?? []
+//    let unbalanced = result.filter { $0.percentIdeal < Stock.thresholdPercent }
+//    print("Unbalanced: \(unbalanced)")
+//    return unbalanced
+//}
 
-func setName(arguments: [String], in context: Context)
-{
-    guard arguments.count > 0 else
-    {
-        print("No name to set")
-        return
-    }
-    
-    let name = arguments.joined(separator: " ")
-    
-    guard let entity = workspace.first as? SymbolNamed else
-    {
-        print("No entity")
-        return
-    }
-    
-    let symbol = Symbol(context: context, name: name)
-    entity.symbolName = symbol
-}
+//@discardableResult func priority(context: Context) -> [Flow]
+//{
+//    var suggested: Set<Flow> = []
+//    let allStocks: [Stock] = Stock.all(context: context)
+//    let unbalancedStocks = allStocks.filter { stock in
+//        stock.percentIdeal < 1
+//    }
+//
+//    for stock in unbalancedStocks
+//    {
+//        var bestFlow: Flow?
+//        var bestPercentIdeal: Double = 0
+//
+//        let allFlows = stock.unwrappedInflows + stock.unwrappedOutflows
+//
+//        for flow in allFlows
+//        {
+//            let amount: Double
+//
+//            // TODO: Could clean this up a bit
+//            if stock.unwrappedInflows.contains(where: { $0 == flow })
+//            {
+//                amount = -flow.amount
+//            }
+//            else if stock.unwrappedOutflows.contains(where: { $0 == flow })
+//            {
+//                amount = flow.amount
+//            }
+//            else
+//            {
+//                print("Something's wrong: flow wasn't part of inflows or outflows")
+//                fatalError()
+//            }
+//
+//            let projectedCurrent = min(stock.max, stock.current + amount)
+//            let projectedPercentIdeal = Double.percentDelta(
+//                a: projectedCurrent,
+//                b: stock.target,
+//                minimum: stock.min,
+//                maximum: stock.max)
+//            if projectedPercentIdeal > bestPercentIdeal
+//            {
+//                bestFlow = flow
+//                bestPercentIdeal = projectedPercentIdeal
+//            }
+//        }
+//
+//        if let flow = bestFlow
+//        {
+//            suggested.insert(flow)
+//        }
+//    }
+//
+//    print("Priority: \(suggested)")
+//    return Array(suggested)
+//}
 
-func view()
-{
-    guard let entity = workspace.first else
-    {
-        print("No entity")
-        return
-    }
-    
-    if let entity = entity as? Printable
-    {
-        print(entity.fullDescription)
-    }
-    else
-    {
-        print(entity)
-    }
-}
-
-func delete(context: Context)
-{
-    guard let entity = workspace.first else
-    {
-        print("No entity")
-        return
-    }
-    
-    context.delete(entity)
-}
-
-func library(context: Context)
-{
-    for type in EntityType.libraryVisible
-    {
-        let count = type.count(in: context)
-        print("\(type.icon.text) \(type.title) (\(count))")
-    }
-}
-
-@discardableResult func pinned(context: Context) -> [Pinnable]
-{
-    let request = Entity.makePinnedObjectsFetchRequest(context: context)
-    let result = (try? context.fetch(request)) ?? []
-    let pins = result.compactMap { $0 as? Pinnable }
-    print("Pins: \(pins)")
-    return pins
-}
-
-@discardableResult func unbalanced(context: Context) -> [Stock]
-{
-    let request: NSFetchRequest<Stock> = Stock.fetchRequest()
-    let result = (try? context.fetch(request)) ?? []
-    let unbalanced = result.filter { $0.percentIdeal < Stock.thresholdPercent }
-    print("Unbalanced: \(unbalanced)")
-    return unbalanced
-}
-
-@discardableResult func priority(context: Context) -> [Flow]
-{
-    var suggested: Set<Flow> = []
-    let allStocks: [Stock] = Stock.all(context: context)
-    let unbalancedStocks = allStocks.filter { stock in
-        stock.percentIdeal < 1
-    }
-    
-    for stock in unbalancedStocks
-    {
-        var bestFlow: Flow?
-        var bestPercentIdeal: Double = 0
-        
-        let allFlows = stock.unwrappedInflows + stock.unwrappedOutflows
-        
-        for flow in allFlows
-        {
-            let amount: Double
-            
-            // TODO: Could clean this up a bit
-            if stock.unwrappedInflows.contains(where: { $0 == flow })
-            {
-                amount = -flow.amount
-            }
-            else if stock.unwrappedOutflows.contains(where: { $0 == flow })
-            {
-                amount = flow.amount
-            }
-            else
-            {
-                print("Something's wrong: flow wasn't part of inflows or outflows")
-                fatalError()
-            }
-            
-            let projectedCurrent = min(stock.max, stock.current + amount)
-            let projectedPercentIdeal = Double.percentDelta(
-                a: projectedCurrent,
-                b: stock.target,
-                minimum: stock.min,
-                maximum: stock.max)
-            if projectedPercentIdeal > bestPercentIdeal
-            {
-                bestFlow = flow
-                bestPercentIdeal = projectedPercentIdeal
-            }
-        }
-        
-        if let flow = bestFlow
-        {
-            suggested.insert(flow)
-        }
-    }
-    
-    print("Priority: \(suggested)")
-    return Array(suggested)
-}
-
-@discardableResult func all(arguments: [String], in context: Context) -> [NSFetchRequestResult]
-{
-    guard let first = arguments.first else
-    {
-        print("No entity type")
-        return []
-    }
-    
-    let entityType: EntityType
-    
-    switch first
-    {
-    case "stock":
-        entityType = .stock
-    case "flow":
-        entityType = .flow
-    case "unit":
-        entityType = .unit
-    case "event":
-        entityType = .event
-    case "condition":
-        entityType = .condition
-    default:
-        print("Invalid entity type")
-        return []
-    }
-    
-    let request: NSFetchRequest<NSFetchRequestResult> = entityType.managedObjectType.fetchRequest()
-    request.sortDescriptors = [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: true)]
-    let result = (try? context.fetch(request)) ?? []
-    guard result.count > 0 else {
-        print("No results")
-        return []
-    }
-    
-    for item in result.enumerated()
-    {
-        if let entity = item.element as? Named
-        {
-            let icon = entityType.icon.text
-            print("\(item.offset): \(icon) \(entity.title)")
-        }
-    }
-    
-    return result
-}
+//@discardableResult func all(arguments: [String], in context: Context) -> [NSFetchRequestResult]
+//{
+//    guard let first = arguments.first else
+//    {
+//        print("No entity type")
+//        return []
+//    }
+//
+//    let entityType: EntityType
+//
+//    switch first
+//    {
+//    case "stock":
+//        entityType = .stock
+//    case "flow":
+//        entityType = .flow
+//    case "unit":
+//        entityType = .unit
+//    case "event":
+//        entityType = .event
+//    case "condition":
+//        entityType = .condition
+//    default:
+//        print("Invalid entity type")
+//        return []
+//    }
+//
+//    let request: NSFetchRequest<NSFetchRequestResult> = entityType.managedObjectType.fetchRequest()
+//    request.sortDescriptors = [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: true)]
+//    let result = (try? context.fetch(request)) ?? []
+//    guard result.count > 0 else {
+//        print("No results")
+//        return []
+//    }
+//
+//    for item in result.enumerated()
+//    {
+//        if let entity = item.element as? Named
+//        {
+//            let icon = entityType.icon.text
+//            print("\(item.offset): \(icon) \(entity.title)")
+//        }
+//    }
+//
+//    return result
+//}
 
 // MARK: - Stocks
 
-/// Sets the `valueTypeRaw` property of the `source` property of the stock
-/// Options are:
-/// 1. Boolean
-/// 2. Infinite
-/// 3. Percent
-/// 4. Number
-/// 5. Date
-func setType(arguments: [String])
-{
-    let validOptionsString = "Valid options are:\nBoolean\nInfinite\nPercent\nNumber\nDate"
-    
-    guard let type = arguments.first?.lowercased() else {
-        print("Please enter a type. \(validOptionsString)")
-        return
-    }
-    
-    guard let stock = workspace.first as? Stock else
-    {
-        print("No entity, or entity isn't a stock.")
-        return
-    }
-    
-    switch type
-    {
-    case "boolean":
-        stock.source?.valueType = .boolean
-    case "infinite":
-        stock.source?.valueType = .infinite
-    case "percent":
-        stock.source?.valueType = .percent
-    case "number":
-        stock.source?.valueType = .number
-    case "date":
-        stock.source?.valueType = .date
-    default:
-        print("Invalid type. \(validOptionsString)")
-    }
-}
-
-func setCurrent(arguments: [String])
-{
-    guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
-    stock.current = number
-}
-
-func setIdeal(arguments: [String])
-{
-    guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
-    stock.target = number
-}
-
-func setMin(arguments: [String])
-{
-    guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
-    stock.min = number
-}
-
-func setMax(arguments: [String])
-{
-    guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
-    stock.max = number
-}
-
-// TODO: Rather than searching/creating a unit,
-// let's use the index of the arguments to find a unit in the workspace
-func setUnit(arguments: [String])
-{
-    guard let (stock, unit): (Stock, Unit) = getEntities(arguments: arguments) else { return }
-    stock.unit = unit
-}
-
-func linkOutflow(arguments: [String])
-{
-    guard let (stock, flow): (Stock, Flow) = getEntities(arguments: arguments) else { return }
-    stock.addToOutflows(flow)
-}
-
-func linkInflow(arguments: [String])
-{
-    guard let (stock, flow): (Stock, Flow) = getEntities(arguments: arguments) else { return }
-    stock.addToInflows(flow)
-}
-
-func unlinkOutflow(arguments: [String])
-{
-    guard let (stock, flow): (Stock, Flow) = getEntities(arguments: arguments) else { return }
-    stock.removeFromOutflows(flow)
-}
-
-func unlinkInflow(arguments: [String])
-{
-    guard let (stock, flow): (Stock, Flow) = getEntities(arguments: arguments) else { return }
-    stock.removeFromInflows(flow)
-}
+//func setCurrent(arguments: [String])
+//{
+//    guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
+//    stock.current = number
+//}
+//
+//func setIdeal(arguments: [String])
+//{
+//    guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
+//    stock.target = number
+//}
+//
+//func setMin(arguments: [String])
+//{
+//    guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
+//    stock.min = number
+//}
+//
+//func setMax(arguments: [String])
+//{
+//    guard let (number, stock): (Double, Stock) = getNumberArgumentAndEntity(arguments: arguments) else { return }
+//    stock.max = number
+//}
+//
+//// TODO: Rather than searching/creating a unit,
+//// let's use the index of the arguments to find a unit in the workspace
+//func setUnit(arguments: [String])
+//{
+//    guard let (stock, unit): (Stock, Unit) = getEntities(arguments: arguments) else { return }
+//    stock.unit = unit
+//}
+//
+//func linkOutflow(arguments: [String])
+//{
+//    guard let (stock, flow): (Stock, Flow) = getEntities(arguments: arguments) else { return }
+//    stock.addToOutflows(flow)
+//}
+//
+//func linkInflow(arguments: [String])
+//{
+//    guard let (stock, flow): (Stock, Flow) = getEntities(arguments: arguments) else { return }
+//    stock.addToInflows(flow)
+//}
+//
+//func unlinkOutflow(arguments: [String])
+//{
+//    guard let (stock, flow): (Stock, Flow) = getEntities(arguments: arguments) else { return }
+//    stock.removeFromOutflows(flow)
+//}
+//
+//func unlinkInflow(arguments: [String])
+//{
+//    guard let (stock, flow): (Stock, Flow) = getEntities(arguments: arguments) else { return }
+//    stock.removeFromInflows(flow)
+//}
 
 /// Applies to both flows and stocks
-func linkEvent(arguments: [String])
-{
-}
-
-/// Applies to both flows and stocks
-func unlinkEvent(arguments: [String])
-{
-    
-}
+//func linkEvent(arguments: [String])
+//{
+//}
+//
+///// Applies to both flows and stocks
+//func unlinkEvent(arguments: [String])
+//{
+//
+//}
 
 // MARK: - Flows
 
-func setAmount(arguments: [String])
-{
-    guard let (number, flow): (Double, Flow) = getNumberArgumentAndEntity(arguments: arguments) else { return }
-    flow.amount = number
-}
+//func setAmount(arguments: [String])
+//{
+//    guard let (number, flow): (Double, Flow) = getNumberArgumentAndEntity(arguments: arguments) else { return }
+//    flow.amount = number
+//}
+//
+//func setDelay(arguments: [String])
+//{
+//    guard let (number, flow): (Double, Flow) = getNumberArgumentAndEntity(arguments: arguments) else { return }
+//    flow.delay = number
+//}
+//
+//func setDuration(arguments: [String])
+//{
+//    guard let (number, flow): (Double, Flow) = getNumberArgumentAndEntity(arguments: arguments) else { return }
+//    flow.duration = number
+//}
+//
+//func setRequiresUserCompletion(arguments: [String])
+//{
+//    guard let (bool, flow): (Bool, Flow) = getBooleanArgumentAndEntity(arguments: arguments) else { return }
+//    flow.requiresUserCompletion = bool
+//}
+//
+//func setFrom(arguments: [String])
+//{
+//    guard let (flow, stock): (Flow, Stock) = getEntities(arguments: arguments) else { return }
+//    flow.from = stock
+//}
+//
+//func setTo(arguments: [String])
+//{
+//    guard let (flow, stock): (Flow, Stock) = getEntities(arguments: arguments) else { return }
+//    flow.to = stock
+//}
 
-func setDelay(arguments: [String])
-{
-    guard let (number, flow): (Double, Flow) = getNumberArgumentAndEntity(arguments: arguments) else { return }
-    flow.delay = number
-}
+//func run(flow: Flow? = nil)
+//{
+//    guard let flow = flow ?? (workspace.first as? Flow) else
+//    {
+//        print("First entity wasn't a flow")
+//        return
+//    }
+//    
+//    // 1. Wait delay seconds
+//    // 2. Calculate the amount per second (amount / duration)
+//    // 3. On a timer, subtract the amount of aps from "from" and add it to "to"
+//    // 4. If "from" has aps or less, get that amount and add it to "to"
+//    // 5. If "from" has 0, finish the run
+//    // 6. If "to" is at the max value, also finish the run
+//    
+//    print("Starting. Waiting for \(flow.delay) seconds")
+//    // Not great.. but does the trick
+//    sleep(UInt32(flow.delay))
+//    print("Delay completed.")
+//    let amount = flow.amount
+//    runHelper(flow: flow, amount: amount)
+//}
+//
+//func runHelper(flow: Flow, amount: Double)
+//{
+//    guard let fromSource = flow.from?.source else
+//    {
+//        print("No from source")
+//        return
+//    }
+//    
+//    guard let fromMin = flow.from?.minimum else
+//    {
+//        print("No from minimum")
+//        return
+//    }
+//    
+//    guard let toSource = flow.to?.source else
+//    {
+//        print("No to source")
+//        return
+//    }
+//    
+//    guard let toMax = flow.to?.maximum else
+//    {
+//        print("No to maximum")
+//        return
+//    }
+//    
+//    let aps = flow.amount / flow.duration
+//    
+//    var amountToSubtract: Double = min(aps, amount)
+//    
+//    if fromSource.value - aps < fromMin.value
+//    {
+//        amountToSubtract = fromSource.value
+//    }
+//    
+//    if toSource.value + amountToSubtract > toMax.value
+//    {
+//        amountToSubtract = toMax.value - toSource.value
+//    }
+//    
+//    if amountToSubtract <= 0
+//    {
+//        print("Done!")
+//        return
+//    }
+//    
+//    print("Moving resources...")
+//    print("From: \(fromSource.value), to: \(toSource.value), amount: \(amountToSubtract)")
+//    
+//    fromSource.value -= amountToSubtract
+//    toSource.value += amountToSubtract
+//    
+//    print("Sleeping for 1 second")
+//    sleep(1)
+//    runHelper(flow: flow, amount: amount - amountToSubtract)
+//}
 
-func setDuration(arguments: [String])
-{
-    guard let (number, flow): (Double, Flow) = getNumberArgumentAndEntity(arguments: arguments) else { return }
-    flow.duration = number
-}
-
-func setRequiresUserCompletion(arguments: [String])
-{
-    guard let (bool, flow): (Bool, Flow) = getBooleanArgumentAndEntity(arguments: arguments) else { return }
-    flow.requiresUserCompletion = bool
-}
-
-func setFrom(arguments: [String])
-{
-    guard let (flow, stock): (Flow, Stock) = getEntities(arguments: arguments) else { return }
-    flow.from = stock
-}
-
-func setTo(arguments: [String])
-{
-    guard let (flow, stock): (Flow, Stock) = getEntities(arguments: arguments) else { return }
-    flow.to = stock
-}
-
-func run(flow: Flow? = nil)
-{
-    guard let flow = flow ?? (workspace.first as? Flow) else
-    {
-        print("First entity wasn't a flow")
-        return
-    }
-    
-    // 1. Wait delay seconds
-    // 2. Calculate the amount per second (amount / duration)
-    // 3. On a timer, subtract the amount of aps from "from" and add it to "to"
-    // 4. If "from" has aps or less, get that amount and add it to "to"
-    // 5. If "from" has 0, finish the run
-    // 6. If "to" is at the max value, also finish the run
-    
-    print("Starting. Waiting for \(flow.delay) seconds")
-    // Not great.. but does the trick
-    sleep(UInt32(flow.delay))
-    print("Delay completed.")
-    let amount = flow.amount
-    runHelper(flow: flow, amount: amount)
-}
-
-func runHelper(flow: Flow, amount: Double)
-{
-    guard let fromSource = flow.from?.source else
-    {
-        print("No from source")
-        return
-    }
-    
-    guard let fromMin = flow.from?.minimum else
-    {
-        print("No from minimum")
-        return
-    }
-    
-    guard let toSource = flow.to?.source else
-    {
-        print("No to source")
-        return
-    }
-    
-    guard let toMax = flow.to?.maximum else
-    {
-        print("No to maximum")
-        return
-    }
-    
-    let aps = flow.amount / flow.duration
-    
-    var amountToSubtract: Double = min(aps, amount)
-    
-    if fromSource.value - aps < fromMin.value
-    {
-        amountToSubtract = fromSource.value
-    }
-    
-    if toSource.value + amountToSubtract > toMax.value
-    {
-        amountToSubtract = toMax.value - toSource.value
-    }
-    
-    if amountToSubtract <= 0
-    {
-        print("Done!")
-        return
-    }
-    
-    print("Moving resources...")
-    print("From: \(fromSource.value), to: \(toSource.value), amount: \(amountToSubtract)")
-    
-    fromSource.value -= amountToSubtract
-    toSource.value += amountToSubtract
-    
-    print("Sleeping for 1 second")
-    sleep(1)
-    runHelper(flow: flow, amount: amount - amountToSubtract)
-}
-
-func setIsActive(arguments: [String])
-{
-    guard let (bool, event): (Bool, Event) = getBooleanArgumentAndEntity(arguments: arguments) else
-    {
-        print("Couldn't get an event and a boolean to set is active")
-        return
-    }
-    
-    event.isActive = bool
-}
-
-func addCondition(arguments: [String])
-{
-    guard let (event, condition): (Event, Condition) = getEntities(arguments: arguments) else
-    {
-        print("Couldn't find an event, condition")
-        return
-    }
-    
-    event.addToConditions(condition)
-}
+//func setIsActive(arguments: [String])
+//{
+//    guard let (bool, event): (Bool, Event) = getBooleanArgumentAndEntity(arguments: arguments) else
+//    {
+//        print("Couldn't get an event and a boolean to set is active")
+//        return
+//    }
+//
+//    event.isActive = bool
+//}
+//
+//func addCondition(arguments: [String])
+//{
+//    guard let (event, condition): (Event, Condition) = getEntities(arguments: arguments) else
+//    {
+//        print("Couldn't find an event, condition")
+//        return
+//    }
+//
+//    event.addToConditions(condition)
+//}
 
 /// Sets `all` or `any` on the condition
 func setConditionType(arguments: [String])

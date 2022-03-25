@@ -101,6 +101,24 @@ public extension Event
         
         return targetEvents
     }
+    
+    static func activeAndSatisfiedEvents(context: Context) -> [Event]
+    {
+        let request: NSFetchRequest<Event> = Event.fetchRequest()
+        let events = (try? context.fetch(request)) ?? []
+        
+        var trueEvents: [Event] = []
+        
+        for event in events
+        {
+            if event.shouldTrigger
+            {
+                trueEvents.append(event)
+            }
+        }
+        
+        return trueEvents
+    }
 }
 
 public extension Event

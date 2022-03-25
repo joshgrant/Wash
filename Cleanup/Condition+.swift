@@ -10,19 +10,13 @@ import Core
 
 extension Condition
 {    
-    func setComparison(_ comparison: String, type: String)
+    func setComparison(_ comparison: ComparisonType, type: String)
     {
-        guard let comparisonType = ComparisonType(string: comparison) else
-        {
-            print("Invalid comparison. Either `bool`, `date`, or `number`")
-            return
-        }
-        
         booleanComparisonType = nil
         numberComparisonType = nil
         dateComparisonType = nil
 
-        switch comparisonType
+        switch comparison
         {
         case .boolean:
             guard let booleanType = BooleanComparisonType(string: type) else
@@ -46,34 +40,5 @@ extension Condition
             }
             dateComparisonType = dateType
         }
-    }
-}
-
-// MARK: - Utility
-
-extension Condition
-{
-    static func handleCommand(command: CommandData) -> Bool
-    {
-        switch command.command
-        {
-        case "set-comparison":
-            guard let condition: Condition = getEntity(from: workspace),
-                  let (c, t) = parseTwoStrings(arguments: command.arguments)
-            else {
-                break
-            }
-            condition.setComparison(c, type: t)
-        case "set-left-hand":
-            guard let condition: Condition = getEntity(from: workspace) else { break }
-            condition.leftHand = makeSource(from: command.arguments, in: database.context)
-        case "set-right-hand":
-            guard let condition: Condition = getEntity(from: workspace) else { break }
-            condition.rightHand = makeSource(from: command.arguments, in: database.context)
-        default:
-            return false
-        }
-        
-        return true
     }
 }
