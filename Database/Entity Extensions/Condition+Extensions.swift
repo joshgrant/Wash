@@ -127,30 +127,6 @@ public extension Condition
             numberComparisonTypeRaw = newValue?.rawValue ?? -1
         }
     }
-    
-    //    var stringComparisonType: StringComparisonType?
-    //    {
-    //        get
-    //        {
-    //            .init(rawValue: stringComparisonTypeRaw)
-    //        }
-    //        set
-    //        {
-    //            stringComparisonTypeRaw = newValue?.rawValue ?? -1
-    //        }
-    //    }
-}
-
-public extension Condition
-{
-    var unwrappedEvents: Set<Event> {
-        guard let unwrapped = events as? Set<Event> else {
-            assertionFailure("Failed to unwrap the events NSSet to an [Event]")
-            return []
-        }
-        
-        return unwrapped
-    }
 }
 
 public extension Condition
@@ -207,10 +183,4 @@ public extension Condition
             fatalError("We don't handle other types, such as `string`.")
         }
     }
-}
-
-public enum ConditionError: Error
-{
-    case invalidType(given: Any, expected: Any)
-    case invalidComparison
 }

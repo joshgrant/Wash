@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-public enum EntityType
+enum EntityType
 {
     case stock
     case flow
@@ -113,43 +113,7 @@ public enum EntityType
             return 0
         }
     }
-    
-    static func type(from entityType: Entity.Type) -> EntityType?
-    {
-        switch entityType
-        {
-        case is Stock.Type: return .stock
-        case is Flow.Type: return .flow
-//        case is Task.Type: return .task
-        case is Event.Type: return .event
-//        case is Conversion.Type: return .conversion
-        case is Condition.Type: return .condition
-//        case is Symbol.Type: return .symbol
-//        case is Note.Type: return .note
-        case is Unit.Type: return .unit
-        default:
-            return nil
-        }
-    }
-    
-    static func type(from entity: Entity) -> EntityType?
-    {
-        switch entity
-        {
-        case is Stock: return .stock
-        case is Flow: return .flow
-//        case is Task: return .task
-        case is Event: return .event
-//        case is Conversion: return .conversion
-        case is Condition: return .condition
-//        case is Symbol: return .symbol
-//        case is Note: return .note
-        case is Unit: return .unit
-        default:
-            return nil
-        }
-    }
-    
+
     init?(string: String)
     {
         switch string
@@ -163,24 +127,6 @@ public enum EntityType
             return nil
         }
     }
-    
-//    static func configuration(for entity: Entity) -> EntityDetailViewController.DataSource
-//    {
-//        switch entity
-//        {
-//        case is Stock: return .stock
-//        case is Flow: return .flow
-//        case is Task: return .task
-//        case is Event: return .event
-//        case is Conversion: return .conversion
-//        case is Condition: return .condition
-//        case is Symbol: return .symbol
-//        case is Note: return .note
-//        case is Unit: return .unit
-//        default:
-//            fatalError("Unhandled entity")
-//        }
-//    }
 }
 
 // MARK: - Creating entities

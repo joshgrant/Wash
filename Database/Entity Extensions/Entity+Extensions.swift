@@ -64,23 +64,8 @@ public extension Entity
     }
 }
 
-public extension Entity
-{
-    func togglePinAction() -> ActionClosure
-    {
-        ActionClosure { selector in
-            self.isPinned.toggle()
-        }
-    }
-}
-
 extension Entity
 {
-    static var readableName: String
-    {
-        return entityName.insertSpacesBetweenCamelCaseWords()
-    }
-    
     static var entityName: String
     {
         let components = NSStringFromClass(self).components(separatedBy: ".")

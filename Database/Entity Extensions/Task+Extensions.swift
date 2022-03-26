@@ -8,26 +8,3 @@
 import Foundation
 
 extension Task: SymbolNamed {}
-
-extension Task
-{
-    var completionType: CompletionType
-    {
-        get {
-            CompletionType(rawValue: completionTypeRaw)!
-        }
-        set {
-            completionTypeRaw = newValue.rawValue
-        }
-    }
-    
-    var completionOrderType: OrderType
-    {
-        get {
-            OrderType(rawValue: completionOrderTypeRaw)!
-        }
-        set {
-            completionOrderTypeRaw = newValue.rawValue
-        }
-    }
-}

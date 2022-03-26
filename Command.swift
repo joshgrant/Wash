@@ -731,17 +731,6 @@ struct CommandData
         return number
     }
     
-    func getEntity(in workspace: [Entity], at index: Int) -> Entity?
-    {
-        guard index < workspace.count else
-        {
-            print("Index was out of bounds.")
-            return nil
-        }
-        
-        return workspace[index]
-    }
-    
     func getSourceValueType() -> SourceValueType?
     {
         guard let first = arguments.first?.lowercased() else

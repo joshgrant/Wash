@@ -7,7 +7,7 @@
 
 import Cocoa
 
-public enum Icon: String
+enum Icon: String
 {
     case add = "plus"
     case pin = "pin"
@@ -57,9 +57,9 @@ public enum Icon: String
     
     case edit = "pencil"
     
-    var image: NSImage? { .init(systemSymbolName: rawValue, accessibilityDescription: nil) }
+//    var image: NSImage? { .init(systemSymbolName: rawValue, accessibilityDescription: nil) }
     
-    public var text: String
+    var text: String
     {
         switch self
         {

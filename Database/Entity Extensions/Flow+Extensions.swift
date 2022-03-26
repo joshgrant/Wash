@@ -54,7 +54,8 @@ History:                    \(history?.allObjects ?? [])
 extension Flow
 {
     // TODO: Display this to the user...
-    var needsUserExecution: Bool {
+    var needsUserExecution: Bool
+    {
         // If `requiresUserCompletion` is true
         // If `events` are all satisfied
         // If not running currently
@@ -71,7 +72,7 @@ extension Flow
         return requiresUserCompletion && !isRunning && allEventsSatisfied
     }
     
-    func run(verbose: Bool = true)
+    func run(verbose: Bool = false)
     {
         if isRunning
         {

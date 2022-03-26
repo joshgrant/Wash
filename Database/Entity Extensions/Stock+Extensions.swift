@@ -50,18 +50,6 @@ extension Stock
         source!.valueType
     }
     
-    var unwrappedValidStates: [State]
-    {
-        get
-        {
-            validStates?.toArray() ?? []
-        }
-        set
-        {
-            validStates = NSSet(array: newValue)
-        }
-    }
-    
     var unwrappedInflows: [Flow]
     {
         get

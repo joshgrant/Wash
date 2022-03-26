@@ -8,7 +8,6 @@
 import Foundation
 import CoreData
 import SpriteKit
-import Core
 
 let database = Database()
 
@@ -23,13 +22,9 @@ let minute = ContextPopulator.minuteStock(context: database.context)
 let second = ContextPopulator.secondStock(context: database.context)
 
 var workspace: [Entity] = [source, sink]
-
-print("Hello, world!")
-
-var lastCommand = CommandData(input: "")
 var lastResult: [Entity] = []
 
-var quit: Bool = false
+print("Hello, world!")
 
 let inputLoop: (Heartbeat) -> Void = { heartbeat in
     guard let input = readLine() else { return }

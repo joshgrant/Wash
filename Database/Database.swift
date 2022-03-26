@@ -23,10 +23,7 @@ open class Database
     // MARK: - Variables
     
     public var container: Container
-    
     public var context: Context { container.viewContext }
-    public var model: Model { container.managedObjectModel }
-    public var coordinator: Coordinator { container.persistentStoreCoordinator }
     
     // MARK: - Initialization
     
@@ -54,25 +51,6 @@ open class Database
         }
         
         return container
-    }
-    
-    // MARK: - Functions
-    
-    public func getItemsForList<T: NSManagedObject>(context: Context, type: T.Type) -> [T]
-    {
-        let fetchRequest: NSFetchRequest<T> = NSFetchRequest(entityName: NSStringFromClass(type))
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            assertionFailure(error.localizedDescription)
-            return []
-        }
-    }
-    
-    public func getItemInList<T: NSManagedObject>(at indexPath: IndexPath, context: Context, type: T.Type) -> T?
-    {
-        let items = getItemsForList(context: context, type: type)
-        return items[indexPath.item]
     }
 }
 

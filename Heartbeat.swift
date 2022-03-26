@@ -43,10 +43,7 @@ class Heartbeat
         }
     }()
     
-    private var startTime: DispatchTime
-    
     var shouldQuit: Bool = false
-    var tick: Int { DispatchTime.deltaSeconds(.now(), startTime) }
     
     // MARK: - Initialization
     
@@ -58,8 +55,6 @@ class Heartbeat
         self.inputLoop = inputLoop
         self.eventLoop = eventLoop
         self.cleanup = cleanup
-        
-        startTime = .now()
 
         configureInputThread()
         configureEventTimer()
@@ -75,14 +70,5 @@ class Heartbeat
     private func configureEventTimer()
     {
         RunLoop.current.add(eventTimer, forMode: .common)
-    }
-}
-
-extension DispatchTime
-{
-    static func deltaSeconds(_ a: DispatchTime, _ b: DispatchTime) -> Int
-    {
-        let delta = a.uptimeNanoseconds - b.uptimeNanoseconds
-        return Int(delta / 1_000_000_000)
     }
 }

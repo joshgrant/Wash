@@ -26,18 +26,4 @@ public extension Context
             fatalError(error.localizedDescription)
         }
     }
-    
-    func performFetchRequest<T>(fetchRequest: NSFetchRequest<T>) -> [T]
-    {
-        do
-        {
-            let result = try fetch(fetchRequest)
-            return result
-        }
-        catch
-        {
-            assertionFailure(error.localizedDescription)
-            return []
-        }
-    }
 }

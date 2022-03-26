@@ -46,11 +46,3 @@ extension SourceValueType: CustomStringConvertible
         }
     }
 }
-
-extension SourceValueType
-{
-    static func random() -> SourceValueType
-    {
-        Self.allCases.randomElement()!
-    }
-}

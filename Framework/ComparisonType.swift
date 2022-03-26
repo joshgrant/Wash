@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ComparisonType: Int16, CaseIterable, Random
+public enum ComparisonType: Int16, CaseIterable
 {
     case boolean
     case date
@@ -44,7 +44,7 @@ extension ComparisonType: CustomStringConvertible
     }
 }
 
-public enum BooleanComparisonType: Int16, CaseIterable, Random
+public enum BooleanComparisonType: Int16, CaseIterable
 {
     case equal
     case notEqual
@@ -63,7 +63,7 @@ public enum BooleanComparisonType: Int16, CaseIterable, Random
     }
 }
 
-public enum DateComparisonType: Int16, CaseIterable, Random
+public enum DateComparisonType: Int16, CaseIterable
 {
     case after
     case before
@@ -82,7 +82,7 @@ public enum DateComparisonType: Int16, CaseIterable, Random
     }
 }
 
-public enum NumberComparisonType: Int16, CaseIterable, Random
+public enum NumberComparisonType: Int16, CaseIterable
 {
     case equal
     case notEqual

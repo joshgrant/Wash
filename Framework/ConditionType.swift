@@ -13,7 +13,7 @@ public enum ConditionType: Int16, CaseIterable
     case any
 }
 
-extension ConditionType: FallbackProtocol
+extension ConditionType
 {
     static let fallback: ConditionType = .all
 }
