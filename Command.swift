@@ -578,7 +578,7 @@ extension Command
         var suggested: Set<Flow> = []
         let allStocks: [Stock] = Stock.all(context: context)
         let unbalancedStocks = allStocks.filter { stock in
-            stock.percentIdeal < 1
+            stock.percentIdeal < 0.6 // Arbitrary threshold
         }
         
         for stock in unbalancedStocks
@@ -595,11 +595,11 @@ extension Command
                 // TODO: Could clean this up a bit
                 if stock.unwrappedInflows.contains(where: { $0 == flow })
                 {
-                    amount = -flow.amount
+                    amount = flow.amount
                 }
                 else if stock.unwrappedOutflows.contains(where: { $0 == flow })
                 {
-                    amount = flow.amount
+                    amount = -flow.amount
                 }
                 else
                 {

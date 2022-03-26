@@ -157,6 +157,12 @@ extension Flow
         
         if amountToSubtract <= 0
         {
+            
+            let history = History(context: database.context)
+            history.date = .now
+            history.eventType = .updated
+            addToHistory(history)
+            
             if verbose { print("Done!") }
             self.isRunning = false
             return
