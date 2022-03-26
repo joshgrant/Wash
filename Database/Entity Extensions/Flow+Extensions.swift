@@ -53,7 +53,6 @@ History:                    \(history?.allObjects ?? [])
 
 extension Flow
 {
-    // TODO: Display this to the user...
     var needsUserExecution: Bool
     {
         // If `requiresUserCompletion` is true
@@ -72,7 +71,7 @@ extension Flow
         return requiresUserCompletion && !isRunning && allEventsSatisfied
     }
     
-    func run(verbose: Bool = false)
+    func run(fromUser: Bool = false, verbose: Bool = true)
     {
         if isRunning
         {
@@ -95,15 +94,18 @@ extension Flow
             print("Starting. Waiting for \(delay) seconds @ \(date)")
         }
         
-        let date = Date(timeIntervalSinceNow: delay)
-        RunLoop.current.schedule(after: .init(date)) { [weak self] in
-            guard let self = self else
-            {
-                if verbose { print("No `self` in run loop. Exiting") }
-                return
+        if delay >= 1 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self = self else
+                {
+                    if verbose { print("No `self` in run loop. Exiting") }
+                    return
+                }
+                if verbose { print("Delay completed.") }
+                self.runHelper(amount: self.amount, verbose: verbose)
             }
-            if verbose { print("Delay completed.") }
-            self.runHelper(amount: self.amount, verbose: verbose)
+        } else {
+            runHelper(amount: self.amount, verbose: verbose)
         }
     }
 
@@ -114,24 +116,28 @@ extension Flow
         guard let fromSource = from?.source else
         {
             if verbose { print("No from source") }
+            isRunning = false
             return
         }
         
         guard let fromMin = from?.minimum else
         {
             if verbose { print("No from minimum") }
+            isRunning = false
             return
         }
         
         guard let toSource = to?.source else
         {
             if verbose { print("No to source") }
+            isRunning = false
             return
         }
         
         guard let toMax = to?.maximum else
         {
             if verbose { print("No to maximum") }
+            isRunning = false
             return
         }
         
@@ -164,10 +170,11 @@ extension Flow
         
         if verbose { print("Re-scheduling for 1 second") }
         
-        RunLoop.current.schedule(after: .init(.now.addingTimeInterval(1)), tolerance: .milliseconds(5)) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self = self else
             {
                 if verbose { print("No self in run helper") }
+                self?.isRunning = false
                 return
             }
             

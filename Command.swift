@@ -25,10 +25,10 @@ enum Command
     case pinned
     case library
     case all(entityType: EntityType)
-    
     case unbalanced
     case priority
     case events
+    case flows
     
     case save
     case quit
@@ -133,6 +133,8 @@ enum Command
             self = .priority
         case "events":
             self = .events
+        case "flows":
+            self = .flows
         case "save":
             self = .save
         case "quit":
@@ -328,6 +330,8 @@ enum Command
             output = runPriority(context: context)
         case .events:
             output = runEvents(context: context)
+        case .flows:
+            output = runFlowsNeedingCompletion(context: context)
         case .save:
             context.quickSave()
         case .quit:
@@ -391,7 +395,7 @@ enum Command
             flow.to = stock
             output = [flow]
         case .run(let flow):
-            flow.run()
+            flow.run(fromUser: true)
             output = [flow]
         case .linkFlowEvent(let flow, let event):
             flow.addToEvents(event)
@@ -634,6 +638,18 @@ extension Command
             print(event)
         }
         return events
+    }
+    
+    func runFlowsNeedingCompletion(context: Context) -> [Entity]
+    {
+        let flows: [Flow] = Flow.all(context: context)
+        let flowsNeedingCompletion = flows.filter { flow in
+            flow.needsUserExecution
+        }
+        for flow in flowsNeedingCompletion {
+            print(flow)
+        }
+        return flowsNeedingCompletion
     }
 }
 
