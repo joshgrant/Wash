@@ -65,7 +65,7 @@ enum Command
     // MARK: - Events
     
     case setIsActive(event: Event, isActive: Bool)
-    case setCondition(event: Event, condition: Condition)
+    case linkCondition(event: Event, condition: Condition)
     case setConditionType(event: Event, type: ConditionType)
     case linkFlow(event: Event, flow: Flow)
     case setCooldown(event: Event, cooldown: Double)
@@ -75,8 +75,13 @@ enum Command
     case setComparison(condition: Condition,
                        comparison: ComparisonType,
                        type: String)
-    case setLeftHand(condition: Condition, source: Source)
-    case setRightHand(condition: Condition, source: Source)
+    case setLeftHandSource(condition: Condition, source: Source)
+    case setLeftHandStock(condition: Condition, stock: Stock)
+    case setLeftHandNumber(condition: Condition, number: Double)
+    
+    case setRightHandSource(condition: Condition, source: Source)
+    case setRightHandStock(condition: Condition, stock: Stock)
+    case setRightHandNumber(condition: Condition, number: Double)
     
     init?(commandData: CommandData, workspace: inout [Entity], lastResult: [Entity])
     {
@@ -206,9 +211,9 @@ enum Command
         case "set-active":
             guard let (event, isActive): (Event, Bool) = Self.getEntityAndBool(commandData: commandData, workspace: workspace) else { return nil }
             self = .setIsActive(event: event, isActive: isActive)
-        case "set-condition":
+        case "link-condition":
             guard let (event, condition): (Event, Condition) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
-            self = .setCondition(event: event, condition: condition)
+            self = .linkCondition(event: event, condition: condition)
         case "set-condition-type":
             guard let event = Self.getEntity(in: workspace) as? Event else { return nil }
             guard let conditionType = commandData.getConditionType() else { return nil }
@@ -225,11 +230,41 @@ enum Command
             guard let type = commandData.getArgument(at: 1) else { return nil }
             self = .setComparison(condition: condition, comparison: comparison, type: type)
         case "set-left-hand":
-            guard let (condition, source): (Condition, Source) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
-            self = .setLeftHand(condition: condition, source: source)
+            if let (condition, number): (Condition, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .setLeftHandNumber(condition: condition, number: number)
+            }
+            else if let (condition, source): (Condition, Source) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .setLeftHandSource(condition: condition, source: source)
+            }
+            else if let (condition, stock): (Condition, Stock) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .setLeftHandStock(condition: condition, stock: stock)
+            }
+            else
+            {
+                print("Failed to parse the left-hand.")
+                return nil
+            }
         case "set-right-hand":
-            guard let (condition, source): (Condition, Source) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
-            self = .setRightHand(condition: condition, source: source)
+            if let (condition, number): (Condition, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .setRightHandNumber(condition: condition, number: number)
+            }
+            else if let (condition, source): (Condition, Source) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .setRightHandSource(condition: condition, source: source)
+            }
+            else if let (condition, stock): (Condition, Stock) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .setRightHandStock(condition: condition, stock: stock)
+            }
+            else
+            {
+                print("Failed to parse the right-hand.")
+                return nil
+            }
         default:
             return nil
         }
@@ -246,6 +281,7 @@ enum Command
         case .add(let entityType, let name):
             let entity = entityType.insertNewEntity(into: context, name: name)
             output = [entity]
+            workspace.insert(entity, at: 0)
         case .setName(let entity, let name):
             if let entity = entity as? SymbolNamed {
                 let symbol = Symbol(context: context, name: name)
@@ -364,7 +400,7 @@ enum Command
         case .setIsActive(let event, let isActive):
             event.isActive = isActive
             output = [event]
-        case .setCondition(let event, let condition):
+        case .linkCondition(let event, let condition):
             event.addToConditions(condition)
             output = [event]
         case .setConditionType(let event, let type):
@@ -379,10 +415,28 @@ enum Command
         case .setComparison(let condition, let comparison, let type):
             condition.setComparison(comparison, type: type)
             output = [condition]
-        case .setLeftHand(let condition, let source):
+        case .setLeftHandSource(let condition, let source):
             condition.leftHand = source
             output = [condition]
-        case .setRightHand(let condition, let source):
+        case .setLeftHandStock(let condition, let stock):
+            condition.leftHand = stock.source
+            output = [condition]
+        case .setLeftHandNumber(let condition, let number):
+            let source = Source(context: context)
+            source.valueType = .number
+            source.value = number
+            condition.leftHand = source
+            output = [condition]
+        case .setRightHandSource(let condition, let source):
+            condition.rightHand = source
+            output = [condition]
+        case .setRightHandStock(let condition, let stock):
+            condition.rightHand = stock.source
+            output = [condition]
+        case .setRightHandNumber(let condition, let number):
+            let source = Source(context: context)
+            source.valueType = .number
+            source.value = number
             condition.rightHand = source
             output = [condition]
         }
@@ -390,33 +444,33 @@ enum Command
         return output
     }
     
-    static func getEntity<T: Entity>(in workspace: [Entity], at index: Int = 0) -> T?
+    static func getEntity<T: Entity>(in workspace: [Entity], at index: Int = 0, warn: Bool = true) -> T?
     {
         guard workspace.count > index else
         {
-            print("The index \(index) is out of bounds.")
+            if warn { print("The index \(index) is out of bounds.") }
             return nil
         }
         
         guard let entity = workspace[index] as? T else
         {
-            print("The entity at index \(index) was not a(n) \(T.self)")
+            if warn { print("The entity at index \(index) was not a(n) \(T.self)") }
             return nil
         }
         
         return entity
     }
     
-    static func getEntities<A: Entity, B: Entity>(commandData: CommandData, workspace: [Entity]) -> (A, B)?
+    static func getEntities<A: Entity, B: Entity>(commandData: CommandData, workspace: [Entity], warn: Bool = true) -> (A, B)?
     {
         guard let index = commandData.getIndex() else
         {
-            print("No index.")
+            if warn { print("No index.") }
             return nil
         }
         
-        let first: A? = getEntity(in: workspace, at: 0)
-        let second: B? = getEntity(in: workspace, at: index)
+        let first: A? = getEntity(in: workspace, at: 0, warn: warn)
+        let second: B? = getEntity(in: workspace, at: index, warn: warn)
         
         guard let f = first, let s = second else
         {
@@ -426,17 +480,17 @@ enum Command
         return (f, s)
     }
     
-    static func getEntityAndDouble<T: Entity>(commandData: CommandData, workspace: [Entity]) -> (T, Double)?
+    static func getEntityAndDouble<T: Entity>(commandData: CommandData, workspace: [Entity], warn: Bool = false) -> (T, Double)?
     {
         guard let argument = commandData.arguments.first, let number = Double(argument) else
         {
-            print("Please enter a number.")
+            if warn { print("Please enter a number.") }
             return nil
         }
         
         guard let entity = workspace.first as? T else
         {
-            print("No entity, or entity isn't a \(T.self)")
+            if warn { print("No entity, or entity isn't a \(T.self)") }
             return nil
         }
         
@@ -654,10 +708,16 @@ struct CommandData
     
     func getIndex() -> Int?
     {
-        guard let first = arguments.first else
+        guard var first = arguments.first else
         {
             print("No arguments.")
             return nil
+        }
+        
+        // For the cases where we want a wild-card to distinguish it from a number input
+        if first.first == "$"
+        {
+            first.removeFirst()
         }
         
         guard let number = Int(first) else

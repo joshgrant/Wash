@@ -93,5 +93,6 @@ public extension Database
         }
         
         container = Self.createContainer()
+        populate(context: container.viewContext)
     }
 }
