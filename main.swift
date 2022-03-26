@@ -29,11 +29,17 @@ print("Hello, world!")
 var lastCommand = CommandData(input: "")
 var lastResult: [Entity] = []
 
+var quit: Bool = false
+
 let inputLoop: (Heartbeat) -> Void = { heartbeat in
     guard let input = readLine() else { return }
     let commandData = CommandData(input: input)
-    let command = Command(commandData: commandData, workspace: &workspace, lastResult: lastResult)
+    let command = Command(commandData: commandData, workspace: &workspace, lastResult: lastResult, quit: &quit)
     lastResult = command?.run(database: database) ?? []
+    
+    if quit {
+        exit(0)
+    }
     
     print(workspace.formatted(EntityListFormatStyle()))
 }

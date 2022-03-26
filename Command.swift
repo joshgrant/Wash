@@ -83,7 +83,7 @@ enum Command
     case setRightHandStock(condition: Condition, stock: Stock)
     case setRightHandNumber(condition: Condition, number: Double)
     
-    init?(commandData: CommandData, workspace: inout [Entity], lastResult: [Entity])
+    init?(commandData: CommandData, workspace: inout [Entity], lastResult: [Entity], quit: inout Bool)
     {
         switch commandData.command
         {
@@ -135,7 +135,8 @@ enum Command
         case "save":
             self = .save
         case "quit":
-            self = .quit
+            quit = true
+            return nil
         case "nuke":
             self = .nuke
         case "clear":
