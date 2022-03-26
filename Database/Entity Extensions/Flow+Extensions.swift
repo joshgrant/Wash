@@ -33,11 +33,16 @@ extension Flow: Printable
 {
     var fullDescription: String
     {
+        let delay = Date(timeIntervalSinceReferenceDate: 0) ..< Date(timeIntervalSinceReferenceDate: delay)
+        let duration = Date(timeIntervalSinceReferenceDate: 0) ..< Date(timeIntervalSinceReferenceDate: duration)
+        
+        return
 """
 Amount:                     \(amount)
-Delay (seconds):            \(delay)
-Duration (seconds):         \(duration)
-Requuires User Completion:  \(requiresUserCompletion)
+Delay:                      \(delay.formatted(.components(style: .abbreviated)))
+Duration:                   \(duration.formatted(.components(style: .abbreviated)))
+Requires User Completion:   \(requiresUserCompletion)
+Is running:                 \(isRunning)
 Events:                     \(events?.allObjects ?? [])
 From:                       \(from?.description ?? "nil")
 To:                         \(to?.description ?? "nil")
@@ -48,8 +53,34 @@ History:                    \(history?.allObjects ?? [])
 
 extension Flow
 {
-    func run()
+    // TODO: Display this to the user...
+    var needsUserExecution: Bool {
+        // If `requiresUserCompletion` is true
+        // If `events` are all satisfied
+        // If not running currently
+        
+        var allEventsSatisfied = true
+        
+        for event: Event in unwrapped(\Flow.events) {
+            if !event.isSatisfied {
+                allEventsSatisfied = false
+                break
+            }
+        }
+        
+        return requiresUserCompletion && !isRunning && allEventsSatisfied
+    }
+    
+    func run(verbose: Bool = true)
     {
+        if isRunning
+        {
+            if verbose { print("Already running!") }
+            return
+        }
+        
+        isRunning = true
+        
         // 1. Wait delay seconds
         // 2. Calculate the amount per second (amount / duration)
         // 3. On a timer, subtract the amount of aps from "from" and add it to "to"
@@ -57,36 +88,49 @@ extension Flow
         // 5. If "from" has 0, finish the run
         // 6. If "to" is at the max value, also finish the run
         
-        print("Starting. Waiting for \(delay) seconds")
-        // Not great.. but does the trick
-        sleep(UInt32(delay))
-        print("Delay completed.")
-        runHelper(amount: amount)
+        if verbose
+        {
+            let date = Date.now.formatted(.dateTime.day().hour().minute().second())
+            print("Starting. Waiting for \(delay) seconds @ \(date)")
+        }
+        
+        let date = Date(timeIntervalSinceNow: delay)
+        RunLoop.current.schedule(after: .init(date)) { [weak self] in
+            guard let self = self else
+            {
+                if verbose { print("No `self` in run loop. Exiting") }
+                return
+            }
+            if verbose { print("Delay completed.") }
+            self.runHelper(amount: self.amount, verbose: verbose)
+        }
     }
 
-    func runHelper(amount: Double)
+    func runHelper(amount: Double, verbose: Bool = false)
     {
+        if verbose { print("Entering run helper") }
+        
         guard let fromSource = from?.source else
         {
-            print("No from source")
+            if verbose { print("No from source") }
             return
         }
         
         guard let fromMin = from?.minimum else
         {
-            print("No from minimum")
+            if verbose { print("No from minimum") }
             return
         }
         
         guard let toSource = to?.source else
         {
-            print("No to source")
+            if verbose { print("No to source") }
             return
         }
         
         guard let toMax = to?.maximum else
         {
-            print("No to maximum")
+            if verbose { print("No to maximum") }
             return
         }
         
@@ -106,18 +150,28 @@ extension Flow
         
         if amountToSubtract <= 0
         {
-            print("Done!")
+            if verbose { print("Done!") }
+            self.isRunning = false
             return
         }
         
-        print("Moving resources...")
-        print("From: \(fromSource.value), to: \(toSource.value), amount: \(amountToSubtract)")
+        if verbose { print("Moving resources...") }
+        if verbose { print("From: \(fromSource.value), to: \(toSource.value), amount: \(amountToSubtract)") }
         
         fromSource.value -= amountToSubtract
         toSource.value += amountToSubtract
         
-        print("Sleeping for 1 second")
-        sleep(1)
-        runHelper(amount: amount - amountToSubtract)
+        if verbose { print("Re-scheduling for 1 second") }
+        
+        RunLoop.current.schedule(after: .init(.now.addingTimeInterval(1)), tolerance: .milliseconds(5)) { [weak self] in
+            guard let self = self else
+            {
+                if verbose { print("No self in run helper") }
+                return
+            }
+            
+            if verbose { print("Begin re-entry of run helper") }
+            self.runHelper(amount: amount - amountToSubtract, verbose: verbose)
+        }
     }
 }

@@ -9,50 +9,55 @@ import Foundation
 
 class Heartbeat
 {
+    typealias Completion = () -> Void
+    
     // MARK: - Variables
     
-    /// Return `false` to stop execution
     private var inputLoop: (Heartbeat) -> Void
-    
-    /// Return `false` to stop execution
     private var eventLoop: (Heartbeat) -> Void
+    private var cleanup: (Completion) -> Void
     
     private lazy var inputThread: Thread = {
         let thread = Thread { [self] in
-            while shouldRun
+            while !shouldQuit
             {
                 inputLoop(self)
             }
-            print("Input terminated")
             
-            eventTimer.invalidate()
-            print("Event timer invalidated")
-            
-            print("Goodbye")
-            exit(0)
+            cleanup {
+                print("Input terminated")
+                
+                eventTimer.invalidate()
+                print("Event timer invalidated")
+                
+                print("Goodbye")
+                exit(0)
+            }
         }
         return thread
     }()
     
     private lazy var eventTimer: Timer = {
-        return Timer(timeInterval: 1.0, repeats: true) { [self] _ in
+        return Timer(timeInterval: 1, repeats: true) { [self] _ in
             eventLoop(self)
         }
     }()
     
     private var startTime: DispatchTime
     
-    var shouldRun: Bool = true
+    var shouldQuit: Bool = false
     var tick: Int { DispatchTime.deltaSeconds(.now(), startTime) }
     
     // MARK: - Initialization
     
     @discardableResult
     init(inputLoop: @escaping (Heartbeat) -> Void,
-         eventLoop: @escaping (Heartbeat) -> Void)
+         eventLoop: @escaping (Heartbeat) -> Void,
+         cleanup: @escaping (Completion) -> Void)
     {
         self.inputLoop = inputLoop
         self.eventLoop = eventLoop
+        self.cleanup = cleanup
         
         startTime = .now()
 

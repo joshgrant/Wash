@@ -118,6 +118,7 @@ enum Command
             self = .select(index: index)
         case "choose":
             guard let index = commandData.getIndex() else { return nil }
+            guard index < lastResult.count else { return nil }
             self = .choose(index: index, lastResult: lastResult)
         case "pinned":
             self = .pinned

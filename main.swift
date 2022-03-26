@@ -34,17 +34,14 @@ var quit: Bool = false
 let inputLoop: (Heartbeat) -> Void = { heartbeat in
     guard let input = readLine() else { return }
     let commandData = CommandData(input: input)
-    let command = Command(commandData: commandData, workspace: &workspace, lastResult: lastResult, quit: &quit)
+    let command = Command(commandData: commandData, workspace: &workspace, lastResult: lastResult, quit: &heartbeat.shouldQuit)
     lastResult = command?.run(database: database) ?? []
-    
-    if quit {
-        exit(0)
-    }
     
     print(workspace.formatted(EntityListFormatStyle()))
 }
 
 let eventLoop: (Heartbeat) -> Void = { heartbeat in
+    
     evaluateActiveEvents(context: database.context)
     evaluateInactiveEvents(context: database.context)
     
@@ -57,7 +54,27 @@ let eventLoop: (Heartbeat) -> Void = { heartbeat in
     second.current = Double(components.second ?? 0)
 }
 
-Heartbeat.init(inputLoop: inputLoop, eventLoop: eventLoop)
+let cleanup: (() -> Void) -> Void = { completion in
+    // Stop all of the flows
+    let allFlows: [Flow] = Flow.all(context: database.context)
+    for flow in allFlows
+    {
+        flow.isRunning = false
+    }
+    
+    // Clear last trigger date
+    let allEvents: [Event] = Event.all(context: database.context)
+    for event in allEvents
+    {
+        event.lastTrigger = nil
+    }
+    
+    database.context.quickSave()
+    
+    completion()
+}
+
+Heartbeat(inputLoop: inputLoop, eventLoop: eventLoop, cleanup: cleanup)
 RunLoop.current.run()
 
 func evaluateInactiveEvents(context: Context)
@@ -76,9 +93,6 @@ func evaluateInactiveEvents(context: Context)
     }
 }
 
-// TODO: Questions - an event may be active for a long time.
-/// Options: 1. Kill switch. Once an event is run, it gets set to "isActive: false". Add a "cooldown" value that determines how long until the event is active again
-// TODO: Automatically add a condition and stock upon event creation (isActive) ?? and
 func evaluateActiveEvents(context: Context)
 {
     let events = Event.activeAndSatisfiedEvents(context: context)
@@ -86,14 +100,9 @@ func evaluateActiveEvents(context: Context)
     {
         for flow in event.unwrappedFlows
         {
-            if !flow.requiresUserCompletion
+            if !flow.requiresUserCompletion && !flow.isRunning
             {
                 flow.run()
-            }
-            else
-            {
-                // TODO: FIX THIS
-                // Add the flow to the ones requiring user completion???
             }
         }
         event.lastTrigger = Date()
