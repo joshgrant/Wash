@@ -90,6 +90,16 @@ enum Command
     case linkSystemStock(system: System, stock: Stock)
     case unlinkSystemStock(system: System, stock: Stock)
     
+    // MARK: - Processes
+    
+    case linkProcessFlow(process: Process, flow: Flow)
+    case unlinkProcessFlow(process: Process, flow: Flow)
+    case linkProcessSubprocess(process: Process, subprocess: Process)
+    case unlinkProcessSubprocess(process: Process, subprocess: Process)
+    case runProcess(process: Process)
+    case linkProcessEvent(process: Process, event: Event)
+    case unlinkProcessEvent(process: Process, event: Event)
+    
     init?(commandData: CommandData, workspace: inout [Entity], lastResult: [Entity], quit: inout Bool)
     {
         switch commandData.command.lowercased()
@@ -210,8 +220,19 @@ enum Command
             guard let (flow, stock): (Flow, Stock) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
             self = .setTo(flow: flow, stock: stock)
         case "run":
-            guard let flow: Flow = Self.getEntity(in: workspace) else { return nil }
-            self = .run(flow: flow)
+            if let flow: Flow = Self.getEntity(in: workspace, warn: false)
+            {
+                self = .run(flow: flow)
+            }
+            else if let process: Process = Self.getEntity(in: workspace, warn: false)
+            {
+                self = .runProcess(process: process)
+            }
+            else
+            {
+                print("Failed to run. No matching type")
+                return nil
+            }
         case "finish":
             guard let flow: Flow = Self.getEntity(in: workspace) else { return nil }
             self = .finish(flow: flow)
@@ -278,6 +299,10 @@ enum Command
             {
                 self = .linkSystemFlow(system: system, flow: flow)
             }
+            else if let (process, flow): (Process, Flow) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .linkProcessFlow(process: process, flow: flow)
+            }
             else
             {
                 print("Failed to link flow. No matching types.")
@@ -287,6 +312,10 @@ enum Command
             if let (system, flow): (System, Flow) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
             {
                 self = .unlinkSystemFlow(system: system, flow: flow)
+            }
+            else if let (process, flow): (Process, Flow) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .unlinkProcessFlow(process: process, flow: flow)
             }
             else
             {
@@ -322,23 +351,51 @@ enum Command
             {
                 self = .linkStockEvent(stock: stock, event: event)
             }
+            else if let (process, event): (Process, Event) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .linkProcessEvent(process: process, event: event)
+            }
             else
             {
                 print("Failed to link event. No matching types.")
                 return nil
             }
         case "unlink-event":
-            if let (flow, event): (Flow, Event) = Self.getEntities(commandData: commandData, workspace: workspace)
+            if let (flow, event): (Flow, Event) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
             {
                 self = .unlinkFlowEvent(flow: flow, event: event)
             }
-            else if let (stock, event): (Stock, Event) = Self.getEntities(commandData: commandData, workspace: workspace)
+            else if let (stock, event): (Stock, Event) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
             {
                 self = .unlinkStockEvent(stock: stock, event: event)
+            }
+            else if let (process, event): (Process, Event) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .unlinkProcessEvent(process: process, event: event)
             }
             else
             {
                 print("Failed to unlink event. No matching types.")
+                return nil
+            }
+        case "link-process":
+            if let (process, subprocess): (Process, Process) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .linkProcessSubprocess(process: process, subprocess: subprocess)
+            }
+            else
+            {
+                print("Failed to link subprocess. No matching types.")
+                return nil
+            }
+        case "unlink-process":
+            if let (process, subprocess): (Process, Process) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .unlinkProcessSubprocess(process: process, subprocess: subprocess)
+            }
+            else
+            {
+                print("Failed to unlink subprocess. No matching types.")
                 return nil
             }
         default:
@@ -532,14 +589,28 @@ enum Command
             source.value = number
             condition.rightHand = source
             output = [condition]
-        case .linkSystemFlow(system: let system, flow: let flow):
+        case .linkSystemFlow(let system, let flow):
             system.addToFlows(flow)
-        case .unlinkSystemFlow(system: let system, flow: let flow):
+        case .unlinkSystemFlow(let system, let flow):
             system.removeFromFlows(flow)
-        case .linkSystemStock(system: let system, stock: let stock):
+        case .linkSystemStock(let system, let stock):
             system.addToStocks(stock)
-        case .unlinkSystemStock(system: let system, stock: let stock):
+        case .unlinkSystemStock(let system, let stock):
             system.removeFromStocks(stock)
+        case .linkProcessFlow(let process, let flow):
+            process.addToFlows(flow)
+        case .unlinkProcessFlow(let process, let flow):
+            process.removeFromFlows(flow)
+        case .linkProcessSubprocess(let process, let subprocess):
+            process.addToSubProcesses(subprocess)
+        case .unlinkProcessSubprocess(let process, let subprocess):
+            process.removeFromSubProcesses(subprocess)
+        case .runProcess(let process):
+            process.run()
+        case .linkProcessEvent(let process, let event):
+            process.addToEvents(event)
+        case .unlinkProcessEvent(let process, let event):
+            process.removeFromEvents(event)
         }
         
         context.quickSave()
@@ -665,8 +736,7 @@ extension Command
         {
             if let entity = item.element as? Named
             {
-                let icon = entityType.icon.text
-                print("\(item.offset): \(icon) \(entity.title)")
+                print("\(item.offset): \(entity)")
             }
         }
         

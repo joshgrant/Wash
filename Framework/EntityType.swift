@@ -12,7 +12,6 @@ enum EntityType
 {
     case stock
     case flow
-//    case task
     case event
 //    case conversion
     case condition
@@ -20,20 +19,21 @@ enum EntityType
 //    case note
     case unit
     case system
+    case process
     
     static var libraryVisible: [EntityType]
     {
         [
             .stock,
             .flow,
-//            .task,
             .event,
 //            .conversion,
             .condition,
 //            .symbol,
 //            .note,
             .unit,
-            .system
+            .system,
+            .process
         ]
     }
     
@@ -43,7 +43,6 @@ enum EntityType
         {
         case .stock: return "Stocks".localized
         case .flow: return "Flows".localized
-//        case .task: return "Tasks".localized
         case .event: return "Events".localized
 //        case .conversion: return "Conversions".localized
         case .condition: return "Conditions".localized
@@ -51,6 +50,7 @@ enum EntityType
 //        case .note: return "Notes".localized
         case .unit: return "Units".localized
         case .system: return "Systems".localized
+        case .process: return "Processes".localized
         }
     }
     
@@ -60,7 +60,6 @@ enum EntityType
         {
         case .stock: return .stock
         case .flow: return .flow
-//        case .task: return .task
         case .event: return .event
 //        case .conversion: return .conversion
         case .condition: return .condition
@@ -68,6 +67,7 @@ enum EntityType
 //        case .note: return .note
         case .unit: return .unit
         case .system: return .system
+        case .process: return .task
         }
     }
     
@@ -85,6 +85,7 @@ enum EntityType
 //        case .note: return Note.self
         case .unit: return Unit.self
         case .system: return System.self
+        case .process: return Process.self
         }
     }
     
@@ -105,6 +106,8 @@ enum EntityType
             return makeUnit(name: name, in: context)
         case .system:
             return makeSystem(name: name, in: context)
+        case .process:
+            return makeProcess(name: name, in: context)
         }
     }
     
@@ -131,7 +134,9 @@ enum EntityType
         case "condition": self = .condition
         case "unit": self = .unit
         case "system": self = .system
+        case "process": self = .process
         default:
+            print("Invalid entity type!")
             return nil
         }
     }
@@ -251,6 +256,19 @@ extension EntityType
         }
         
         return system
+    }
+    
+    @discardableResult
+    func makeProcess(name: String?, in context: Context) -> Process
+    {
+        let process = Process(context: context)
+        
+        if let name = name
+        {
+            process.symbolName = Symbol(context: context, name: name)
+        }
+        
+        return process
     }
 }
 

@@ -12,7 +12,7 @@ extension Stock: Pinnable {}
 
 extension Stock
 {
-    static let thresholdPercent: Double = 0.8
+    static let thresholdPercent: Double = 0.6
     
     public override var description: String
     {

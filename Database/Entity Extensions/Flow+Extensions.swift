@@ -42,6 +42,8 @@ extension Flow: Printable
 {
     var amountPerSecond: Double { return amount / duration }
     
+    var percentComplete: Double { return amountRemaining / amount }
+    
     var fullDescription: String
     {
         let delay = Date(timeIntervalSinceReferenceDate: 0) ..< Date(timeIntervalSinceReferenceDate: delay)
