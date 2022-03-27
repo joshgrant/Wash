@@ -7,15 +7,17 @@
 
 import Foundation
 
+typealias Completion = () -> Void
+typealias DispatchCompletion = (@escaping Completion) -> Void
+
 class Heartbeat
 {
-    typealias Completion = () -> Void
-    
     // MARK: - Variables
     
+    private var start: DispatchCompletion
     private var inputLoop: (Heartbeat) -> Void
     private var eventLoop: (Heartbeat) -> Void
-    private var cleanup: (Completion) -> Void
+    private var cleanup: DispatchCompletion
     
     private lazy var inputThread: Thread = {
         let thread = Thread { [self] in
@@ -25,13 +27,15 @@ class Heartbeat
             }
             
             cleanup {
-                print("Input terminated")
-                
-                eventTimer.invalidate()
-                print("Event timer invalidated")
-                
-                print("Goodbye")
-                exit(0)
+                DispatchQueue.main.async { [weak self] in
+                    print("Input terminated")
+                    
+                    self?.eventTimer.invalidate()
+                    print("Event timer invalidated")
+                    
+                    print("Goodbye")
+                    exit(0)
+                }
             }
         }
         return thread
@@ -48,16 +52,20 @@ class Heartbeat
     // MARK: - Initialization
     
     @discardableResult
-    init(inputLoop: @escaping (Heartbeat) -> Void,
+    init(start: @escaping DispatchCompletion,
+        inputLoop: @escaping (Heartbeat) -> Void,
          eventLoop: @escaping (Heartbeat) -> Void,
-         cleanup: @escaping (Completion) -> Void)
+         cleanup: @escaping DispatchCompletion)
     {
+        self.start = start
         self.inputLoop = inputLoop
         self.eventLoop = eventLoop
         self.cleanup = cleanup
-
-        configureInputThread()
-        configureEventTimer()
+        
+        start { [self] in
+            configureInputThread()
+            configureEventTimer()
+        }
     }
     
     // MARK: - Configuration

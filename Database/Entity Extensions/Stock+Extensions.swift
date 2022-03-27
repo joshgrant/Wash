@@ -172,3 +172,11 @@ extension Stock
             maximum: max)
     }
 }
+
+extension Stock: Comparable
+{
+    public static func < (lhs: Stock, rhs: Stock) -> Bool
+    {
+        (lhs.unwrappedName ?? "") < (rhs.unwrappedName ?? "")
+    }
+}

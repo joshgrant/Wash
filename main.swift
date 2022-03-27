@@ -24,7 +24,26 @@ let second = ContextPopulator.secondStock(context: database.context)
 var workspace: [Entity] = [source, sink]
 var lastResult: [Entity] = []
 
-print("Hello, world!")
+let start: DispatchCompletion = { completion in
+    
+    print("Hello, world!")
+    
+    let runningFlows = Flow.runningFlows(in: database.context)
+    if runningFlows.count > 0
+    {
+        print("Re-starting \(runningFlows.count) flows.")
+        for flow in runningFlows
+        {
+            flow.resume()
+            // The only problem with this is that it's interrupted
+            // halfway through... We need some progress indicator
+            // on a flow that shows how far we've gotten and
+            // when we quit, we can just resume at that progress...
+        }
+    }
+    
+    completion()
+}
 
 let inputLoop: (Heartbeat) -> Void = { heartbeat in
     guard let input = readLine() else { return }
@@ -49,27 +68,28 @@ let eventLoop: (Heartbeat) -> Void = { heartbeat in
     second.current = Double(components.second ?? 0)
 }
 
-let cleanup: (() -> Void) -> Void = { completion in
+let cleanup: DispatchCompletion = { completion in
     // Stop all of the flows
-    let allFlows: [Flow] = Flow.all(context: database.context)
-    for flow in allFlows
-    {
-        flow.isRunning = false
+    database.context.perform {
+        // Clear last trigger date
+        let allEvents: [Event] = Event.all(context: database.context)
+        for event in allEvents
+        {
+            event.lastTrigger = nil
+        }
+        
+        database.context.quickSave()
+        
+        completion()
     }
-    
-    // Clear last trigger date
-    let allEvents: [Event] = Event.all(context: database.context)
-    for event in allEvents
-    {
-        event.lastTrigger = nil
-    }
-    
-    database.context.quickSave()
-    
-    completion()
 }
 
-Heartbeat(inputLoop: inputLoop, eventLoop: eventLoop, cleanup: cleanup)
+Heartbeat(
+    start: start,
+    inputLoop: inputLoop,
+    eventLoop: eventLoop,
+    cleanup: cleanup)
+
 RunLoop.current.run()
 
 func evaluateInactiveEvents(context: Context)

@@ -28,13 +28,13 @@ extension System: Printable
         var stockString = ""
         var flowString = ""
         
-        for stock: Stock in unwrapped(\System.stocks)
+        for stock: Stock in unwrapped(\System.stocks).sorted()
         {
             stockString += "\(index): \(stock.description)\n"
             index += 1
         }
         
-        for flow: Flow in unwrapped(\System.flows)
+        for flow: Flow in unwrapped(\System.flows).sorted()
         {
             flowString += "\(index): \(flow.description)\n"
             index += 1
@@ -78,7 +78,10 @@ extension System
 
 extension System: Selectable
 {
-    var selection: [Entity] {
-        return unwrapped(\System.stocks) + unwrapped(\System.flows)
+    var selection: [Entity]
+    {
+        let stocks: [Stock] = unwrapped(\System.stocks).sorted()
+        let flows: [Flow] = unwrapped(\System.flows).sorted()
+        return stocks + flows
     }
 }

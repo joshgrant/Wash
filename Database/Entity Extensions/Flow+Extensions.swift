@@ -27,10 +27,20 @@ public extension Flow
         let icon = Icon.flow.text
         return "\(icon) \(name)"
     }
+    
+    var runningDescription: String
+    {
+        let name = unwrappedName ?? ""
+        let icon = Icon.flow.text
+        let amount = amountPerSecond.formatted(.number.precision(.fractionLength(4)))
+        return "\(icon): \(name), \(amount)/s"
+    }
 }
 
 extension Flow: Printable
 {
+    var amountPerSecond: Double { return amount / duration }
+    
     var fullDescription: String
     {
         let delay = Date(timeIntervalSinceReferenceDate: 0) ..< Date(timeIntervalSinceReferenceDate: delay)
@@ -71,6 +81,12 @@ extension Flow
         return requiresUserCompletion && !isRunning && allEventsSatisfied
     }
     
+    /// When the flow is running, and the program is quit, we need to re-run it.
+    func resume(verbose: Bool = false)
+    {
+        runHelper(verbose: verbose)
+    }
+    
     func run(fromUser: Bool = false, verbose: Bool = false)
     {
         if isRunning
@@ -80,6 +96,8 @@ extension Flow
         }
         
         isRunning = true
+        
+        amountRemaining = amount
         
         // 1. Wait delay seconds
         // 2. Calculate the amount per second (amount / duration)
@@ -102,14 +120,14 @@ extension Flow
                     return
                 }
                 if verbose { print("Delay completed.") }
-                self.runHelper(amount: self.amount, verbose: verbose)
+                self.runHelper(verbose: verbose)
             }
         } else {
-            runHelper(amount: self.amount, verbose: verbose)
+            runHelper(verbose: verbose)
         }
     }
 
-    func runHelper(amount: Double, verbose: Bool = false)
+    func runHelper(verbose: Bool = false)
     {
         if verbose { print("Entering run helper") }
         
@@ -141,9 +159,9 @@ extension Flow
             return
         }
         
-        let aps = self.amount / duration
+        let aps = amountPerSecond
         
-        var amountToSubtract: Double = min(aps, amount)
+        var amountToSubtract: Double = min(aps, amountRemaining)
         
         if fromSource.value - aps < fromMin.value
         {
@@ -185,7 +203,27 @@ extension Flow
             }
             
             if verbose { print("Begin re-entry of run helper") }
-            self.runHelper(amount: amount - amountToSubtract, verbose: verbose)
+            self.amountRemaining = self.amountRemaining - amountToSubtract
+            self.runHelper(verbose: verbose)
         }
+    }
+}
+
+extension Flow: Comparable
+{
+    public static func < (lhs: Flow, rhs: Flow) -> Bool
+    {
+        (lhs.unwrappedName ?? "") < (rhs.unwrappedName ?? "")
+    }
+}
+
+extension Flow
+{
+    static func runningFlows(in context: Context) -> [Flow]
+    {
+        let request: NSFetchRequest<Flow> = Flow.fetchRequest()
+        request.predicate = NSPredicate(format: "isRunning == true")
+        let result = (try? context.fetch(request)) ?? []
+        return result
     }
 }

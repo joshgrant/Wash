@@ -29,6 +29,7 @@ enum Command
     case priority
     case events
     case flows
+    case running
     
     case save
     case quit
@@ -142,6 +143,8 @@ enum Command
             self = .events
         case "flows":
             self = .flows
+        case "running":
+            self = .running
         case "save":
             self = .save
         case "quit":
@@ -409,6 +412,8 @@ enum Command
             output = runEvents(context: context)
         case .flows:
             output = runFlowsNeedingCompletion(context: context)
+        case .running:
+            output = allRunningFlows(context: context)
         case .save:
             context.quickSave()
         case .quit:
@@ -608,6 +613,18 @@ enum Command
 
 extension Command
 {
+    func allRunningFlows(context: Context) -> [Entity]
+    {
+        let result = Flow.runningFlows(in: context)
+        
+        for flow in result
+        {
+            print(flow.runningDescription)
+        }
+        
+        return result
+    }
+    
     func runPinned(context: Context) -> [Entity]
     {
         let request = Entity.makePinnedObjectsFetchRequest(context: context)
