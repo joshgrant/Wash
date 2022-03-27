@@ -83,6 +83,13 @@ enum Command
     case setRightHandStock(condition: Condition, stock: Stock)
     case setRightHandNumber(condition: Condition, number: Double)
     
+    // MARK: - Systems
+    
+    case linkSystemFlow(system: System, flow: Flow)
+    case unlinkSystemFlow(system: System, flow: Flow)
+    case linkSystemStock(system: System, stock: Stock)
+    case unlinkSystemStock(system: System, stock: Stock)
+    
     init?(commandData: CommandData, workspace: inout [Entity], lastResult: [Entity], quit: inout Bool)
     {
         switch commandData.command
@@ -179,12 +186,6 @@ enum Command
         case "unlink-inflow":
             guard let (stock, flow): (Stock, Flow) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
             self = .unlinkInflow(stock: stock, flow: flow)
-        case "link-stock-event":
-            guard let (stock, event): (Stock, Event) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
-            self = .linkStockEvent(stock: stock, event: event)
-        case "unlink-stock-event":
-            guard let (stock, event): (Stock, Event) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
-            self = .unlinkStockEvent(stock: stock, event: event)
         case "set-amount":
             guard let (flow, amount): (Flow, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace) else { return nil }
             self = .setAmount(flow: flow, amount: amount)
@@ -206,12 +207,6 @@ enum Command
         case "run":
             guard let flow: Flow = Self.getEntity(in: workspace) else { return nil }
             self = .run(flow: flow)
-        case "link-flow-event":
-            guard let (flow, event): (Flow, Event) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
-            self = .linkFlowEvent(flow: flow, event: event)
-        case "unlink-flow-event":
-            guard let (flow, event): (Flow, Event) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
-            self = .unlinkFlowEvent(flow: flow, event: event)
         case "set-active":
             guard let (event, isActive): (Event, Bool) = Self.getEntityAndBool(commandData: commandData, workspace: workspace) else { return nil }
             self = .setIsActive(event: event, isActive: isActive)
@@ -222,9 +217,6 @@ enum Command
             guard let event = Self.getEntity(in: workspace) as? Event else { return nil }
             guard let conditionType = commandData.getConditionType() else { return nil }
             self = .setConditionType(event: event, type: conditionType)
-        case "link-flow":
-            guard let (event, flow): (Event, Flow) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
-            self = .linkFlow(event: event, flow: flow)
         case "set-cooldown":
             guard let (event, cooldown): (Event, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace) else { return nil }
             self = .setCooldown(event: event, cooldown: cooldown)
@@ -269,6 +261,78 @@ enum Command
                 print("Failed to parse the right-hand.")
                 return nil
             }
+        case "link-flow":
+            if let (event, flow): (Event, Flow) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .linkFlow(event: event, flow: flow)
+            }
+            else if let (system, flow): (System, Flow) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .linkSystemFlow(system: system, flow: flow)
+            }
+            else
+            {
+                print("Failed to link flow. No matching types.")
+                return nil
+            }
+        case "unlink-flow":
+            if let (system, flow): (System, Flow) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .unlinkSystemFlow(system: system, flow: flow)
+            }
+            else
+            {
+                print("Failed to unlink flow. No matching types.")
+                return nil
+            }
+        case "link-stock":
+            if let (system, stock): (System, Stock) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .linkSystemStock(system: system, stock: stock)
+            }
+            else
+            {
+                print("Failed to link stock. No matching types")
+                return nil
+            }
+        case "unlink-stock":
+            if let (system, stock): (System, Stock) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .unlinkSystemStock(system: system, stock: stock)
+            }
+            else
+            {
+                print("Failed to unlink stock. No matching types")
+                return nil
+            }
+        case "link-event":
+            if let (flow, event): (Flow, Event) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .linkFlowEvent(flow: flow, event: event)
+            }
+            else if let (stock, event): (Stock, Event) = Self.getEntities(commandData: commandData, workspace: workspace, warn: false)
+            {
+                self = .linkStockEvent(stock: stock, event: event)
+            }
+            else
+            {
+                print("Failed to link event. No matching types.")
+                return nil
+            }
+        case "unlink-event":
+            if let (flow, event): (Flow, Event) = Self.getEntities(commandData: commandData, workspace: workspace)
+            {
+                self = .unlinkFlowEvent(flow: flow, event: event)
+            }
+            else if let (stock, event): (Stock, Event) = Self.getEntities(commandData: commandData, workspace: workspace)
+            {
+                self = .unlinkStockEvent(stock: stock, event: event)
+            }
+            else
+            {
+                print("Failed to unlink event. No matching types.")
+                return nil
+            }
         default:
             return nil
         }
@@ -300,6 +364,10 @@ enum Command
             output = [entity]
         case .view(let printable):
             print(printable.fullDescription)
+            if let entity = printable as? Selectable
+            {
+                output = entity.selection
+            }
         case .delete(let entity):
             context.delete(entity)
             output = [entity]
@@ -310,10 +378,19 @@ enum Command
             entity.isPinned = false
             output = [entity]
         case .select(let index):
+            guard index < workspace.count else { return [] }
+            
             let item = workspace[index]
             workspace.remove(at: index)
             workspace.insert(item, at: 0)
-            output = [item]
+            if let item = item as? Selectable
+            {
+                output = item.selection
+            }
+            else
+            {
+                output = [item]
+            }
         case .choose(let index, let lastResult):
             let item = lastResult[index]
             workspace.insert(item, at: 0)
@@ -445,6 +522,14 @@ enum Command
             source.value = number
             condition.rightHand = source
             output = [condition]
+        case .linkSystemFlow(system: let system, flow: let flow):
+            system.addToFlows(flow)
+        case .unlinkSystemFlow(system: let system, flow: let flow):
+            system.removeFromFlows(flow)
+        case .linkSystemStock(system: let system, stock: let stock):
+            system.addToStocks(stock)
+        case .unlinkSystemStock(system: let system, stock: let stock):
+            system.removeFromStocks(stock)
         }
         
         return output
@@ -578,7 +663,7 @@ extension Command
         var suggested: Set<Flow> = []
         let allStocks: [Stock] = Stock.all(context: context)
         let unbalancedStocks = allStocks.filter { stock in
-            stock.percentIdeal < 0.6 // Arbitrary threshold
+            stock.percentIdeal <= 0.6 // Arbitrary threshold
         }
         
         for stock in unbalancedStocks
@@ -586,7 +671,7 @@ extension Command
             var bestFlow: Flow?
             var bestPercentIdeal: Double = 0
             
-            let allFlows = stock.unwrappedInflows + stock.unwrappedOutflows
+            let allFlows = (stock.unwrappedInflows + stock.unwrappedOutflows).filter { !$0.isRunning }
             
             for flow in allFlows
             {

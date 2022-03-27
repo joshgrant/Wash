@@ -71,7 +71,7 @@ extension Flow
         return requiresUserCompletion && !isRunning && allEventsSatisfied
     }
     
-    func run(fromUser: Bool = false, verbose: Bool = true)
+    func run(fromUser: Bool = false, verbose: Bool = false)
     {
         if isRunning
         {

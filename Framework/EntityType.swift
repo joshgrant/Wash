@@ -19,6 +19,7 @@ enum EntityType
 //    case symbol
 //    case note
     case unit
+    case system
     
     static var libraryVisible: [EntityType]
     {
@@ -31,7 +32,8 @@ enum EntityType
             .condition,
 //            .symbol,
 //            .note,
-            .unit
+            .unit,
+            .system
         ]
     }
     
@@ -48,6 +50,7 @@ enum EntityType
 //        case .symbol: return "Symbols".localized
 //        case .note: return "Notes".localized
         case .unit: return "Units".localized
+        case .system: return "System".localized
         }
     }
     
@@ -64,6 +67,7 @@ enum EntityType
 //        case .symbol: return .symbol
 //        case .note: return .note
         case .unit: return .unit
+        case .system: return .system
         }
     }
     
@@ -80,6 +84,7 @@ enum EntityType
 //        case .symbol: return Symbol.self
 //        case .note: return Note.self
         case .unit: return Unit.self
+        case .system: return System.self
         }
     }
     
@@ -98,6 +103,8 @@ enum EntityType
             return makeCondition(name: name, in: context)
         case .unit:
             return makeUnit(name: name, in: context)
+        case .system:
+            return makeSystem(name: name, in: context)
         }
     }
     
@@ -123,6 +130,7 @@ enum EntityType
         case "event": self = .event
         case "condition": self = .condition
         case "unit": self = .unit
+        case "system": self = .system
         default:
             return nil
         }
@@ -174,9 +182,9 @@ extension EntityType
     {
         let flow = Flow(context: context)
         
-        flow.amount = 1
+        flow.amount = 100
         flow.delay = 0
-        flow.duration = 1
+        flow.duration = 0
         flow.requiresUserCompletion = false
         
         if let name = name
@@ -230,6 +238,19 @@ extension EntityType
         }
         
         return unit
+    }
+    
+    @discardableResult
+    func makeSystem(name: String?, in context: Context) -> System
+    {
+        let system = System(context: context)
+        
+        if let name = name
+        {
+            system.symbolName = Symbol(context: context, name: name)
+        }
+        
+        return system
     }
 }
 

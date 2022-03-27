@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		03056A4127EFC10200D10BA6 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4027EFC10200D10BA6 /* History+Extensions.swift */; };
 		03056A4327EFC12B00D10BA6 /* HistoryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4227EFC12B00D10BA6 /* HistoryEvent.swift */; };
+		03056A4527EFD3D200D10BA6 /* System+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4427EFD3D200D10BA6 /* System+Extensions.swift */; };
+		03056A4727EFE3C700D10BA6 /* Selectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4627EFE3C700D10BA6 /* Selectable.swift */; };
 		0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333F48927D3F6B000B4C284 /* Printable.swift */; };
 		0333F48C27D3FA3C00B4C284 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333F48B27D3FA3C00B4C284 /* Command.swift */; };
 		03739A5427E802EF0029BC9D /* Heartbeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03739A5327E802EF0029BC9D /* Heartbeat.swift */; };
@@ -58,6 +60,8 @@
 /* Begin PBXFileReference section */
 		03056A4027EFC10200D10BA6 /* History+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
 		03056A4227EFC12B00D10BA6 /* HistoryEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEvent.swift; sourceTree = "<group>"; };
+		03056A4427EFD3D200D10BA6 /* System+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "System+Extensions.swift"; sourceTree = "<group>"; };
+		03056A4627EFE3C700D10BA6 /* Selectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selectable.swift; sourceTree = "<group>"; };
 		0333F48927D3F6B000B4C284 /* Printable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printable.swift; sourceTree = "<group>"; };
 		0333F48B27D3FA3C00B4C284 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		03739A5327E802EF0029BC9D /* Heartbeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heartbeat.swift; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 				03B4AA0327C1A0F80071F63E /* State+Extensions.swift */,
 				03B4AA0A27C1A0F90071F63E /* Stock+Extensions.swift */,
 				03B4AA0C27C1A0F90071F63E /* Symbol+Extensions.swift */,
+				03056A4427EFD3D200D10BA6 /* System+Extensions.swift */,
 				03B4AA0727C1A0F90071F63E /* Task+Extensions.swift */,
 				03B4AA0E27C1A0F90071F63E /* Unit+Extensions.swift */,
 			);
@@ -164,6 +169,7 @@
 				03B4AA1227C1A0F90071F63E /* Pinnable.swift */,
 				03B4AA1127C1A0F90071F63E /* Named.swift */,
 				0333F48927D3F6B000B4C284 /* Printable.swift */,
+				03056A4627EFE3C700D10BA6 /* Selectable.swift */,
 			);
 			path = "Entity Protocols";
 			sourceTree = "<group>";
@@ -271,6 +277,7 @@
 				03B4AA9C27C1A31E0071F63E /* Priority.swift in Sources */,
 				0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */,
 				03B4AA3C27C1A0F90071F63E /* Flow+Extensions.swift in Sources */,
+				03056A4527EFD3D200D10BA6 /* System+Extensions.swift in Sources */,
 				03B4AA8227C1A31E0071F63E /* NSSet+Extensions.swift in Sources */,
 				03056A4327EFC12B00D10BA6 /* HistoryEvent.swift in Sources */,
 				03B4A9D427C005F10071F63E /* main.swift in Sources */,
@@ -279,6 +286,7 @@
 				03B4AA4727C1A0F90071F63E /* Condition+Extensions.swift in Sources */,
 				03B4AA3727C1A0F90071F63E /* Conversion+Extensions.swift in Sources */,
 				03B4AA9A27C1A31E0071F63E /* ConditionType.swift in Sources */,
+				03056A4727EFE3C700D10BA6 /* Selectable.swift in Sources */,
 				03B4AA7A27C1A31E0071F63E /* String+Extensions.swift in Sources */,
 				03B4AA4627C1A0F90071F63E /* Named.swift in Sources */,
 				03B4AA9027C1A31E0071F63E /* Double+Extensions.swift in Sources */,
