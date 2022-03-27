@@ -131,7 +131,7 @@ struct EntityFormatStyle: FormatStyle
     typealias FormatOutput = String
     
     func format(_ value: Entity) -> String {
-        return value.description
+        return value.debugDescription
     }
 }
 

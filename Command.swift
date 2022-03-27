@@ -60,6 +60,7 @@ enum Command
     case run(flow: Flow)
     case linkFlowEvent(flow: Flow, event: Event)
     case unlinkFlowEvent(flow: Flow, event: Event)
+    case finish(flow: Flow)
     
     // MARK: - Events
     
@@ -91,7 +92,7 @@ enum Command
     
     init?(commandData: CommandData, workspace: inout [Entity], lastResult: [Entity], quit: inout Bool)
     {
-        switch commandData.command
+        switch commandData.command.lowercased()
         {
         case "add":
             guard let type = commandData.getEntityType() else { return nil }
@@ -187,6 +188,11 @@ enum Command
             self = .unlinkInflow(stock: stock, flow: flow)
         case "set-amount":
             guard let (flow, amount): (Flow, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace) else { return nil }
+            guard amount > 0 else
+            {
+                print("Flow amount can't be < 0. Try switching the inflow/outflow arrangement.")
+                return nil
+            }
             self = .setAmount(flow: flow, amount: amount)
         case "set-delay":
             guard let (flow, delay): (Flow, Double) = Self.getEntityAndDouble(commandData: commandData, workspace: workspace) else { return nil }
@@ -206,6 +212,9 @@ enum Command
         case "run":
             guard let flow: Flow = Self.getEntity(in: workspace) else { return nil }
             self = .run(flow: flow)
+        case "finish":
+            guard let flow: Flow = Self.getEntity(in: workspace) else { return nil }
+            self = .finish(flow: flow)
         case "set-active":
             guard let (event, isActive): (Event, Bool) = Self.getEntityAndBool(commandData: commandData, workspace: workspace) else { return nil }
             self = .setIsActive(event: event, isActive: isActive)
@@ -471,6 +480,10 @@ enum Command
         case .run(let flow):
             flow.run(fromUser: true)
             output = [flow]
+        case .finish(let flow):
+            flow.amountRemaining = 0
+            flow.isRunning = false
+            output = [flow]
         case .linkFlowEvent(let flow, let event):
             flow.addToEvents(event)
             output = [flow]
@@ -674,7 +687,7 @@ extension Command
         var suggested: Set<Flow> = []
         let allStocks: [Stock] = Stock.all(context: context)
         let unbalancedStocks = allStocks.filter { stock in
-            stock.percentIdeal <= 0.6 // Arbitrary threshold
+            stock.percentIdeal <= Stock.thresholdPercent
         }
         
         for stock in unbalancedStocks

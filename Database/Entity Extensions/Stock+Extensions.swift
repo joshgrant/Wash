@@ -18,7 +18,16 @@ extension Stock
     {
         let name = unwrappedName ?? ""
         let icon = Icon.stock.text
-        return "\(icon) \(name)"
+        
+        if percentIdeal.isNaN
+        {
+            return "\(icon) \(name)"
+        }
+        else
+        {
+            let percent = percentIdeal.formatted(.percent)
+            return "\(icon) \(name): \(percent)"
+        }
     }
 }
 

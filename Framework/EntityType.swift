@@ -50,7 +50,7 @@ enum EntityType
 //        case .symbol: return "Symbols".localized
 //        case .note: return "Notes".localized
         case .unit: return "Units".localized
-        case .system: return "System".localized
+        case .system: return "Systems".localized
         }
     }
     
