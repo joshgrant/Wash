@@ -31,8 +31,6 @@ enum Command
     case flows
     case running
     
-    case save
-    case quit
     case nuke
     case clear
     
@@ -145,8 +143,6 @@ enum Command
             self = .flows
         case "running":
             self = .running
-        case "save":
-            self = .save
         case "quit":
             quit = true
             return nil
@@ -414,10 +410,6 @@ enum Command
             output = runFlowsNeedingCompletion(context: context)
         case .running:
             output = allRunningFlows(context: context)
-        case .save:
-            context.quickSave()
-        case .quit:
-            context.quickSave()
         case .nuke:
             database.clear()
         case .clear:
@@ -536,6 +528,8 @@ enum Command
         case .unlinkSystemStock(system: let system, stock: let stock):
             system.removeFromStocks(stock)
         }
+        
+        context.quickSave()
         
         return output
     }

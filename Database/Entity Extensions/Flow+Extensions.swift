@@ -33,7 +33,8 @@ public extension Flow
         let name = unwrappedName ?? ""
         let icon = Icon.flow.text
         let amount = amountPerSecond.formatted(.number.precision(.fractionLength(4)))
-        return "\(icon): \(name), \(amount)/s"
+        let progress = (1 - (amountRemaining / self.amount)).formatted(.percent)
+        return "\(icon): \(name), \(amount)/s, \(progress)"
     }
 }
 
