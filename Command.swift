@@ -33,6 +33,9 @@ enum Command
     case flows
     case running
     
+    case dashboard
+    case suggest
+    
     case nuke
     case clear
     
@@ -152,6 +155,10 @@ enum Command
             self = .unbalanced
         case "priority":
             self = .priority
+        case "dashboard":
+            self = .dashboard
+        case "suggest":
+            self = .suggest
         case "events":
             self = .events
         case "flows":
@@ -476,6 +483,35 @@ enum Command
             output = runUnbalanced(context: context)
         case .priority:
             output = runPriority(context: context)
+        case .dashboard:
+            // print out the pinned, unbalanced stocks, unbalanced systems, priority items
+            let pinned = runPinned(context: context, shouldPrint: false)
+            let unbalanced = runUnbalanced(context: context, shouldPrint: false)
+            let priority = runPriority(context: context, shouldPrint: false)
+            
+            print("Pinned")
+            print("------------")
+            for pin in pinned {
+                print(pin)
+            }
+            print("")
+            print("Unbalanced")
+            print("------------")
+            for item in unbalanced {
+                print(item)
+            }
+            print("")
+            print("Priority")
+            print("------------")
+            for item in priority {
+                print(item)
+            }
+            print("------------")
+        case .suggest:
+            // Should we pin an item we view often?
+            // Should we find a flow to balance an unbalanced stock?
+            // Should we run a priority flow?
+            break
         case .events:
             output = runEvents(context: context)
         case .flows:
@@ -709,12 +745,12 @@ extension Command
         return result
     }
     
-    func runPinned(context: Context) -> [Entity]
+    func runPinned(context: Context, shouldPrint: Bool = true) -> [Entity]
     {
         let request = Entity.makePinnedObjectsFetchRequest(context: context)
         let result = (try? context.fetch(request)) ?? []
         let pins = result.compactMap { $0 as? Pinnable }
-        print("Pins: \(pins)")
+        if shouldPrint { print("Pins: \(pins)") }
         return pins
     }
     
@@ -749,16 +785,22 @@ extension Command
         return result as? [Entity] ?? []
     }
     
-    func runUnbalanced(context: Context) -> [Entity]
+    func runUnbalanced(context: Context, shouldPrint: Bool = true) -> [Entity]
     {
-        let request: NSFetchRequest<Stock> = Stock.fetchRequest()
-        let result = (try? context.fetch(request)) ?? []
-        let unbalanced = result.filter { $0.percentIdeal < Stock.thresholdPercent }
-        print("Unbalanced: \(unbalanced)")
-        return unbalanced
+        let requestStock: NSFetchRequest<Stock> = Stock.fetchRequest()
+        let resultStock = (try? context.fetch(requestStock)) ?? []
+        let unbalancedStocks = resultStock.filter { $0.percentIdeal < Stock.thresholdPercent }
+        if shouldPrint { print("Unbalanced Stocks: \(unbalancedStocks)") }
+        
+        let requestSystem: NSFetchRequest<System> = System.fetchRequest()
+        let resultSystem = (try? context.fetch(requestSystem)) ?? []
+        let unbalancedSystems = resultSystem.filter { $0.percentIdeal < Stock.thresholdPercent }
+        if shouldPrint { print("Unbalanced Systems: \(unbalancedSystems)") }
+        
+        return unbalancedStocks + unbalancedSystems
     }
     
-    func runPriority(context: Context) -> [Entity]
+    func runPriority(context: Context, shouldPrint: Bool = true) -> [Entity]
     {
         var suggested: Set<Flow> = []
         let allStocks: [Stock] = Stock.all(context: context)
@@ -811,7 +853,7 @@ extension Command
             }
         }
         
-        print("Priority: \(suggested)")
+        if shouldPrint { print("Priority: \(suggested)") }
         return Array(suggested)
     }
     
