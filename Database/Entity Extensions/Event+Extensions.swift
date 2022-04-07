@@ -10,6 +10,7 @@ import CoreData
 
 extension Event: SymbolNamed {}
 extension Event: Pinnable {}
+extension Event: Historable {}
 
 public extension Event
 {

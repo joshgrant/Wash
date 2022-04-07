@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Block" representedClassName="Block" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="imageCaption" optional="YES" attributeType="String"/>
         <attribute name="imageURL" optional="YES" attributeType="URI"/>
@@ -91,7 +91,9 @@
         <attribute name="eventTypeRaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="historyOfEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="history" inverseEntity="Event"/>
         <relationship name="historyOfFlow" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Flow" inverseName="history" inverseEntity="Flow"/>
+        <relationship name="historyOfProcess" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Process" inverseName="history" inverseEntity="Process"/>
         <relationship name="historyOfStock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="history" inverseEntity="Stock"/>
+        <relationship name="historyOfSystem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="history" inverseEntity="System"/>
         <relationship name="source" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="history" inverseEntity="Source"/>
     </entity>
     <entity name="Note" representedClassName="Note" parentEntity="Entity" syncable="YES" codeGenerationType="class">
@@ -109,6 +111,7 @@
         <attribute name="sortOrder" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="processes" inverseEntity="Event"/>
         <relationship name="flows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="process" inverseEntity="Flow"/>
+        <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="historyOfProcess" inverseEntity="History"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Process" inverseName="subProcesses" inverseEntity="Process"/>
         <relationship name="subProcesses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Process" inverseName="parent" inverseEntity="Process"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfProcess" inverseEntity="Symbol"/>
@@ -165,6 +168,7 @@
     </entity>
     <entity name="System" representedClassName="System" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <relationship name="flows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="system" inverseEntity="Flow"/>
+        <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="historyOfSystem" inverseEntity="History"/>
         <relationship name="stocks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stock" inverseName="system" inverseEntity="Stock"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfSystem" inverseEntity="Symbol"/>
     </entity>
@@ -186,14 +190,14 @@
         <element name="Entity" positionX="9" positionY="54" width="128" height="149"/>
         <element name="Event" positionX="36" positionY="81" width="128" height="179"/>
         <element name="Flow" positionX="-9" positionY="36" width="128" height="224"/>
-        <element name="History" positionX="9" positionY="54" width="128" height="119"/>
+        <element name="History" positionX="9" positionY="54" width="128" height="149"/>
         <element name="Note" positionX="45" positionY="90" width="128" height="119"/>
+        <element name="Process" positionX="0" positionY="45" width="128" height="179"/>
         <element name="Source" positionX="0" positionY="144" width="128" height="194"/>
         <element name="State" positionX="0" positionY="135" width="128" height="89"/>
         <element name="Stock" positionX="18" positionY="63" width="128" height="254"/>
         <element name="Symbol" positionX="27" positionY="72" width="128" height="209"/>
-        <element name="Process" positionX="0" positionY="45" width="128" height="164"/>
+        <element name="System" positionX="0" positionY="144" width="128" height="89"/>
         <element name="Unit" positionX="0" positionY="144" width="128" height="149"/>
-        <element name="System" positionX="0" positionY="144" width="128" height="74"/>
     </elements>
 </model>

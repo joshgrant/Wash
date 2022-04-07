@@ -9,6 +9,7 @@ import CoreData
 
 extension Stock: SymbolNamed {}
 extension Stock: Pinnable {}
+extension Stock: Historable {}
 
 extension Stock
 {

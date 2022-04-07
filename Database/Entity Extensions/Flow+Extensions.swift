@@ -10,6 +10,7 @@ import CoreData
 
 extension Flow: SymbolNamed {}
 extension Flow: Pinnable {}
+extension Flow: Historable {}
 
 // TODO: Flow "amounts" can be dynamic or static - i.e for some "user-completed" flows
 // the amount should be "enterable" like - how much water did you just drinik?

@@ -7,7 +7,8 @@
 
 import Foundation
 
-extension Process: SymbolNamed { }
+extension Process: SymbolNamed {}
+extension Process: Historable {}
 
 extension Process: Selectable
 {

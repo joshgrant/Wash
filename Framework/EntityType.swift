@@ -179,6 +179,8 @@ extension EntityType
             stock.symbolName = Symbol(context: context, name: name)
         }
         
+        stock.addHistory(.created, context: context)
+        
         return stock
     }
 
@@ -197,6 +199,8 @@ extension EntityType
             flow.symbolName = Symbol(context: context, name: name)
         }
         
+        flow.addHistory(.created, context: context)
+        
         return flow
     }
 
@@ -212,6 +216,8 @@ extension EntityType
         {
             event.symbolName = Symbol(context: context, name: name)
         }
+        
+        event.addHistory(.created, context: context)
         
         return event
     }
@@ -255,6 +261,8 @@ extension EntityType
             system.symbolName = Symbol(context: context, name: name)
         }
         
+        system.addHistory(.created, context: context)
+        
         return system
     }
     
@@ -267,6 +275,8 @@ extension EntityType
         {
             process.symbolName = Symbol(context: context, name: name)
         }
+        
+        process.addHistory(.created, context: context)
         
         return process
     }
