@@ -10,6 +10,8 @@ import CoreData
 
 enum Command
 {
+    case help
+    
     case add(entityType: EntityType, name: String?)
     case setName(entity: Entity, name: String)
     case hide(entity: Entity)
@@ -104,6 +106,8 @@ enum Command
     {
         switch commandData.command.lowercased()
         {
+        case "help":
+            self = .help
         case "add":
             guard let type = commandData.getEntityType() else { return nil }
             let name = commandData.getName(startingAt: 1)
@@ -411,6 +415,8 @@ enum Command
         
         switch self
         {
+        case .help:
+            print("Sorry, there's no help available at this time.")
         case .add(let entityType, let name):
             let entity = entityType.insertNewEntity(into: context, name: name)
             output = [entity]
