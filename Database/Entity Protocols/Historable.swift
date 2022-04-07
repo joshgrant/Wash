@@ -18,11 +18,11 @@ protocol Historable
 
 extension Historable
 {
-    func addHistory(_ eventType: HistoryEvent, context: Context)
+    func logHistory(_ eventType: HistoryEvent, context: Context)
     {
         let history = History(context: context)
         history.date = .now
-        history.eventType = .created
+        history.eventType = eventType
         addToHistory(history)
     }
 }

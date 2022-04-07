@@ -92,9 +92,9 @@
         <relationship name="historyOfEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="history" inverseEntity="Event"/>
         <relationship name="historyOfFlow" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Flow" inverseName="history" inverseEntity="Flow"/>
         <relationship name="historyOfProcess" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Process" inverseName="history" inverseEntity="Process"/>
+        <relationship name="historyOfSource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="history" inverseEntity="Source"/>
         <relationship name="historyOfStock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="history" inverseEntity="Stock"/>
         <relationship name="historyOfSystem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="history" inverseEntity="System"/>
-        <relationship name="source" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="history" inverseEntity="Source"/>
     </entity>
     <entity name="Note" representedClassName="Note" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="thumbnail" optional="YES" attributeType="URI"/>
@@ -122,7 +122,7 @@
         <relationship name="conditionLeftHand" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Condition" inverseName="leftHand" inverseEntity="Condition"/>
         <relationship name="conditionRightHand" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Condition" inverseName="rightHand" inverseEntity="Condition"/>
         <relationship name="dynamicSource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="linkedSources" inverseEntity="Source"/>
-        <relationship name="history" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="History" inverseName="source" inverseEntity="History"/>
+        <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="historyOfSource" inverseEntity="History"/>
         <relationship name="linkedSources" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Source" inverseName="dynamicSource" inverseEntity="Source"/>
         <relationship name="stock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="source" inverseEntity="Stock"/>
         <relationship name="stockIdeal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="ideal" inverseEntity="Stock"/>
@@ -144,8 +144,6 @@
         <relationship name="maximum" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="stockMaximum" inverseEntity="Source"/>
         <relationship name="minimum" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="stockMinimum" inverseEntity="Source"/>
         <relationship name="outflows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flow" inverseName="from" inverseEntity="Flow"/>
-        <relationship name="producedStockOfProcesss" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Process"/>
-        <relationship name="requiredStockOfProcesss" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Process"/>
         <relationship name="source" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="stock" inverseEntity="Source"/>
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfStock" inverseEntity="Symbol"/>
         <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="stocks" inverseEntity="System"/>
@@ -195,7 +193,7 @@
         <element name="Process" positionX="0" positionY="45" width="128" height="179"/>
         <element name="Source" positionX="0" positionY="144" width="128" height="194"/>
         <element name="State" positionX="0" positionY="135" width="128" height="89"/>
-        <element name="Stock" positionX="18" positionY="63" width="128" height="254"/>
+        <element name="Stock" positionX="18" positionY="63" width="128" height="224"/>
         <element name="Symbol" positionX="27" positionY="72" width="128" height="209"/>
         <element name="System" positionX="0" positionY="144" width="128" height="89"/>
         <element name="Unit" positionX="0" positionY="144" width="128" height="149"/>
