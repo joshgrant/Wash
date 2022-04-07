@@ -7,13 +7,13 @@
 
 import Foundation
 
-public protocol Named: Entity
+protocol Named: Entity
 {
     var unwrappedName: String? { get }
     var managedObjectContext: Context? { get }
 }
 
-public extension Named
+extension Named
 {
     var title: String
     {
@@ -23,12 +23,12 @@ public extension Named
     }
 }
 
-public protocol SymbolNamed: Named
+protocol SymbolNamed: Named
 {
     var symbolName: Symbol? { get set }
 }
 
-public extension SymbolNamed
+extension SymbolNamed
 {
     var unwrappedName: String? {
         get {

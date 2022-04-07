@@ -27,9 +27,4 @@ extension Double
 
         return 1 - delta / scale
     }
-    
-    static func veryRandom() -> Double
-    {
-        Double.random(in: -10e10 ... 10e10)
-    }
 }

@@ -1,8 +1,8 @@
 //
 //  HistoryEvent.swift
-//  Core
+//  Wash
 //
-//  Created by Joshua Grant on 10/2/20.
+//  Created by Joshua Grant on 3/26/22.
 //
 
 import Foundation
@@ -14,15 +14,20 @@ public enum HistoryEvent: Int16, CaseIterable
     case deleted
 }
 
-extension HistoryEvent: FallbackProtocol
+extension HistoryEvent
 {
     static let fallback: HistoryEvent = .created
 }
 
-extension HistoryEvent
+extension HistoryEvent: CustomStringConvertible
 {
-    static func random() -> HistoryEvent
+    public var description: String
     {
-        allCases.randomElement()!
+        switch self
+        {
+        case .created: return "Created".localized
+        case .updated: return "Updated".localized
+        case .deleted: return "Deleted".localized
+        }
     }
 }

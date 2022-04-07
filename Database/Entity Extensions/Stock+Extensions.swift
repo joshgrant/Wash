@@ -12,13 +12,22 @@ extension Stock: Pinnable {}
 
 extension Stock
 {
-    static let thresholdPercent: Double = 0.8
+    static let thresholdPercent: Double = 0.6
     
     public override var description: String
     {
         let name = unwrappedName ?? ""
         let icon = Icon.stock.text
-        return "\(icon) \(name)"
+        
+        if percentIdeal.isNaN
+        {
+            return "\(icon) \(name)"
+        }
+        else
+        {
+            let percent = percentIdeal.formatted(.percent)
+            return "\(icon) \(name): \(percent)"
+        }
     }
 }
 
@@ -48,18 +57,6 @@ extension Stock
     var valueType: SourceValueType
     {
         source!.valueType
-    }
-    
-    var unwrappedValidStates: [State]
-    {
-        get
-        {
-            validStates?.toArray() ?? []
-        }
-        set
-        {
-            validStates = NSSet(array: newValue)
-        }
     }
     
     var unwrappedInflows: [Flow]
@@ -182,5 +179,13 @@ extension Stock
             b: target,
             minimum: min,
             maximum: max)
+    }
+}
+
+extension Stock: Comparable
+{
+    public static func < (lhs: Stock, rhs: Stock) -> Bool
+    {
+        (lhs.unwrappedName ?? "") < (rhs.unwrappedName ?? "")
     }
 }

@@ -14,15 +14,7 @@ public enum Priority: Int16, CaseIterable
     case exponential
 }
 
-extension Priority: FallbackProtocol
-{
-    static let fallback: Priority = .linear
-}
-
 extension Priority
 {
-    static func random() -> Priority
-    {
-        allCases.randomElement()!
-    }
+    static let fallback: Priority = .linear
 }

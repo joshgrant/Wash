@@ -7,12 +7,26 @@
 
 import Foundation
 
-public enum ComparisonType: Int16, CaseIterable, Random
+public enum ComparisonType: Int16, CaseIterable
 {
     case boolean
     case date
-//    case string
     case number
+    
+    init?(string: String)
+    {
+        switch string.lowercased()
+        {
+        case "bool", "boolean", "b":
+            self = .boolean
+        case "date", "d":
+            self = .date
+        case "number", "n":
+            self = .number
+        default:
+            return nil
+        }
+    }
 }
 
 extension ComparisonType: CustomStringConvertible
@@ -30,29 +44,45 @@ extension ComparisonType: CustomStringConvertible
     }
 }
 
-public enum BooleanComparisonType: Int16, CaseIterable, Random
+public enum BooleanComparisonType: Int16, CaseIterable
 {
     case equal
     case notEqual
+    
+    init?(string: String)
+    {
+        switch string
+        {
+        case "equal":
+            self = .equal
+        case "not-equal":
+            self = .notEqual
+        default:
+            return nil
+        }
+    }
 }
 
-public enum DateComparisonType: Int16, CaseIterable, Random
+public enum DateComparisonType: Int16, CaseIterable
 {
     case after
     case before
-//    case inTheLast
-//    case notInTheLast
+    
+    init?(string: String)
+    {
+        switch string
+        {
+        case "after":
+            self = .after
+        case "before":
+            self = .before
+        default:
+            return nil
+        }
+    }
 }
 
-//public enum StringComparisonType: Int16, CaseIterable, Random
-//{
-//    case beginsWith
-//    case endsWith
-//    case contains
-//    case doesNotContain
-//}
-
-public enum NumberComparisonType: Int16, CaseIterable, Random
+public enum NumberComparisonType: Int16, CaseIterable
 {
     case equal
     case notEqual
@@ -60,5 +90,25 @@ public enum NumberComparisonType: Int16, CaseIterable, Random
     case lessThan
     case greaterThanOrEqual
     case lessThanOrEqual
-//    case inTheRange
+    
+    init?(string: String)
+    {
+        switch string
+        {
+        case "equal":
+            self = .equal
+        case "not-equal":
+            self = .notEqual
+        case "gt":
+            self = .greaterThan
+        case "lt":
+            self = .lessThan
+        case "gtoe":
+            self = .greaterThanOrEqual
+        case "ltoe":
+            self = .lessThanOrEqual
+        default:
+            return nil
+        }
+    }
 }

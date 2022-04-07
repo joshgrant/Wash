@@ -87,19 +87,22 @@ public extension Event
 
 public extension Event
 {
-    static func eventsFromSources(_ sources: [Source]) -> [Event]
+    static func activeAndSatisfiedEvents(context: Context) -> [Event]
     {
-        var targetEvents: [Event] = sources.flatMap {
-            $0.conditionLeftHand?.unwrappedEvents ?? []
+        let request: NSFetchRequest<Event> = Event.fetchRequest()
+        let events = (try? context.fetch(request)) ?? []
+        
+        var trueEvents: [Event] = []
+        
+        for event in events
+        {
+            if event.shouldTrigger
+            {
+                trueEvents.append(event)
+            }
         }
         
-        let valueEvents = sources.flatMap {
-            $0.conditionRightHand?.unwrappedEvents ?? []
-        }
-        
-        targetEvents.append(contentsOf: valueEvents)
-        
-        return targetEvents
+        return trueEvents
     }
 }
 
