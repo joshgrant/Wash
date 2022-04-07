@@ -7,6 +7,8 @@
 
 import Foundation
 
+extension Source: Historable {}
+
 public extension Source
 {
     var valueType: SourceValueType

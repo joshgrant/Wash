@@ -10,6 +10,7 @@ import CoreData
 
 extension Flow: SymbolNamed {}
 extension Flow: Pinnable {}
+extension Flow: Historable {}
 
 // TODO: Flow "amounts" can be dynamic or static - i.e for some "user-completed" flows
 // the amount should be "enterable" like - how much water did you just drinik?
@@ -179,13 +180,11 @@ extension Flow
         if amountToSubtract <= 0
         {
             
-            let history = History(context: database.context)
-            history.date = .now
-            history.eventType = .updated
-            addToHistory(history)
-            
             if verbose { print("Done!") }
             self.isRunning = false
+            
+            logHistory(.finished, context: database.context)
+            
             return
         }
         
@@ -194,6 +193,9 @@ extension Flow
         
         fromSource.value -= amountToSubtract
         toSource.value += amountToSubtract
+        
+        fromSource.logHistory(.updatedValue, context: database.context)
+        toSource.logHistory(.updatedValue, context: database.context)
         
         if verbose { print("Re-scheduling for 1 second") }
         

@@ -48,6 +48,9 @@ extension Command
             guard let index = commandData.getIndex() else { return nil }
             guard index < lastResult.count else { return nil }
             self = .choose(index: index, lastResult: lastResult)
+        case "history":
+            guard let entity = workspace.first as? Historable else { return nil }
+            self = .history(entity: entity)
         case "pinned":
             self = .pinned
         case "library":
@@ -69,6 +72,8 @@ extension Command
             self = .flows
         case "running":
             self = .running
+        case "hidden":
+            self = .hidden
         case "quit":
             quit = true
             return nil

@@ -16,6 +16,10 @@
 		03056A4D27F01F8B00D10BA6 /* OrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4C27F01F8B00D10BA6 /* OrderType.swift */; };
 		0330F9A927FF7ADB008B40F3 /* Command+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9A827FF7ADB008B40F3 /* Command+Init.swift */; };
 		0330F9AB27FF7AF3008B40F3 /* Command+Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9AA27FF7AF3008B40F3 /* Command+Run.swift */; };
+		0330F9AE27FF7B6A008B40F3 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9AD27FF7B6A008B40F3 /* CommandData.swift */; };
+		0330F9B027FF7B80008B40F3 /* Command+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9AF27FF7B80008B40F3 /* Command+Parsing.swift */; };
+		0330F9B227FF7C7D008B40F3 /* Historable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9B127FF7C7D008B40F3 /* Historable.swift */; };
+		0330F9B427FF8009008B40F3 /* Command+NonStateModifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */; };
 		0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333F48927D3F6B000B4C284 /* Printable.swift */; };
 		0333F48C27D3FA3C00B4C284 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333F48B27D3FA3C00B4C284 /* Command.swift */; };
 		03739A5427E802EF0029BC9D /* Heartbeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03739A5327E802EF0029BC9D /* Heartbeat.swift */; };
@@ -71,6 +75,10 @@
 		03056A4C27F01F8B00D10BA6 /* OrderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderType.swift; sourceTree = "<group>"; };
 		0330F9A827FF7ADB008B40F3 /* Command+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command+Init.swift"; sourceTree = "<group>"; };
 		0330F9AA27FF7AF3008B40F3 /* Command+Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command+Run.swift"; sourceTree = "<group>"; };
+		0330F9AD27FF7B6A008B40F3 /* CommandData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
+		0330F9AF27FF7B80008B40F3 /* Command+Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command+Parsing.swift"; sourceTree = "<group>"; };
+		0330F9B127FF7C7D008B40F3 /* Historable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Historable.swift; sourceTree = "<group>"; };
+		0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command+NonStateModifying.swift"; sourceTree = "<group>"; };
 		0333F48927D3F6B000B4C284 /* Printable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printable.swift; sourceTree = "<group>"; };
 		0333F48B27D3FA3C00B4C284 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		03739A5327E802EF0029BC9D /* Heartbeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heartbeat.swift; sourceTree = "<group>"; };
@@ -120,8 +128,11 @@
 			isa = PBXGroup;
 			children = (
 				0333F48B27D3FA3C00B4C284 /* Command.swift */,
+				0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */,
+				0330F9AF27FF7B80008B40F3 /* Command+Parsing.swift */,
 				0330F9AA27FF7AF3008B40F3 /* Command+Run.swift */,
 				0330F9A827FF7ADB008B40F3 /* Command+Init.swift */,
+				0330F9AD27FF7B6A008B40F3 /* CommandData.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -170,13 +181,13 @@
 				03B4AA0827C1A0F90071F63E /* Flow+Extensions.swift */,
 				03056A4027EFC10200D10BA6 /* History+Extensions.swift */,
 				03B4AA0527C1A0F80071F63E /* Note+Extensions.swift */,
+				03056A4827F00F2000D10BA6 /* Process+Extensions.swift */,
 				03B4AA0227C1A0F80071F63E /* Source+Extensions.swift */,
 				03B4AA0327C1A0F80071F63E /* State+Extensions.swift */,
 				03B4AA0A27C1A0F90071F63E /* Stock+Extensions.swift */,
 				03B4AA0C27C1A0F90071F63E /* Symbol+Extensions.swift */,
 				03056A4427EFD3D200D10BA6 /* System+Extensions.swift */,
 				03B4AA0E27C1A0F90071F63E /* Unit+Extensions.swift */,
-				03056A4827F00F2000D10BA6 /* Process+Extensions.swift */,
 			);
 			path = "Entity Extensions";
 			sourceTree = "<group>";
@@ -188,6 +199,7 @@
 				03B4AA1127C1A0F90071F63E /* Named.swift */,
 				0333F48927D3F6B000B4C284 /* Printable.swift */,
 				03056A4627EFE3C700D10BA6 /* Selectable.swift */,
+				0330F9B127FF7C7D008B40F3 /* Historable.swift */,
 			);
 			path = "Entity Protocols";
 			sourceTree = "<group>";
@@ -281,6 +293,7 @@
 			files = (
 				03E40A2F27E3D45E00688AE8 /* Model.xcdatamodeld in Sources */,
 				03B4AA2527C1A0F90071F63E /* Stock+Extensions.swift in Sources */,
+				0330F9B027FF7B80008B40F3 /* Command+Parsing.swift in Sources */,
 				03B4AA3127C1A0F90071F63E /* Note+Extensions.swift in Sources */,
 				03B4AA1727C1A0F90071F63E /* Event+Extensions.swift in Sources */,
 				03B4AA3627C1A0F90071F63E /* Source+Extensions.swift in Sources */,
@@ -292,9 +305,11 @@
 				03B4AA3927C1A0F90071F63E /* Symbol+Extensions.swift in Sources */,
 				0330F9AB27FF7AF3008B40F3 /* Command+Run.swift in Sources */,
 				03B4AA9927C1A31E0071F63E /* EntityType.swift in Sources */,
+				0330F9B227FF7C7D008B40F3 /* Historable.swift in Sources */,
 				03B4AA2327C1A0F90071F63E /* Entity+Extensions.swift in Sources */,
 				03B4AA8427C1A31E0071F63E /* SourceValueType.swift in Sources */,
 				03D5FC8127E65753007E87A9 /* Condition+.swift in Sources */,
+				0330F9B427FF8009008B40F3 /* Command+NonStateModifying.swift in Sources */,
 				03B4AA9C27C1A31E0071F63E /* Priority.swift in Sources */,
 				0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */,
 				03B4AA3C27C1A0F90071F63E /* Flow+Extensions.swift in Sources */,
@@ -314,6 +329,7 @@
 				0330F9A927FF7ADB008B40F3 /* Command+Init.swift in Sources */,
 				0333F48C27D3FA3C00B4C284 /* Command.swift in Sources */,
 				03B4AA4127C1A0F90071F63E /* State+Extensions.swift in Sources */,
+				0330F9AE27FF7B6A008B40F3 /* CommandData.swift in Sources */,
 				03B4AA8327C1A31E0071F63E /* ComparisonType.swift in Sources */,
 				03056A4D27F01F8B00D10BA6 /* OrderType.swift in Sources */,
 				03056A4927F00F2000D10BA6 /* Process+Extensions.swift in Sources */,

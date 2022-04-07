@@ -9,6 +9,7 @@ import Foundation
 
 extension System: SymbolNamed {}
 extension System: Pinnable {}
+extension System: Historable {}
 
 extension System
 {
