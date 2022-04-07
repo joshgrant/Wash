@@ -16,9 +16,19 @@ extension Command
         
         for flow in result
         {
+            if flow.isHidden { continue }
             print(flow.runningDescription)
         }
         
+        return result
+    }
+    
+    func allHidden(context: Context) -> [Entity]
+    {
+        let request: NSFetchRequest<Entity> = Entity.fetchRequest()
+        request.predicate = NSPredicate(format: "isHidden == true")
+        let result = (try? context.fetch(request)) ?? []
+        print(result)
         return result
     }
     
@@ -44,6 +54,7 @@ extension Command
     func runAll(entityType: EntityType, context: Context) -> [Entity]
     {
         let request: NSFetchRequest<NSFetchRequestResult> = entityType.managedObjectType.fetchRequest()
+        request.predicate = NSPredicate(format: "isHidden == false && deletedDate == nil")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: true)]
         let result = (try? context.fetch(request)) ?? []
         guard result.count > 0 else {
@@ -65,11 +76,13 @@ extension Command
     func runUnbalanced(context: Context, shouldPrint: Bool = true) -> [Entity]
     {
         let requestStock: NSFetchRequest<Stock> = Stock.fetchRequest()
+        requestStock.predicate = NSPredicate(format: "isHidden == false && deletedDate == nil")
         let resultStock = (try? context.fetch(requestStock)) ?? []
         let unbalancedStocks = resultStock.filter { $0.percentIdeal < Stock.thresholdPercent }
         if shouldPrint { print("Unbalanced Stocks: \(unbalancedStocks)") }
         
         let requestSystem: NSFetchRequest<System> = System.fetchRequest()
+        requestSystem.predicate = NSPredicate(format: "isHidden == false && deletedDate == nil")
         let resultSystem = (try? context.fetch(requestSystem)) ?? []
         let unbalancedSystems = resultSystem.filter { $0.percentIdeal < Stock.thresholdPercent }
         if shouldPrint { print("Unbalanced Systems: \(unbalancedSystems)") }
@@ -94,6 +107,8 @@ extension Command
             
             for flow in allFlows
             {
+                if flow.isHidden { continue }
+                
                 let amount: Double
                 
                 // TODO: Could clean this up a bit
@@ -148,7 +163,7 @@ extension Command
     {
         let flows: [Flow] = Flow.all(context: context)
         let flowsNeedingCompletion = flows.filter { flow in
-            flow.needsUserExecution
+            flow.needsUserExecution && !flow.isHidden && flow.deletedDate == nil
         }
         for flow in flowsNeedingCompletion {
             print(flow)

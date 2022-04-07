@@ -33,6 +33,7 @@ enum Command
     case events
     case flows
     case running
+    case hidden
     
     case dashboard
     case suggest

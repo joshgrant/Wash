@@ -141,11 +141,12 @@ extension Command
             output = runFlowsNeedingCompletion(context: context)
         case .running:
             output = allRunningFlows(context: context)
+        case .hidden:
+            output = allHidden(context: context)
         case .nuke:
             database.clear()
         case .clear:
             workspace.removeAll()
-            
         case .setStockType(let stock, let type):
             stock.source?.valueType = type
             output = [stock]

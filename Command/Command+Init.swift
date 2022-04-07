@@ -72,6 +72,8 @@ extension Command
             self = .flows
         case "running":
             self = .running
+        case "hidden":
+            self = .hidden
         case "quit":
             quit = true
             return nil

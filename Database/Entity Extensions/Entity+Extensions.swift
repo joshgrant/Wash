@@ -44,7 +44,7 @@ public extension Entity
 {
     static func makePinnedObjectsPredicate() -> NSPredicate
     {
-        NSPredicate(format: "isPinned == %i", true)
+        NSPredicate(format: "isPinned == true && isHidden == false && deletedDate == nil")
     }
     
     static func makePinnedObjectsSortDescriptors() -> [NSSortDescriptor]

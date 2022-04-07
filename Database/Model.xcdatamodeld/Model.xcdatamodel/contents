@@ -47,8 +47,8 @@
     <entity name="Entity" representedClassName="Entity" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="deletedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="isHidden" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isPinned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isHidden" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isPinned" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="uniqueID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="updatedDate" optional="YES" attributeType="Date" derived="YES" derivationExpression="now()" usesScalarValueType="NO"/>
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="linkedEntities" inverseEntity="Note"/>

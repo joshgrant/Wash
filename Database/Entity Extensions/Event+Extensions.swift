@@ -91,6 +91,7 @@ public extension Event
     static func activeAndSatisfiedEvents(context: Context) -> [Event]
     {
         let request: NSFetchRequest<Event> = Event.fetchRequest()
+        request.predicate = NSPredicate(format: "isHidden == false && deletedDate == nil")
         let events = (try? context.fetch(request)) ?? []
         
         var trueEvents: [Event] = []
