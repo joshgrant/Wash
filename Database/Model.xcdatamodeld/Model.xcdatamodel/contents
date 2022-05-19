@@ -72,11 +72,12 @@
         <relationship name="symbolName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Symbol" inverseName="nameOfEvent" inverseEntity="Symbol"/>
     </entity>
     <entity name="Flow" representedClassName="Flow" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="amountRemaining" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="delay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="isRunning" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="repeats" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="requiresUserCompletion" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="flows" inverseEntity="Event"/>
         <relationship name="from" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="outflows" inverseEntity="Stock"/>
@@ -185,15 +186,15 @@
         <element name="Conversion" positionX="0" positionY="45" width="128" height="119"/>
         <element name="Entity" positionX="9" positionY="54" width="128" height="149"/>
         <element name="Event" positionX="36" positionY="81" width="128" height="179"/>
-        <element name="Flow" positionX="-9" positionY="36" width="128" height="224"/>
+        <element name="Flow" positionX="-9" positionY="36" width="128" height="239"/>
         <element name="History" positionX="9" positionY="54" width="128" height="119"/>
         <element name="Note" positionX="45" positionY="90" width="128" height="119"/>
+        <element name="Process" positionX="0" positionY="45" width="128" height="164"/>
         <element name="Source" positionX="0" positionY="144" width="128" height="194"/>
         <element name="State" positionX="0" positionY="135" width="128" height="89"/>
         <element name="Stock" positionX="18" positionY="63" width="128" height="254"/>
         <element name="Symbol" positionX="27" positionY="72" width="128" height="209"/>
-        <element name="Process" positionX="0" positionY="45" width="128" height="164"/>
-        <element name="Unit" positionX="0" positionY="144" width="128" height="149"/>
         <element name="System" positionX="0" positionY="144" width="128" height="74"/>
+        <element name="Unit" positionX="0" positionY="144" width="128" height="149"/>
     </elements>
 </model>

@@ -51,11 +51,13 @@ extension Flow: Printable
         
         return
 """
+Name:                       \(unwrappedName ?? "")
 Amount:                     \(amount)
 Delay:                      \(delay.formatted(.components(style: .abbreviated)))
 Duration:                   \(duration.formatted(.components(style: .abbreviated)))
 Requires User Completion:   \(requiresUserCompletion)
 Is running:                 \(isRunning)
+Repeats:                    \(repeats)
 Events:                     \(events?.allObjects ?? [])
 From:                       \(from?.description ?? "nil")
 To:                         \(to?.description ?? "nil")
@@ -85,9 +87,9 @@ extension Flow
     }
     
     /// When the flow is running, and the program is quit, we need to re-run it.
-    func resume(verbose: Bool = false)
+    func resume()
     {
-        runHelper(verbose: verbose)
+        runHelper(verbose: false)
     }
     
     func run(fromUser: Bool = false, verbose: Bool = false)
@@ -130,7 +132,7 @@ extension Flow
         }
     }
 
-    func runHelper(verbose: Bool = false)
+    func runHelper(verbose: Bool)
     {
         if verbose { print("Entering run helper") }
         
@@ -178,14 +180,19 @@ extension Flow
         
         if amountToSubtract <= 0
         {
-            
-            let history = History(context: database.context)
-            history.date = .now
-            history.eventType = .updated
-            addToHistory(history)
+//            let history = History(context: database.context)
+//            history.date = .now
+//            history.eventType = .updated
+//            addToHistory(history)
             
             if verbose { print("Done!") }
             self.isRunning = false
+            
+            if repeats
+            {
+                run(fromUser: false, verbose: verbose)
+            }
+            
             return
         }
         

@@ -55,12 +55,14 @@ enum Command
     case setDelay(flow: Flow, delay: Double)
     case setDuration(flow: Flow, duration: Double)
     case setRequires(flow: Flow, requires: Bool)
+    case setRepeats(flow: Flow, repeats: Bool)
     case setFrom(flow: Flow, stock: Stock)
     case setTo(flow: Flow, stock: Stock)
     case run(flow: Flow)
     case linkFlowEvent(flow: Flow, event: Event)
     case unlinkFlowEvent(flow: Flow, event: Event)
     case finish(flow: Flow)
+    case clearHistory(flow: Flow)
     
     // MARK: - Events
     
@@ -213,6 +215,9 @@ enum Command
         case "set-requires":
             guard let (flow, requires): (Flow, Bool) = Self.getEntityAndBool(commandData: commandData, workspace: workspace) else { return nil }
             self = .setRequires(flow: flow, requires: requires)
+        case "set-repeats":
+            guard let (flow, repeats): (Flow, Bool) = Self.getEntityAndBool(commandData: commandData, workspace: workspace) else { return nil }
+            self = .setRepeats(flow: flow, repeats: repeats)
         case "set-from":
             guard let (flow, stock): (Flow, Stock) = Self.getEntities(commandData: commandData, workspace: workspace) else { return nil }
             self = .setFrom(flow: flow, stock: stock)
@@ -236,6 +241,9 @@ enum Command
         case "finish":
             guard let flow: Flow = Self.getEntity(in: workspace) else { return nil }
             self = .finish(flow: flow)
+        case "clear-history":
+            guard let flow: Flow = Self.getEntity(in: workspace) else { return nil }
+            self = .clearHistory(flow: flow)
         case "set-active":
             guard let (event, isActive): (Event, Bool) = Self.getEntityAndBool(commandData: commandData, workspace: workspace) else { return nil }
             self = .setIsActive(event: event, isActive: isActive)
@@ -528,6 +536,9 @@ enum Command
         case .setRequires(let flow, let requires):
             flow.requiresUserCompletion = requires
             output = [flow]
+        case .setRepeats(let flow, let repeats):
+            flow.repeats = repeats
+            output = [flow]
         case .setFrom(let flow, let stock):
             flow.from = stock
             output = [flow]
@@ -541,6 +552,10 @@ enum Command
             flow.amountRemaining = 0
             flow.isRunning = false
             output = [flow]
+        case .clearHistory(let flow):
+            if let history = flow.history {
+                flow.removeFromHistory(history)
+            }
         case .linkFlowEvent(let flow, let event):
             flow.addToEvents(event)
             output = [flow]

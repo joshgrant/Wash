@@ -187,10 +187,11 @@ extension EntityType
     {
         let flow = Flow(context: context)
         
-        flow.amount = 100
-        flow.delay = 0
-        flow.duration = 0
+        flow.amount = 1
+        flow.delay = 1
+        flow.duration = 1
         flow.requiresUserCompletion = false
+        flow.repeats = false
         
         if let name = name
         {
