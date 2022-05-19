@@ -107,4 +107,8 @@ enum Command
     case runProcess(process: Process)
     case linkProcessEvent(process: Process, event: Event)
     case unlinkProcessEvent(process: Process, event: Event)
+    
+    // MARK: - Other
+    
+    case booleanStockFlow(name: String?)
 }

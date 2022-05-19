@@ -57,7 +57,14 @@ extension Stock
 {
     var valueType: SourceValueType
     {
-        source!.valueType
+        get
+        {
+            return source!.valueType
+        }
+        set
+        {
+            source?.valueType = newValue
+        }
     }
     
     var unwrappedInflows: [Flow]

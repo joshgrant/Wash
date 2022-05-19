@@ -321,6 +321,9 @@ extension Command
                 print("Failed to unlink subprocess. No matching types.")
                 return nil
             }
+        case "boolean-stock-flow":
+            let name = commandData.getName(startingAt: 0)
+            self = .booleanStockFlow(name: name)
         default:
             return nil
         }

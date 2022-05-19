@@ -374,6 +374,38 @@ extension Command
         case .unlinkProcessEvent(let process, let event):
             process.removeFromEvents(event)
             process.logHistory(.removedEvent, context: context)
+        case .booleanStockFlow(let name):
+            
+            guard let name = name else {
+                print("Please enter a name, or we can't create a boolean stock & flow.")
+                return output
+            }
+            
+            let stock = EntityType.stock.insertNewEntity(into: context, name: name) as! Stock
+            stock.current = 0
+            stock.target = 1
+            stock.max = 1
+            stock.valueType = .boolean
+            
+            let checkFlow = EntityType.flow.insertNewEntity(into: context, name: "Check: " + name) as! Flow
+            checkFlow.amount = 1
+            checkFlow.duration = 0
+            checkFlow.delay = 0
+            checkFlow.from = ContextPopulator.sourceStock(context: context)
+            checkFlow.to = stock
+            
+            let uncheckFlow = EntityType.flow.insertNewEntity(into: context, name: "Uncheck: " + name) as! Flow
+            uncheckFlow.amount = 1
+            uncheckFlow.duration = 0
+            uncheckFlow.delay = 0
+            uncheckFlow.from = stock
+            uncheckFlow.to = ContextPopulator.sinkStock(context: context)
+            
+            output = [stock, checkFlow, uncheckFlow]
+            
+            workspace.insert(stock, at: 0)
+            workspace.insert(checkFlow, at: 1)
+            workspace.insert(uncheckFlow, at: 2)
         }
         
         context.quickSave()
