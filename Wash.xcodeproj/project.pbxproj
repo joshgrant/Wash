@@ -21,7 +21,6 @@
 		0330F9B227FF7C7D008B40F3 /* Historable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9B127FF7C7D008B40F3 /* Historable.swift */; };
 		0330F9B427FF8009008B40F3 /* Command+NonStateModifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */; };
 		0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333F48927D3F6B000B4C284 /* Printable.swift */; };
-		0333F48C27D3FA3C00B4C284 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333F48B27D3FA3C00B4C284 /* Command.swift */; };
 		03739A5427E802EF0029BC9D /* Heartbeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03739A5327E802EF0029BC9D /* Heartbeat.swift */; };
 		03B4A9D427C005F10071F63E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4A9D327C005F10071F63E /* main.swift */; };
 		03B4AA1727C1A0F90071F63E /* Event+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4AA0D27C1A0F90071F63E /* Event+Extensions.swift */; };
@@ -51,6 +50,7 @@
 		03B4AA9F27C32CD40071F63E /* ContextPopulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4AA9E27C32CD40071F63E /* ContextPopulator.swift */; };
 		03D5FC8127E65753007E87A9 /* Condition+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D5FC8027E65753007E87A9 /* Condition+.swift */; };
 		03E40A2F27E3D45E00688AE8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03B4AA1327C1A0F90071F63E /* Model.xcdatamodeld */; };
+		03FF92D828C4069900FC1956 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF92D728C4069900FC1956 /* Command.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,7 +80,6 @@
 		0330F9B127FF7C7D008B40F3 /* Historable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Historable.swift; sourceTree = "<group>"; };
 		0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command+NonStateModifying.swift"; sourceTree = "<group>"; };
 		0333F48927D3F6B000B4C284 /* Printable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printable.swift; sourceTree = "<group>"; };
-		0333F48B27D3FA3C00B4C284 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		03739A5327E802EF0029BC9D /* Heartbeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heartbeat.swift; sourceTree = "<group>"; };
 		03B4A9D027C005F10071F63E /* Wash */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Wash; sourceTree = BUILT_PRODUCTS_DIR; };
 		03B4A9D327C005F10071F63E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -111,6 +110,7 @@
 		03B4AA7427C1A31E0071F63E /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		03B4AA9E27C32CD40071F63E /* ContextPopulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPopulator.swift; sourceTree = "<group>"; };
 		03D5FC8027E65753007E87A9 /* Condition+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Condition+.swift"; sourceTree = "<group>"; };
+		03FF92D728C4069900FC1956 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,11 +127,10 @@
 		0330F9AC27FF7AFD008B40F3 /* Command */ = {
 			isa = PBXGroup;
 			children = (
-				0333F48B27D3FA3C00B4C284 /* Command.swift */,
+				0330F9A827FF7ADB008B40F3 /* Command+Init.swift */,
 				0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */,
 				0330F9AF27FF7B80008B40F3 /* Command+Parsing.swift */,
 				0330F9AA27FF7AF3008B40F3 /* Command+Run.swift */,
-				0330F9A827FF7ADB008B40F3 /* Command+Init.swift */,
 				0330F9AD27FF7B6A008B40F3 /* CommandData.swift */,
 			);
 			path = Command;
@@ -140,6 +139,7 @@
 		03B4A9C727C005F10071F63E = {
 			isa = PBXGroup;
 			children = (
+				03FF92D728C4069900FC1956 /* Command.swift */,
 				0330F9AC27FF7AFD008B40F3 /* Command */,
 				03739A5327E802EF0029BC9D /* Heartbeat.swift */,
 				03B4A9D327C005F10071F63E /* main.swift */,
@@ -314,6 +314,7 @@
 				0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */,
 				03B4AA3C27C1A0F90071F63E /* Flow+Extensions.swift in Sources */,
 				03056A4527EFD3D200D10BA6 /* System+Extensions.swift in Sources */,
+				03FF92D828C4069900FC1956 /* Command.swift in Sources */,
 				03B4AA8227C1A31E0071F63E /* NSSet+Extensions.swift in Sources */,
 				03056A4327EFC12B00D10BA6 /* HistoryEvent.swift in Sources */,
 				03B4A9D427C005F10071F63E /* main.swift in Sources */,
@@ -327,7 +328,6 @@
 				03B4AA4627C1A0F90071F63E /* Named.swift in Sources */,
 				03B4AA9027C1A31E0071F63E /* Double+Extensions.swift in Sources */,
 				0330F9A927FF7ADB008B40F3 /* Command+Init.swift in Sources */,
-				0333F48C27D3FA3C00B4C284 /* Command.swift in Sources */,
 				03B4AA4127C1A0F90071F63E /* State+Extensions.swift in Sources */,
 				0330F9AE27FF7B6A008B40F3 /* CommandData.swift in Sources */,
 				03B4AA8327C1A31E0071F63E /* ComparisonType.swift in Sources */,
