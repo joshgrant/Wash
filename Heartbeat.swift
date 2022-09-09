@@ -61,14 +61,17 @@ class Heartbeat
         self.inputLoop = inputLoop
         self.eventLoop = eventLoop
         self.cleanup = cleanup
-        
+    }
+    
+    // MARK: - Configuration
+    
+    func run()
+    {
         start { [self] in
             configureInputThread()
             configureEventTimer()
         }
     }
-    
-    // MARK: - Configuration
     
     private func configureInputThread()
     {

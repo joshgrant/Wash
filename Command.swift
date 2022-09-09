@@ -248,12 +248,12 @@ class CommandRun: Command
     {
         if let flow: Flow = try? workspace.first()
         {
-            flow.run(fromUser: true)
+            flow.run(fromUser: true, context: database.context)
             return [flow]
         }
         else if let process: Process = try? workspace.first()
         {
-            process.run()
+            process.run(context: database.context)
             return [process]
         }
         else
@@ -265,7 +265,6 @@ class CommandRun: Command
 
 class CommandAdd: Command
 {
-    
     override var names: [String] { ["add"] }
     
     override func run() throws -> [Entity]
@@ -282,7 +281,6 @@ class CommandAdd: Command
 
 class CommandSetName: Command
 {
-    
     override var names: [String] { ["setName"] }
     
     override func run() throws -> [Entity]
@@ -299,7 +297,6 @@ class CommandSetName: Command
 
 class CommandHide: Command
 {
-    
     override var names: [String] { ["hide"] }
     
     override func run() throws -> [Entity]
@@ -312,7 +309,6 @@ class CommandHide: Command
 
 class CommandUnhide: Command
 {
-    
     override var names: [String] { ["unhide"] }
     
     override func run() throws -> [Entity]
@@ -325,7 +321,6 @@ class CommandUnhide: Command
 
 class CommandView: Command
 {
-    
     override var names: [String] { ["view"] }
     
     override func run() throws -> [Entity]
@@ -350,7 +345,6 @@ class CommandView: Command
 
 class CommandDelete: Command
 {
-    
     override var names: [String] { ["delete"] }
     
     override func run() throws -> [Entity]
@@ -363,7 +357,6 @@ class CommandDelete: Command
 
 class CommandPin: Command
 {
-    
     override var names: [String] { ["pin"] }
     
     override func run() throws -> [Entity]
@@ -376,7 +369,6 @@ class CommandPin: Command
 
 class CommandUnpin: Command
 {
-    
     override var names: [String] { ["unpin"] }
     
     override func run() throws -> [Entity]
@@ -389,7 +381,6 @@ class CommandUnpin: Command
 
 class CommandSelect: Command
 {
-    
     override var names: [String] { ["select"] }
     
     override func run() throws -> [Entity]
@@ -412,7 +403,6 @@ class CommandSelect: Command
 
 class CommandChoose: Command
 {
-    
     override var names: [String] { ["choose"] }
     
     override func run() throws -> [Entity]
@@ -433,7 +423,6 @@ class CommandChoose: Command
 
 class CommandHistory: Command
 {
-    
     override var names: [String] { ["history"] }
     
     override func run() throws -> [Entity]
@@ -479,7 +468,6 @@ class CommandPinned: Command
 
 class CommandLibrary: Command
 {
-    
     override var names: [String] { ["library"] }
     
     override func run() throws -> [Entity]
@@ -496,7 +484,6 @@ class CommandLibrary: Command
 
 class CommandAll: Command
 {
-    
     override var names: [String] { ["all"] }
     
     override func run() throws -> [Entity]
@@ -529,7 +516,6 @@ class CommandAll: Command
 
 class CommandUnbalanced: Command
 {
-    
     override var names: [String] { ["unbalanced"] }
     
     var shouldPrint: Bool = true
@@ -554,7 +540,6 @@ class CommandUnbalanced: Command
 
 class CommandPriority: Command
 {
-    
     override var names: [String] { ["priority"] }
     
     var shouldPrint: Bool = true
@@ -627,36 +612,40 @@ class CommandDashboard: Command
     {
         let pinned = CommandPinned(input: input, workspace: workspace, database: database)
         pinned?.shouldPrint = false
+        let pinResult = try pinned?.run() ?? []
         
         let unbalanced = CommandUnbalanced(input: input, workspace: workspace, database: database)
         unbalanced?.shouldPrint = false
+        let unbalancedResult = try unbalanced?.run() ?? []
+        
         let priority = CommandPriority(input: input, workspace: workspace, database: database)
         priority?.shouldPrint = false
+        let priorityResult = try priority?.run() ?? []
         
         print("Pinned")
         print("------------")
-        for pin in pinned?.run() {
+        for pin in pinResult {
             print(pin)
         }
         print("")
         print("Unbalanced")
         print("------------")
-        for item in unbalanced?.run() {
+        for item in unbalancedResult {
             print(item)
         }
         print("")
         print("Priority")
         print("------------")
-        for item in priority?.run() {
+        for item in priorityResult {
             print(item)
         }
         print("------------")
+        return []
     }
 }
 
 class CommandSuggest: Command
 {
-    
     override var names: [String] { ["suggest"] }
     
     override func run() throws -> [Entity]
@@ -664,12 +653,12 @@ class CommandSuggest: Command
         //            // Should we pin an item we view often?
         //            // Should we find a flow to balance an unbalanced stock?
         //            // Should we run a priority flow?
+        return []
     }
 }
 
 class CommandEvents: Command
 {
-    
     override var names: [String] { ["events"] }
     
     override func run() -> [Entity]
@@ -685,7 +674,6 @@ class CommandEvents: Command
 
 class CommandFlows: Command
 {
-    
     override var names: [String] { ["flows"] }
     
     override func run() -> [Entity]
@@ -703,7 +691,6 @@ class CommandFlows: Command
 
 class CommandRunning: Command
 {
-    
     override var names: [String] { ["running"] }
     
     override func run() -> [Entity]
@@ -722,7 +709,6 @@ class CommandRunning: Command
 
 class CommandHidden: Command
 {
-    
     override var names: [String] { ["hidden"] }
     
     override func run() -> [Entity]
@@ -737,40 +723,39 @@ class CommandHidden: Command
 
 class CommandQuit: Command
 {
-    
     override var names: [String] { ["quit"] }
     
     override func run() throws -> [Entity]
     {
         // TODO: Communicate to quit the application
+        fatalError()
     }
 }
 
 class CommandNuke: Command
 {
-    
     override var names: [String] { ["nuke"] }
     
     override func run() throws -> [Entity]
     {
         database.clear()
+        return []
     }
 }
 
 class CommandClear: Command
 {
-    
     override var names: [String] { ["clear"] }
     
     override func run() throws -> [Entity]
     {
         workspace.entities.removeAll()
+        return []
     }
 }
 
 class CommandSetStockType: Command
 {
-    
     override var names: [String] { ["setStockType"] }
     
     override func run() throws -> [Entity]
@@ -784,7 +769,6 @@ class CommandSetStockType: Command
 
 class CommandSetCurrent: Command
 {
-    
     override var names: [String] { ["setCurrent"] }
     
     override func run() throws -> [Entity]
@@ -798,7 +782,6 @@ class CommandSetCurrent: Command
 
 class CommandSetIdeal: Command
 {
-    
     override var names: [String] { ["setIdeal"] }
     
     override func run() throws -> [Entity]
@@ -812,7 +795,6 @@ class CommandSetIdeal: Command
 
 class CommandSetMin: Command
 {
-    
     override var names: [String] { ["setMin"] }
     
     override func run() throws -> [Entity]
@@ -826,7 +808,6 @@ class CommandSetMin: Command
 
 class CommandSetMax: Command
 {
-    
     override var names: [String] { ["setMax"] }
     
     override func run() throws -> [Entity]
@@ -840,7 +821,6 @@ class CommandSetMax: Command
 
 class CommandSetUnit: Command
 {
-    
     override var names: [String] { ["setUnit"] }
     
     override func run() throws -> [Entity]
@@ -855,7 +835,6 @@ class CommandSetUnit: Command
 
 class CommandLinkOutflow: Command
 {
-    
     override var names: [String] { ["linkOutflow"] }
     
     override func run() throws -> [Entity]
@@ -870,7 +849,6 @@ class CommandLinkOutflow: Command
 
 class CommandLinkInflow: Command
 {
-    
     override var names: [String] { ["linkInflow"] }
     
     override func run() throws -> [Entity]
@@ -885,7 +863,6 @@ class CommandLinkInflow: Command
 
 class CommandUnlinkOutflow: Command
 {
-    
     override var names: [String] { ["unlinkOutflow"] }
     
     override func run() throws -> [Entity]
@@ -900,7 +877,6 @@ class CommandUnlinkOutflow: Command
 
 class CommandUnlinkInflow: Command
 {
-    
     override var names: [String] { ["unlinkInflow"] }
     
     override func run() throws -> [Entity]
@@ -915,7 +891,6 @@ class CommandUnlinkInflow: Command
 
 class CommandSetAmount: Command
 {
-    
     override var names: [String] { ["setAmount"] }
     
     override func run() throws -> [Entity]
@@ -931,7 +906,6 @@ class CommandSetAmount: Command
 
 class CommandSetDelay: Command
 {
-    
     override var names: [String] { ["setDelay"] }
     
     override func run() throws -> [Entity]
@@ -945,7 +919,6 @@ class CommandSetDelay: Command
 
 class CommandSetDuration: Command
 {
-    
     override var names: [String] { ["setDuration"] }
     
     override func run() throws -> [Entity]
@@ -959,7 +932,6 @@ class CommandSetDuration: Command
 
 class CommandSetRequires: Command
 {
-    
     override var names: [String] { ["setRequires"] }
     
     override func run() throws -> [Entity]
@@ -973,7 +945,6 @@ class CommandSetRequires: Command
 
 class CommandSetFrom: Command
 {
-    
     override var names: [String] { ["setFrom"] }
     
     override func run() throws -> [Entity]
@@ -988,7 +959,6 @@ class CommandSetFrom: Command
 
 class CommandSetTo: Command
 {
-    
     override var names: [String] { ["setTo"] }
     
     override func run() throws -> [Entity]
@@ -1003,7 +973,6 @@ class CommandSetTo: Command
 
 class CommandFinish: Command
 {
-    
     override var names: [String] { ["finish"] }
     
     override func run() throws -> [Entity]
@@ -1017,7 +986,6 @@ class CommandFinish: Command
 
 class CommandSetRepeats: Command
 {
-    
     override var names: [String] { ["setRepeats"] }
     
     override func run() throws -> [Entity]
@@ -1031,7 +999,6 @@ class CommandSetRepeats: Command
 
 class CommandSetActive: Command
 {
-    
     override var names: [String] { ["setActive"] }
     
     override func run() throws -> [Entity]
@@ -1045,7 +1012,6 @@ class CommandSetActive: Command
 
 class CommandLinkCondition: Command
 {
-    
     override var names: [String] { ["linkCondition"] }
     
     override func run() throws -> [Entity]
@@ -1060,7 +1026,6 @@ class CommandLinkCondition: Command
 
 class CommandUnlinkCondition: Command
 {
-    
     override var names: [String] { ["unlinkCondition"] }
     
     override func run() throws -> [Entity]
@@ -1075,7 +1040,6 @@ class CommandUnlinkCondition: Command
 
 class CommandSetConditionType: Command
 {
-    
     override var names: [String] { ["setConditionType"] }
     
     override func run() throws -> [Entity]
@@ -1089,7 +1053,6 @@ class CommandSetConditionType: Command
 
 class CommandSetCooldown: Command
 {
-    
     override var names: [String] { ["setCooldown"] }
     
     override func run() throws -> [Entity]
@@ -1103,7 +1066,6 @@ class CommandSetCooldown: Command
 
 class CommandSetComparison: Command
 {
-    
     override var names: [String] { ["setComparison"] }
     
     override func run() throws -> [Entity]
@@ -1118,7 +1080,6 @@ class CommandSetComparison: Command
 
 class CommandSetLeftHand: Command
 {
-    
     override var names: [String] { ["setLeftHand"] }
     
     override func run() throws -> [Entity]
@@ -1156,7 +1117,6 @@ class CommandSetLeftHand: Command
 
 class CommandSetRightHand: Command
 {
-    
     override var names: [String] { ["setRightHand"] }
     
     override func run() throws -> [Entity]
@@ -1194,7 +1154,6 @@ class CommandSetRightHand: Command
 
 class CommandLinkFlow: Command
 {
-    
     override var names: [String] { ["linkFlow"] }
     
     override func run() throws -> [Entity]
@@ -1226,7 +1185,6 @@ class CommandLinkFlow: Command
 
 class CommandUnlinkFlow: Command
 {
-    
     override var names: [String] { ["unlinkFlow"] }
     
     override func run() throws -> [Entity]
@@ -1258,7 +1216,6 @@ class CommandUnlinkFlow: Command
 
 class CommandLinkStock: Command
 {
-    
     override var names: [String] { ["linkStock"] }
     
     override func run() throws -> [Entity]
@@ -1273,7 +1230,6 @@ class CommandLinkStock: Command
 
 class CommandUnlinkStock: Command
 {
-    
     override var names: [String] { ["unlinkStock"] }
     
     override func run() throws -> [Entity]
@@ -1288,7 +1244,6 @@ class CommandUnlinkStock: Command
 
 class CommandLinkEvent: Command
 {
-    
     override var names: [String] { ["linkEvent"] }
     
     override func run() throws -> [Entity]
@@ -1320,7 +1275,6 @@ class CommandLinkEvent: Command
 
 class CommandUnlinkEvent: Command
 {
-    
     override var names: [String] { ["unlinkEvent"] }
     
     override func run() throws -> [Entity]
@@ -1352,7 +1306,6 @@ class CommandUnlinkEvent: Command
 
 class CommandLinkProcess: Command
 {
-    
     override var names: [String] { ["linkProcess"] }
     
     override func run() throws -> [Entity]
@@ -1367,7 +1320,6 @@ class CommandLinkProcess: Command
 
 class CommandUnlinkProcess: Command
 {
-    
     override var names: [String] { ["unlinkProcess"] }
     
     override func run() throws -> [Entity]
@@ -1382,7 +1334,6 @@ class CommandUnlinkProcess: Command
 
 class CommandBooleanStockFlow: Command
 {
-    
     override var names: [String] { ["booleanStockFlow"] }
     
     override func run() throws -> [Entity]

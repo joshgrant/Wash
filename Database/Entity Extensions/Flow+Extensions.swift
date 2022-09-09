@@ -88,12 +88,12 @@ extension Flow
     }
     
     /// When the flow is running, and the program is quit, we need to re-run it.
-    func resume()
+    func resume(context: Context)
     {
-        runHelper(verbose: false)
+        runHelper(verbose: false, context: context)
     }
     
-    func run(fromUser: Bool = false, verbose: Bool = false)
+    func run(fromUser: Bool = false, verbose: Bool = false, context: Context)
     {
         if isRunning
         {
@@ -126,14 +126,14 @@ extension Flow
                     return
                 }
                 if verbose { print("Delay completed.") }
-                self.runHelper(verbose: verbose)
+                self.runHelper(verbose: verbose, context: context)
             }
         } else {
-            runHelper(verbose: verbose)
+            runHelper(verbose: verbose, context: context)
         }
     }
 
-    func runHelper(verbose: Bool)
+    func runHelper(verbose: Bool, context: Context)
     {
         if verbose { print("Entering run helper") }
         
@@ -188,7 +188,7 @@ extension Flow
             
             if repeats
             {
-                run(fromUser: false, verbose: verbose)
+                run(fromUser: false, verbose: verbose, context: context)
             }
             
             return
@@ -200,8 +200,8 @@ extension Flow
         fromSource.value -= amountToSubtract
         toSource.value += amountToSubtract
         
-        fromSource.logHistory(.updatedValue, context: database.context)
-        toSource.logHistory(.updatedValue, context: database.context)
+        fromSource.logHistory(.updatedValue, context: context)
+        toSource.logHistory(.updatedValue, context: context)
         
         if verbose { print("Re-scheduling for 1 second") }
         
@@ -215,7 +215,7 @@ extension Flow
             
             if verbose { print("Begin re-entry of run helper") }
             self.amountRemaining = self.amountRemaining - amountToSubtract
-            self.runHelper(verbose: verbose)
+            self.runHelper(verbose: verbose, context: context)
         }
     }
 }

@@ -95,13 +95,13 @@ extension Process
         return current / total
     }
     
-    func run()
+    func run(context: Context)
     {
         // In a process, should we run all of the subprocesses?
         
         for flow: Flow in unwrapped(\Process.flows)
         {
-            flow.run()
+            flow.run(context: context)
         }
     }
 }
