@@ -35,9 +35,17 @@ let start: DispatchCompletion = { completion in
 
 let inputLoop: (Heartbeat) -> Void = { heartbeat in
     guard let input = readLine() else { return }
-    guard let command = Command(input: input, workspace: workspace, context: database.context) else { return }
-    workspace.lastResult = command.run(database: database)
-    workspace.display()
+    guard let command = Command(input: input, workspace: workspace, database: database) else { return }
+    
+    do
+    {
+        workspace.lastResult = try command.run()
+        workspace.display()
+    }
+    catch
+    {
+        print("Error thrown from input: \(error)")
+    }
 }
 
 let eventLoop: (Heartbeat) -> Void = { heartbeat in

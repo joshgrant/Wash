@@ -8,24 +8,36 @@
 import Foundation
 import CoreData
 
-class Command
+protocol TextRepresentable
+{
+    var names: [String] { get }
+}
+
+open class Command: TextRepresentable
 {
     // MARK: - Variables
     
-    var context: Context
+    open var names: [String] { [] }
+    
+    var database: Database
+    
+    @available(*, deprecated)
+    var input: String
+    
     var command: String
     var arguments: [String]
     var workspace: Workspace
     
     // MARK: - Initialization
     
-    init?(input: String, workspace: Workspace, context: Context)
+    init?(input: String, workspace: Workspace, database: Database)
     {
         let (command, arguments) = Self.parse(input: input)
+        self.input = input
         self.command = command
         self.arguments = arguments
         self.workspace = workspace
-        self.context = context
+        self.database = database
     }
     
     static func parse(input: String) -> (String, [String])
@@ -74,12 +86,78 @@ class Command
     
     // MARK: - Public functions
     
-    func run(database: Database) -> [Entity]
+    open func run() throws -> [Entity]
     {
         // Parse the command....
         database.context.quickSave()
         return []
     }
+}
+
+extension Command
+{
+    static var allCases: [Command.Type] = [
+        CommandAdd.self,
+        CommandSetName.self,
+        CommandHide.self,
+        CommandUnhide.self,
+        CommandView.self,
+        CommandDelete.self,
+        CommandPin.self,
+        CommandUnpin.self,
+        CommandSelect.self,
+        CommandChoose.self,
+        CommandHistory.self,
+        CommandPinned.self,
+        CommandLibrary.self,
+        CommandAll.self,
+        CommandUnbalanced.self,
+        CommandPriority.self,
+        CommandDashboard.self,
+        CommandSuggest.self,
+        CommandEvents.self,
+        CommandFlows.self,
+        CommandRunning.self,
+        CommandHidden.self,
+        CommandQuit.self,
+        CommandNuke.self,
+        CommandClear.self,
+        CommandSetStockType.self,
+        CommandSetCurrent.self,
+        CommandSetIdeal.self,
+        CommandSetMin.self,
+        CommandSetMax.self,
+        CommandSetUnit.self,
+        CommandLinkOutflow.self,
+        CommandLinkInflow.self,
+        CommandUnlinkOutflow.self,
+        CommandUnlinkInflow.self,
+        CommandSetAmount.self,
+        CommandSetDelay.self,
+        CommandSetDuration.self,
+        CommandSetRequires.self,
+        CommandSetFrom.self,
+        CommandSetTo.self,
+        CommandFinish.self,
+        CommandSetRepeats.self,
+        CommandSetActive.self,
+        CommandLinkCondition.self,
+        CommandUnlinkCondition.self,
+        CommandSetConditionType.self,
+        CommandSetCooldown.self,
+        CommandSetComparison.self,
+        CommandSetLeftHand.self,
+        CommandSetRightHand.self,
+        CommandLinkFlow.self,
+        CommandUnlinkFlow.self,
+        CommandLinkStock.self,
+        CommandUnlinkStock.self,
+        CommandLinkEvent.self,
+        CommandUnlinkEvent.self,
+        CommandLinkProcess.self,
+        CommandUnlinkProcess.self,
+        CommandBooleanStockFlow.self,
+    ]
 }
 
 // MARK: - Argument parsing
@@ -146,51 +224,111 @@ private extension Command
 
 // MARK: - Commands
 
-private extension Command
+class CommandHelp: Command
 {
-    func help() throws -> [Entity]
+    override var names: [String]
     {
+        ["help"]
+    }
+    
+    override func run() -> [Entity] {
         print("Sorry, no help is available at this time.")
         return []
     }
+}
+
+class CommandRun: Command
+{
+    override var names: [String]
+    {
+        ["run"]
+    }
     
-    func add() throws -> [Entity]
+    override func run() throws -> [Entity]
+    {
+        if let flow: Flow = try? workspace.first()
+        {
+            flow.run(fromUser: true)
+            return [flow]
+        }
+        else if let process: Process = try? workspace.first()
+        {
+            process.run()
+            return [process]
+        }
+        else
+        {
+            throw ParsingError.notRunnable
+        }
+    }
+}
+
+class CommandAdd: Command
+{
+    
+    override var names: [String] { ["add"] }
+    
+    override func run() throws -> [Entity]
     {
         let entityType = try entityType()
         let name = try name(startingAt: 1)
         
-        let entity = entityType.insertNewEntity(into: context, name: name)
+        let entity = entityType.insertNewEntity(into: database.context, name: name)
         workspace.entities.insert(entity, at: 0)
         
         return [entity]
     }
+}
+
+class CommandSetName: Command
+{
     
-    func setName() throws -> [Entity]
+    override var names: [String] { ["setName"] }
+    
+    override func run() throws -> [Entity]
     {
         let entity: SymbolNamed = try workspace.first()
         let name = try name()
         
-        let symbol = Symbol(context: context, name: name)
+        let symbol = Symbol(context: database.context, name: name)
         entity.symbolName = symbol
         
         return [entity]
     }
+}
+
+class CommandHide: Command
+{
     
-    func hide() throws -> [Entity]
+    override var names: [String] { ["hide"] }
+    
+    override func run() throws -> [Entity]
     {
         let entity: Entity = try workspace.first()
         entity.isHidden = true
         return [entity]
     }
+}
+
+class CommandUnhide: Command
+{
     
-    func unhide() throws -> [Entity]
+    override var names: [String] { ["unhide"] }
+    
+    override func run() throws -> [Entity]
     {
         let entity: Entity = try workspace.first()
         entity.isHidden = false
         return [entity]
     }
+}
+
+class CommandView: Command
+{
     
-    func view() throws -> [Entity]
+    override var names: [String] { ["view"] }
+    
+    override func run() throws -> [Entity]
     {
         let entity: Printable = try workspace.first()
         print(entity.fullDescription)
@@ -208,29 +346,53 @@ private extension Command
             throw ParsingError.argumentDidNotMatchType(Entity.self)
         }
     }
+}
+
+class CommandDelete: Command
+{
     
-    func delete() throws -> [Entity]
+    override var names: [String] { ["delete"] }
+    
+    override func run() throws -> [Entity]
     {
         let entity: Entity = try workspace.first()
-        context.delete(entity)
+        database.context.delete(entity)
         return [entity]
     }
+}
+
+class CommandPin: Command
+{
     
-    func pin() throws -> [Entity]
+    override var names: [String] { ["pin"] }
+    
+    override func run() throws -> [Entity]
     {
         let entity: Pinnable = try workspace.first()
         entity.isPinned = true
         return [entity]
     }
+}
+
+class CommandUnpin: Command
+{
     
-    func unpin() throws -> [Entity]
+    override var names: [String] { ["unpin"] }
+    
+    override func run() throws -> [Entity]
     {
         let entity: Pinnable = try workspace.first()
         entity.isPinned = false
         return [entity]
     }
+}
+
+class CommandSelect: Command
+{
     
-    func select() throws -> [Entity]
+    override var names: [String] { ["select"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let entity: Entity = try workspace.entity(at: index)
@@ -246,8 +408,14 @@ private extension Command
             return [entity]
         }
     }
+}
+
+class CommandChoose: Command
+{
     
-    func choose() throws -> [Entity]
+    override var names: [String] { ["choose"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         
@@ -261,8 +429,14 @@ private extension Command
         
         return [entity]
     }
+}
+
+class CommandHistory: Command
+{
     
-    func history() throws -> [Entity]
+    override var names: [String] { ["history"] }
+    
+    override func run() throws -> [Entity]
     {
         let entity: Historable = try workspace.first()
         
@@ -285,28 +459,47 @@ private extension Command
             return []
         }
     }
+}
+
+class CommandPinned: Command
+{
+    override var names: [String] { ["pinned"] }
     
-    func pinned(shouldPrint: Bool) -> [Entity]
+    var shouldPrint: Bool = true
+    
+    override func run() throws -> [Entity]
     {
-        let request = Entity.makePinnedObjectsFetchRequest(context: context)
-        let result = (try? context.fetch(request)) ?? []
+        let request = Entity.makePinnedObjectsFetchRequest(context: database.context)
+        let result = (try? database.context.fetch(request)) ?? []
         let pins = result.compactMap { $0 as? Pinnable }
         if shouldPrint { print("Pins: \(pins)") }
         return pins
     }
+}
+
+class CommandLibrary: Command
+{
     
-    func library() -> [Entity]
+    override var names: [String] { ["library"] }
+    
+    override func run() throws -> [Entity]
     {
         for type in EntityType.libraryVisible
         {
-            let count = type.count(in: context)
+            let count = type.count(in: database.context)
             print("\(type.icon.text) \(type.title) (\(count))")
         }
         
         return []
     }
+}
+
+class CommandAll: Command
+{
     
-    func all() throws -> [Entity]
+    override var names: [String] { ["all"] }
+    
+    override func run() throws -> [Entity]
     {
         let entityType = try entityType()
         
@@ -314,7 +507,7 @@ private extension Command
         request.predicate = NSPredicate(format: "isHidden == false && deletedDate == nil")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: true)]
         
-        let result = try context.fetch(request)
+        let result = try database.context.fetch(request)
         
         guard result.count > 0 else
         {
@@ -332,28 +525,44 @@ private extension Command
         
         return result as? [Entity] ?? []
     }
+}
+
+class CommandUnbalanced: Command
+{
     
-    func unbalanced(shouldPrint: Bool = true) -> [Entity]
+    override var names: [String] { ["unbalanced"] }
+    
+    var shouldPrint: Bool = true
+    
+    override func run() -> [Entity]
     {
         let requestStock: NSFetchRequest<Stock> = Stock.fetchRequest()
         requestStock.predicate = NSPredicate(format: "isHidden == false && deletedDate == nil")
-        let resultStock = (try? context.fetch(requestStock)) ?? []
+        let resultStock = (try? database.context.fetch(requestStock)) ?? []
         let unbalancedStocks = resultStock.filter { $0.percentIdeal < Stock.thresholdPercent }
         if shouldPrint { print("Unbalanced Stocks: \(unbalancedStocks)") }
         
         let requestSystem: NSFetchRequest<System> = System.fetchRequest()
         requestSystem.predicate = NSPredicate(format: "isHidden == false && deletedDate == nil")
-        let resultSystem = (try? context.fetch(requestSystem)) ?? []
+        let resultSystem = (try? database.context.fetch(requestSystem)) ?? []
         let unbalancedSystems = resultSystem.filter { $0.percentIdeal < Stock.thresholdPercent }
         if shouldPrint { print("Unbalanced Systems: \(unbalancedSystems)") }
         
         return unbalancedStocks + unbalancedSystems
     }
+}
+
+class CommandPriority: Command
+{
     
-    func priority(shouldPrint: Bool = true) -> [Entity]
+    override var names: [String] { ["priority"] }
+    
+    var shouldPrint: Bool = true
+    
+    override func run() -> [Entity]
     {
         var suggested: Set<Flow> = []
-        let allStocks: [Stock] = Stock.all(context: context)
+        let allStocks: [Stock] = Stock.all(context: database.context)
         let unbalancedStocks = allStocks.filter { stock in
             stock.percentIdeal <= Stock.thresholdPercent
         }
@@ -408,53 +617,80 @@ private extension Command
         if shouldPrint { print("Priority: \(suggested)") }
         return Array(suggested)
     }
+}
+
+class CommandDashboard: Command
+{
+    override var names: [String] { ["dashboard"] }
     
-    func dashboard()
+    override func run() throws -> [Entity]
     {
-        let pinned = pinned(shouldPrint: false)
-        let unbalanced = unbalanced(shouldPrint: false)
-        let priority = priority(shouldPrint: false)
+        let pinned = CommandPinned(input: input, workspace: workspace, database: database)
+        pinned?.shouldPrint = false
+        
+        let unbalanced = CommandUnbalanced(input: input, workspace: workspace, database: database)
+        unbalanced?.shouldPrint = false
+        let priority = CommandPriority(input: input, workspace: workspace, database: database)
+        priority?.shouldPrint = false
         
         print("Pinned")
         print("------------")
-        for pin in pinned {
+        for pin in pinned?.run() {
             print(pin)
         }
         print("")
         print("Unbalanced")
         print("------------")
-        for item in unbalanced {
+        for item in unbalanced?.run() {
             print(item)
         }
         print("")
         print("Priority")
         print("------------")
-        for item in priority {
+        for item in priority?.run() {
             print(item)
         }
         print("------------")
     }
+}
+
+class CommandSuggest: Command
+{
     
-    func suggest()
+    override var names: [String] { ["suggest"] }
+    
+    override func run() throws -> [Entity]
     {
         //            // Should we pin an item we view often?
         //            // Should we find a flow to balance an unbalanced stock?
         //            // Should we run a priority flow?
     }
+}
+
+class CommandEvents: Command
+{
     
-    func events() -> [Entity]
+    override var names: [String] { ["events"] }
+    
+    override func run() -> [Entity]
     {
-        let events = Event.activeAndSatisfiedEvents(context: context)
+        let events = Event.activeAndSatisfiedEvents(context: database.context)
         for event in events
         {
             print(event)
         }
         return events
     }
+}
+
+class CommandFlows: Command
+{
     
-    func flows() -> [Entity]
+    override var names: [String] { ["flows"] }
+    
+    override func run() -> [Entity]
     {
-        let flows: [Flow] = Flow.all(context: context)
+        let flows: [Flow] = Flow.all(context: database.context)
         let flowsNeedingCompletion = flows.filter { flow in
             flow.needsUserExecution && !flow.isHidden && flow.deletedDate == nil
         }
@@ -463,10 +699,16 @@ private extension Command
         }
         return flowsNeedingCompletion
     }
+}
+
+class CommandRunning: Command
+{
     
-    func running() -> [Entity]
+    override var names: [String] { ["running"] }
+    
+    override func run() -> [Entity]
     {
-        let result = Flow.runningFlows(in: context)
+        let result = Flow.runningFlows(in: database.context)
         
         for flow in result
         {
@@ -476,72 +718,132 @@ private extension Command
         
         return result
     }
+}
+
+class CommandHidden: Command
+{
     
-    func hidden() -> [Entity]
+    override var names: [String] { ["hidden"] }
+    
+    override func run() -> [Entity]
     {
         let request: NSFetchRequest<Entity> = Entity.fetchRequest()
         request.predicate = NSPredicate(format: "isHidden == true")
-        let result = (try? context.fetch(request)) ?? []
+        let result = (try? database.context.fetch(request)) ?? []
         print(result)
         return result
     }
+}
+
+class CommandQuit: Command
+{
     
-    func quit()
+    override var names: [String] { ["quit"] }
+    
+    override func run() throws -> [Entity]
     {
         // TODO: Communicate to quit the application
     }
+}
+
+class CommandNuke: Command
+{
     
-    func nuke()
+    override var names: [String] { ["nuke"] }
+    
+    override func run() throws -> [Entity]
     {
         database.clear()
     }
+}
+
+class CommandClear: Command
+{
     
-    func clear()
+    override var names: [String] { ["clear"] }
+    
+    override func run() throws -> [Entity]
     {
         workspace.entities.removeAll()
     }
+}
+
+class CommandSetStockType: Command
+{
     
-    func setStockType() throws -> [Entity]
+    override var names: [String] { ["setStockType"] }
+    
+    override func run() throws -> [Entity]
     {
         let stock: Stock = try workspace.first()
         let type = try sourceValueType()
         stock.source?.valueType = type
         return [stock]
     }
+}
+
+class CommandSetCurrent: Command
+{
     
-    func setCurrent() throws -> [Entity]
+    override var names: [String] { ["setCurrent"] }
+    
+    override func run() throws -> [Entity]
     {
         let stock: Stock = try workspace.first()
         let number: Double = try value()
         stock.current = number
         return [stock]
     }
+}
+
+class CommandSetIdeal: Command
+{
     
-    func setIdeal() throws -> [Entity]
+    override var names: [String] { ["setIdeal"] }
+    
+    override func run() throws -> [Entity]
     {
         let stock: Stock = try workspace.first()
         let number: Double = try value()
         stock.target = number
         return [stock]
     }
+}
+
+class CommandSetMin: Command
+{
     
-    func setMin() throws -> [Entity]
+    override var names: [String] { ["setMin"] }
+    
+    override func run() throws -> [Entity]
     {
         let stock: Stock = try workspace.first()
         let number: Double = try value()
         stock.min = number
         return [stock]
     }
+}
+
+class CommandSetMax: Command
+{
     
-    func setMax() throws -> [Entity]
+    override var names: [String] { ["setMax"] }
+    
+    override func run() throws -> [Entity]
     {
         let stock: Stock = try workspace.first()
         let number: Double = try value()
         stock.max = number
         return [stock]
     }
+}
+
+class CommandSetUnit: Command
+{
     
-    func setUnit() throws -> [Entity]
+    override var names: [String] { ["setUnit"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let stock: Stock = try workspace.first()
@@ -549,8 +851,14 @@ private extension Command
         stock.unit = unit
         return [stock]
     }
+}
+
+class CommandLinkOutflow: Command
+{
     
-    func linkOutflow() throws -> [Entity]
+    override var names: [String] { ["linkOutflow"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let stock: Stock = try workspace.first()
@@ -558,8 +866,14 @@ private extension Command
         stock.addToOutflows(flow)
         return [stock]
     }
+}
+
+class CommandLinkInflow: Command
+{
     
-    func linkInflow() throws -> [Entity]
+    override var names: [String] { ["linkInflow"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let stock: Stock = try workspace.first()
@@ -567,8 +881,14 @@ private extension Command
         stock.addToInflows(flow)
         return [stock]
     }
+}
+
+class CommandUnlinkOutflow: Command
+{
     
-    func unlinkOutflow() throws -> [Entity]
+    override var names: [String] { ["unlinkOutflow"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let stock: Stock = try workspace.first()
@@ -576,8 +896,14 @@ private extension Command
         stock.removeFromOutflows(flow)
         return [stock]
     }
+}
+
+class CommandUnlinkInflow: Command
+{
     
-    func unlinkInflow() throws -> [Entity]
+    override var names: [String] { ["unlinkInflow"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let stock: Stock = try workspace.first()
@@ -585,8 +911,14 @@ private extension Command
         stock.removeFromInflows(flow)
         return [stock]
     }
+}
+
+class CommandSetAmount: Command
+{
     
-    func setAmount() throws -> [Entity]
+    override var names: [String] { ["setAmount"] }
+    
+    override func run() throws -> [Entity]
     {
         let flow: Flow = try workspace.first()
         let amount: Double = try value()
@@ -595,32 +927,56 @@ private extension Command
         flow.amount = amount
         return [flow]
     }
+}
+
+class CommandSetDelay: Command
+{
     
-    func setDelay() throws -> [Entity]
+    override var names: [String] { ["setDelay"] }
+    
+    override func run() throws -> [Entity]
     {
         let flow: Flow = try workspace.first()
         let delay: Double = try value()
         flow.delay = delay
         return [flow]
     }
+}
+
+class CommandSetDuration: Command
+{
     
-    func setDuration() throws -> [Entity]
+    override var names: [String] { ["setDuration"] }
+    
+    override func run() throws -> [Entity]
     {
         let flow: Flow = try workspace.first()
         let duration: Double = try value()
         flow.duration = duration
         return [flow]
     }
+}
+
+class CommandSetRequires: Command
+{
     
-    func setRequires() throws -> [Entity]
+    override var names: [String] { ["setRequires"] }
+    
+    override func run() throws -> [Entity]
     {
         let flow: Flow = try workspace.first()
         let requires: Bool = try value()
         flow.requiresUserCompletion = requires
         return [flow]
     }
+}
+
+class CommandSetFrom: Command
+{
     
-    func setFrom() throws -> [Entity]
+    override var names: [String] { ["setFrom"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let flow: Flow = try workspace.first()
@@ -628,8 +984,14 @@ private extension Command
         flow.from = stock
         return [flow]
     }
+}
+
+class CommandSetTo: Command
+{
     
-    func setTo() throws -> [Entity]
+    override var names: [String] { ["setTo"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let flow: Flow = try workspace.first()
@@ -637,50 +999,56 @@ private extension Command
         flow.to = stock
         return [flow]
     }
+}
+
+class CommandFinish: Command
+{
     
-    func run() throws -> [Entity]
-    {
-        if let flow: Flow = try? workspace.first()
-        {
-            flow.run(fromUser: true)
-            return [flow]
-        }
-        else if let process: Process = try? workspace.first()
-        {
-            process.run()
-            return [process]
-        }
-        else
-        {
-            throw ParsingError.notRunnable
-        }
-    }
+    override var names: [String] { ["finish"] }
     
-    func finish() throws -> [Entity]
+    override func run() throws -> [Entity]
     {
         let flow: Flow = try workspace.first()
         flow.amountRemaining = 0
         flow.isRunning = false
         return [flow]
     }
+}
+
+class CommandSetRepeats: Command
+{
     
-    func setRepeats() throws -> [Entity]
+    override var names: [String] { ["setRepeats"] }
+    
+    override func run() throws -> [Entity]
     {
         let flow: Flow = try workspace.first()
         let repeats: Bool = try value()
         flow.repeats = repeats
         return [flow]
     }
+}
+
+class CommandSetActive: Command
+{
     
-    func setActive() throws -> [Entity]
+    override var names: [String] { ["setActive"] }
+    
+    override func run() throws -> [Entity]
     {
         let event: Event = try workspace.first()
         let active: Bool = try value()
         event.isActive = active
         return [event]
     }
+}
+
+class CommandLinkCondition: Command
+{
     
-    func linkCondition() throws -> [Entity]
+    override var names: [String] { ["linkCondition"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let event: Event = try workspace.first()
@@ -688,8 +1056,14 @@ private extension Command
         event.addToConditions(condition)
         return [event]
     }
+}
+
+class CommandUnlinkCondition: Command
+{
     
-    func unlinkCondition() throws -> [Entity]
+    override var names: [String] { ["unlinkCondition"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let event: Event = try workspace.first()
@@ -697,24 +1071,42 @@ private extension Command
         event.removeFromConditions(condition)
         return [event]
     }
+}
+
+class CommandSetConditionType: Command
+{
     
-    func setConditionType() throws -> [Entity]
+    override var names: [String] { ["setConditionType"] }
+    
+    override func run() throws -> [Entity]
     {
         let event: Event = try workspace.first()
         let conditionType = try conditionType()
         event.conditionType = conditionType
         return [event]
     }
+}
+
+class CommandSetCooldown: Command
+{
     
-    func setCooldown() throws -> [Entity]
+    override var names: [String] { ["setCooldown"] }
+    
+    override func run() throws -> [Entity]
     {
         let event: Event = try workspace.first()
         let cooldown: Double = try value()
         event.cooldownSeconds = cooldown
         return [event]
     }
+}
+
+class CommandSetComparison: Command
+{
     
-    func setComparison() throws -> [Entity]
+    override var names: [String] { ["setComparison"] }
+    
+    override func run() throws -> [Entity]
     {
         let condition: Condition = try workspace.first()
         let comparison = try comparisonType()
@@ -722,14 +1114,20 @@ private extension Command
         condition.setComparison(comparison, type: type)
         return [condition]
     }
+}
+
+class CommandSetLeftHand: Command
+{
     
-    func setLeftHand() throws -> [Entity]
+    override var names: [String] { ["setLeftHand"] }
+    
+    override func run() throws -> [Entity]
     {
         let condition: Condition = try workspace.first()
         
         if let number: Double = try? value()
         {
-            let source = Source(context: context)
+            let source = Source(context: database.context)
             source.valueType = .number
             source.value = number
             condition.leftHand = source
@@ -754,14 +1152,20 @@ private extension Command
             throw ParsingError.workspaceEntityCannotPerformThisOperation
         }
     }
+}
+
+class CommandSetRightHand: Command
+{
     
-    func setRightHand() throws -> [Entity]
+    override var names: [String] { ["setRightHand"] }
+    
+    override func run() throws -> [Entity]
     {
         let condition: Condition = try workspace.first()
         
         if let number: Double = try? value()
         {
-            let source = Source(context: context)
+            let source = Source(context: database.context)
             source.valueType = .number
             source.value = number
             condition.rightHand = source
@@ -786,8 +1190,14 @@ private extension Command
             throw ParsingError.workspaceEntityCannotPerformThisOperation
         }
     }
+}
+
+class CommandLinkFlow: Command
+{
     
-    func linkFlow() throws -> [Entity]
+    override var names: [String] { ["linkFlow"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let flow: Flow = try workspace.entity(at: index)
@@ -812,8 +1222,14 @@ private extension Command
             throw ParsingError.workspaceEntityCannotPerformThisOperation
         }
     }
+}
+
+class CommandUnlinkFlow: Command
+{
     
-    func unlinkFlow() throws -> [Entity]
+    override var names: [String] { ["unlinkFlow"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let flow: Flow = try workspace.entity(at: index)
@@ -838,8 +1254,14 @@ private extension Command
             throw ParsingError.workspaceEntityCannotPerformThisOperation
         }
     }
+}
+
+class CommandLinkStock: Command
+{
     
-    func linkStock() throws -> [Entity]
+    override var names: [String] { ["linkStock"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let stock: Stock = try workspace.entity(at: index)
@@ -847,8 +1269,14 @@ private extension Command
         system.addToStocks(stock)
         return [system]
     }
+}
+
+class CommandUnlinkStock: Command
+{
     
-    func unlinkStock() throws -> [Entity]
+    override var names: [String] { ["unlinkStock"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let stock: Stock = try workspace.entity(at: index)
@@ -856,8 +1284,14 @@ private extension Command
         system.removeFromStocks(stock)
         return [system]
     }
+}
+
+class CommandLinkEvent: Command
+{
     
-    func linkEvent() throws -> [Entity]
+    override var names: [String] { ["linkEvent"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let event: Event = try workspace.entity(at: index)
@@ -882,8 +1316,14 @@ private extension Command
             throw ParsingError.workspaceEntityCannotPerformThisOperation
         }
     }
+}
+
+class CommandUnlinkEvent: Command
+{
     
-    func unlinkEvent() throws -> [Entity]
+    override var names: [String] { ["unlinkEvent"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let event: Event = try workspace.entity(at: index)
@@ -908,8 +1348,14 @@ private extension Command
             throw ParsingError.workspaceEntityCannotPerformThisOperation
         }
     }
+}
+
+class CommandLinkProcess: Command
+{
     
-    func linkProcess() throws -> [Entity]
+    override var names: [String] { ["linkProcess"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let subprocess: Process = try workspace.entity(at: index)
@@ -917,8 +1363,14 @@ private extension Command
         process.addToSubProcesses(subprocess)
         return [process]
     }
+}
+
+class CommandUnlinkProcess: Command
+{
     
-    func unlinkProcess() throws -> [Entity]
+    override var names: [String] { ["unlinkProcess"] }
+    
+    override func run() throws -> [Entity]
     {
         let index = try index()
         let subprocess: Process = try workspace.entity(at: index)
@@ -926,31 +1378,37 @@ private extension Command
         process.removeFromSubProcesses(subprocess)
         return [process]
     }
+}
+
+class CommandBooleanStockFlow: Command
+{
     
-    func booleanStockFlow() throws -> [Entity]
+    override var names: [String] { ["booleanStockFlow"] }
+    
+    override func run() throws -> [Entity]
     {
         let name = try name()
         
-        let stock = EntityType.stock.insertNewEntity(into: context, name: name) as! Stock
+        let stock = EntityType.stock.insertNewEntity(into: database.context, name: name) as! Stock
         stock.current = 0
         stock.target = 1
         stock.max = 1
         stock.valueType = .boolean
         
         // Check as in "check off a box"
-        let checkFlow = EntityType.flow.insertNewEntity(into: context, name: "Check: " + name) as! Flow
+        let checkFlow = EntityType.flow.insertNewEntity(into: database.context, name: "Check: " + name) as! Flow
         checkFlow.amount = 1
         checkFlow.duration = 1
         checkFlow.delay = 0
-        checkFlow.from = ContextPopulator.sourceStock(context: context)
+        checkFlow.from = ContextPopulator.sourceStock(context: database.context)
         checkFlow.to = stock
         
-        let uncheckFlow = EntityType.flow.insertNewEntity(into: context, name: "Uncheck: " + name) as! Flow
+        let uncheckFlow = EntityType.flow.insertNewEntity(into: database.context, name: "Uncheck: " + name) as! Flow
         uncheckFlow.amount = 1
         uncheckFlow.duration = 0
         uncheckFlow.delay = 0
         uncheckFlow.from = stock
-        uncheckFlow.to = ContextPopulator.sinkStock(context: context)
+        uncheckFlow.to = ContextPopulator.sinkStock(context: database.context)
         
         workspace.entities.insert(stock, at: 0)
         workspace.entities.insert(checkFlow, at: 2)
