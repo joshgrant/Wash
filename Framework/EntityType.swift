@@ -74,6 +74,7 @@ enum EntityType
     }
     
     @discardableResult
+    @available(*, deprecated)
     func insertNewEntity(into context: Context, name: String?) -> Entity
     {
         switch self

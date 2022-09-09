@@ -14,9 +14,7 @@
 		03056A4927F00F2000D10BA6 /* Process+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4827F00F2000D10BA6 /* Process+Extensions.swift */; };
 		03056A4B27F01F5E00D10BA6 /* CompletionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4A27F01F5E00D10BA6 /* CompletionType.swift */; };
 		03056A4D27F01F8B00D10BA6 /* OrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4C27F01F8B00D10BA6 /* OrderType.swift */; };
-		0330F9AB27FF7AF3008B40F3 /* Command+Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9AA27FF7AF3008B40F3 /* Command+Run.swift */; };
 		0330F9B227FF7C7D008B40F3 /* Historable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9B127FF7C7D008B40F3 /* Historable.swift */; };
-		0330F9B427FF8009008B40F3 /* Command+NonStateModifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */; };
 		0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333F48927D3F6B000B4C284 /* Printable.swift */; };
 		03739A5427E802EF0029BC9D /* Heartbeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03739A5327E802EF0029BC9D /* Heartbeat.swift */; };
 		03B4A9D427C005F10071F63E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4A9D327C005F10071F63E /* main.swift */; };
@@ -74,9 +72,7 @@
 		03056A4827F00F2000D10BA6 /* Process+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Process+Extensions.swift"; sourceTree = "<group>"; };
 		03056A4A27F01F5E00D10BA6 /* CompletionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionType.swift; sourceTree = "<group>"; };
 		03056A4C27F01F8B00D10BA6 /* OrderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderType.swift; sourceTree = "<group>"; };
-		0330F9AA27FF7AF3008B40F3 /* Command+Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command+Run.swift"; sourceTree = "<group>"; };
 		0330F9B127FF7C7D008B40F3 /* Historable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Historable.swift; sourceTree = "<group>"; };
-		0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command+NonStateModifying.swift"; sourceTree = "<group>"; };
 		0333F48927D3F6B000B4C284 /* Printable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printable.swift; sourceTree = "<group>"; };
 		03739A5327E802EF0029BC9D /* Heartbeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heartbeat.swift; sourceTree = "<group>"; };
 		03B4A9D027C005F10071F63E /* Wash */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Wash; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,22 +122,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0330F9AC27FF7AFD008B40F3 /* Command */ = {
-			isa = PBXGroup;
-			children = (
-				0330F9B327FF8009008B40F3 /* Command+NonStateModifying.swift */,
-				0330F9AA27FF7AF3008B40F3 /* Command+Run.swift */,
-			);
-			path = Command;
-			sourceTree = "<group>";
-		};
 		03B4A9C727C005F10071F63E = {
 			isa = PBXGroup;
 			children = (
 				03F736C328CAA717009F90C5 /* Workspace.swift */,
 				03F736C128CAA6EA009F90C5 /* Command.swift */,
 				03F736D228CAAFE9009F90C5 /* ParsingError.swift */,
-				03F736C028CAA6D8009F90C5 /* Old Command */,
 				03739A5327E802EF0029BC9D /* Heartbeat.swift */,
 				03B4A9D327C005F10071F63E /* main.swift */,
 				03F736BC28CAA635009F90C5 /* EntityListFormatStyle.swift */,
@@ -234,14 +220,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		03F736C028CAA6D8009F90C5 /* Old Command */ = {
-			isa = PBXGroup;
-			children = (
-				0330F9AC27FF7AFD008B40F3 /* Command */,
-			);
-			path = "Old Command";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,14 +291,12 @@
 				03B4AA4527C1A0F90071F63E /* Unit+Extensions.swift in Sources */,
 				03B4AA2D27C1A0F90071F63E /* Database.swift in Sources */,
 				03B4AA3927C1A0F90071F63E /* Symbol+Extensions.swift in Sources */,
-				0330F9AB27FF7AF3008B40F3 /* Command+Run.swift in Sources */,
 				03B4AA9927C1A31E0071F63E /* EntityType.swift in Sources */,
 				03F736C428CAA717009F90C5 /* Workspace.swift in Sources */,
 				0330F9B227FF7C7D008B40F3 /* Historable.swift in Sources */,
 				03B4AA2327C1A0F90071F63E /* Entity+Extensions.swift in Sources */,
 				03B4AA8427C1A31E0071F63E /* SourceValueType.swift in Sources */,
 				03D5FC8127E65753007E87A9 /* Condition+.swift in Sources */,
-				0330F9B427FF8009008B40F3 /* Command+NonStateModifying.swift in Sources */,
 				03B4AA9C27C1A31E0071F63E /* Priority.swift in Sources */,
 				0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */,
 				03B4AA3C27C1A0F90071F63E /* Flow+Extensions.swift in Sources */,

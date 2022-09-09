@@ -26,4 +26,5 @@ enum ParsingError: Error
     case flowAmountInvalid(Double)
     
     case noHistory
+    case notRunnable
 }
