@@ -10,19 +10,7 @@ import CoreData
 import SpriteKit
 
 let database = Database()
-
-let source = ContextPopulator.sourceStock(context: database.context)
-let sink = ContextPopulator.sinkStock(context: database.context)
-
-let year = ContextPopulator.yearStock(context: database.context)
-let month = ContextPopulator.monthStock(context: database.context)
-let day = ContextPopulator.dayStock(context: database.context)
-let hour = ContextPopulator.hourStock(context: database.context)
-let minute = ContextPopulator.minuteStock(context: database.context)
-let second = ContextPopulator.secondStock(context: database.context)
-
-var workspace: [Entity] = [source, sink]
-var lastResult: [Entity] = []
+let workspace = Workspace(database: database)
 
 let start: DispatchCompletion = { completion in
     
@@ -47,25 +35,15 @@ let start: DispatchCompletion = { completion in
 
 let inputLoop: (Heartbeat) -> Void = { heartbeat in
     guard let input = readLine() else { return }
-    let commandData = CommandData(input: input)
-    let command = Command(commandData: commandData, workspace: &workspace, lastResult: lastResult, quit: &heartbeat.shouldQuit)
-    lastResult = command?.run(database: database) ?? []
-    
-    print(workspace.formatted(EntityListFormatStyle()))
+    guard let command = Command(input: input, workspace: workspace) else { return }
+    workspace.lastResult = command.run(database: database)
+    workspace.display()
 }
 
 let eventLoop: (Heartbeat) -> Void = { heartbeat in
-    
     evaluateActiveEvents(context: database.context)
     evaluateInactiveEvents(context: database.context)
-    
-    let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: .now)
-    year.current = Double(components.year ?? 0)
-    month.current = Double(components.month ?? 0)
-    day.current = Double(components.day ?? 0)
-    hour.current = Double(components.hour ?? 0)
-    minute.current = Double(components.minute ?? 0)
-    second.current = Double(components.second ?? 0)
+    workspace.update()
 }
 
 let cleanup: DispatchCompletion = { completion in
@@ -122,40 +100,5 @@ func evaluateActiveEvents(context: Context)
         }
         event.lastTrigger = Date()
         event.isActive = false
-    }
-}
-
-struct EntityFormatStyle: FormatStyle
-{
-    typealias FormatInput = Entity
-    typealias FormatOutput = String
-    
-    func format(_ value: Entity) -> String {
-        return value.debugDescription
-    }
-}
-
-struct EntityListFormatStyle: FormatStyle
-{
-    typealias FormatInput = [Entity]
-    typealias FormatOutput = String
-
-    func format(_ value: [Entity]) -> String
-    {
-        var output = "["
-        
-        // TODO: Maybe with indexes is an option?
-        for item in value.enumerated()
-        {
-            output += "\(item.offset): \(EntityFormatStyle().format(item.element)), "
-        }
-        
-        if output.count > 2 {
-            output.removeLast(2)
-        }
-        
-        output += "]"
-        
-        return output
     }
 }

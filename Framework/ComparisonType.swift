@@ -13,7 +13,7 @@ public enum ComparisonType: Int16, CaseIterable
     case date
     case number
     
-    init?(string: String)
+    init(string: String) throws
     {
         switch string.lowercased()
         {
@@ -24,7 +24,7 @@ public enum ComparisonType: Int16, CaseIterable
         case "number", "n":
             self = .number
         default:
-            return nil
+            throw ParsingError.invalidComparisonType(string)
         }
     }
 }

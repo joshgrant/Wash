@@ -13,10 +13,7 @@ enum EntityType
     case stock
     case flow
     case event
-//    case conversion
     case condition
-//    case symbol
-//    case note
     case unit
     case system
     case process
@@ -27,10 +24,7 @@ enum EntityType
             .stock,
             .flow,
             .event,
-//            .conversion,
             .condition,
-//            .symbol,
-//            .note,
             .unit,
             .system,
             .process
@@ -44,10 +38,7 @@ enum EntityType
         case .stock: return "Stocks".localized
         case .flow: return "Flows".localized
         case .event: return "Events".localized
-//        case .conversion: return "Conversions".localized
         case .condition: return "Conditions".localized
-//        case .symbol: return "Symbols".localized
-//        case .note: return "Notes".localized
         case .unit: return "Units".localized
         case .system: return "Systems".localized
         case .process: return "Processes".localized
@@ -61,10 +52,7 @@ enum EntityType
         case .stock: return .stock
         case .flow: return .flow
         case .event: return .event
-//        case .conversion: return .conversion
         case .condition: return .condition
-//        case .symbol: return .symbol
-//        case .note: return .note
         case .unit: return .unit
         case .system: return .system
         case .process: return .task
@@ -77,12 +65,8 @@ enum EntityType
         {
         case .stock: return Stock.self
         case .flow: return Flow.self
-//        case .task: return Task.self
         case .event: return Event.self
-//        case .conversion: return Conversion.self
         case .condition: return Condition.self
-//        case .symbol: return Symbol.self
-//        case .note: return Note.self
         case .unit: return Unit.self
         case .system: return System.self
         case .process: return Process.self
@@ -124,7 +108,7 @@ enum EntityType
         }
     }
 
-    init?(string: String)
+    init(string: String) throws
     {
         switch string
         {
@@ -136,8 +120,7 @@ enum EntityType
         case "system": self = .system
         case "process": self = .process
         default:
-            print("Invalid entity type!")
-            return nil
+            throw ParsingError.invalidEntityType(string)
         }
     }
 }

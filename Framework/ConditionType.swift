@@ -20,13 +20,16 @@ extension ConditionType
 
 extension ConditionType
 {
-    init?(_ string: String)
+    init(string: String) throws
     {
-        switch string
+        switch string.lowercased()
         {
-        case "all": self = .all
-        case "any": self = .any
-        default:    self.init(rawValue: .max)
+        case "all":
+            self = .all
+        case "any":
+            self = .any
+        default:
+            throw ParsingError.invalidConditionType(string)
         }
     }
 }

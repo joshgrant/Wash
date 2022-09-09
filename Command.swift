@@ -2,1072 +2,758 @@
 //  Command.swift
 //  Wash
 //
-//  Created by Joshua Grant on 9/3/22.
+//  Created by Joshua Grant on 9/8/22.
 //
 
 import Foundation
 
-var allCommands: [Command.Type] = [
-    CommandHelp.self,
-    CommandAdd.self
-]
-
-protocol CommandLineName
-{
-    var names: [String] { get }
-}
-
 class Command
 {
-}
-
-class CommandHelp: Command
-{
-}
-
-extension CommandHelp
-{
-    var names: [String] { ["help"] }
-}
-
-class CommandAdd: Command
-{
-    var entityType: EntityType
-    var name: String?
+    // MARK: - Variables
     
-    init(entityType: EntityType, name: String? = nil) {
-        self.entityType = entityType
-        self.name = name
+    var context: Context
+    var command: String
+    var arguments: [String]
+    var workspace: Workspace
+    
+    // MARK: - Initialization
+    
+    init?(input: String, workspace: Workspace, context: Context)
+    {
+        let (command, arguments) = Self.parse(input: input)
+        self.command = command
+        self.arguments = arguments
+        self.workspace = workspace
+        self.context = context
+    }
+    
+    static func parse(input: String) -> (String, [String])
+    {
+        var command = ""
+        var arguments: [String] = []
+
+        var word = ""
+        var openQuote = false
+
+        func assign()
+        {
+            if command == ""
+            {
+                command = word
+            }
+            else
+            {
+                arguments.append(word)
+            }
+
+            word = ""
+        }
+
+        for char in Array(input)
+        {
+            if char == "\""
+            {
+                openQuote.toggle()
+            }
+
+            if !openQuote && char == " "
+            {
+                assign()
+            }
+            else
+            {
+                word.append(char)
+            }
+        }
+
+        assign()
+        
+        return (command, arguments)
+    }
+    
+    // MARK: - Public functions
+    
+    func run(database: Database) -> [Entity]
+    {
+        return []
     }
 }
 
-extension CommandAdd
-{
-    var names: [String] { ["add"] }
-}
+// MARK: - Argument parsing
 
-class CommandSetName: Command
+private extension Command
 {
-    var entity: Entity
-    var name: String
+    func entityType() throws -> EntityType
+    {
+        guard arguments.count > 0 else { throw ParsingError.noArguments }
+        return try EntityType(string: arguments[0])
+    }
     
-    init(entity: Entity, name: String) {
-        self.entity = entity
-        self.name = name
+    func name(startingAt index: Int = 0) throws -> String
+    {
+        guard arguments.count > index else { throw ParsingError.indexOutsideOfArgumentsBounds(index) }
+        return arguments[index...].joined(separator: " ")
+    }
+    
+    func index() throws -> Int
+    {
+        guard var first = arguments.first else { throw ParsingError.noArguments }
+        
+        // For the cases where we want a wild-card to distinguish it from a number input
+        if first.first == "$"
+        {
+            first.removeFirst()
+        }
+        
+        guard let number = Int(first) else { throw ParsingError.argumentDidNotMatchType(Int.self) }
+        return number
+    }
+    
+    func sourceValueType() throws -> SourceValueType
+    {
+        guard let first = arguments.first else { throw ParsingError.noArguments }
+        return try SourceValueType(string: first.lowercased())
+    }
+    
+    func value<T: LosslessStringConvertible>() throws -> T
+    {
+        guard let first = arguments.first else { throw ParsingError.noArguments }
+        guard let number = T(first) else { throw ParsingError.argumentDidNotMatchType(T.self) }
+        return number
+    }
+    
+    func conditionType() throws -> ConditionType
+    {
+        guard let string = arguments.first else { throw ParsingError.noArguments }
+        return try ConditionType(string: string)
+    }
+    
+    func comparisonType() throws -> ComparisonType
+    {
+        guard let string = arguments.first else { throw ParsingError.noArguments }
+        return try ComparisonType(string: string)
+    }
+    
+    func argument(at index: Int) throws -> String
+    {
+        guard arguments.count > index else { throw ParsingError.indexOutsideOfArgumentsBounds(index) }
+        return arguments[index]
     }
 }
 
-extension CommandSetName
-{
-    var names: [String] { ["set-name"] }
-}
+// MARK: - Commands
 
-class CommandHide: Command
+private extension Command
 {
-    var entity: Entity
-    
-    init(entity: Entity) {
-        self.entity = entity
+    func help() throws -> [Entity]
+    {
+        print("Sorry, no help is available at this time.")
+        return []
     }
-}
-
-extension CommandHide
-{
-    var names: [String] { ["hide"] }
-}
-
-class CommandUnhide: Command
-{
-    var entity: Entity
     
-    init(entity: Entity) {
-        self.entity = entity
-    }
-}
-
-extension CommandUnhide
-{
-    var names: [String] { ["unhide"] }
-}
-
-class CommandView: Command
-{
-    var entity: Printable
+    func add() throws -> [Entity]
+       {
+           let entityType = try entityType()
+           let name = try name(startingAt: 1)
+           
+           let entity = entityType.insertNewEntity(into: context, name: name)
+           workspace.entities.insert(entity, at: 0)
+           
+           return [entity]
+       }
+       
+       func setName() throws -> [Entity]
+       {
+           let entity: SymbolNamed = try workspace.first()
+           let name = try name()
+           
+           let symbol = Symbol(context: context, name: name)
+           entity.symbolName = symbol
+           
+           return [entity]
+       }
+       
+       func hide() throws -> [Entity]
+       {
+           let entity: Entity = try workspace.first()
+           entity.isHidden = true
+           return [entity]
+       }
+       
+       func unhide() throws -> [Entity]
+       {
+           let entity: Entity = try workspace.first()
+           entity.isHidden = false
+           return [entity]
+       }
+       
+       func view() throws -> [Entity]
+       {
+           let entity: Printable = try workspace.first()
+           print(entity.fullDescription)
+           
+           if let entity = entity as? Selectable
+           {
+               return entity.selection
+           }
+       }
+       
+       func delete() throws -> [Entity]
+       {
+           let entity = try workspace.first()
+           context.delete(entity)
+           return [entity]
+       }
+       
+       func pin() throws -> [Entity]
+       {
+           let entity: Pinnable = try workspace.first()
+           entity.isPinned = true
+           return [entity]
+       }
+       
+       func unpin() throws -> [Entity]
+       {
+           let entity: Pinnable = try workspace.first()
+           entity.isPinned = false
+           return [entity]
+       }
+       
+       func select() throws -> [Entity]
+       {
+           let index = try index()
+           let entity: Entity = try workspace.entity(at: index)
+           workspace.entities.remove(at: index)
+           workspace.entities.insert(entity, at: 0)
+           
+           if let entity = entity as? Selectable
+           {
+               return entity.selection
+           }
+           else
+           {
+               return [entity]
+           }
+       }
+       
+       func choose() throws -> [Entity]
+       {
+           let index = try index()
+           
+           guard index < workspace.lastResult.count else
+           {
+               throw ParsingError.lastResultIndexOutOfBounds(index)
+           }
+           
+           let entity = workspace.lastResult[index]
+           workspace.entities.insert(entity, at: 0)
+           
+           return [entity]
+       }
+       
+       func history() throws -> [Entity]
+       {
+           let entity: Historable = try workspace.first()
+           
+           guard let history = entity.history else
+           {
+               throw ParsingError.noHistory
+           }
+           
+           for item in history
+           {
+               print(item)
+           }
+       }
+       
+       func pinned()
+       {
+           //            output = runPinned(context: context)
+       }
+       
+       func library()
+       {
+           //            output = runLibrary(context: context)
+       }
+       
+       func all() throws -> [Entity]
+       {
+           let entityType = try entityType()
+           //            output = runAll(entityType: entityType, context: context)
+       }
+       
+       func unbalanced()
+       {
+           //            output = runUnbalanced(context: context)
+       }
+       
+       func priority()
+       {
+           //            output = runPriority(context: context)
+       }
+       
+       func dashboard()
+       {
+           // print out the pinned, unbalanced stocks, unbalanced systems, priority items
+           //            let pinned = runPinned(context: context, shouldPrint: false)
+           //            let unbalanced = runUnbalanced(context: context, shouldPrint: false)
+           //            let priority = runPriority(context: context, shouldPrint: false)
+           //
+           //            print("Pinned")
+           //            print("------------")
+           //            for pin in pinned {
+           //                print(pin)
+           //            }
+           //            print("")
+           //            print("Unbalanced")
+           //            print("------------")
+           //            for item in unbalanced {
+           //                print(item)
+           //            }
+           //            print("")
+           //            print("Priority")
+           //            print("------------")
+           //            for item in priority {
+           //                print(item)
+           //            }
+           //            print("------------")
+       }
+       
+       func suggest()
+       {
+           //            // Should we pin an item we view often?
+           //            // Should we find a flow to balance an unbalanced stock?
+           //            // Should we run a priority flow?
+       }
+       
+       func events()
+       {
+           //            output = runEvents(context: context)
+       }
+       
+       func flows()
+       {
+           //            output = runFlowsNeedingCompletion(context: context)
+       }
+       
+       func running()
+       {
+           //            output = allRunningFlows(context: context)
+       }
+       
+       func hidden()
+       {
+           //            output = allHidden(context: context)
+       }
+       
+       func quit()
+       {
+           // TODO: Communicate to quit the application
+       }
+       
+       func nuke()
+       {
+           //            database.clear()
+       }
+       
+       func clear()
+       {
+           //            workspace.removeAll()
+       }
+       
+       func setStockType() throws -> [Entity]
+       {
+           let stock: Stock = try workspace.first()
+           let type = try sourceValueType()
+           stock.source?.valueType = type
+           return [stock]
+       }
+       
+       func setCurrent() throws -> [Entity]
+       {
+           let stock: Stock = try workspace.first()
+           let number: Double = try value()
+           stock.current = number
+           return [stock]
+       }
+       
+       func setIdeal() throws -> [Entity]
+       {
+           let stock: Stock = try workspace.first()
+           let number: Double = try value()
+           stock.target = number
+           return [stock]
+       }
+       
+       func setMin() throws -> [Entity]
+       {
+           let stock: Stock = try workspace.first()
+           let number: Double = try value()
+           stock.min = number
+           return [stock]
+       }
+       
+       func setMax() throws -> [Entity]
+       {
+           let stock: Stock = try workspace.first()
+           let number: Double = try value()
+           stock.max = number
+           return [stock]
+       }
+       
+       func setUnit() throws -> [Entity]
+       {
+           let index = try index()
+           let stock: Stock = try workspace.first()
+           let unit: Unit = try workspace.entity(at: index)
+           stock.unit = unit
+           return [stock]
+       }
+       
+       func linkOutflow() throws -> [Entity]
+       {
+           let index = try index()
+           let stock: Stock = try workspace.first()
+           let flow: Flow = try workspace.entity(at: index)
+           stock.addToOutflows(flow)
+           return [stock]
+       }
+       
+       func linkInflow() throws -> [Entity]
+       {
+           let index = try index()
+           let stock: Stock = try workspace.first()
+           let flow: Flow = try workspace.entity(at: index)
+           stock.addToInflows(flow)
+           return [stock]
+       }
+       
+       func unlinkOutflow() throws -> [Entity]
+       {
+           let index = try index()
+           let stock: Stock = try workspace.first()
+           let flow: Flow = try workspace.entity(at: index)
+           stock.removeFromOutflows(flow)
+           return [stock]
+       }
+       
+       func unlinkInflow() throws -> [Entity]
+       {
+           let index = try index()
+           let stock: Stock = try workspace.first()
+           let flow: Flow = try workspace.entity(at: index)
+           stock.removeFromInflows(flow)
+           return [stock]
+       }
+       
+       func setAmount() throws -> [Entity]
+       {
+           let flow: Flow = try workspace.first()
+           let amount: Double = try value()
+           
+           guard amount > 0 else { throw ParsingError.flowAmountInvalid(amount) }
+           flow.amount = amount
+           return [flow]
+       }
+       
+       func setDelay() throws -> [Entity]
+       {
+           let flow: Flow = try workspace.first()
+           let delay: Double = try value()
+           flow.delay = delay
+           return [flow]
+       }
+       
+       func setDuration() throws -> [Entity]
+       {
+           let flow: Flow = try workspace.first()
+           let duration: Double = try value()
+           flow.duration = duration
+           return [flow]
+       }
+       
+       func setRequires() throws -> [Entity]
+       {
+           let flow: Flow = try workspace.first()
+           let requires: Bool = try value()
+           flow.requiresUserCompletion = requires
+           return [flow]
+       }
+       
+       func setFrom() throws -> [Entity]
+       {
+           let index = try index()
+           let flow: Flow = try workspace.first()
+           let stock: Stock = try workspace.entity(at: index)
+           flow.from = stock
+           return [flow]
+       }
+       
+       func setTo() throws -> [Entity]
+       {
+           let index = try index()
+           let flow: Flow = try workspace.first()
+           let stock: Stock = try workspace.entity(at: index)
+           flow.to = stock
+           return [flow]
+       }
+       
+       func run() throws -> [Entity]
+       {
+           if let flow: Flow = try? workspace.first()
+           {
+               flow.run(fromUser: true)
+               return [flow]
+           }
+           else if let process: Process = try? workspace.first()
+           {
+               process.run()
+               return [process]
+           }
+       }
+       
+       func finish() throws -> [Entity]
+       {
+           let flow: Flow = try workspace.first()
+           flow.amountRemaining = 0
+           flow.isRunning = false
+           return [flow]
+       }
+       
+       func setRepeats() throws -> [Entity]
+       {
+           let flow: Flow = try workspace.first()
+           let repeats: Bool = try value()
+           flow.repeats = repeats
+           return [flow]
+       }
+       
+       func setActive() throws -> [Entity]
+       {
+           let event: Event = try workspace.first()
+           let active: Bool = try value()
+           event.isActive = active
+           return [event]
+       }
+       
+       func linkCondition() throws -> [Entity]
+       {
+           let index = try index()
+           let event: Event = try workspace.first()
+           let condition: Condition = try workspace.entity(at: index)
+           event.addToConditions(condition)
+           return [event]
+       }
     
-    init(entity: Printable) {
-        self.entity = entity
+        func unlinkCondition() throws -> [Entity]
+    {
+        let index = try index()
+        let event: Event = try workspace.first()
+        let condition: Condition = try workspace.entity(at: index)
+        event.removeFromConditions(condition)
+        return [event]
     }
-}
-
-extension CommandView
-{
-    var names: [String] { ["view"] }
-}
-
-class CommandDelete: Command
-{
-    var entity: Entity
-    
-    init(entity: Entity) {
-        self.entity = entity
-    }
-}
-
-extension CommandDelete
-{
-    var names: [String] { ["delete"] }
-}
-
-class CommandPin: Command
-{
-    var entity: Pinnable
-    
-    init(entity: Pinnable) {
-        self.entity = entity
-    }
-}
-
-extension CommandPin
-{
-    var names: [String] { ["pin"] }
-}
-
-class CommandUnpin: Command
-{
-    var entity: Pinnable
-    
-    init(entity: Pinnable) {
-        self.entity = entity
-    }
-}
-
-extension CommandUnpin
-{
-    var names: [String] { ["unpin"] }
-}
-
-class CommandHistory: Command
-{
-    var entity: Historable
-    
-    init(entity: Historable) {
-        self.entity = entity
-    }
-}
-
-extension CommandHistory
-{
-    var names: [String] { ["history"] }
-}
-
-class CommandSelect: Command
-{
-    var index: Int
-    
-    init(index: Int) {
-        self.index = index
-    }
-}
-
-extension CommandSelect
-{
-    var names: [String] { ["select"] }
-}
-
-class CommandChoose: Command
-{
-    var index: Int
-    var lastResult: [Entity]
-    
-    init(index: Int, lastResult: [Entity]) {
-        self.index = index
-        self.lastResult = lastResult
-    }
-}
-
-extension CommandChoose
-{
-    var names: [String] { ["choose"] }
-}
-
-class CommandPinned: Command
-{
-}
-
-extension CommandPinned
-{
-    var names: [String] { ["pinned"] }
-}
-
-class CommandLibrary: Command
-{
-}
-
-extension CommandLibrary
-{
-    var names: [String] { ["library"] }
-}
-
-class CommandAll: Command
-{
-    var entityType: EntityType
-    
-    init(entityType: EntityType) {
-        self.entityType = entityType
-    }
-}
-
-extension CommandAll
-{
-    var names: [String] { ["all"] }
-}
-
-class CommandUnbalanced: Command
-{
-}
-
-extension CommandUnbalanced
-{
-    var names: [String] { ["unbalanced"] }
-}
-
-class CommandPriority: Command
-{
-}
-
-extension CommandPriority
-{
-    var names: [String] { ["priority"] }
-}
-
-class CommandEvents: Command
-{
-}
-
-extension CommandEvents
-{
-    var names: [String] { ["events"] }
-}
-
-class CommandFlows: Command
-{
-}
-
-extension CommandFlows
-{
-    var names: [String] { ["flows"] }
-}
-
-class CommandRunning: Command
-{
-}
-
-extension CommandRunning
-{
-    var names: [String] { ["running"] }
-}
-
-class CommandHidden: Command
-{
-}
-
-extension CommandHidden
-{
-    var names: [String] { ["hidden"] }
-}
-
-class CommandDashboard: Command
-{
-}
-
-extension CommandDashboard
-{
-    var names: [String] { ["dashboard"] }
-}
-
-class CommandSuggest: Command
-{
-}
-
-extension CommandSuggest
-{
-    var names: [String] { ["suggest"] }
-}
-
-class CommandNuke: Command
-{
-}
-
-extension CommandNuke
-{
-    var names: [String] { ["nuke"] }
-}
-
-class CommandClear: Command
-{
-}
-
-extension CommandClear
-{
-    var names: [String] { ["clear"] }
-}
-
-// MARK: - Stocks
-
-class CommandSetStockType: Command
-{
-    var stock: Stock
-    var type: SourceValueType
-    
-    init(stock: Stock, type: SourceValueType) {
-        self.stock = stock
-        self.type = type
-    }
-}
-
-extension CommandSetStockType
-{
-    var names: [String] { ["set-stock-type"] }
-}
-
-class CommandSetCurrent: Command
-{
-    var stock: Stock
-    var current: Double
-    
-    init(stock: Stock, current: Double) {
-        self.stock = stock
-        self.current = current
-    }
-}
-
-extension CommandSetCurrent
-{
-    var names: [String] { ["set-current"] }
-}
-
-class CommandSetIdeal: Command
-{
-    var stock: Stock
-    var ideal: Double
-    
-    init(stock: Stock, ideal: Double) {
-        self.stock = stock
-        self.ideal = ideal
-    }
-}
-
-extension CommandSetIdeal
-{
-    var names: [String] { ["set-ideal"] }
-}
-
-class CommandSetMin: Command
-{
-    var stock: Stock
-    var min: Double
-    
-    init(stock: Stock, min: Double) {
-        self.stock = stock
-        self.min = min
-    }
-}
-
-extension CommandSetMin
-{
-    var names: [String] { ["set-min"] }
-}
-
-class CommandSetMax: Command
-{
-    var stock: Stock
-    var max: Double
-    
-    init(stock: Stock, max: Double) {
-        self.stock = stock
-        self.max = max
-    }
-}
-
-extension CommandSetMax
-{
-    var names: [String] { ["set-max"] }
-}
-
-class CommandSetUnit: Command
-{
-    var stock: Stock
-    var unit: Unit
-    
-    init(stock: Stock, unit: Unit) {
-        self.stock = stock
-        self.unit = unit
-    }
-}
-
-extension CommandSetUnit
-{
-    var names: [String] { ["set-unit"] }
-}
-
-class CommandLinkOutflow: Command
-{
-    var stock: Stock
-    var flow: Flow
-    
-    init(stock: Stock, flow: Flow) {
-        self.stock = stock
-        self.flow = flow
-    }
-}
-
-extension CommandLinkOutflow
-{
-    var names: [String] { ["link-outflow"] }
-}
-
-class CommandLinkInflow: Command
-{
-    var stock: Stock
-    var flow: Flow
-    
-    init(stock: Stock, flow: Flow) {
-        self.stock = stock
-        self.flow = flow
-    }
-}
-
-extension CommandLinkInflow
-{
-    var names: [String] { ["link-inflow"] }
-}
-
-class CommandUnlinkOutflow: Command
-{
-    var stock: Stock
-    var flow: Flow
-    
-    init(stock: Stock, flow: Flow) {
-        self.stock = stock
-        self.flow = flow
-    }
-}
-
-extension CommandUnlinkOutflow
-{
-    var names: [String] { ["unlink-outflow"] }
-}
-
-class CommandUnlinkInflow: Command
-{
-    var stock: Stock
-    var flow: Flow
-    
-    init(stock: Stock, flow: Flow) {
-        self.stock = stock
-        self.flow = flow
-    }
-}
-
-extension CommandUnlinkInflow
-{
-    var names: [String] { ["unlink-inflow"] }
-}
-
-class CommandLinkStockEvent: Command
-{
-    var stock: Stock
-    var event: Event
-    
-    init(stock: Stock, event: Event) {
-        self.stock = stock
-        self.event = event
-    }
-}
-
-extension CommandLinkStockEvent
-{
-    var names: [String] { ["link-stock-event"] }
-}
-
-class CommandUnlinkStockEvent: Command
-{
-    var stock: Stock
-    var event: Event
-    
-    init(stock: Stock, event: Event) {
-        self.stock = stock
-        self.event = event
-    }
-}
-
-extension CommandUnlinkStockEvent
-{
-    var names: [String] { ["unlink-stock-event"] }
-}
-
-// MARK: - Flows
-
-class CommandSetAmount: Command
-{
-    var flow: Flow
-    var amount: Double
-    
-    init(flow: Flow, amount: Double) {
-        self.flow = flow
-        self.amount = amount
-    }
-}
-
-extension CommandSetAmount
-{
-    var names: [String] { ["set-amount"] }
-}
-
-class CommandSetDelay: Command
-{
-    var flow: Flow
-    var delay: Double
-    
-    init(flow: Flow, delay: Double) {
-        self.flow = flow
-        self.delay = delay
-    }
-}
-
-extension CommandSetDelay
-{
-    var names: [String] { ["set-delay"] }
-}
-
-class CommandSetDuration: Command
-{
-    var flow: Flow
-    var duration: Double
-    
-    init(flow: Flow, duration: Double) {
-        self.flow = flow
-        self.duration = duration
-    }
-}
-
-extension CommandSetDuration
-{
-    var names: [String] { ["set-duration"] }
-}
-
-class CommandSetRequires: Command
-{
-    var flow: Flow
-    var requires: Bool
-    
-    init(flow: Flow, requires: Bool) {
-        self.flow = flow
-        self.requires = requires
-    }
-}
-
-extension CommandSetRequires
-{
-    var names: [String] { ["set-requires"] }
-}
-
-class CommandSetFrom: Command
-{
-    var flow: Flow
-    var stock: Stock
-    
-    init(flow: Flow, stock: Stock) {
-        self.flow = flow
-        self.stock = stock
-    }
-}
-
-extension CommandSetFrom
-{
-    var names: [String] { ["set-from"] }
-}
-
-class CommandSetTo: Command
-{
-    var flow: Flow
-    var stock: Stock
-    
-    init(flow: Flow, stock: Stock) {
-        self.flow = flow
-        self.stock = stock
-    }
-}
-
-extension CommandSetTo
-{
-    var names: [String] { ["set-to"] }
-}
-
-class CommandRun: Command
-{
-    var flow: Flow
-    
-    init(flow: Flow) {
-        self.flow = flow
-    }
-}
-
-extension CommandRun
-{
-    var names: [String] { ["run"] }
-}
-
-class CommandLinkFlowEvent: Command
-{
-    var flow: Flow
-    var event: Event
-    
-    init(flow: Flow, event: Event) {
-        self.flow = flow
-        self.event = event
-    }
-}
-
-extension CommandLinkFlowEvent
-{
-    var names: [String] { ["link-flow-event"] }
-}
-
-class CommandUnlinkFlowEvent: Command
-{
-    var flow: Flow
-    var event: Event
-    
-    init(flow: Flow, event: Event) {
-        self.flow = flow
-        self.event = event
-    }
-}
-
-extension CommandUnlinkFlowEvent
-{
-    var names: [String] { ["unlink-flow-event"] }
-}
-
-class CommandFinish: Command
-{
-    var flow: Flow
-    
-    init(flow: Flow) {
-        self.flow = flow
-    }
-}
-
-extension CommandFinish
-{
-    var names: [String] { ["finish"] }
-}
-
-class CommandSetRepeats: Command
-{
-    var flow: Flow
-    var repeats: Bool
-    
-    init(flow: Flow, repeats: Bool) {
-        self.flow = flow
-        self.repeats = repeats
-    }
-}
-
-extension CommandSetRepeats
-{
-    var names: [String] { ["set-repeats"] }
-}
-
-// MARK: - Events
-
-class CommandSetIsActive: Command
-{
-    var event: Event
-    var isActive: Bool
-    
-    init(event: Event, isActive: Bool) {
-        self.event = event
-        self.isActive = isActive
-    }
-}
-
-extension CommandSetIsActive
-{
-    var names: [String] { ["set-is-active"] }
-}
-
-class CommandLinkCondition: Command
-{
-    var event: Event
-    var condition: Condition
-    
-    init(event: Event, condition: Condition) {
-        self.event = event
-        self.condition = condition
-    }
-}
-
-extension CommandLinkCondition
-{
-    var names: [String] { ["link-condition"] }
-}
-
-class CommandSetConditionType: Command
-{
-    var event: Event
-    var type: ConditionType
-    
-    init(event: Event, type: ConditionType) {
-        self.event = event
-        self.type = type
-    }
-}
-
-extension CommandSetConditionType
-{
-    var names: [String] { ["set-condition-type"] }
-}
-
-class CommandLinkFlow: Command
-{
-    var event: Event
-    var flow: Flow
-    
-    init(event: Event, flow: Flow) {
-        self.event = event
-        self.flow = flow
-    }
-}
-
-extension CommandLinkFlow
-{
-    var names: [String] { ["link-flow"] }
-}
-
-class CommandSetCooldown: Command
-{
-    var event: Event
-    var cooldown: Double
-    
-    init(event: Event, cooldown: Double) {
-        self.event = event
-        self.cooldown = cooldown
-    }
-}
-
-extension CommandSetCooldown
-{
-    var names: [String] { ["set-cooldown"] }
-}
-
-// MARK: - Conditions
-
-class CommandSetComparison: Command
-{
-    var condition: Condition
-    var comparison: ComparisonType
-    var type: String
-    
-    init(condition: Condition, comparison: ComparisonType, type: String) {
-        self.condition = condition
-        self.comparison = comparison
-        self.type = type
-    }
-}
-
-extension CommandSetComparison
-{
-    var names: [String] { ["set-comparison"] }
-}
-
-class CommandSetLeftHandSource: Command
-{
-    var condition: Condition
-    var source: Source
-    
-    init(condition: Condition, source: Source) {
-        self.condition = condition
-        self.source = source
-    }
-}
-
-extension CommandSetLeftHandSource
-{
-    var names: [String] { ["set-left-hand-source"] }
-}
-
-class CommandSetLeftHandStock: Command
-{
-    var condition: Condition
-    var stock: Stock
-    
-    init(condition: Condition, stock: Stock) {
-        self.condition = condition
-        self.stock = stock
-    }
-}
-
-extension CommandSetLeftHandStock
-{
-    var names: [String] { ["set-left-hand-stock"] }
-}
-
-class CommandSetLeftHandNumber: Command
-{
-    var condition: Condition
-    var number: Double
-    
-    init(condition: Condition, number: Double) {
-        self.condition = condition
-        self.number = number
-    }
-}
-
-extension CommandSetLeftHandNumber
-{
-    var names: [String] { ["set-left-hand-number"] }
-}
-
-class CommandSetRightHandSource: Command
-{
-    var condition: Condition
-    var source: Source
-    
-    init(condition: Condition, source: Source) {
-        self.condition = condition
-        self.source = source
-    }
-}
-
-extension CommandSetRightHandSource
-{
-    var names: [String] { ["set-right-hand-source"] }
-}
-
-class CommandSetRightHandStock: Command
-{
-    var condition: Condition
-    var stock: Stock
-    
-    init(condition: Condition, stock: Stock) {
-        self.condition = condition
-        self.stock = stock
-    }
-}
-
-extension CommandSetRightHandStock
-{
-    var names: [String] { ["set-right-hand-stock"] }
-}
-
-class CommandSetRightHandNumber: Command
-{
-    var condition: Condition
-    var number: Double
-    
-    init(condition: Condition, number: Double) {
-        self.condition = condition
-        self.number = number
-    }
-}
-
-extension CommandSetRightHandNumber
-{
-    var names: [String] { ["set-right-hand-number"] }
-}
-
-// MARK: - Systems
-
-class CommandLinkSystemFlow: Command
-{
-    var system: System
-    var flow: Flow
-    
-    init(system: System, flow: Flow) {
-        self.system = system
-        self.flow = flow
-    }
-}
-
-extension CommandLinkSystemFlow
-{
-    var names: [String] { ["link-system-flow"] }
-}
-
-class CommandUnlinkSystemFlow: Command
-{
-    var system: System
-    var flow: Flow
-    
-    init(system: System, flow: Flow) {
-        self.system = system
-        self.flow = flow
-    }
-}
-
-extension CommandUnlinkSystemFlow
-{
-    var names: [String] { ["unlink-system-flow"] }
-}
-
-class CommandLinkSystemStock: Command
-{
-    var system: System
-    var stock: Stock
-    
-    init(system: System, stock: Stock) {
-        self.system = system
-        self.stock = stock
-    }
-}
-
-extension CommandLinkSystemStock
-{
-    var names: [String] { ["link-system-stock"] }
-}
-
-class CommandUnlinkSystemStock: Command
-{
-    var system: System
-    var stock: Stock
-    
-    init(system: System, stock: Stock) {
-        self.system = system
-        self.stock = stock
-    }
-}
-
-extension CommandUnlinkSystemStock
-{
-    var names: [String] { ["unlink-system-stock"] }
-}
-
-// MARK: - Processes
-
-class CommandLinkProcessFlow: Command
-{
-    var process: Process
-    var flow: Flow
-    
-    init(process: Process, flow: Flow) {
-        self.process = process
-        self.flow = flow
-    }
-}
-
-extension CommandLinkProcessFlow
-{
-    var names: [String] { ["link-process-flow"] }
-}
-
-class CommandUnlinkProcessFlow: Command
-{
-    var process: Process
-    var flow: Flow
-    
-    init(process: Process, flow: Flow) {
-        self.process = process
-        self.flow = flow
-    }
-}
-
-extension CommandUnlinkProcessFlow
-{
-    var names: [String] { ["unlink-process-flow"] }
-}
-
-class CommandLinkProcessSubprocess: Command
-{
-    var process: Process
-    var subprocess: Process
-    
-    init(process: Process, subprocess: Process) {
-        self.process = process
-        self.subprocess = subprocess
-    }
-}
-
-extension CommandLinkProcessSubprocess
-{
-    var names: [String] { ["link-process-subprocess"] }
-}
-
-class CommandUnlinkProcessSubprocess: Command
-{
-    var process: Process
-    var subprocess: Process
-    
-    init(process: Process, subprocess: Process) {
-        self.process = process
-        self.subprocess = subprocess
-    }
-}
-
-extension CommandUnlinkProcessSubprocess
-{
-    var names: [String] { ["unlink-process-subprocess"] }
-}
-
-class CommandRunProcess: Command
-{
-    var process: Process
-    
-    init(process: Process) {
-        self.process = process
-    }
-}
-
-extension CommandRunProcess
-{
-    var names: [String] { ["run-process"] }
-}
-
-class CommandLinkProcessEvent: Command
-{
-    var process: Process
-    var event: Event
-    
-    init(process: Process, event: Event) {
-        self.process = process
-        self.event = event
-    }
-}
-
-extension CommandLinkProcessEvent
-{
-    var names: [String] { ["link-process-event"] }
-}
-
-class CommandUnlinkProcessEvent: Command
-{
-    var process: Process
-    var event: Event
-    
-    init(process: Process, event: Event) {
-        self.process = process
-        self.event = event
-    }
-}
-
-extension CommandUnlinkProcessEvent
-{
-    var names: [String] { ["unlink-process-event"] }
-}
-
-// MARK: - Other
-
-class CommandBooleanStockFlow: Command
-{
-    var name: String?
-    
-    init(name: String? = nil) {
-        self.name = name
-    }
-}
-
-extension CommandBooleanStockFlow
-{
-    var names: [String] { ["boolean-stock-flow"] }
-}
+       
+       func setConditionType() throws -> [Entity]
+       {
+           let event: Event = try workspace.first()
+           let conditionType = try conditionType()
+           event.conditionType = conditionType
+           return [event]
+       }
+       
+       func setCooldown() throws -> [Entity]
+       {
+           let event: Event = try workspace.first()
+           let cooldown: Double = try value()
+           event.cooldownSeconds = cooldown
+           return [event]
+       }
+       
+       func setComparison() throws -> [Entity]
+       {
+           let condition: Condition = try workspace.first()
+           let comparison = try comparisonType()
+           let type = try argument(at: 1)
+       }
+       
+       func setLeftHand() throws -> [Entity]
+       {
+           let condition: Condition = try workspace.first()
+           
+           if let leftHand: Double = try? value()
+           {
+               
+           }
+           else if
+               let index = try? index(),
+               let source: Source = try workspace.entity(at: index)
+           {
+               
+           }
+           else if
+               let index = try? index(),
+               let stock: Stock = try workspace.entity(at: index)
+           {
+               
+           }
+           else
+           {
+               throw ParsingError.workspaceEntityCannotPerformThisOperation
+           }
+       }
+       
+       func setRightHand() throws -> [Entity]
+       {
+           let condition: Condition = try workspace.first()
+           
+           if let rightHand: Double = try? value()
+           {
+               
+           }
+           else if
+               let index = try? index(),
+               let source: Source = try workspace.entity(at: index)
+           {
+               
+           }
+           else if
+               let index = try? index(),
+               let stock: Stock = try workspace.entity(at: index)
+           {
+               
+           }
+           else
+           {
+               throw ParsingError.workspaceEntityCannotPerformThisOperation
+           }
+       }
+       
+       func linkFlow() throws -> [Entity]
+       {
+           let index = try index()
+           let flow: Flow = try workspace.entity(at: index)
+           
+           if let event: Event = try? workspace.first()
+           {
+               event.addToFlows(flow)
+               return [event]
+           }
+           else if let system: System = try? workspace.first()
+           {
+               system.addToFlows(flow)
+               return [system]
+           }
+           else if let process: Process = try? workspace.first()
+           {
+               process.addToFlows(flow)
+               return [process]
+           }
+           else
+           {
+               throw ParsingError.workspaceEntityCannotPerformThisOperation
+           }
+       }
+       
+       func unlinkFlow() throws -> [Entity]
+       {
+           let index = try index()
+           let flow: Flow = try workspace.entity(at: index)
+           
+           if let event: Event = try? workspace.first()
+           {
+               
+           }
+           else if let system: System = try? workspace.first()
+           {
+               
+           }
+           else if let process: Process = try? workspace.first()
+           {
+               
+           }
+           else
+           {
+               throw ParsingError.workspaceEntityCannotPerformThisOperation
+           }
+       }
+       
+       func linkStock() throws -> [Entity]
+       {
+           let index = try index()
+           let stock: Stock = try workspace.entity(at: index)
+           let system: System = try workspace.first()
+       }
+       
+       func unlinkStock() throws -> [Entity]
+       {
+           let index = try index()
+           let stock: Stock = try workspace.entity(at: index)
+           let system: System = try workspace.first()
+       }
+       
+       func linkEvent() throws -> [Entity]
+       {
+           let index = try index()
+           let event: Event = try workspace.entity(at: index)
+           
+           if let flow: Flow = try? workspace.first()
+           {
+               
+           }
+           else if let stock: Stock = try? workspace.first()
+           {
+               
+           }
+           else if let process: Process = try? workspace.first()
+           {
+               
+           }
+           else
+           {
+               throw ParsingError.workspaceEntityCannotPerformThisOperation
+           }
+       }
+       
+       func unlinkEvent() throws -> [Entity]
+       {
+           let index = try index()
+           let event: Event = try workspace.entity(at: index)
+           
+           if let flow: Flow = try? workspace.first()
+           {
+               
+           }
+           else if let stock: Stock = try? workspace.first()
+           {
+               
+           }
+           else if let process: Process = try? workspace.first()
+           {
+               
+           }
+           else
+           {
+               throw ParsingError.workspaceEntityCannotPerformThisOperation
+           }
+       }
+       
+       func linkProcess() throws -> [Entity]
+       {
+           let index = try index()
+           let subprocess: Process = try workspace.entity(at: index)
+           let process: Process = try workspace.first()
+       }
+       
+       func unlinkProcess() throws -> [Entity]
+       {
+           let index = try index()
+           let subprocess: Process = try workspace.entity(at: index)
+           let process: Process = try workspace.first()
+       }
+       
+       func booleanStockFlow() throws -> [Entity]
+       {
+           let name = try name()
+       }
+   }

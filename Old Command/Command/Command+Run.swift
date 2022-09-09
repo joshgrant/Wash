@@ -1,102 +1,4 @@
-////
-////  Command+Run.swift
-////  Wash
-////
-////  Created by Josh Grant on 4/7/22.
-////
-//
-//import Foundation
-//
-//extension Command
-//{
-//    func run(database: Database) -> [Entity]?
-//    {
-//        let context = database.context
-//        
-//        var output: [Entity] = []
-//        
-//        switch self
-//        {
-//        case .help:
-//            print("Hi, so you're looking for help? Here's a list of the commands:")
-//            
-//        case .add(let entityType, let name):
-//            let entity = entityType.insertNewEntity(into: context, name: name)
-//            output = [entity]
-//            workspace.insert(entity, at: 0)
-//        case .setName(let entity, let name):
-//            if let entity = entity as? SymbolNamed {
-//                let symbol = Symbol(context: context, name: name)
-//                entity.symbolName = symbol
-//            }
-//            output = [entity]
-//            if let entity = entity as? Historable {
-//                entity.logHistory(.setName, context: context)
-//            }
-//            
-//        case .hide(let entity):
-//            entity.isHidden = true
-//            output = [entity]
-//            if let entity = entity as? Historable {
-//                entity.logHistory(.hidden, context: context)
-//            }
-//            
-//        case .unhide(let entity):
-//            entity.isHidden = false
-//            output = [entity]
-//            if let entity = entity as? Historable {
-//                entity.logHistory(.unhidden, context: context)
-//            }
-//            
-//        case .view(let printable):
-//            print(printable.fullDescription)
-//            if let entity = printable as? Selectable
-//            {
-//                output = entity.selection
-//            }
-//        case .delete(let entity):
-//            context.delete(entity)
-//            output = [entity]
-//            if let entity = entity as? Historable {
-//                entity.logHistory(.deleted, context: context)
-//            }
-//            
-//        case .pin(entity: let entity):
-//            entity.isPinned = true
-//            output = [entity]
-//            if let entity = entity as? Historable {
-//                entity.logHistory(.pinned, context: context)
-//            }
-//            
-//        case .unpin(entity: let entity):
-//            entity.isPinned = false
-//            output = [entity]
-//            if let entity = entity as? Historable {
-//                entity.logHistory(.unpinned, context: context)
-//            }
-//            
-//        case .select(let index):
-//            guard index < workspace.count else { return [] }
-//            
-//            let item = workspace[index]
-//            workspace.remove(at: index)
-//            workspace.insert(item, at: 0)
-//            if let item = item as? Selectable
-//            {
-//                output = item.selection
-//            }
-//            else
-//            {
-//                output = [item]
-//            }
-//        case .choose(let index, let lastResult):
-//            let item = lastResult[index]
-//            workspace.insert(item, at: 0)
-//            output = [item]
-//        case .history(let historable):
-//            for item in historable.history ?? .init() {
-//                print(item)
-//            }
+
 //        case .pinned:
 //            output = runPinned(context: context)
 //        case .library:
@@ -148,60 +50,16 @@
 //            database.clear()
 //        case .clear:
 //            workspace.removeAll()
-//        case .setStockType(let stock, let type):
-//            stock.source?.valueType = type
-//            output = [stock]
-//            stock.logHistory(.setStockType, context: context)
+
+
+
 //            
-//        case .setCurrent(let stock, let current):
-//            stock.current = current
-//            output = [stock]
-//            stock.logHistory(.setCurrent, context: context)
+
+
+
+
 //            
-//        case .setIdeal(let stock, let ideal):
-//            stock.target = ideal
-//            output = [stock]
-//            stock.logHistory(.setIdeal, context: context)
-//            
-//        case .setMin(let stock, let min):
-//            stock.min = min
-//            output = [stock]
-//            stock.logHistory(.setMin, context: context)
-//            
-//        case .setMax(let stock, let max):
-//            stock.max = max
-//            output = [stock]
-//            stock.logHistory(.setMax, context: context)
-//            
-//        case .setUnit(let stock, let unit):
-//            stock.unit = unit
-//            output = [stock]
-//            stock.logHistory(.setUnit, context: context)
-//            
-//        case .linkOutflow(let stock, let flow):
-//            stock.addToOutflows(flow)
-//            output = [stock]
-//            stock.logHistory(.linkedOutflow, context: context)
-//            flow.logHistory(.setFromStock, context: context)
-//            
-//        case .linkInflow(let stock, let flow):
-//            stock.addToInflows(flow)
-//            output = [stock]
-//            stock.logHistory(.linkedInflow, context: context)
-//            flow.logHistory(.setToStock, context: context)
-//            
-//        case .unlinkOutflow(let stock, let flow):
-//            stock.removeFromOutflows(flow)
-//            output = [stock]
-//            stock.logHistory(.unlinkedOutflow, context: context)
-//            flow.logHistory(.removedFromStock, context: context)
-//            
-//        case .unlinkInflow(let stock, let flow):
-//            stock.removeFromInflows(flow)
-//            output = [stock]
-//            stock.logHistory(.unlinkedInflow, context: context)
-//            flow.logHistory(.removedToStock, context: context)
-//            
+
 //        case .linkStockEvent(let stock, let event):
 //            stock.addToEvents(event)
 //            output = [stock]
@@ -213,53 +71,14 @@
 //            output = [stock]
 //            stock.logHistory(.unlinkedEvent, context: context)
 //            event.logHistory(.unlinkedStock, context: context)
-//            
-//        case .setAmount(let flow, let amount):
-//            flow.amount = amount
-//            output = [flow]
-//            flow.logHistory(.updatedAmount, context: context)
-//            
-//        case .setDelay(let flow, let delay):
-//            flow.delay = delay
-//            output = [flow]
-//            flow.logHistory(.updatedDelay, context: context)
-//            
-//        case .setDuration(let flow, let duration):
-//            flow.duration = duration
-//            output = [flow]
-//            flow.logHistory(.updatedDuration, context: context)
-//            
-//        case .setRequires(let flow, let requires):
-//            flow.requiresUserCompletion = requires
-//            output = [flow]
-//            flow.logHistory(.setRequiresUserCompletion, context: context)
-//            
-//        case .setFrom(let flow, let stock):
-//            flow.from = stock
-//            output = [flow]
-//            flow.logHistory(.setFromStock, context: context)
-//            
-//        case .setTo(let flow, let stock):
-//            flow.to = stock
-//            output = [flow]
-//            flow.logHistory(.setToStock, context: context)
-//            
-//        case .run(let flow):
-//            flow.run(fromUser: true)
-//            output = [flow]
-//            flow.logHistory(.ran, context: context)
-//            
-//        case .finish(let flow):
-//            flow.amountRemaining = 0
-//            flow.isRunning = false
-//            output = [flow]
-//            flow.logHistory(.finished, context: context)
-//            
-//        case .setRepeats(let flow, let repeats):
-//            flow.repeats = repeats
-//            output = [flow]
-//            flow.logHistory(.setRepeats, context: context)
-//            
+
+
+
+
+
+
+
+
 //        case .linkFlowEvent(let flow, let event):
 //            flow.addToEvents(event)
 //            output = [flow]

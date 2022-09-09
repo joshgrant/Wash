@@ -17,7 +17,7 @@ public enum SourceValueType: Int16, CaseIterable
     
     case date
     
-    init?(string: String)
+    init(string: String) throws
     {
         switch string
         {
@@ -27,7 +27,7 @@ public enum SourceValueType: Int16, CaseIterable
         case "number", "decimal": self = .number
         case "date": self = .date
         default:
-            return nil
+            throw ParsingError.invalidSourceValueType(string)
         }
     }
 }
