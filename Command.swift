@@ -8,33 +8,33 @@
 import Foundation
 import CoreData
 
-protocol TextRepresentable
+protocol TextRepresentable: AnyObject
 {
-    var names: [String] { get }
+    static var names: [String] { get }
 }
 
 open class Command: TextRepresentable
 {
     // MARK: - Variables
     
-    open var names: [String] { [] }
+    open class var names: [String] { [] }
     
     var database: Database
     
     @available(*, deprecated)
     var input: String
     
-    var command: String
+    var commandName: String
     var arguments: [String]
     var workspace: Workspace
     
     // MARK: - Initialization
     
-    init?(input: String, workspace: Workspace, database: Database)
+    public required init?(input: String, workspace: Workspace, database: Database)
     {
-        let (command, arguments) = Self.parse(input: input)
+        let (commandName, arguments) = Self.parse(input: input)
         self.input = input
-        self.command = command
+        self.commandName = commandName
         self.arguments = arguments
         self.workspace = workspace
         self.database = database
@@ -88,7 +88,19 @@ open class Command: TextRepresentable
     
     open func run() throws -> [Entity]
     {
-        // Parse the command....
+        for commandType in Self.allCases
+        {
+            if commandType.names.contains(commandName)
+            {
+                guard let command = commandType.init(input: input, workspace: workspace, database: database) else
+                {
+                    throw ParsingError.invalidCommand
+                }
+                
+                return try command.run()
+            }
+        }
+        
         database.context.quickSave()
         return []
     }
@@ -97,6 +109,8 @@ open class Command: TextRepresentable
 extension Command
 {
     static var allCases: [Command.Type] = [
+        CommandHelp.self,
+        CommandRun.self,
         CommandAdd.self,
         CommandSetName.self,
         CommandHide.self,
@@ -226,12 +240,12 @@ private extension Command
 
 class CommandHelp: Command
 {
-    override var names: [String]
+    override class var names: [String]
     {
         ["help"]
     }
     
-    override func run() -> [Entity] {
+    override func run() throws -> [Entity] {
         print("Sorry, no help is available at this time.")
         return []
     }
@@ -239,7 +253,7 @@ class CommandHelp: Command
 
 class CommandRun: Command
 {
-    override var names: [String]
+    override class var names: [String]
     {
         ["run"]
     }
@@ -265,7 +279,7 @@ class CommandRun: Command
 
 class CommandAdd: Command
 {
-    override var names: [String] { ["add"] }
+    override class var names: [String] { ["add"] }
     
     override func run() throws -> [Entity]
     {
@@ -281,7 +295,7 @@ class CommandAdd: Command
 
 class CommandSetName: Command
 {
-    override var names: [String] { ["setName"] }
+    override class var names: [String] { ["setName"] }
     
     override func run() throws -> [Entity]
     {
@@ -297,7 +311,7 @@ class CommandSetName: Command
 
 class CommandHide: Command
 {
-    override var names: [String] { ["hide"] }
+    override class var names: [String] { ["hide"] }
     
     override func run() throws -> [Entity]
     {
@@ -309,7 +323,7 @@ class CommandHide: Command
 
 class CommandUnhide: Command
 {
-    override var names: [String] { ["unhide"] }
+    override class var names: [String] { ["unhide"] }
     
     override func run() throws -> [Entity]
     {
@@ -321,7 +335,7 @@ class CommandUnhide: Command
 
 class CommandView: Command
 {
-    override var names: [String] { ["view"] }
+    override class var names: [String] { ["view"] }
     
     override func run() throws -> [Entity]
     {
@@ -345,7 +359,7 @@ class CommandView: Command
 
 class CommandDelete: Command
 {
-    override var names: [String] { ["delete"] }
+    override class var names: [String] { ["delete"] }
     
     override func run() throws -> [Entity]
     {
@@ -357,7 +371,7 @@ class CommandDelete: Command
 
 class CommandPin: Command
 {
-    override var names: [String] { ["pin"] }
+    override class var names: [String] { ["pin"] }
     
     override func run() throws -> [Entity]
     {
@@ -369,7 +383,7 @@ class CommandPin: Command
 
 class CommandUnpin: Command
 {
-    override var names: [String] { ["unpin"] }
+    override class var names: [String] { ["unpin"] }
     
     override func run() throws -> [Entity]
     {
@@ -381,7 +395,7 @@ class CommandUnpin: Command
 
 class CommandSelect: Command
 {
-    override var names: [String] { ["select"] }
+    override class var names: [String] { ["select"] }
     
     override func run() throws -> [Entity]
     {
@@ -403,7 +417,7 @@ class CommandSelect: Command
 
 class CommandChoose: Command
 {
-    override var names: [String] { ["choose"] }
+    override class var names: [String] { ["choose"] }
     
     override func run() throws -> [Entity]
     {
@@ -423,7 +437,7 @@ class CommandChoose: Command
 
 class CommandHistory: Command
 {
-    override var names: [String] { ["history"] }
+    override class var names: [String] { ["history"] }
     
     override func run() throws -> [Entity]
     {
@@ -452,7 +466,7 @@ class CommandHistory: Command
 
 class CommandPinned: Command
 {
-    override var names: [String] { ["pinned"] }
+    override class var names: [String] { ["pinned"] }
     
     var shouldPrint: Bool = true
     
@@ -468,7 +482,7 @@ class CommandPinned: Command
 
 class CommandLibrary: Command
 {
-    override var names: [String] { ["library"] }
+    override class var names: [String] { ["library"] }
     
     override func run() throws -> [Entity]
     {
@@ -484,7 +498,7 @@ class CommandLibrary: Command
 
 class CommandAll: Command
 {
-    override var names: [String] { ["all"] }
+    override class var names: [String] { ["all"] }
     
     override func run() throws -> [Entity]
     {
@@ -516,7 +530,7 @@ class CommandAll: Command
 
 class CommandUnbalanced: Command
 {
-    override var names: [String] { ["unbalanced"] }
+    override class var names: [String] { ["unbalanced"] }
     
     var shouldPrint: Bool = true
     
@@ -540,7 +554,7 @@ class CommandUnbalanced: Command
 
 class CommandPriority: Command
 {
-    override var names: [String] { ["priority"] }
+    override class var names: [String] { ["priority"] }
     
     var shouldPrint: Bool = true
     
@@ -606,7 +620,7 @@ class CommandPriority: Command
 
 class CommandDashboard: Command
 {
-    override var names: [String] { ["dashboard"] }
+    override class var names: [String] { ["dashboard"] }
     
     override func run() throws -> [Entity]
     {
@@ -646,7 +660,7 @@ class CommandDashboard: Command
 
 class CommandSuggest: Command
 {
-    override var names: [String] { ["suggest"] }
+    override class var names: [String] { ["suggest"] }
     
     override func run() throws -> [Entity]
     {
@@ -659,7 +673,7 @@ class CommandSuggest: Command
 
 class CommandEvents: Command
 {
-    override var names: [String] { ["events"] }
+    override class var names: [String] { ["events"] }
     
     override func run() -> [Entity]
     {
@@ -674,7 +688,7 @@ class CommandEvents: Command
 
 class CommandFlows: Command
 {
-    override var names: [String] { ["flows"] }
+    override class var names: [String] { ["flows"] }
     
     override func run() -> [Entity]
     {
@@ -691,7 +705,7 @@ class CommandFlows: Command
 
 class CommandRunning: Command
 {
-    override var names: [String] { ["running"] }
+    override class var names: [String] { ["running"] }
     
     override func run() -> [Entity]
     {
@@ -709,7 +723,7 @@ class CommandRunning: Command
 
 class CommandHidden: Command
 {
-    override var names: [String] { ["hidden"] }
+    override class var names: [String] { ["hidden"] }
     
     override func run() -> [Entity]
     {
@@ -723,7 +737,7 @@ class CommandHidden: Command
 
 class CommandQuit: Command
 {
-    override var names: [String] { ["quit"] }
+    override class var names: [String] { ["quit"] }
     
     override func run() throws -> [Entity]
     {
@@ -734,7 +748,7 @@ class CommandQuit: Command
 
 class CommandNuke: Command
 {
-    override var names: [String] { ["nuke"] }
+    override class var names: [String] { ["nuke"] }
     
     override func run() throws -> [Entity]
     {
@@ -745,7 +759,7 @@ class CommandNuke: Command
 
 class CommandClear: Command
 {
-    override var names: [String] { ["clear"] }
+    override class var names: [String] { ["clear"] }
     
     override func run() throws -> [Entity]
     {
@@ -756,7 +770,7 @@ class CommandClear: Command
 
 class CommandSetStockType: Command
 {
-    override var names: [String] { ["setStockType"] }
+    override class var names: [String] { ["setStockType"] }
     
     override func run() throws -> [Entity]
     {
@@ -769,7 +783,7 @@ class CommandSetStockType: Command
 
 class CommandSetCurrent: Command
 {
-    override var names: [String] { ["setCurrent"] }
+    override class var names: [String] { ["setCurrent"] }
     
     override func run() throws -> [Entity]
     {
@@ -782,7 +796,7 @@ class CommandSetCurrent: Command
 
 class CommandSetIdeal: Command
 {
-    override var names: [String] { ["setIdeal"] }
+    override class var names: [String] { ["setIdeal"] }
     
     override func run() throws -> [Entity]
     {
@@ -795,7 +809,7 @@ class CommandSetIdeal: Command
 
 class CommandSetMin: Command
 {
-    override var names: [String] { ["setMin"] }
+    override class var names: [String] { ["setMin"] }
     
     override func run() throws -> [Entity]
     {
@@ -808,7 +822,7 @@ class CommandSetMin: Command
 
 class CommandSetMax: Command
 {
-    override var names: [String] { ["setMax"] }
+    override class var names: [String] { ["setMax"] }
     
     override func run() throws -> [Entity]
     {
@@ -821,7 +835,7 @@ class CommandSetMax: Command
 
 class CommandSetUnit: Command
 {
-    override var names: [String] { ["setUnit"] }
+    override class var names: [String] { ["setUnit"] }
     
     override func run() throws -> [Entity]
     {
@@ -835,7 +849,7 @@ class CommandSetUnit: Command
 
 class CommandLinkOutflow: Command
 {
-    override var names: [String] { ["linkOutflow"] }
+    override class var names: [String] { ["linkOutflow"] }
     
     override func run() throws -> [Entity]
     {
@@ -849,7 +863,7 @@ class CommandLinkOutflow: Command
 
 class CommandLinkInflow: Command
 {
-    override var names: [String] { ["linkInflow"] }
+    override class var names: [String] { ["linkInflow"] }
     
     override func run() throws -> [Entity]
     {
@@ -863,7 +877,7 @@ class CommandLinkInflow: Command
 
 class CommandUnlinkOutflow: Command
 {
-    override var names: [String] { ["unlinkOutflow"] }
+    override class var names: [String] { ["unlinkOutflow"] }
     
     override func run() throws -> [Entity]
     {
@@ -877,7 +891,7 @@ class CommandUnlinkOutflow: Command
 
 class CommandUnlinkInflow: Command
 {
-    override var names: [String] { ["unlinkInflow"] }
+    override class var names: [String] { ["unlinkInflow"] }
     
     override func run() throws -> [Entity]
     {
@@ -891,7 +905,7 @@ class CommandUnlinkInflow: Command
 
 class CommandSetAmount: Command
 {
-    override var names: [String] { ["setAmount"] }
+    override class var names: [String] { ["setAmount"] }
     
     override func run() throws -> [Entity]
     {
@@ -906,7 +920,7 @@ class CommandSetAmount: Command
 
 class CommandSetDelay: Command
 {
-    override var names: [String] { ["setDelay"] }
+    override class var names: [String] { ["setDelay"] }
     
     override func run() throws -> [Entity]
     {
@@ -919,7 +933,7 @@ class CommandSetDelay: Command
 
 class CommandSetDuration: Command
 {
-    override var names: [String] { ["setDuration"] }
+    override class var names: [String] { ["setDuration"] }
     
     override func run() throws -> [Entity]
     {
@@ -932,7 +946,7 @@ class CommandSetDuration: Command
 
 class CommandSetRequires: Command
 {
-    override var names: [String] { ["setRequires"] }
+    override class var names: [String] { ["setRequires"] }
     
     override func run() throws -> [Entity]
     {
@@ -945,7 +959,7 @@ class CommandSetRequires: Command
 
 class CommandSetFrom: Command
 {
-    override var names: [String] { ["setFrom"] }
+    override class var names: [String] { ["setFrom"] }
     
     override func run() throws -> [Entity]
     {
@@ -959,7 +973,7 @@ class CommandSetFrom: Command
 
 class CommandSetTo: Command
 {
-    override var names: [String] { ["setTo"] }
+    override class var names: [String] { ["setTo"] }
     
     override func run() throws -> [Entity]
     {
@@ -973,7 +987,7 @@ class CommandSetTo: Command
 
 class CommandFinish: Command
 {
-    override var names: [String] { ["finish"] }
+    override class var names: [String] { ["finish"] }
     
     override func run() throws -> [Entity]
     {
@@ -986,7 +1000,7 @@ class CommandFinish: Command
 
 class CommandSetRepeats: Command
 {
-    override var names: [String] { ["setRepeats"] }
+    override class var names: [String] { ["setRepeats"] }
     
     override func run() throws -> [Entity]
     {
@@ -999,7 +1013,7 @@ class CommandSetRepeats: Command
 
 class CommandSetActive: Command
 {
-    override var names: [String] { ["setActive"] }
+    override class var names: [String] { ["setActive"] }
     
     override func run() throws -> [Entity]
     {
@@ -1012,7 +1026,7 @@ class CommandSetActive: Command
 
 class CommandLinkCondition: Command
 {
-    override var names: [String] { ["linkCondition"] }
+    override class var names: [String] { ["linkCondition"] }
     
     override func run() throws -> [Entity]
     {
@@ -1026,7 +1040,7 @@ class CommandLinkCondition: Command
 
 class CommandUnlinkCondition: Command
 {
-    override var names: [String] { ["unlinkCondition"] }
+    override class var names: [String] { ["unlinkCondition"] }
     
     override func run() throws -> [Entity]
     {
@@ -1040,7 +1054,7 @@ class CommandUnlinkCondition: Command
 
 class CommandSetConditionType: Command
 {
-    override var names: [String] { ["setConditionType"] }
+    override class var names: [String] { ["setConditionType"] }
     
     override func run() throws -> [Entity]
     {
@@ -1053,7 +1067,7 @@ class CommandSetConditionType: Command
 
 class CommandSetCooldown: Command
 {
-    override var names: [String] { ["setCooldown"] }
+    override class var names: [String] { ["setCooldown"] }
     
     override func run() throws -> [Entity]
     {
@@ -1066,7 +1080,7 @@ class CommandSetCooldown: Command
 
 class CommandSetComparison: Command
 {
-    override var names: [String] { ["setComparison"] }
+    override class var names: [String] { ["setComparison"] }
     
     override func run() throws -> [Entity]
     {
@@ -1080,7 +1094,7 @@ class CommandSetComparison: Command
 
 class CommandSetLeftHand: Command
 {
-    override var names: [String] { ["setLeftHand"] }
+    override class var names: [String] { ["setLeftHand"] }
     
     override func run() throws -> [Entity]
     {
@@ -1117,7 +1131,7 @@ class CommandSetLeftHand: Command
 
 class CommandSetRightHand: Command
 {
-    override var names: [String] { ["setRightHand"] }
+    override class var names: [String] { ["setRightHand"] }
     
     override func run() throws -> [Entity]
     {
@@ -1154,7 +1168,7 @@ class CommandSetRightHand: Command
 
 class CommandLinkFlow: Command
 {
-    override var names: [String] { ["linkFlow"] }
+    override class var names: [String] { ["linkFlow"] }
     
     override func run() throws -> [Entity]
     {
@@ -1185,7 +1199,7 @@ class CommandLinkFlow: Command
 
 class CommandUnlinkFlow: Command
 {
-    override var names: [String] { ["unlinkFlow"] }
+    override class var names: [String] { ["unlinkFlow"] }
     
     override func run() throws -> [Entity]
     {
@@ -1216,7 +1230,7 @@ class CommandUnlinkFlow: Command
 
 class CommandLinkStock: Command
 {
-    override var names: [String] { ["linkStock"] }
+    override class var names: [String] { ["linkStock"] }
     
     override func run() throws -> [Entity]
     {
@@ -1230,7 +1244,7 @@ class CommandLinkStock: Command
 
 class CommandUnlinkStock: Command
 {
-    override var names: [String] { ["unlinkStock"] }
+    override class var names: [String] { ["unlinkStock"] }
     
     override func run() throws -> [Entity]
     {
@@ -1244,7 +1258,7 @@ class CommandUnlinkStock: Command
 
 class CommandLinkEvent: Command
 {
-    override var names: [String] { ["linkEvent"] }
+    override class var names: [String] { ["linkEvent"] }
     
     override func run() throws -> [Entity]
     {
@@ -1275,7 +1289,7 @@ class CommandLinkEvent: Command
 
 class CommandUnlinkEvent: Command
 {
-    override var names: [String] { ["unlinkEvent"] }
+    override class var names: [String] { ["unlinkEvent"] }
     
     override func run() throws -> [Entity]
     {
@@ -1306,7 +1320,7 @@ class CommandUnlinkEvent: Command
 
 class CommandLinkProcess: Command
 {
-    override var names: [String] { ["linkProcess"] }
+    override class var names: [String] { ["linkProcess"] }
     
     override func run() throws -> [Entity]
     {
@@ -1320,7 +1334,7 @@ class CommandLinkProcess: Command
 
 class CommandUnlinkProcess: Command
 {
-    override var names: [String] { ["unlinkProcess"] }
+    override class var names: [String] { ["unlinkProcess"] }
     
     override func run() throws -> [Entity]
     {
@@ -1334,7 +1348,7 @@ class CommandUnlinkProcess: Command
 
 class CommandBooleanStockFlow: Command
 {
-    override var names: [String] { ["booleanStockFlow"] }
+    override class var names: [String] { ["booleanStockFlow"] }
     
     override func run() throws -> [Entity]
     {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Workspace
+open class Workspace
 {
     // MARK: - Variables
     

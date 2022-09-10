@@ -14,6 +14,9 @@ class Heartbeat
 {
     // MARK: - Variables
     
+    @available(*, deprecated)
+    var shouldQuit: Bool = false
+    
     private var start: DispatchCompletion
     private var inputLoop: (Heartbeat) -> Void
     private var eventLoop: (Heartbeat) -> Void
@@ -46,8 +49,6 @@ class Heartbeat
             eventLoop(self)
         }
     }()
-    
-    var shouldQuit: Bool = false
     
     // MARK: - Initialization
     

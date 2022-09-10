@@ -27,4 +27,6 @@ enum ParsingError: Error
     
     case noHistory
     case notRunnable
+    
+    case invalidCommand
 }
