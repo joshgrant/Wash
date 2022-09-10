@@ -11,6 +11,7 @@ import CoreData
 protocol TextRepresentable: AnyObject
 {
     static var names: [String] { get }
+    static var description: String { get }
 }
 
 open class Command: TextRepresentable
@@ -18,6 +19,7 @@ open class Command: TextRepresentable
     // MARK: - Variables
     
     open class var names: [String] { [] }
+    open class var description: String { "" }
     
     var database: Database
     
@@ -246,7 +248,14 @@ class CommandHelp: Command
     }
     
     override func run() throws -> [Entity] {
-        print("Sorry, no help is available at this time.")
+        
+        for command in Command.allCases
+        {
+            print(command.names)
+            print(command.description)
+            print("----------")
+        }
+        
         return []
     }
 }
