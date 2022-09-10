@@ -59,6 +59,7 @@ enum EntityType
         }
     }
     
+    @available(*, deprecated)
     var managedObjectType: Entity.Type
     {
         switch self
@@ -70,29 +71,6 @@ enum EntityType
         case .unit: return Unit.self
         case .system: return System.self
         case .process: return Process.self
-        }
-    }
-    
-    @discardableResult
-    @available(*, deprecated)
-    func insertNewEntity(into context: Context, name: String?) -> Entity
-    {
-        switch self
-        {
-        case .stock:
-            return makeStock(name: name, in: context)
-        case .flow:
-            return makeFlow(name: name, in: context)
-        case .event:
-            return makeEvent(name: name, in: context)
-        case .condition:
-            return makeCondition(name: name, in: context)
-        case .unit:
-            return makeUnit(name: name, in: context)
-        case .system:
-            return makeSystem(name: name, in: context)
-        case .process:
-            return makeProcess(name: name, in: context)
         }
     }
     
@@ -123,147 +101,6 @@ enum EntityType
         default:
             throw ParsingError.invalidEntityType(string)
         }
-    }
-}
-
-// MARK: - Creating entities
-
-extension EntityType
-{
-    @discardableResult
-    func makeStock(name: String?, in context: Context) -> Stock
-    {
-        let stock = Stock(context: context)
-        stock.stateMachine = false
-        stock.isPinned = false
-        stock.createdDate = Date()
-        
-        let source = Source(context: context)
-        source.valueType = .number
-        source.value = 0
-        stock.source = source
-        
-        let minimum = Source(context: context)
-        minimum.valueType = .number
-        minimum.value = 0
-        stock.minimum = minimum
-        
-        let maximum = Source(context: context)
-        maximum.valueType = .number
-        maximum.value = 100
-        stock.maximum = maximum
-        
-        let ideal = Source(context: context)
-        ideal.valueType = .number
-        ideal.value = 100
-        stock.ideal = ideal
-        
-        if let name = name
-        {
-            stock.symbolName = Symbol(context: context, name: name)
-        }
-        
-        stock.logHistory(.created, context: context)
-        
-        return stock
-    }
-
-    @discardableResult
-    func makeFlow(name: String?, in context: Context) -> Flow
-    {
-        let flow = Flow(context: context)
-        
-        flow.amount = 1
-        flow.delay = 1
-        flow.duration = 1
-        flow.requiresUserCompletion = false
-        flow.repeats = false
-        
-        if let name = name
-        {
-            flow.symbolName = Symbol(context: context, name: name)
-        }
-        
-        flow.logHistory(.created, context: context)
-        
-        return flow
-    }
-
-    @discardableResult
-    func makeEvent(name: String?, in context: Context) -> Event
-    {
-        let event = Event(context: context)
-        
-        event.conditionType = .all
-        event.isActive = true
-        
-        if let name = name
-        {
-            event.symbolName = Symbol(context: context, name: name)
-        }
-        
-        event.logHistory(.created, context: context)
-        
-        return event
-    }
-    
-    @discardableResult
-    func makeCondition(name: String?, in context: Context) -> Condition
-    {
-        let condition = Condition(context: context)
-        
-        if let name = name
-        {
-            condition.symbolName = Symbol(context: context, name: name)
-        }
-        
-        return condition
-    }
-    
-    @discardableResult
-    func makeUnit(name: String?, in context: Context) -> Unit
-    {
-        let unit = Unit(context: context)
-        
-        unit.isBase = true
-        
-        if let name = name
-        {
-            unit.symbolName = Symbol(context: context, name: name)
-            unit.abbreviation = name
-        }
-        
-        return unit
-    }
-    
-    @discardableResult
-    func makeSystem(name: String?, in context: Context) -> System
-    {
-        let system = System(context: context)
-        
-        if let name = name
-        {
-            system.symbolName = Symbol(context: context, name: name)
-        }
-        
-        system.logHistory(.created, context: context)
-        
-        return system
-    }
-    
-    @discardableResult
-    func makeProcess(name: String?, in context: Context) -> Process
-    {
-        let process = Process(context: context)
-        
-        if let name = name
-        {
-            process.symbolName = Symbol(context: context, name: name)
-        }
-        
-        process.logHistory(.created, context: context)
-        
-        return process
     }
 }
 

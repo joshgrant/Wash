@@ -197,3 +197,40 @@ extension Stock: Comparable
         (lhs.unwrappedName ?? "") < (rhs.unwrappedName ?? "")
     }
 }
+
+extension Stock: Insertable
+{
+    typealias T = Stock
+    
+    static func insert(name: String, into context: Context) -> T
+    {
+        let stock = Stock(context: context)
+        stock.stateMachine = false
+        stock.isPinned = false
+        stock.createdDate = Date()
+        
+        let source = Source(context: context)
+        source.valueType = .number
+        source.value = 0
+        stock.source = source
+        
+        let minimum = Source(context: context)
+        minimum.valueType = .number
+        minimum.value = 0
+        stock.minimum = minimum
+        
+        let maximum = Source(context: context)
+        maximum.valueType = .number
+        maximum.value = 100
+        stock.maximum = maximum
+        
+        let ideal = Source(context: context)
+        ideal.valueType = .number
+        ideal.value = 100
+        stock.ideal = ideal
+        
+        stock.unwrappedName = name
+        
+        return stock
+    }
+}

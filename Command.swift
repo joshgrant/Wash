@@ -178,15 +178,15 @@ extension Command
 
 private extension Command
 {
-    func entityType() throws -> EntityType
+    func entityType() throws -> Entity.Type
     {
         guard arguments.count > 0 else { throw ParsingError.noArguments }
-        return try EntityType(string: arguments[0])
+        return try EntityType(string: arguments[0]).managedObjectType
     }
     
     func name(startingAt index: Int = 0) throws -> String
     {
-        guard arguments.count > index else { throw ParsingError.indexOutsideOfArgumentsBounds(index) }
+        guard arguments.count > index else { throw ParsingError.expectedAName }
         return arguments[index...].joined(separator: " ")
     }
     
@@ -286,9 +286,34 @@ class CommandAdd: Command
         let entityType = try entityType()
         let name = try name(startingAt: 1)
         
-        let entity = entityType.insertNewEntity(into: database.context, name: name)
-        workspace.entities.insert(entity, at: 0)
+        let entity: Entity
         
+        switch entityType
+        {
+        case is Stock.Type:
+            entity = Stock.insert(name: name, into: database.context)
+        case is Flow.Type:
+            entity = Flow.insert(name: name, into: database.context)
+        case is Event.Type:
+            entity = Event.insert(name: name, into: database.context)
+        case is Condition.Type:
+            entity = Condition.insert(name: name, into: database.context)
+        case is Unit.Type:
+            entity = Unit.insert(name: name, into: database.context)
+        case is System.Type:
+            entity = System.insert(name: name, into: database.context)
+        case is Process.Type:
+            entity = Process.insert(name: name, into: database.context)
+        default:
+            throw ParsingError.notInsertable
+        }
+
+        if let entity = entity as? SymbolNamed
+        {
+            entity.unwrappedName = name
+        }
+
+        workspace.entities.insert(entity, at: 0)
         return [entity]
     }
 }
@@ -302,8 +327,7 @@ class CommandSetName: Command
         let entity: SymbolNamed = try workspace.first()
         let name = try name()
         
-        let symbol = Symbol(context: database.context, name: name)
-        entity.symbolName = symbol
+        entity.unwrappedName = name
         
         return [entity]
     }
@@ -504,7 +528,7 @@ class CommandAll: Command
     {
         let entityType = try entityType()
         
-        let request: NSFetchRequest<NSFetchRequestResult> = entityType.managedObjectType.fetchRequest()
+        let request: NSFetchRequest<NSFetchRequestResult> = entityType.fetchRequest()
         request.predicate = NSPredicate(format: "isHidden == false && deletedDate == nil")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Entity.createdDate, ascending: true)]
         
@@ -1354,21 +1378,21 @@ class CommandBooleanStockFlow: Command
     {
         let name = try name()
         
-        let stock = EntityType.stock.insertNewEntity(into: database.context, name: name) as! Stock
+        let stock = Stock.insert(name: name, into: database.context)
         stock.current = 0
         stock.target = 1
         stock.max = 1
         stock.valueType = .boolean
         
         // Check as in "check off a box"
-        let checkFlow = EntityType.flow.insertNewEntity(into: database.context, name: "Check: " + name) as! Flow
+        let checkFlow = Flow.insert(name: "Check: " + name, into: database.context)
         checkFlow.amount = 1
         checkFlow.duration = 1
         checkFlow.delay = 0
         checkFlow.from = ContextPopulator.sourceStock(context: database.context)
         checkFlow.to = stock
         
-        let uncheckFlow = EntityType.flow.insertNewEntity(into: database.context, name: "Uncheck: " + name) as! Flow
+        let uncheckFlow = Flow.insert(name: "Uncheck: " + name, into: database.context)
         uncheckFlow.amount = 1
         uncheckFlow.duration = 0
         uncheckFlow.delay = 0

@@ -125,3 +125,19 @@ public extension Event
         unwrapped(\Event.stocks)
     }
 }
+
+extension Event: Insertable
+{
+    typealias T = Event
+    
+    static func insert(name: String, into context: Context) -> Event
+    {
+        let event = Event(context: context)
+        
+        event.conditionType = .all
+        event.isActive = true
+        event.unwrappedName = name
+        
+        return event
+    }
+}

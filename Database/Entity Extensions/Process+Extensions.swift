@@ -132,3 +132,15 @@ extension Process
         }
     }
 }
+
+extension Process: Insertable
+{
+    typealias T = Process
+    
+    static func insert(name: String, into context: Context) -> Process
+    {
+        let process = Process(context: context)
+        process.unwrappedName = name
+        return process
+    }
+}

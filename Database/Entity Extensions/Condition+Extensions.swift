@@ -184,3 +184,15 @@ public extension Condition
         }
     }
 }
+
+extension Condition: Insertable
+{
+    typealias T = Condition
+    
+    static func insert(name: String, into context: Context) -> Condition
+    {
+        let condition = Condition(context: context)
+        condition.unwrappedName = name
+        return condition
+    }
+}

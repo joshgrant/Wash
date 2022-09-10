@@ -86,3 +86,15 @@ extension System: Selectable
         return stocks + flows
     }
 }
+
+extension System: Insertable
+{
+    typealias T = System
+    
+    static func insert(name: String, into context: Context) -> System
+    {
+        let system = System(context: context)
+        system.unwrappedName = name
+        return system
+    }
+}

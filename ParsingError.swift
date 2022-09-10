@@ -11,6 +11,7 @@ enum ParsingError: Error
 {
     case noArguments
     case indexOutsideOfArgumentsBounds(Int)
+    case expectedAName
     case argumentDidNotMatchType(Any.Type)
     case invalidConditionType(String)
     case invalidComparisonType(String)
@@ -27,6 +28,7 @@ enum ParsingError: Error
     
     case noHistory
     case notRunnable
+    case notInsertable
     
     case invalidCommand
 }

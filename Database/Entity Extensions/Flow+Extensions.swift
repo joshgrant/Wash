@@ -238,3 +238,23 @@ extension Flow
         return result
     }
 }
+
+extension Flow: Insertable
+{
+    typealias T = Flow
+    
+    static func insert(name: String, into context: Context) -> Flow
+    {
+        let flow = Flow(context: context)
+        
+        flow.amount = 1
+        flow.delay = 1
+        flow.duration = 1
+        flow.requiresUserCompletion = false
+        flow.repeats = false
+        
+        flow.unwrappedName = name
+        
+        return flow
+    }
+}

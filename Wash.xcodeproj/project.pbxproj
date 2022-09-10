@@ -15,6 +15,9 @@
 		03056A4B27F01F5E00D10BA6 /* CompletionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4A27F01F5E00D10BA6 /* CompletionType.swift */; };
 		03056A4D27F01F8B00D10BA6 /* OrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03056A4C27F01F8B00D10BA6 /* OrderType.swift */; };
 		0318F88128CBEC9C00FF2F5C /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0318F88028CBEC9C00FF2F5C /* App.swift */; };
+		0318F88328CC0FFB00FF2F5C /* SymbolNamed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0318F88228CC0FFB00FF2F5C /* SymbolNamed.swift */; };
+		0318F88528CC103500FF2F5C /* BusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0318F88428CC103500FF2F5C /* BusinessLogic.swift */; };
+		0318F88928CC1A1B00FF2F5C /* Insertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0318F88828CC1A1B00FF2F5C /* Insertable.swift */; };
 		0330F9B227FF7C7D008B40F3 /* Historable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330F9B127FF7C7D008B40F3 /* Historable.swift */; };
 		0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333F48927D3F6B000B4C284 /* Printable.swift */; };
 		03739A5427E802EF0029BC9D /* Heartbeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03739A5327E802EF0029BC9D /* Heartbeat.swift */; };
@@ -74,6 +77,9 @@
 		03056A4A27F01F5E00D10BA6 /* CompletionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionType.swift; sourceTree = "<group>"; };
 		03056A4C27F01F8B00D10BA6 /* OrderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderType.swift; sourceTree = "<group>"; };
 		0318F88028CBEC9C00FF2F5C /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		0318F88228CC0FFB00FF2F5C /* SymbolNamed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolNamed.swift; sourceTree = "<group>"; };
+		0318F88428CC103500FF2F5C /* BusinessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLogic.swift; sourceTree = "<group>"; };
+		0318F88828CC1A1B00FF2F5C /* Insertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insertable.swift; sourceTree = "<group>"; };
 		0330F9B127FF7C7D008B40F3 /* Historable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Historable.swift; sourceTree = "<group>"; };
 		0333F48927D3F6B000B4C284 /* Printable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printable.swift; sourceTree = "<group>"; };
 		03739A5327E802EF0029BC9D /* Heartbeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heartbeat.swift; sourceTree = "<group>"; };
@@ -158,6 +164,7 @@
 				03B4AA0127C1A0F80071F63E /* Entity Extensions */,
 				03B4AA1027C1A0F90071F63E /* Entity Protocols */,
 				03B4AA1327C1A0F90071F63E /* Model.xcdatamodeld */,
+				0318F88428CC103500FF2F5C /* BusinessLogic.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -192,6 +199,8 @@
 				0333F48927D3F6B000B4C284 /* Printable.swift */,
 				03056A4627EFE3C700D10BA6 /* Selectable.swift */,
 				0330F9B127FF7C7D008B40F3 /* Historable.swift */,
+				0318F88228CC0FFB00FF2F5C /* SymbolNamed.swift */,
+				0318F88828CC1A1B00FF2F5C /* Insertable.swift */,
 			);
 			path = "Entity Protocols";
 			sourceTree = "<group>";
@@ -302,13 +311,16 @@
 				03B4AA8427C1A31E0071F63E /* SourceValueType.swift in Sources */,
 				03D5FC8127E65753007E87A9 /* Condition+.swift in Sources */,
 				03B4AA9C27C1A31E0071F63E /* Priority.swift in Sources */,
+				0318F88328CC0FFB00FF2F5C /* SymbolNamed.swift in Sources */,
 				0333F48A27D3F6B000B4C284 /* Printable.swift in Sources */,
 				03B4AA3C27C1A0F90071F63E /* Flow+Extensions.swift in Sources */,
 				03F736BF28CAA640009F90C5 /* EntityFormatStyle.swift in Sources */,
 				03056A4527EFD3D200D10BA6 /* System+Extensions.swift in Sources */,
 				03B4AA8227C1A31E0071F63E /* NSSet+Extensions.swift in Sources */,
 				03056A4327EFC12B00D10BA6 /* HistoryEvent.swift in Sources */,
+				0318F88528CC103500FF2F5C /* BusinessLogic.swift in Sources */,
 				03B4A9D427C005F10071F63E /* main.swift in Sources */,
+				0318F88928CC1A1B00FF2F5C /* Insertable.swift in Sources */,
 				03056A4127EFC10200D10BA6 /* History+Extensions.swift in Sources */,
 				03739A5427E802EF0029BC9D /* Heartbeat.swift in Sources */,
 				03F736C228CAA6EA009F90C5 /* Command.swift in Sources */,
